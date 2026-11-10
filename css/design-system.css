@@ -20,6 +20,10 @@
    v0.4.1 : contenu du menu — 3 sections (Mon compte / Inviter des
             gens / Aide et support) avec labels en tout petit
             caractère, items copiés du style sidebar original.
+   v0.4.2 : menu — « Ma classe » (Mon compte) · « Rejoindre la
+            communauté » (vert WhatsApp) + bouton Déconnexion en bas
+            du tiroir · modale de confirmation copiée à l'identique
+            de l'original (popup « Se déconnecter ? »).
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -62,6 +66,7 @@
   /* Structure */
   --radius: 16px;
   --transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-fast: all 0.15s ease; /* arvexa-ui.css:71 (modal de confirmation) */
   --header-height: 64px;
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -364,6 +369,72 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
 }
 .sidebar .nav-item.active i { color: var(--accent); }
 
+/* Bas du menu : communauté WhatsApp + déconnexion (v0.4.2).
+   .nav-bottom copié de l'original (index.html:141-143). */
+.sidebar .nav-bottom {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(var(--rgb-soft), 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Rejoindre la communauté : bouton WhatsApp — volontairement
+   différent des items du menu (vert de marque, plein, centré) */
+.sidebar .whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #25D366, #1EB85A);
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 4px 16px rgba(37, 211, 102, 0.22);
+  transition: var(--transition);
+}
+
+.sidebar .whatsapp-btn i { font-size: 17px; }
+.sidebar .whatsapp-btn:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 6px 22px rgba(37, 211, 102, 0.35);
+}
+.sidebar .whatsapp-btn:active { transform: scale(0.97); }
+
+/* Déconnexion : copie fidèle de .sidebar .nav-bottom a de l'original
+   (même taille réduite, couleur discrète) */
+.sidebar .logout-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 500;
+  width: 100%;
+  transition: var(--transition);
+}
+
+.sidebar .logout-item i { width: 20px; text-align: center; font-size: 15px; }
+.sidebar .logout-item:hover { color: var(--text-dim); background: rgba(var(--rgb-soft), 0.03); }
+
 /* ═══════════════════════════════════════════════════════════════════
    BARRE DE TÂCHES FIXE EN BAS — v0.3.1 « LUXE »
    Base : .bottom-nav MathMind (mathmind.html, lignes 963-978).
@@ -505,6 +576,244 @@ html[data-theme="light"] .bottom-nav button.active i {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MODALE DE CONFIRMATION — copie à l'identique du site original
+   (index.html:688-905). Utilisée par la déconnexion ; réutilisable
+   pour toutes les confirmations futures via window.arvexaConfirm().
+   ═══════════════════════════════════════════════════════════════════ */
+.arvexa-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.arvexa-confirm-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.arvexa-confirm-modal {
+  background: linear-gradient(145deg, var(--bg-surface) 0%, var(--bg-dark) 100%);
+  border: 1px solid rgba(184, 134, 11, 0.25);
+  border-radius: 20px;
+  padding: 32px 28px 24px;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  transform: scale(0.96) translateY(10px);
+  transition: transform 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(184, 134, 11, 0.08);
+}
+
+.arvexa-confirm-overlay.show .arvexa-confirm-modal {
+  transform: scale(1) translateY(0);
+}
+
+.arvexa-confirm-modal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-bright), transparent);
+  opacity: 0.9;
+}
+
+.arvexa-confirm-modal::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(184, 134, 11, 0.04), transparent 60%);
+  pointer-events: none;
+}
+
+.arvexa-confirm-icon-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 18px;
+  position: relative;
+  z-index: 1;
+}
+
+.arvexa-confirm-icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(184, 134, 11, 0.15), rgba(184, 134, 11, 0.05));
+  border: 1px solid rgba(184, 134, 11, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  position: relative;
+}
+
+.arvexa-confirm-icon-box.danger {
+  background: linear-gradient(135deg, rgba(184, 92, 58, 0.15), rgba(184, 92, 58, 0.05));
+  border-color: rgba(184, 92, 58, 0.3);
+}
+
+.arvexa-confirm-title {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: 'Playfair Display', Georgia, serif;
+  color: var(--text-light);
+  text-align: center;
+  margin-bottom: 8px;
+  line-height: 1.25;
+  position: relative;
+  z-index: 1;
+}
+
+.arvexa-confirm-divider {
+  width: 40px;
+  height: 2px;
+  margin: 0 auto 16px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  position: relative;
+  z-index: 1;
+}
+
+.arvexa-confirm-message {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.arvexa-confirm-message strong {
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.arvexa-confirm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.arvexa-confirm-btn {
+  flex: 1;
+  padding: 13px 16px;
+  border-radius: 999px;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+.arvexa-confirm-btn.cancel {
+  background: rgba(var(--rgb-soft), 0.05);
+  color: var(--text-dim);
+  border: 1px solid rgba(var(--rgb-soft), 0.08);
+}
+
+.arvexa-confirm-btn.cancel:hover {
+  background: rgba(var(--rgb-soft), 0.09);
+  color: var(--text-light);
+  border-color: rgba(var(--rgb-soft), 0.12);
+}
+
+.arvexa-confirm-btn.cancel:active { transform: scale(0.97); }
+
+.arvexa-confirm-btn.danger {
+  background: linear-gradient(135deg, #D97A3A, #B85C3A);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(184, 92, 58, 0.25);
+}
+
+.arvexa-confirm-btn.danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(184, 92, 58, 0.4);
+}
+
+.arvexa-confirm-btn.danger:active { transform: scale(0.97); }
+
+.arvexa-confirm-btn i { font-size: 13px; }
+
+.arvexa-confirm-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(var(--rgb-soft), 0.03);
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  z-index: 2;
+}
+
+.arvexa-confirm-close:hover {
+  background: rgba(var(--rgb-soft), 0.08);
+  color: var(--text-light);
+}
+
+/* Mode clair : ombre papier chaude (v8.6 de l'original) */
+html[data-theme="light"] .arvexa-confirm-modal {
+  box-shadow: 0 20px 60px rgba(74, 58, 24, 0.18), 0 0 40px rgba(184, 134, 11, 0.10);
+}
+
+/* Responsive — mêmes paliers que l'original */
+@media (max-width: 640px) {
+  .arvexa-confirm-modal { padding: 26px 22px 20px; max-width: 360px; }
+  .arvexa-confirm-icon-box { width: 56px; height: 56px; font-size: 24px; }
+  .arvexa-confirm-title { font-size: 19px; }
+  .arvexa-confirm-message { font-size: 13.5px; }
+  .arvexa-confirm-btn { padding: 11px 14px; font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  .arvexa-confirm-modal { padding: 22px 18px 18px; }
+  .arvexa-confirm-title { font-size: 17px; }
+  .arvexa-confirm-message { font-size: 13px; margin-bottom: 20px; }
+}
+
+@media (max-width: 360px) {
+  .arvexa-confirm-modal { padding: 20px 16px 16px; }
+  .arvexa-confirm-title { font-size: 16px; }
+  .arvexa-confirm-message { font-size: 12.5px; }
+  .arvexa-confirm-btn { padding: 10px 10px; font-size: 12.5px; gap: 6px; }
 }
 
 /* ── ACCESSIBILITÉ ─────────────────────────────────────────────── */

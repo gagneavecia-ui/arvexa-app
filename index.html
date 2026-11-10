@@ -42,6 +42,9 @@
       <a href="#/profil" class="nav-item" data-route="profil">
         <i class="fas fa-user" aria-hidden="true"></i> Profil
       </a>
+      <button type="button" class="nav-item" data-menu="classe">
+        <i class="fas fa-graduation-cap" aria-hidden="true"></i> Ma classe
+      </button>
       <button type="button" class="nav-item" data-menu="abonnement">
         <i class="fas fa-crown" aria-hidden="true"></i> Mon abonnement
       </button>
@@ -68,6 +71,17 @@
       <button type="button" class="nav-item" data-menu="support">
         <i class="fas fa-headset" aria-hidden="true"></i> Contacter le support
       </button>
+
+      <!-- ═══ BAS DU MENU : communauté + déconnexion ═══ -->
+      <div class="nav-bottom">
+        <a href="https://wa.me/22774872082" target="_blank" rel="noopener" class="whatsapp-btn"
+           id="whatsappCommunityBtn" title="Rejoindre la communauté ARVX sur WhatsApp">
+          <i class="fab fa-whatsapp" aria-hidden="true"></i> Rejoindre la communauté
+        </a>
+        <button type="button" class="logout-item" id="logoutBtn">
+          <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Déconnexion
+        </button>
+      </div>
     </nav>
   </aside>
 
@@ -141,6 +155,38 @@
       <i class="fas fa-user" aria-hidden="true"></i><span>Profil</span>
     </button>
   </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       MODALE DE CONFIRMATION — copie à l'identique du site
+       original (index.html:1778-1798). Utilisée d'abord pour
+       la déconnexion ; servira aussi aux autres confirmations.
+       ══════════════════════════════════════════════════════ -->
+  <div class="arvexa-confirm-overlay" id="arvexaConfirmModal">
+    <div class="arvexa-confirm-modal">
+      <button class="arvexa-confirm-close" id="arvexaConfirmClose" aria-label="Fermer">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="arvexa-confirm-icon-wrap">
+        <div class="arvexa-confirm-icon-box danger" id="arvexaConfirmIconBox">
+          <span id="arvexaConfirmIcon">⚠️</span>
+        </div>
+      </div>
+      <h3 class="arvexa-confirm-title" id="arvexaConfirmTitle">Confirmation</h3>
+      <div class="arvexa-confirm-divider"></div>
+      <p class="arvexa-confirm-message" id="arvexaConfirmMessage">
+        Es-tu sûr de vouloir continuer ?
+      </p>
+      <div class="arvexa-confirm-actions">
+        <button class="arvexa-confirm-btn cancel" id="arvexaConfirmCancel">
+          Annuler
+        </button>
+        <button class="arvexa-confirm-btn danger" id="arvexaConfirmOk">
+          <i class="fas fa-check"></i>
+          <span id="arvexaConfirmOkText">Confirmer</span>
+        </button>
+      </div>
+    </div>
+  </div>
 
 </body>
 </html>

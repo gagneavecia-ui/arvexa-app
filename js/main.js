@@ -35,6 +35,17 @@
        profil navigue vers #/profil, les autres écrans seront
        branchés à leur étape. État actif de l'item « Profil »
        synchronisé avec la vue courante.
+
+   v0.4.2 :
+     · « Ma classe » ajoutée dans Mon compte.
+     · bas du tiroir : « Rejoindre la communauté » (WhatsApp) et
+       bouton Déconnexion.
+     · modale de confirmation copiée à l'identique de l'original
+       (window.arvexaConfirm + #arvexaConfirmModal) : mêmes textes,
+       mêmes variantes danger/primary, mêmes fermetures (croix,
+       Annuler, extérieur, Échap). Le bouton Déconnexion ouvre le
+       MÊME popup que le site actuel (« Se déconnecter ? ») ; la
+       confirmation appellera Firebase Auth à l'étape backend.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -255,3 +266,88 @@ if (location.hash) {
   if (!VIEWS.includes(h)) location.replace('#/accueil');
 }
 showView(parseHash(), { animate: false });
+
+/* ═══════════════════════════════════════════════════════════════════
+   MODALE DE CONFIRMATION — copie fidèle du site original
+   (index.html:3565-3616). window.arvexaConfirm({ title, message,
+   icon, confirmText, cancelText, variant, onConfirm, onCancel }).
+   Fermetures : croix, Annuler, clic extérieur, Échap.
+   ═══════════════════════════════════════════════════════════════════ */
+
+const confirmModal = document.getElementById('arvexaConfirmModal');
+const confirmIconBox = document.getElementById('arvexaConfirmIconBox');
+const confirmIcon = document.getElementById('arvexaConfirmIcon');
+const confirmTitle = document.getElementById('arvexaConfirmTitle');
+const confirmMessage = document.getElementById('arvexaConfirmMessage');
+const confirmOk = document.getElementById('arvexaConfirmOk');
+const confirmOkText = document.getElementById('arvexaConfirmOkText');
+const confirmCancel = document.getElementById('arvexaConfirmCancel');
+const confirmClose = document.getElementById('arvexaConfirmClose');
+
+let confirmCallback = null;
+let confirmCancelCb = null;
+let confirmedFlag = false;
+
+window.arvexaConfirm = function (options) {
+  if (!confirmModal) return;
+  confirmTitle.textContent = options.title || 'Confirmation';
+  confirmMessage.innerHTML = options.message || 'Es-tu sûr de vouloir continuer ?';
+  confirmIcon.textContent = options.icon || '⚠️';
+  confirmOkText.textContent = options.confirmText || 'Confirmer';
+  confirmCancel.textContent = options.cancelText || 'Annuler';
+  confirmIconBox.className = 'arvexa-confirm-icon-box ' + (options.variant === 'primary' ? '' : 'danger');
+  confirmOk.className = 'arvexa-confirm-btn ' + (options.variant === 'primary' ? 'primary' : 'danger');
+  confirmCallback = options.onConfirm || null;
+  confirmCancelCb = options.onCancel || null;
+  confirmedFlag = false;
+  confirmModal.classList.add('show');
+  document.body.style.overflow = 'hidden';
+};
+
+function closeArvexaConfirm() {
+  if (!confirmModal) return;
+  confirmModal.classList.remove('show');
+  document.body.style.overflow = '';
+  const ccb = confirmCancelCb;
+  confirmCallback = null;
+  confirmCancelCb = null;
+  if (!confirmedFlag && typeof ccb === 'function') ccb();
+}
+
+confirmCancel?.addEventListener('click', closeArvexaConfirm);
+confirmClose?.addEventListener('click', closeArvexaConfirm);
+confirmOk?.addEventListener('click', () => {
+  const cb = confirmCallback;
+  confirmedFlag = true;
+  closeArvexaConfirm();
+  if (typeof cb === 'function') cb();
+});
+confirmModal?.addEventListener('click', (e) => {
+  if (e.target === confirmModal) closeArvexaConfirm();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && confirmModal?.classList.contains('show')) closeArvexaConfirm();
+});
+
+/* ── DÉCONNEXION — mêmes textes que le site original
+   (handleLogout, index.html:3928-3936). La confirmation exécutera
+   Firebase Auth signOut + redirection à l'étape backend. ── */
+
+function performLogout() {
+  /* Backend à venir : signOut(auth) puis écran d'accueil/connexion.
+     Pour l'instant rien de plus — aucun compte n'est encore branché. */
+}
+
+const logoutBtn = document.getElementById('logoutBtn');
+logoutBtn?.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.arvexaConfirm({
+    title: 'Se déconnecter ?',
+    message: 'Tu devras te <strong>reconnecter</strong> pour accéder à ton compte.',
+    icon: '⚠️',
+    confirmText: 'Se déconnecter',
+    cancelText: 'Annuler',
+    variant: 'danger',
+    onConfirm: performLogout,
+  });
+});

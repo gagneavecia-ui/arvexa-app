@@ -3,14 +3,20 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.4.1 Menu complet (3 sections)
+## Étape actuelle — v0.4.2 Menu complet + déconnexion identique
 
-- **Menu tiroir rempli** :
-  - **MON COMPTE** — Profil (→ `#/profil`), Mon abonnement
+- **Menu tiroir** :
+  - **MON COMPTE** — Profil (→ `#/profil`), Ma classe, Mon abonnement
   - **INVITER DES GENS** — Inviter des camarades, Parrainage
   - **AIDE ET SUPPORT** — Rappels et notifications, Compte et suppression, Contacter le support
-  - Labels de section en tout petit caractère (9 px, majuscules espacées), items dans le
-    style exact de la sidebar originale, état actif or synchronisé avec la vue.
+  - **Bas du menu** — « Rejoindre la communauté » (vert WhatsApp `#25D366`, logo WhatsApp,
+    volontairement différent des autres items) puis Déconnexion.
+- **Déconnexion identique au site actuel** : même popup de confirmation copié à l'identique
+  (« Se déconnecter ? » / ⚠️ / « Tu devras te reconnecter… » / Annuler · Se déconnecter),
+  mêmes fermetures (croix, Annuler, extérieur, Échap). La confirmation branchera Firebase
+  Auth à l'étape backend.
+- Modale de confirmation réutilisable pour toutes les futures confirmations
+  (`window.arvexaConfirm()`).
 - **Principe AXIA appliqué** : une seule page qui **ne se recharge jamais** — aucune
   barre de chargement du navigateur, navigation synchrone entre les écrans.
 - **5 vues SPA** (Accueil, Réviser, Examen, Progression, Profil) échangées par le
