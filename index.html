@@ -141,7 +141,26 @@
          jamais de barre de chargement du navigateur).
          Le contenu de chaque vue arrive étape par étape.
          ══════════════════════════════════════════════════════ -->
-    <section class="view" id="view-accueil" data-view="accueil"><!-- contenu — étapes suivantes --></section>
+    <section class="view" id="view-accueil" data-view="accueil">
+      <!-- ═══ BLOC 1 — CARTE OBJECTIF (v0.6) ═══
+           Héros compact : objectif de l'élève (examen + date),
+           compte à rebours J-x et mini barre de progression.
+           Inspire du compte à rebours BAC de l'original (30-40 %),
+           réduit et générique : ARVX est polyvalent. La valeur
+           affichée est un exemple tant que le flux « choisir mon
+           objectif » n'existe pas (localStorage 'arvexa-goal'). -->
+      <div class="goal-card">
+        <div class="goal-top">
+          <div class="goal-left">
+            <span class="goal-eyebrow"><i class="fas fa-bullseye" aria-hidden="true"></i><span data-i18n="accueil.objectif">Objectif</span></span>
+            <span class="goal-title" id="goalTitle">Baccalauréat 2027</span>
+            <span class="goal-meta" id="goalMeta">15 juin 2027 · 🌱 Tu as le temps</span>
+          </div>
+          <span class="goal-count" id="goalCount">J-216</span>
+        </div>
+        <div class="goal-track" aria-hidden="true"><div class="goal-fill" id="goalFill"></div></div>
+      </div>
+    </section>
     <section class="view" id="view-reviser" data-view="reviser" hidden><!-- contenu — étapes suivantes --></section>
     <section class="view" id="view-examen" data-view="examen" hidden><!-- contenu — étapes suivantes --></section>
     <section class="view" id="view-progression" data-view="progression" hidden><!-- contenu — étapes suivantes --></section>

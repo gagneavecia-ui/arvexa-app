@@ -3,7 +3,35 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.5.1 Bouton thème (clair/sombre) + menu v2
+## Étape actuelle — v0.6 Accueil : bloc 1 « carte objectif »
+
+- **Carte objectif** en tête de l'accueil — héros **compact** qui résume
+  l'objectif de l'élève en un coup d'œil (inspiration 30-40 % du compte à
+  rebours BAC de l'original, réduite et **générique** : ARVX est polyvalent,
+  pas seulement BAC) :
+  - sur-titre **🎯 OBJECTIF** (petit, or, espacé) ;
+  - nom de l'objectif (ex. « Baccalauréat 2027 ») ;
+  - date de l'examen + statut selon le temps restant
+    (🌱 Tu as le temps → ⏳ La course est lancée → 🔥 Sprint final → 🏁 Bonne chance !) ;
+  - **compte à rebours** en pastille or : **J-217** (AN : **D-217**), calculé
+    en direct depuis la date du jour — le bouton **rafraîchir** le recalcule ;
+  - **mini barre de progression** or (temps écoulé entre le début des
+    révisions et l'examen, comme la barre du compte à rebours original).
+- **Valeur d'exemple affichée** tant que le flux « choisir mon objectif »
+  n'existe pas : dès qu'il sera branché (profil/backend), localStorage
+  `'arvexa-goal' { label, date, start }` prendra le relais automatiquement
+  (testé : « Concours médecine 2027 » s'affiche instantanément).
+- **Le cadre fixe est respecté** : blocs à hauteur constante, vue accueil
+  centrée (`max-width 720px`), aucun défilement vertical de la page.
+- **Traduit instantanément** (FR/AN) : OBJECTIF/GOAL, statuts, J-/D-, date
+  formatée (`15 juin 2027` ↔ `15 June 2027`). Adaptable aux deux thèmes :
+  matériaux identiques à la carte profil (radial or), or foncé lisible sur
+  papier en mode clair, ombres chaudes.
+- Preuves SPA re-vérifiées : marque mémoire `42` intacte après bascules
+  thème + langue + navigation, `performance navigation = 1` (aucun
+  rechargement du document).
+
+## v0.5.1 — Bouton thème (clair/sombre) + menu v2
 
 - **Bouton thème dans la barre du haut** (à la place du raccourci profil,
   doublon du menu et de la barre du bas) : mode clair / mode sombre **en un
@@ -71,7 +99,7 @@ HTML5 · CSS3 (custom properties) · JavaScript ES modules — aucune dépendanc
 2. ✅ Barre de tâches fixe en bas (5 onglets)
 3. ✅ Barre du haut (menu, salutation + nom, notifications, profil, rafraîchir)
 4. ✅ SPA : navigation instantanée entre les 5 vues (principe AXIA, zéro rechargement)
-5. Page d'accueil complète (toutes matières)
+5. ✅ Page d'accueil — bloc 1 « carte objectif » (blocs suivants : continuer, actions rapides, matières, question du jour)
 6. Navigation, matières, contenus
 7. Service worker : cache complet, ouverture instantanée + hors ligne
 8. Backend (Firebase) + fonctionnalités

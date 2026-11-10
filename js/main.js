@@ -63,6 +63,15 @@
        dans le menu et la barre du bas). Icône soleil (mode sombre →
        passer en clair) ↔ lune (mode clair → passer en sombre),
        libellés traduits (FR/AN), instantané, aucun rechargement.
+
+   v0.6 :
+     · vue Accueil — BLOC 1 « carte objectif » : objectif de l'élève
+       (examen + date), compte à rebours J-x et mini barre de
+       progression vers la date (inspiré du compte à rebours BAC de
+       l'original, réduit et générique — ARVX est polyvalent).
+       Valeur d'exemple tant que le flux « choisir mon objectif »
+       n'existe pas : localStorage 'arvexa-goal' { label, date, start }
+       prendra le relais. Le bouton rafraîchir recalcule le compte.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -160,6 +169,12 @@ const I18N = {
     'salut.soir': 'Bonsoir',
     'theme.toLight': 'Passer en mode clair',
     'theme.toDark': 'Passer en mode sombre',
+    'accueil.objectif': 'Objectif',
+    'accueil.j': 'J',
+    'accueil.status.temps': '🌱 Tu as le temps',
+    'accueil.status.course': '⏳ La course est lancée',
+    'accueil.status.sprint': '🔥 Sprint final',
+    'accueil.status.fin': '🏁 Bonne chance !',
     'profil.defaultName': 'Élève',
     'plan.gratuit': 'Gratuit',
     'plan.premium': 'Premium',
@@ -196,6 +211,12 @@ const I18N = {
     'salut.soir': 'Good evening',
     'theme.toLight': 'Switch to light mode',
     'theme.toDark': 'Switch to dark mode',
+    'accueil.objectif': 'Goal',
+    'accueil.j': 'D',
+    'accueil.status.temps': '🌱 You have time',
+    'accueil.status.course': '⏳ The race is on',
+    'accueil.status.sprint': '🔥 Final sprint',
+    'accueil.status.fin': '🏁 Good luck!',
     'profil.defaultName': 'Student',
     'plan.gratuit': 'Free',
     'plan.premium': 'Premium',
@@ -257,6 +278,7 @@ function applyLang() {
   applyGreeting();
   applyProfileCard();
   applyThemeButton();
+  updateGoalCard();
 }
 
 function setLang(next) {
@@ -339,6 +361,73 @@ function applyProfileCard() {
   planEl.classList.toggle('gratuit', plan !== 'premium');
 }
 
+/* ── VUE ACCUEIL — BLOC 1 : CARTE OBJECTIF (v0.6) ──
+   Objectif de l'élève (examen + date) + compte à rebours J-x +
+   progression du temps vers la date — même esprit que le compte à
+   rebours BAC de l'original, réduit et générique (toutes matières).
+   Tant que le flux « choisir mon objectif » n'existe pas, la carte
+   affiche un exemple ; localStorage 'arvexa-goal' { label, date,
+   start } prendra le relais (profil / backend). La fonction est
+   déclarée ici mais appelée dès le boot par applyLang() (hoisting) :
+   aucune constante module-level, donc aucun risque de TDZ. ── */
+
+function dayDiff(from, to) {
+  const a = Date.UTC(to.getFullYear(), to.getMonth(), to.getDate());
+  const b = Date.UTC(from.getFullYear(), from.getMonth(), from.getDate());
+  return Math.round((a - b) / 86400000);
+}
+
+function updateGoalCard() {
+  const titleEl = document.getElementById('goalTitle');
+  const metaEl = document.getElementById('goalMeta');
+  const countEl = document.getElementById('goalCount');
+  const fillEl = document.getElementById('goalFill');
+  if (!titleEl || !metaEl || !countEl || !fillEl) return;
+
+  /* Objectif : localStorage 'arvexa-goal' { label, date, start }
+     si présent, sinon l'exemple affiché par défaut (démo). */
+  const GOAL_KEY = 'arvexa-goal';
+  const GOAL_DEMO = { label: 'Baccalauréat 2027', date: '2027-06-15', start: '2026-09-15' };
+  let goal = GOAL_DEMO;
+  try {
+    const g = JSON.parse(localStorage.getItem(GOAL_KEY) || 'null');
+    if (g && g.label && g.date) goal = g;
+  } catch { /* JSON invalide : on garde l'exemple */ }
+
+  const now = new Date();
+  const [gy, gm, gd] = String(goal.date).split('-').map(Number);
+  const exam = new Date(gy, (gm || 1) - 1, gd || 1);
+  const days = dayDiff(now, exam);
+
+  titleEl.textContent = goal.label;
+
+  /* Compte à rebours : J-216 en français, D-216 en anglais. */
+  countEl.textContent = days > 0 ? t('accueil.j') + '-' + days : '🏁';
+
+  /* Statut selon le temps restant — même esprit que l'original
+     (« 🌱 Tu as le temps » quand la date est encore loin). */
+  let statusKey = 'accueil.status.temps';
+  if (days <= 0) statusKey = 'accueil.status.fin';
+  else if (days <= 60) statusKey = 'accueil.status.sprint';
+  else if (days <= 180) statusKey = 'accueil.status.course';
+
+  const dateStr = new Intl.DateTimeFormat(lang === 'an' ? 'en-GB' : 'fr-FR',
+    { day: 'numeric', month: 'long', year: 'numeric' }).format(exam);
+  metaEl.textContent = dateStr + ' · ' + t(statusKey);
+
+  /* Barre : progression du temps entre le début des révisions et
+     l'examen (comme la barre du compte à rebours de l'original). */
+  let pct = 0;
+  const [sy, sm, sd] = String(goal.start || '').split('-').map(Number);
+  if (sy) {
+    const start = new Date(sy, (sm || 1) - 1, sd || 1);
+    const total = dayDiff(start, exam);
+    const done = dayDiff(start, now);
+    if (total > 0) pct = Math.min(100, Math.max(0, Math.round((done / total) * 100)));
+  }
+  fillEl.style.width = pct + '%';
+}
+
 /* ── MENU TIROIR (fidèle au site original, index.html:3947-3954) ── */
 
 const sidebar = document.getElementById('sidebar');
@@ -364,6 +453,7 @@ const refreshBtn = document.getElementById('refreshBtn');
 
 refreshBtn?.addEventListener('click', () => {
   refreshBtn.classList.add('spinning');
+  updateGoalCard(); /* recalcule le compte à rebours de l'objectif */
   setTimeout(() => refreshBtn.classList.remove('spinning'), 800);
 });
 
