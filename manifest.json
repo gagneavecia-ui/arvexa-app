@@ -1,7 +1,7 @@
 {
-  "name": "ARVEXA",
-  "short_name": "ARVEXA",
-  "description": "ARVEXA — toutes les matières, une seule application.",
+  "name": "ARVX",
+  "short_name": "ARVX",
+  "description": "ARVX — toutes les matières, une seule application.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

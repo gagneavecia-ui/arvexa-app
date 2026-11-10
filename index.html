@@ -2,10 +2,10 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>ARVEXA</title>
+  <title>ARVX</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0A0A0A">
-  <meta name="description" content="ARVEXA — toutes les matières, une seule application.">
+  <meta name="description" content="ARVX — toutes les matières, une seule application.">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -16,6 +16,11 @@
   <!-- Font Awesome : même CDN et même version que le site original -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+  <!-- Polices : mêmes familles que le site original (Inter + Playfair Display) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/design-system.css">
   <script type="module" src="js/main.js"></script>
 </head>
@@ -25,12 +30,12 @@
        MENU (tiroir) — design fidèle à la sidebar du site
        original. La navigation est vide pour l'instant :
        elle sera complétée à une prochaine étape.
-       Le logo ARVEXA s'affiche en haut du menu, comme
-       dans le site original.
+       Le logo ARVX s'affiche en haut du menu, X en doré
+       (dégradé or, façon le logo du site original).
        ══════════════════════════════════════════════════════ -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
   <aside class="sidebar" id="sidebar" aria-label="Menu">
-    <a href="#" class="logo" aria-label="ARVEXA">ARVEX<span>A</span></a>
+    <a href="#" class="logo" aria-label="ARVX">ARV<span>X</span></a>
     <nav class="nav">
       <!-- Vide — sera complété -->
     </nav>
@@ -51,7 +56,7 @@
         </button>
         <div class="greeting">
           <span id="greetingText">Bonjour</span>
-          <span id="userFirstName">Élève</span>
+          <span id="userFirstName">ARV<span class="gold-x">X</span></span>
           <span id="greetingEmoji">👋</span>
         </div>
       </div>

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   ARVEXA — DESIGN SYSTEM (fondation)
+   ARVX — DESIGN SYSTEM (fondation)
    Jetons extraits À L'IDENTIQUE du site actuel ARVEXA School v8.30 :
      · Thème sombre (défaut)  — tokens :root des pages
      · Thème clair "papier & encre" — html[data-theme="light"]
@@ -11,6 +11,9 @@
             MathMind du site original.
    v0.3   : barre du haut (header d'accueil fidèle) + menu tiroir
             (sidebar fidèle, nav vide pour l'instant).
+   v0.3.1 : marque ARVX (X en or dégradé) · barre du bas « luxe »
+            (verre dépoli, filet or dégradé, capsule or de l'onglet
+            actif, icône en or dégradé façon wordmark).
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -167,6 +170,16 @@ body {
 .header .greeting #userFirstName { color: var(--accent-bright); font-weight: 700; }
 .header .greeting #greetingEmoji { font-size: 16px; line-height: 1; }
 
+/* Le X du nom ARVX : or dégradé, façon le span doré du logo original */
+.header .greeting #userFirstName .gold-x {
+  background: linear-gradient(100deg, var(--accent), var(--accent-bright) 55%, var(--accent));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+
 .header .header-actions { display: flex; align-items: center; gap: 6px; }
 
 .header .header-actions button {
@@ -207,6 +220,9 @@ body {
 
 /* Thème clair : le nom en or foncé pour rester lisible sur papier */
 html[data-theme="light"] .header .greeting #userFirstName { color: var(--gold-text, #9A7209); }
+html[data-theme="light"] .header .greeting #userFirstName .gold-x {
+  background-image: linear-gradient(100deg, #9A7209, #C79A2A 55%, #9A7209);
+}
 html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); }
 
 /* Tailles mobiles — mêmes paliers que le site original */
@@ -280,8 +296,12 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
 .sidebar .nav { flex: 1; display: flex; flex-direction: column; gap: 2px; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   BARRE DE TÂCHES FIXE EN BAS
-   Reproduction fidèle de .bottom-nav (mathmind.html, lignes 963-978)
+   BARRE DE TÂCHES FIXE EN BAS — v0.3.1 « LUXE »
+   Base : .bottom-nav MathMind (mathmind.html, lignes 963-978).
+   Matériaux enrichis : verre dépoli saturé, filet supérieur or qui
+   s'estompe vers les bords, lueur d'ambiance au-dessus de la barre,
+   capsule or pour l'onglet actif, icône active en or dégradé
+   (même traitement que le span doré du wordmark ARVX).
    ═══════════════════════════════════════════════════════════════════ */
 .bottom-nav {
   position: fixed;
@@ -290,12 +310,42 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
   bottom: 0;
   z-index: 70;
   display: flex;
-  padding: 7px 6px calc(7px + var(--safe-bottom));
-  background: rgba(var(--rgb-veil), 0.96);
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
-  border-top: 1px solid rgba(184, 134, 11, 0.1);
+  padding: 8px 8px calc(8px + var(--safe-bottom));
+  background:
+    linear-gradient(180deg, rgba(184, 134, 11, 0.05), rgba(184, 134, 11, 0) 40%),
+    rgba(var(--rgb-veil), 0.97);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Filet supérieur : or fin qui s'estompe vers les deux bords */
+.bottom-nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg,
+    rgba(184, 134, 11, 0) 0%,
+    rgba(224, 184, 74, 0.45) 16%,
+    rgba(224, 184, 74, 0.7) 50%,
+    rgba(224, 184, 74, 0.45) 84%,
+    rgba(184, 134, 11, 0) 100%);
+  pointer-events: none;
+}
+
+/* Lueur d'ambiance dorée au-dessus de la barre */
+.bottom-nav::after {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 8%;
+  right: 8%;
+  height: 14px;
+  background: radial-gradient(50% 100% at 50% 100%, rgba(224, 184, 74, 0.09), transparent 75%);
+  pointer-events: none;
 }
 
 .bottom-nav button {
@@ -305,34 +355,88 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
+  gap: 3px;
   border: 0;
   background: none;
-  padding: 0;
+  padding: 2px 0 0;
   cursor: pointer;
   font-family: inherit;
   color: var(--nav-muted);
   font-size: 7px;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  position: relative;
+  border-radius: 13px;
   transition: var(--transition);
 }
+
+.bottom-nav button:active { transform: scale(0.93); }
 
 .bottom-nav button i {
   font-size: 17px;
   line-height: 1;
+  transition: var(--transition);
 }
 
+/* Onglet actif : capsule or douce */
 .bottom-nav button.active { color: var(--accent-bright); }
 
-.bottom-nav button.active i {
-  filter: drop-shadow(0 0 7px rgba(224, 184, 74, 0.3));
+.bottom-nav button.active::before {
+  content: '';
+  position: absolute;
+  inset: 3px 7px;
+  border-radius: 12px;
+  background:
+    radial-gradient(70% 90% at 50% 22%, rgba(224, 184, 74, 0.15), rgba(184, 134, 11, 0.05) 62%, transparent 100%),
+    rgba(184, 134, 11, 0.05);
+  border: 1px solid rgba(224, 184, 74, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(224, 184, 74, 0.14),
+    0 0 20px rgba(224, 184, 74, 0.09),
+    0 4px 14px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
 }
 
-/* Thème clair : liseré un peu plus présent + actif en or foncé lisible */
-html[data-theme="light"] .bottom-nav { border-top-color: rgba(184, 134, 11, 0.18); }
+/* Icône active : or dégradé façon wordmark ARVX + halo */
+.bottom-nav button.active i {
+  background: linear-gradient(120deg, var(--accent), var(--accent-bright) 55%, var(--accent));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 7px rgba(224, 184, 74, 0.38));
+}
+
+/* Thème clair : mêmes matériaux, encre papier + or foncé lisible */
+html[data-theme="light"] .bottom-nav::before {
+  background: linear-gradient(90deg,
+    rgba(184, 134, 11, 0) 0%,
+    rgba(154, 114, 9, 0.4) 16%,
+    rgba(154, 114, 9, 0.6) 50%,
+    rgba(154, 114, 9, 0.4) 84%,
+    rgba(184, 134, 11, 0) 100%);
+}
+html[data-theme="light"] .bottom-nav::after {
+  background: radial-gradient(50% 100% at 50% 100%, rgba(184, 134, 11, 0.07), transparent 75%);
+}
 html[data-theme="light"] .bottom-nav button.active { color: var(--gold-text, #9A7209); }
-html[data-theme="light"] .bottom-nav button.active i { filter: none; }
+html[data-theme="light"] .bottom-nav button.active::before {
+  background:
+    radial-gradient(70% 90% at 50% 22%, rgba(184, 134, 11, 0.13), rgba(184, 134, 11, 0.04) 62%, transparent 100%),
+    rgba(184, 134, 11, 0.04);
+  border-color: rgba(184, 134, 11, 0.26);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    0 2px 10px rgba(184, 134, 11, 0.1);
+}
+html[data-theme="light"] .bottom-nav button.active i {
+  background-image: linear-gradient(120deg, #9A7209, #C79A2A 55%, #9A7209);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: none;
+}
 
 /* ── ACCESSIBILITÉ ─────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════════
-   ARVEXA — MAIN.JS (fondation)
+   ARVX — MAIN.JS (fondation)
    Même moteur de thème que ARVEXA School :
      · sombre par défaut, clair si localStorage 'arvexa-theme' = 'light'
      · meta theme-color synchronisée (barre système Android/PWA)
@@ -14,6 +14,12 @@
      · menu tiroir : ouverture/fermeture (bouton, overlay, Échap)
      · bouton rafraîchir : rotation de l'icône (les données viendront
        avec le backend, à une prochaine étape)
+
+   v0.3.1 :
+     · marque ARVX — le nom affiché dans la salutation est « ARVX »
+       avec le X en or dégradé (même traitement que le wordmark du
+       menu). Un prénom d'utilisateur lié au compte prendra le
+       relais à l'étape backend.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -80,9 +86,9 @@ function applyGreeting() {
   if (greetingText) greetingText.textContent = text;
   if (greetingEmoji) greetingEmoji.textContent = emoji;
 
-  /* Nom : profile lié au compte plus tard. D'ici là, localStorage
-     'arvexa_user' { firstName } si présent, sinon « Élève » (défaut
-     du site original). */
+  /* Nom : compte lié au backend plus tard. D'ici là, localStorage
+     'arvexa_user' { firstName } si présent, sinon la marque « ARVX »
+     avec le X en or dégradé (façon le wordmark du site original). */
   const userFirstName = document.getElementById('userFirstName');
   if (userFirstName) {
     let firstName = '';
@@ -91,7 +97,11 @@ function applyGreeting() {
       firstName = (user && user.firstName) || '';
     } catch { /* JSON invalide */ }
     userFirstName.classList.remove('loading');
-    userFirstName.textContent = firstName || 'Élève';
+    if (firstName) {
+      userFirstName.textContent = firstName;
+    } else {
+      userFirstName.innerHTML = 'ARV<span class="gold-x">X</span>';
+    }
   }
 }
 
