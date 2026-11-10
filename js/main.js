@@ -56,6 +56,13 @@
      · carte profil en tête du menu : avatar doré (initiale du
        nom), nom, badge du type de compte (Gratuit / Premium).
      · « Parrainage » devient « Ambassadeur ARVX » (médaille).
+
+   v0.5.1 :
+     · le bouton profil du header devient le bouton THÈME — bascule
+       mode clair / mode sombre en un clic (le profil reste accessible
+       dans le menu et la barre du bas). Icône soleil (mode sombre →
+       passer en clair) ↔ lune (mode clair → passer en sombre),
+       libellés traduits (FR/AN), instantané, aucun rechargement.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -100,7 +107,10 @@ apply(get());
 
 /* Synchronisation entre onglets (thème + langue) */
 window.addEventListener('storage', (e) => {
-  if (!e.key || e.key === KEY) apply(get());
+  if (!e.key || e.key === KEY) {
+    apply(get());
+    applyThemeButton();
+  }
   if (!e.key || e.key === LANG_KEY) {
     lang = storedLang();
     applyLang();
@@ -110,6 +120,31 @@ window.addEventListener('storage', (e) => {
 
 /* API publique — pour le futur réglage "Apparence" */
 window.ARVEXA_THEME = { get, set, toggle };
+
+/* ── BOUTON THÈME DU HEADER (v0.5.1) — mode clair / sombre en un
+   clic, à la place de l'ancien raccourci profil (doublon du menu et
+   de la barre du bas). Soleil en mode sombre (→ passer en clair),
+   lune en mode clair (→ passer en sombre). Instantané : une classe
+   sur <html>, aucun rechargement. ── */
+
+const themeBtn = document.getElementById('themeBtn');
+const themeIcon = document.getElementById('themeIcon');
+
+function applyThemeButton() {
+  const current = get();
+  if (themeIcon) themeIcon.className = current === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+  if (themeBtn) {
+    const label = t(current === 'light' ? 'theme.toDark' : 'theme.toLight');
+    themeBtn.setAttribute('aria-label', label);
+    themeBtn.title = label;
+  }
+}
+
+themeBtn?.addEventListener('click', () => toggle());
+window.addEventListener('arvexa-themechange', applyThemeButton);
+/* Initialisation de l'icône/libellé : via applyLang() (boot plus bas).
+   NE PAS appeler applyThemeButton() ICI : t() lirait I18N avant son
+   initialisation (TDZ) et tuerait tout le module en silence. */
 
 /* ── LANGUE FR / AN — traduction instantanée, zéro rechargement ──
    Principe AXIA : changer de langue est un simple échange de textes
@@ -123,6 +158,8 @@ const I18N = {
     'salut.matin': 'Bonjour',
     'salut.apresmidi': 'Bon après-midi',
     'salut.soir': 'Bonsoir',
+    'theme.toLight': 'Passer en mode clair',
+    'theme.toDark': 'Passer en mode sombre',
     'profil.defaultName': 'Élève',
     'plan.gratuit': 'Gratuit',
     'plan.premium': 'Premium',
@@ -157,6 +194,8 @@ const I18N = {
     'salut.matin': 'Good morning',
     'salut.apresmidi': 'Good afternoon',
     'salut.soir': 'Good evening',
+    'theme.toLight': 'Switch to light mode',
+    'theme.toDark': 'Switch to dark mode',
     'profil.defaultName': 'Student',
     'plan.gratuit': 'Free',
     'plan.premium': 'Premium',
@@ -217,6 +256,7 @@ function applyLang() {
   });
   applyGreeting();
   applyProfileCard();
+  applyThemeButton();
 }
 
 function setLang(next) {

@@ -28,6 +28,11 @@
             logo ARVX (actif en or) · carte profil (avatar doré,
             nom, badge Gratuit / Premium) avant MON COMPTE ·
             « Parrainage » devient « Ambassadeur ARVX ».
+   v0.5.1 : le bouton profil du header devient le bouton thème
+            (soleil ↔ lune, un clic) · mode clair aligné sur les
+            tokens de l'original (or foncé #9A7209 lisible, encre
+            chaude 32,27,18, bordures 0.22, barres de défilement
+            papier) + fondu doux à la bascule clair/sombre.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -92,7 +97,7 @@ html[data-theme="light"] {
   --bg-card: rgba(255, 255, 255, 0.88);
   --bg-card-solid: #FFFFFF;
   --bg-elev: #FDFBF6;
-  --card-border: rgba(184, 134, 11, 0.14);
+  --card-border: rgba(184, 134, 11, 0.22); /* identique à l'original */
 
   /* Texte (encre chaude) */
   --text-light: #262019;
@@ -105,11 +110,19 @@ html[data-theme="light"] {
   --gold-text: #9A7209;
   --on-gold: #141210;
 
-  /* Triplets RGB (thème clair) */
+  /* Triplets RGB (thème clair — encre chaude, comme l'original) */
   --rgb-veil: 250, 247, 240;
   --rgb-card: 255, 255, 255;
-  --rgb-soft: 0, 0, 0;
+  --rgb-soft: 32, 27, 18;
   --nav-muted: #948D7C;
+
+  /* Or : la version vive devient or foncé lisible sur papier
+     (identique à l'original arvexa-ui.css:126-134) */
+  --accent-bright: #9A7209;
+  --accent-dim: rgba(184, 134, 11, 0.12);
+
+  /* Ombre chaude de l'original — jamais de gris froid sur papier */
+  --shadow-warm: 0 8px 32px rgba(74, 58, 24, 0.12);
 }
 
 /* ── BASE ──────────────────────────────────────────────────────── */
@@ -125,6 +138,8 @@ body {
   min-height: 100dvh;
   /* Place réservée pour la barre de tâches fixe */
   padding-bottom: calc(57px + var(--safe-bottom));
+  /* Fondu doux quand on bascule clair ↔ sombre (v0.5.1) */
+  transition: background 0.35s ease, color 0.35s ease;
 }
 
 ::selection { background: rgba(184, 134, 11, 0.28); color: var(--text-light); }
@@ -247,6 +262,19 @@ body {
 /* Bouton rafraîchir : rotation de l'icône pendant l'action */
 @keyframes spin { to { transform: rotate(360deg); } }
 .header .header-actions button.spinning i { animation: spin 0.7s cubic-bezier(0.45, 0, 0.55, 1); }
+
+/* Bouton thème (v0.5.1) : bascule clair/sombre — l'icône pivote
+   doucement au survol et prend la teinte or de la marque */
+.header .header-actions #themeBtn i {
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.header .header-actions #themeBtn:hover { color: var(--accent-bright); }
+.header .header-actions #themeBtn:hover i { transform: rotate(40deg); }
+
+html[data-theme="light"] .header .header-actions #themeBtn:hover {
+  color: var(--gold-text, #9A7209);
+}
 
 /* Thème clair : le nom en or foncé pour rester lisible sur papier */
 html[data-theme="light"] .header .greeting #userFirstName { color: var(--gold-text, #9A7209); }
@@ -462,8 +490,28 @@ html[data-theme="light"] .sidebar .profile-card {
 }
 
 html[data-theme="light"] .sidebar .profile-avatar {
+  /* or foncé sur papier : initiale en papier pour rester lisible */
+  color: #FFF8E7;
   box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1), 0 3px 10px rgba(74, 58, 24, 0.15);
 }
+
+html[data-theme="light"] .sidebar .profile-plan.premium {
+  /* badge premium doux : or pâle + or foncé — jamais criard sur papier */
+  color: var(--gold-text, #9A7209);
+  background: rgba(184, 134, 11, 0.14);
+  border-color: rgba(184, 134, 11, 0.38);
+  box-shadow: none;
+}
+
+/* Barres de défilement assorties au papier (copie de l'original,
+   arvexa-ui.css:206-217) */
+html[data-theme="light"] * {
+  scrollbar-color: #D5CEBD #F5F1E8;
+}
+
+html[data-theme="light"] ::-webkit-scrollbar-track { background: #F5F1E8; }
+html[data-theme="light"] ::-webkit-scrollbar-thumb { background: #D5CEBD; }
+html[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #B8860B; }
 
 html[data-theme="light"] .sidebar .profile-plan.gratuit {
   color: var(--text-dim);

@@ -3,7 +3,20 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.5.0 Menu v2 : langues FR/AN + carte profil
+## Étape actuelle — v0.5.1 Bouton thème (clair/sombre) + menu v2
+
+- **Bouton thème dans la barre du haut** (à la place du raccourci profil,
+  doublon du menu et de la barre du bas) : mode clair / mode sombre **en un
+  clic**, icône soleil ↔ lune, fondu doux à la bascule. Instantané, sans
+  rechargement (principe AXIA), mémorisé (`localStorage 'arvexa-theme'`),
+  synchronisé entre onglets, meta theme-color suivie.
+- **Mode clair « papier & encre » aligné sur le site original** et assoupli
+  pour le confort des yeux : fond `#F5F1E8`, surfaces blanches, encre
+  `#262019`, **or foncé `#9A7209`** pour tous les textes dorés (lisible,
+  jamais criard), encre chaude pour les voiles subtils (`rgb(32,27,18)`),
+  bordures de cartes `rgba(184,134,11,.22)` comme l'original, ombres chaudes
+  (jamais de gris froid), barres de défilement assorties au papier,
+  badge Premium et avatar adaptés en or pâle + or foncé.
 
 - **Langue dans le menu** : deux mini boutons **FR / AN** sur la ligne du logo ARVX
   (à droite), actif en or. La langue change **instantanément** — menu, salutation,

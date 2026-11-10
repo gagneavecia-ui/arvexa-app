@@ -106,9 +106,9 @@
        ══════════════════════════════════════════════════════ -->
   <main class="page">
 
-    <!-- ===== BARRE DU HAUT — identique au header d'accueil
-         du site original : menu, salutation + nom, notifications,
-         profil, rafraîchissement ===== -->
+    <!-- ===== BARRE DU HAUT — header d'accueil du site original :
+         menu, salutation + nom, notifications, BASCULE DE THÈME
+         (clair / sombre en un clic, v0.5.1), rafraîchissement ===== -->
     <header class="header">
       <div class="header-left">
         <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false">
@@ -125,8 +125,8 @@
           <i class="fas fa-bell"></i>
           <span class="notif-dot" id="notifDot"></span>
         </button>
-        <button id="profileBtn" aria-label="Profil">
-          <i class="fas fa-user"></i>
+        <button id="themeBtn" aria-label="Passer en mode clair" title="Mode clair / mode sombre">
+          <i class="fas fa-sun" id="themeIcon" aria-hidden="true"></i>
         </button>
         <button id="refreshBtn" aria-label="Rafraîchir" title="Rafraîchir les données">
           <i class="fas fa-sync-alt"></i>
