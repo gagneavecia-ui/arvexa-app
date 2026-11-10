@@ -1,0 +1,174 @@
+/* ═══════════════════════════════════════════════════════════════════
+   ARVEXA — DESIGN SYSTEM (fondation)
+   Jetons extraits À L'IDENTIQUE du site actuel ARVEXA School v8.30 :
+     · Thème sombre (défaut)  — tokens :root des pages
+     · Thème clair "papier & encre" — html[data-theme="light"]
+   Actuation par js/main.js (localStorage 'arvexa-theme', anti-flash
+   inline dans le <head>, meta theme-color synchronisée).
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+  accent-color: #B8860B;
+
+  /* Marque */
+  --primary: #1A3A2A;
+  --primary-dark: #0A1A12;
+  --primary-light: #2A5A3A;
+  --accent: #B8860B;
+  --accent-bright: #E0B84A;
+  --accent-dim: rgba(184, 134, 11, 0.08);
+
+  /* Statuts */
+  --success: #2D7D5A;
+  --success-light: #3AB67E;
+  --danger: #B85C3A;
+
+  /* Surfaces */
+  --bg-dark: #0A0A0A;
+  --bg: #0A0A0A;
+  --bg-surface: #141414;
+  --bg-card: rgba(20, 20, 20, 0.7);
+  --card-border: rgba(184, 134, 11, 0.06);
+
+  /* Texte */
+  --text-light: #F5F0E8;
+  --text-dim: #8A8A7A;
+  --text-muted: #5A5A4A;
+
+  /* Structure */
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ── THÈME CLAIR "papier & encre" ──────────────────────────────── */
+html[data-theme="light"] {
+  color-scheme: light;
+  accent-color: #B8860B;
+
+  /* Surfaces */
+  --bg-dark: #F5F1E8;
+  --bg: #F5F1E8;
+  --bg-deep: #ECE6D8;
+  --bg-surface: #FFFFFF;
+  --bg-card: rgba(255, 255, 255, 0.88);
+  --bg-card-solid: #FFFFFF;
+  --bg-elev: #FDFBF6;
+  --card-border: rgba(184, 134, 11, 0.14);
+
+  /* Texte (encre chaude) */
+  --text-light: #262019;
+  --text-body: #4A4438;
+  --text-dim: #6E675A;
+  --text-muted: #948D7C;
+  --text-faint: #B8B1A0;
+
+  /* Or foncé pour le texte sur papier */
+  --gold-text: #9A7209;
+  --on-gold: #141210;
+}
+
+/* ── BASE ──────────────────────────────────────────────────────── */
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; width: 100%; overflow-x: hidden; }
+
+body {
+  font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-light);
+  font-size: 14px;
+  min-height: 100dvh;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+::selection { background: rgba(184, 134, 11, 0.28); color: var(--text-light); }
+
+/* ── SCÈNE (page vide, centrée) ────────────────────────────────── */
+.stage {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(3rem, 8vh, 5rem);
+  padding: clamp(1.5rem, 5vw, 3rem);
+}
+
+/* ── MARQUE ────────────────────────────────────────────────────── */
+.brand { display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+.brand-rule {
+  width: 46px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 999px;
+  margin-bottom: 1.6rem;
+}
+
+.brand-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2.6rem, 8vw, 4.2rem);
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.brand-tagline {
+  margin-top: 1.1rem;
+  font-weight: 300;
+  font-size: clamp(0.86rem, 2.6vw, 1rem);
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+}
+
+/* ── PALETTE (inertes : aucune interaction) ────────────────────── */
+.palette {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1.2rem, 4vw, 2.2rem);
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 64px;
+}
+
+.dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--c);
+  border: 1px solid var(--card-border);
+}
+
+.hex {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.name {
+  font-size: 0.66rem;
+  font-weight: 300;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+}
+
+/* Thème clair : l'or du mot-marque passe au foncé pour rester lisible */
+html[data-theme="light"] .brand-name { color: var(--gold-text, #9A7209); }
+
+/* ── ACCESSIBILITÉ ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  html { scroll-behavior: auto; }
+}
