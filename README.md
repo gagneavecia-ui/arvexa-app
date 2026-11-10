@@ -3,7 +3,25 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.6.1 Accueil : bloc 1 « carte statistiques »
+## Étape actuelle — v0.6.2 Accueil : bloc 1bis « les deux modes »
+
+- **Deux mini-cartes côte à côte JUSTE AU-DESSOUS de la carte statistiques** —
+  position fidèle à l'app de référence (AXIA) : pas trop grandes mais bien
+  espacées (grille 2 colonnes, écart 12px), même structure qu'elle :
+  **icône en haut, titre au milieu, sous-titre en bas**.
+- **Mode rapide** (⚡ badge or) — « Révision éclair · 5 min »
+  et **Mode focus** (⏱ badge vert) — « Cycles 25 / 5 ».
+  On reprend la POSITION de la référence, **pas ses couleurs** (pas de
+  jaune/bleu) : matériaux ARVX — surface, bordure or subtile, badges
+  or / vert de la palette, titres en **Playfair Display**.
+- Traduits instantanément (FR/AN : Quick mode / Focus mode, Flash review ·
+  5 min, 25 / 5 cycles), deux thèmes (papier & encre en clair : badges or
+  foncé / vert foncé lisible). Les deux modes seront **branchés à leur
+  étape** — pour l'instant, la carte.
+- Preuves SPA re-vérifiées : marque mémoire 42 intacte, `navigation = 1`,
+  pages fixes entre les barres (aucun défilement de la page).
+
+## v0.6.1 — Accueil : bloc 1 « carte statistiques »
 
 - **La carte prend UN QUART du cadre** entre la barre du haut et la barre du bas
   (`min-height : (100dvh − header − barre du bas) / 4`), centrée, jamais de

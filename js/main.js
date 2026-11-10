@@ -77,6 +77,16 @@
        Valeurs d'exemple tant que les cours réels n'existent pas :
        localStorage 'arvexa-stats' { courses, done } prendra le
        relais.
+
+   v0.6.2 :
+     · BLOC 1bis « les deux modes » — deux mini-cartes côte à côte
+       JUSTE AU-DESSOUS de la carte statistiques (position fidèle à
+       l'app de référence AXIA : icône en haut, titre au milieu,
+       sous-titre en bas — pas trop grandes, bien espacées, sans
+       reprendre les couleurs de la référence). MODE RAPIDE (badge
+       or) et MODE FOCUS (badge vert), traduits instantanément
+       (FR/AN) via data-i18n — aucun handler pour l'instant, les
+       modes seront branchés à leur étape.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -177,6 +187,10 @@ const I18N = {
     'accueil.eyebrow': 'Mes cours',
     'accueil.coursLabel': 'cours',
     'accueil.lus': 'lus et complétés',
+    'accueil.mode.rapide': 'Mode rapide',
+    'accueil.mode.rapideSub': 'Révision éclair · 5 min',
+    'accueil.mode.focus': 'Mode focus',
+    'accueil.mode.focusSub': 'Cycles 25 / 5',
     'profil.defaultName': 'Élève',
     'plan.gratuit': 'Gratuit',
     'plan.premium': 'Premium',
@@ -216,6 +230,10 @@ const I18N = {
     'accueil.eyebrow': 'My courses',
     'accueil.coursLabel': 'courses',
     'accueil.lus': 'read & completed',
+    'accueil.mode.rapide': 'Quick mode',
+    'accueil.mode.rapideSub': 'Flash review · 5 min',
+    'accueil.mode.focus': 'Focus mode',
+    'accueil.mode.focusSub': '25 / 5 cycles',
     'profil.defaultName': 'Student',
     'plan.gratuit': 'Free',
     'plan.premium': 'Premium',
