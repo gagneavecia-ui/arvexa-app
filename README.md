@@ -3,18 +3,28 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.4.2 Menu complet + déconnexion identique
+## Étape actuelle — v0.5.0 Menu v2 : langues FR/AN + carte profil
 
+- **Langue dans le menu** : deux mini boutons **FR / AN** sur la ligne du logo ARVX
+  (à droite), actif en or. La langue change **instantanément** — menu, salutation,
+  onglets du bas, popup de déconnexion, titres d'onglet — **sans aucun rechargement**
+  (principe AXIA). Choix mémorisé (`localStorage 'arvexa-lang'`), synchronisé entre
+  onglets ouverts.
+- **Carte profil** en tête du menu, avant MON COMPTE : photo de profil à gauche
+  (avatar doré à l'initiale du nom), nom à droite et, au-dessous, le type de compte
+  en badge — **Gratuit** (discret) ou **Premium** (or dégradé). Le compte connecté
+  (photo, prénom, plan) prendra le relais à l'étape backend.
+- **« Parrainage » devient « Ambassadeur ARVX »** (icône médaille), dans INVITER DES GENS.
 - **Menu tiroir** :
   - **MON COMPTE** — Profil (→ `#/profil`), Ma classe, Mon abonnement
-  - **INVITER DES GENS** — Inviter des camarades, Parrainage
+  - **INVITER DES GENS** — Inviter des camarades, Ambassadeur ARVX
   - **AIDE ET SUPPORT** — Rappels et notifications, Compte et suppression, Contacter le support
   - **Bas du menu** — « Rejoindre la communauté » (vert WhatsApp `#25D366`, logo WhatsApp,
     volontairement différent des autres items) puis Déconnexion.
 - **Déconnexion identique au site actuel** : même popup de confirmation copié à l'identique
-  (« Se déconnecter ? » / ⚠️ / « Tu devras te reconnecter… » / Annuler · Se déconnecter),
-  mêmes fermetures (croix, Annuler, extérieur, Échap). La confirmation branchera Firebase
-  Auth à l'étape backend.
+  (« Se déconnecter ? » / ⚠️ / « Tu devras te reconnecter… » / Annuler · Se déconnecter,
+  traduit en AN), mêmes fermetures (croix, Annuler, extérieur, Échap). La confirmation
+  branchera Firebase Auth à l'étape backend.
 - Modale de confirmation réutilisable pour toutes les futures confirmations
   (`window.arvexaConfirm()`).
 - **Principe AXIA appliqué** : une seule page qui **ne se recharge jamais** — aucune

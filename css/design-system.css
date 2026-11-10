@@ -24,6 +24,10 @@
             communauté » (vert WhatsApp) + bouton Déconnexion en bas
             du tiroir · modale de confirmation copiée à l'identique
             de l'original (popup « Se déconnecter ? »).
+   v0.5   : menu v2 — mini switch de langue FR / AN à droite du
+            logo ARVX (actif en or) · carte profil (avatar doré,
+            nom, badge Gratuit / Premium) avant MON COMPTE ·
+            « Parrainage » devient « Ambassadeur ARVX ».
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -295,6 +299,18 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
 
 .sidebar.open { left: 0; }
 
+/* Ligne du logo : ARVX à gauche + switch de langue FR / AN à
+   droite (v0.5). Le filet inférieur est porté par .sidebar-head. */
+.sidebar .sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 20px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(var(--rgb-soft), 0.04);
+}
+
 .sidebar .logo {
   display: flex;
   align-items: center;
@@ -304,9 +320,6 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
   font-weight: 700;
   font-family: 'Playfair Display', 'Georgia', serif;
   letter-spacing: 2px;
-  padding-bottom: 20px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid rgba(var(--rgb-soft), 0.04);
 }
 
 .sidebar .logo span {
@@ -317,6 +330,145 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
   -webkit-text-fill-color: transparent;
   font-style: italic;
   margin-left: 4px;
+}
+
+/* Switch de langue : deux mini boutons FR / AN (v0.5).
+   Le bouton actif prend la teinte or de la marque. */
+.sidebar .lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.sidebar .lang-btn {
+  min-width: 36px;
+  height: 27px;
+  padding: 0 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(var(--rgb-soft), 0.09);
+  background: rgba(var(--rgb-soft), 0.03);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sidebar .lang-btn:hover {
+  color: var(--text-dim);
+  border-color: rgba(var(--rgb-soft), 0.16);
+}
+
+.sidebar .lang-btn.active {
+  color: var(--accent-bright);
+  background: rgba(184, 134, 11, 0.12);
+  border-color: rgba(224, 184, 74, 0.35);
+  box-shadow: inset 0 1px 0 rgba(224, 184, 74, 0.16);
+}
+
+/* Carte profil : photo à gauche, nom + type de compte à droite.
+   Placée avant la section MON COMPTE (v0.5). */
+.sidebar .profile-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 14px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.1), rgba(184, 134, 11, 0.02) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.12);
+}
+
+.sidebar .profile-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #141210;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  font-style: italic;
+  border: 1px solid rgba(224, 184, 74, 0.4);
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.08), 0 4px 14px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.sidebar .profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  min-width: 0;
+  max-width: calc(100% - 56px);
+}
+
+.sidebar .profile-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-light);
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar .profile-plan {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.sidebar .profile-plan.gratuit {
+  color: var(--text-dim);
+  background: rgba(var(--rgb-soft), 0.05);
+  border: 1px solid rgba(var(--rgb-soft), 0.09);
+}
+
+.sidebar .profile-plan.premium {
+  color: #141210;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  border: 1px solid rgba(224, 184, 74, 0.4);
+  box-shadow: 0 2px 10px rgba(184, 134, 11, 0.25);
+}
+
+/* Thème clair : mêmes matériaux sur papier */
+html[data-theme="light"] .sidebar .lang-btn.active {
+  color: var(--gold-text, #9A7209);
+  background: rgba(184, 134, 11, 0.1);
+  border-color: rgba(184, 134, 11, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+html[data-theme="light"] .sidebar .profile-card {
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.1), rgba(184, 134, 11, 0.02) 62%),
+    rgba(255, 255, 255, 0.65);
+  border-color: rgba(184, 134, 11, 0.2);
+}
+
+html[data-theme="light"] .sidebar .profile-avatar {
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1), 0 3px 10px rgba(74, 58, 24, 0.15);
+}
+
+html[data-theme="light"] .sidebar .profile-plan.gratuit {
+  color: var(--text-dim);
+  background: rgba(0, 0, 0, 0.045);
+  border-color: rgba(0, 0, 0, 0.1);
 }
 
 .sidebar .nav { flex: 1; display: flex; flex-direction: column; gap: 2px; }

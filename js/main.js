@@ -46,6 +46,16 @@
        Annuler, extérieur, Échap). Le bouton Déconnexion ouvre le
        MÊME popup que le site actuel (« Se déconnecter ? ») ; la
        confirmation appellera Firebase Auth à l'étape backend.
+
+   v0.5 :
+     · switch de langue FR / AN dans le menu, à droite du logo
+       ARVX — traduction instantanée de toute l'interface (menu,
+       salutation, onglets du bas, popup, titres d'onglet) SANS
+       aucun rechargement (principe AXIA). Choix mémorisé dans
+       localStorage 'arvexa-lang', synchronisé entre onglets.
+     · carte profil en tête du menu : avatar doré (initiale du
+       nom), nom, badge du type de compte (Gratuit / Premium).
+     · « Parrainage » devient « Ambassadeur ARVX » (médaille).
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -88,21 +98,148 @@ const toggle = () => set(get() === 'light' ? 'dark' : 'light');
 /* Application immédiate (synchronise avec le boot anti-flash du <head>) */
 apply(get());
 
-/* Synchronisation entre onglets */
+/* Synchronisation entre onglets (thème + langue) */
 window.addEventListener('storage', (e) => {
   if (!e.key || e.key === KEY) apply(get());
+  if (!e.key || e.key === LANG_KEY) {
+    lang = storedLang();
+    applyLang();
+    document.title = titleFor(currentView || 'accueil');
+  }
 });
 
 /* API publique — pour le futur réglage "Apparence" */
 window.ARVEXA_THEME = { get, set, toggle };
 
+/* ── LANGUE FR / AN — traduction instantanée, zéro rechargement ──
+   Principe AXIA : changer de langue est un simple échange de textes
+   dans le DOM (querySelectorAll('[data-i18n]')) — aucune navigation
+   document, aucune barre de chargement, effet immédiat. */
+
+const LANG_KEY = 'arvexa-lang';
+
+const I18N = {
+  fr: {
+    'salut.matin': 'Bonjour',
+    'salut.apresmidi': 'Bon après-midi',
+    'salut.soir': 'Bonsoir',
+    'profil.defaultName': 'Élève',
+    'plan.gratuit': 'Gratuit',
+    'plan.premium': 'Premium',
+    'menu.section.compte': 'Mon compte',
+    'menu.section.inviter': 'Inviter des gens',
+    'menu.section.aide': 'Aide et support',
+    'menu.profil': 'Profil',
+    'menu.classe': 'Ma classe',
+    'menu.abonnement': 'Mon abonnement',
+    'menu.camarades': 'Inviter des camarades',
+    'menu.ambassadeur': 'Ambassadeur ARVX',
+    'menu.notifications': 'Rappels et notifications',
+    'menu.compte': 'Compte et suppression',
+    'menu.support': 'Contacter le support',
+    'menu.communaute': 'Rejoindre la communauté',
+    'menu.deconnexion': 'Déconnexion',
+    'nav.accueil': 'Accueil',
+    'nav.reviser': 'Réviser',
+    'nav.examen': 'Examen',
+    'nav.progression': 'Progression',
+    'nav.profil': 'Profil',
+    'confirm.title': 'Confirmation',
+    'confirm.defaultMessage': 'Es-tu sûr de vouloir continuer ?',
+    'confirm.cancel': 'Annuler',
+    'confirm.ok': 'Confirmer',
+    'deco.title': 'Se déconnecter ?',
+    'deco.message': 'Tu devras te <strong>reconnecter</strong> pour accéder à ton compte.',
+    'deco.ok': 'Se déconnecter',
+    'deco.cancel': 'Annuler',
+  },
+  an: {
+    'salut.matin': 'Good morning',
+    'salut.apresmidi': 'Good afternoon',
+    'salut.soir': 'Good evening',
+    'profil.defaultName': 'Student',
+    'plan.gratuit': 'Free',
+    'plan.premium': 'Premium',
+    'menu.section.compte': 'My account',
+    'menu.section.inviter': 'Invite people',
+    'menu.section.aide': 'Help & support',
+    'menu.profil': 'Profile',
+    'menu.classe': 'My class',
+    'menu.abonnement': 'My subscription',
+    'menu.camarades': 'Invite classmates',
+    'menu.ambassadeur': 'ARVX Ambassador',
+    'menu.notifications': 'Reminders & notifications',
+    'menu.compte': 'Account & deletion',
+    'menu.support': 'Contact support',
+    'menu.communaute': 'Join the community',
+    'menu.deconnexion': 'Log out',
+    'nav.accueil': 'Home',
+    'nav.reviser': 'Revise',
+    'nav.examen': 'Exam',
+    'nav.progression': 'Progress',
+    'nav.profil': 'Profile',
+    'confirm.title': 'Confirmation',
+    'confirm.defaultMessage': 'Are you sure you want to continue?',
+    'confirm.cancel': 'Cancel',
+    'confirm.ok': 'Confirm',
+    'deco.title': 'Log out?',
+    'deco.message': 'You will need to <strong>log in</strong> again to access your account.',
+    'deco.ok': 'Log out',
+    'deco.cancel': 'Cancel',
+  },
+};
+
+function storedLang() {
+  try {
+    const s = localStorage.getItem(LANG_KEY);
+    return s === 'an' ? 'an' : 'fr';
+  } catch {
+    return 'fr';
+  }
+}
+
+let lang = storedLang();
+
+function t(key) {
+  return (I18N[lang] && I18N[lang][key]) ?? I18N.fr[key] ?? key;
+}
+
+function applyLang() {
+  document.documentElement.setAttribute('lang', lang === 'an' ? 'en' : 'fr');
+  document.querySelectorAll('[data-i18n]').forEach((el) => {
+    const value = t(el.dataset.i18n);
+    if (typeof value === 'string') el.textContent = value;
+  });
+  document.querySelectorAll('.lang-btn').forEach((btn) => {
+    const active = btn.dataset.lang === lang;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+  });
+  applyGreeting();
+  applyProfileCard();
+}
+
+function setLang(next) {
+  lang = next === 'an' ? 'an' : 'fr';
+  try { localStorage.setItem(LANG_KEY, lang); } catch { /* stockage indisponible */ }
+  applyLang();
+  document.title = titleFor(currentView || 'accueil');
+  window.dispatchEvent(new CustomEvent('arvexa-langchange', { detail: { lang } }));
+}
+
+document.querySelectorAll('.lang-btn').forEach((btn) => {
+  btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+
+applyLang();
+
 /* ── SALUTATION (fidèle au site original, index.html:2560-2564) ── */
 
 function getGreeting() {
   const hours = new Date().getHours();
-  if (hours >= 5 && hours < 12) return { text: 'Bonjour', emoji: '🌅' };
-  if (hours >= 12 && hours < 18) return { text: 'Bon après-midi', emoji: '☀️' };
-  return { text: 'Bonsoir', emoji: '🌙' };
+  if (hours >= 5 && hours < 12) return { text: t('salut.matin'), emoji: '🌅' };
+  if (hours >= 12 && hours < 18) return { text: t('salut.apresmidi'), emoji: '☀️' };
+  return { text: t('salut.soir'), emoji: '🌙' };
 }
 
 function applyGreeting() {
@@ -132,6 +269,35 @@ function applyGreeting() {
 }
 
 applyGreeting();
+
+/* ── CARTE PROFIL DU MENU (v0.5) — avatar (initiale du nom),
+   nom, type de compte (Gratuit / Premium). Le compte réel
+   (photo, plan) prendra le relais à l'étape backend via
+   localStorage 'arvexa_user' { firstName, plan } puis Firebase. ── */
+
+function applyProfileCard() {
+  const nameEl = document.getElementById('profileName');
+  const avatarEl = document.getElementById('profileAvatar');
+  const planEl = document.getElementById('profilePlan');
+  if (!nameEl || !avatarEl || !planEl) return;
+
+  let firstName = '';
+  let plan = 'gratuit';
+  try {
+    const user = JSON.parse(localStorage.getItem('arvexa_user') || 'null');
+    if (user) {
+      firstName = user.firstName || '';
+      if (user.plan === 'premium') plan = 'premium';
+    }
+  } catch { /* JSON invalide */ }
+
+  const name = firstName || t('profil.defaultName');
+  nameEl.textContent = name;
+  avatarEl.textContent = (name.trim().charAt(0) || 'A').toUpperCase();
+  planEl.textContent = t(plan === 'premium' ? 'plan.premium' : 'plan.gratuit');
+  planEl.classList.toggle('premium', plan === 'premium');
+  planEl.classList.toggle('gratuit', plan !== 'premium');
+}
 
 /* ── MENU TIROIR (fidèle au site original, index.html:3947-3954) ── */
 
@@ -171,12 +337,17 @@ refreshBtn?.addEventListener('click', () => {
 
 const VIEWS = ['accueil', 'reviser', 'examen', 'progression', 'profil'];
 const TITLES = {
-  accueil: 'ARVX',
-  reviser: 'ARVX — Réviser',
-  examen: 'ARVX — Examen',
-  progression: 'ARVX — Progression',
-  profil: 'ARVX — Profil',
+  accueil: { fr: 'ARVX', an: 'ARVX' },
+  reviser: { fr: 'ARVX — Réviser', an: 'ARVX — Revise' },
+  examen: { fr: 'ARVX — Examen', an: 'ARVX — Exam' },
+  progression: { fr: 'ARVX — Progression', an: 'ARVX — Progress' },
+  profil: { fr: 'ARVX — Profil', an: 'ARVX — Profile' },
 };
+
+function titleFor(name) {
+  const entry = TITLES[name];
+  return entry ? (entry[lang] || entry.fr) : 'ARVX';
+}
 
 const viewSections = new Map(VIEWS.map((n) => [n, document.getElementById('view-' + n)]));
 
@@ -219,8 +390,8 @@ function showView(name, { animate = true } = {}) {
     el.classList.toggle('active', el.dataset.route === name);
   });
 
-  /* Titre de l'onglet navigateur / app */
-  document.title = TITLES[name] || 'ARVX';
+  /* Titre de l'onglet navigateur / app (selon la langue courante) */
+  document.title = titleFor(name);
 
   /* Chaque vue s'ouvre en haut, instantanément */
   window.scrollTo(0, 0);
@@ -342,11 +513,11 @@ const logoutBtn = document.getElementById('logoutBtn');
 logoutBtn?.addEventListener('click', (e) => {
   e.preventDefault();
   window.arvexaConfirm({
-    title: 'Se déconnecter ?',
-    message: 'Tu devras te <strong>reconnecter</strong> pour accéder à ton compte.',
+    title: t('deco.title'),
+    message: t('deco.message'),
     icon: '⚠️',
-    confirmText: 'Se déconnecter',
-    cancelText: 'Annuler',
+    confirmText: t('deco.ok'),
+    cancelText: t('deco.cancel'),
     variant: 'danger',
     onConfirm: performLogout,
   });

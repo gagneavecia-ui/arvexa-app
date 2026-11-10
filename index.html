@@ -28,58 +28,74 @@
 
   <!-- ══════════════════════════════════════════════════════
        MENU (tiroir) — design fidèle à la sidebar du site
-       original. La navigation est vide pour l'instant :
-       elle sera complétée à une prochaine étape.
-       Le logo ARVX s'affiche en haut du menu, X en doré
-       (dégradé or, façon le logo du site original).
+       original. Ligne du logo : ARVX (X en doré, dégradé or)
+       avec à droite deux mini boutons de langue FR / AN.
+       Puis carte profil (photo, nom, type de compte) et les
+       sections du menu. Tout est traduit instantanément
+       (FR / AN) sans jamais recharger la page (principe AXIA).
        ══════════════════════════════════════════════════════ -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
   <aside class="sidebar" id="sidebar" aria-label="Menu">
-    <a href="#/accueil" class="logo" aria-label="ARVX">ARV<span>X</span></a>
+    <div class="sidebar-head">
+      <a href="#/accueil" class="logo" aria-label="ARVX">ARV<span>X</span></a>
+      <div class="lang-switch" role="group" aria-label="Langue">
+        <button type="button" class="lang-btn active" data-lang="fr" aria-pressed="true">FR</button>
+        <button type="button" class="lang-btn" data-lang="an" aria-pressed="false">AN</button>
+      </div>
+    </div>
+
+    <!-- Carte profil : photo à gauche, nom, type de compte au-dessous -->
+    <div class="profile-card">
+      <span class="profile-avatar" id="profileAvatar" aria-hidden="true">É</span>
+      <span class="profile-info">
+        <span class="profile-name" id="profileName">Élève</span>
+        <span class="profile-plan gratuit" id="profilePlan">Gratuit</span>
+      </span>
+    </div>
     <nav class="nav">
       <!-- ═══ MON COMPTE ═══ -->
-      <div class="nav-label">Mon compte</div>
+      <div class="nav-label" data-i18n="menu.section.compte">Mon compte</div>
       <a href="#/profil" class="nav-item" data-route="profil">
-        <i class="fas fa-user" aria-hidden="true"></i> Profil
+        <i class="fas fa-user" aria-hidden="true"></i> <span data-i18n="menu.profil">Profil</span>
       </a>
       <button type="button" class="nav-item" data-menu="classe">
-        <i class="fas fa-graduation-cap" aria-hidden="true"></i> Ma classe
+        <i class="fas fa-graduation-cap" aria-hidden="true"></i> <span data-i18n="menu.classe">Ma classe</span>
       </button>
       <button type="button" class="nav-item" data-menu="abonnement">
-        <i class="fas fa-crown" aria-hidden="true"></i> Mon abonnement
+        <i class="fas fa-crown" aria-hidden="true"></i> <span data-i18n="menu.abonnement">Mon abonnement</span>
       </button>
       <div class="nav-divider" role="separator"></div>
 
       <!-- ═══ INVITER DES GENS ═══ -->
-      <div class="nav-label">Inviter des gens</div>
+      <div class="nav-label" data-i18n="menu.section.inviter">Inviter des gens</div>
       <button type="button" class="nav-item" data-menu="camarades">
-        <i class="fas fa-user-plus" aria-hidden="true"></i> Inviter des camarades
+        <i class="fas fa-user-plus" aria-hidden="true"></i> <span data-i18n="menu.camarades">Inviter des camarades</span>
       </button>
-      <button type="button" class="nav-item" data-menu="parrainage">
-        <i class="fas fa-gift" aria-hidden="true"></i> Parrainage
+      <button type="button" class="nav-item" data-menu="ambassadeur">
+        <i class="fas fa-medal" aria-hidden="true"></i> <span data-i18n="menu.ambassadeur">Ambassadeur ARVX</span>
       </button>
       <div class="nav-divider" role="separator"></div>
 
       <!-- ═══ AIDE ET SUPPORT ═══ -->
-      <div class="nav-label">Aide et support</div>
+      <div class="nav-label" data-i18n="menu.section.aide">Aide et support</div>
       <button type="button" class="nav-item" data-menu="notifications">
-        <i class="fas fa-bell" aria-hidden="true"></i> Rappels et notifications
+        <i class="fas fa-bell" aria-hidden="true"></i> <span data-i18n="menu.notifications">Rappels et notifications</span>
       </button>
       <button type="button" class="nav-item" data-menu="compte">
-        <i class="fas fa-user-shield" aria-hidden="true"></i> Compte et suppression
+        <i class="fas fa-user-shield" aria-hidden="true"></i> <span data-i18n="menu.compte">Compte et suppression</span>
       </button>
       <button type="button" class="nav-item" data-menu="support">
-        <i class="fas fa-headset" aria-hidden="true"></i> Contacter le support
+        <i class="fas fa-headset" aria-hidden="true"></i> <span data-i18n="menu.support">Contacter le support</span>
       </button>
 
       <!-- ═══ BAS DU MENU : communauté + déconnexion ═══ -->
       <div class="nav-bottom">
         <a href="https://wa.me/22774872082" target="_blank" rel="noopener" class="whatsapp-btn"
            id="whatsappCommunityBtn" title="Rejoindre la communauté ARVX sur WhatsApp">
-          <i class="fab fa-whatsapp" aria-hidden="true"></i> Rejoindre la communauté
+          <i class="fab fa-whatsapp" aria-hidden="true"></i> <span data-i18n="menu.communaute">Rejoindre la communauté</span>
         </a>
         <button type="button" class="logout-item" id="logoutBtn">
-          <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Déconnexion
+          <i class="fas fa-sign-out-alt" aria-hidden="true"></i> <span data-i18n="menu.deconnexion">Déconnexion</span>
         </button>
       </div>
     </nav>
@@ -140,19 +156,19 @@
        ══════════════════════════════════════════════════════ -->
   <nav class="bottom-nav" aria-label="Navigation principale">
     <button type="button" class="active" data-route="accueil" aria-current="page">
-      <i class="fas fa-home" aria-hidden="true"></i><span>Accueil</span>
+      <i class="fas fa-home" aria-hidden="true"></i><span data-i18n="nav.accueil">Accueil</span>
     </button>
     <button type="button" data-route="reviser">
-      <i class="fas fa-book-open" aria-hidden="true"></i><span>Réviser</span>
+      <i class="fas fa-book-open" aria-hidden="true"></i><span data-i18n="nav.reviser">Réviser</span>
     </button>
     <button type="button" data-route="examen">
-      <i class="fas fa-pencil-alt" aria-hidden="true"></i><span>Examen</span>
+      <i class="fas fa-pencil-alt" aria-hidden="true"></i><span data-i18n="nav.examen">Examen</span>
     </button>
     <button type="button" data-route="progression">
-      <i class="fas fa-chart-line" aria-hidden="true"></i><span>Progression</span>
+      <i class="fas fa-chart-line" aria-hidden="true"></i><span data-i18n="nav.progression">Progression</span>
     </button>
     <button type="button" data-route="profil">
-      <i class="fas fa-user" aria-hidden="true"></i><span>Profil</span>
+      <i class="fas fa-user" aria-hidden="true"></i><span data-i18n="nav.profil">Profil</span>
     </button>
   </nav>
 
@@ -171,18 +187,14 @@
           <span id="arvexaConfirmIcon">⚠️</span>
         </div>
       </div>
-      <h3 class="arvexa-confirm-title" id="arvexaConfirmTitle">Confirmation</h3>
+      <h3 class="arvexa-confirm-title" id="arvexaConfirmTitle" data-i18n="confirm.title">Confirmation</h3>
       <div class="arvexa-confirm-divider"></div>
-      <p class="arvexa-confirm-message" id="arvexaConfirmMessage">
-        Es-tu sûr de vouloir continuer ?
-      </p>
+      <p class="arvexa-confirm-message" id="arvexaConfirmMessage" data-i18n="confirm.defaultMessage">Es-tu sûr de vouloir continuer ?</p>
       <div class="arvexa-confirm-actions">
-        <button class="arvexa-confirm-btn cancel" id="arvexaConfirmCancel">
-          Annuler
-        </button>
+        <button class="arvexa-confirm-btn cancel" id="arvexaConfirmCancel" data-i18n="confirm.cancel">Annuler</button>
         <button class="arvexa-confirm-btn danger" id="arvexaConfirmOk">
           <i class="fas fa-check"></i>
-          <span id="arvexaConfirmOkText">Confirmer</span>
+          <span id="arvexaConfirmOkText" data-i18n="confirm.ok">Confirmer</span>
         </button>
       </div>
     </div>
