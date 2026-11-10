@@ -35,7 +35,7 @@
        ══════════════════════════════════════════════════════ -->
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
   <aside class="sidebar" id="sidebar" aria-label="Menu">
-    <a href="#" class="logo" aria-label="ARVX">ARV<span>X</span></a>
+    <a href="#/accueil" class="logo" aria-label="ARVX">ARV<span>X</span></a>
     <nav class="nav">
       <!-- Vide — sera complété -->
     </nav>
@@ -74,28 +74,40 @@
       </div>
     </header>
 
-    <!-- Contenu de l'accueil — étapes suivantes -->
-    <section class="content"></section>
+    <!-- ══════════════════════════════════════════════════════
+         VUES SPA — une seule page qui ne se recharge JAMAIS.
+         Les 5 écrans sont échangés instantanément en JS
+         (principe AXIA : pas de navigation document, donc
+         jamais de barre de chargement du navigateur).
+         Le contenu de chaque vue arrive étape par étape.
+         ══════════════════════════════════════════════════════ -->
+    <section class="view" id="view-accueil" data-view="accueil"><!-- contenu — étapes suivantes --></section>
+    <section class="view" id="view-reviser" data-view="reviser" hidden><!-- contenu — étapes suivantes --></section>
+    <section class="view" id="view-examen" data-view="examen" hidden><!-- contenu — étapes suivantes --></section>
+    <section class="view" id="view-progression" data-view="progression" hidden><!-- contenu — étapes suivantes --></section>
+    <section class="view" id="view-profil" data-view="profil" hidden><!-- contenu — étapes suivantes --></section>
 
   </main>
 
   <!-- ══════════════════════════════════════════════════════
-       BARRE DE TÂCHES FIXE EN BAS — design fidèle à MathMind
+       BARRE DE TÂCHES FIXE EN BAS — design « luxe ».
+       Chaque onglet change de vue instantanément (SPA,
+       URL synchronisée en #/route — zéro rechargement).
        ══════════════════════════════════════════════════════ -->
   <nav class="bottom-nav" aria-label="Navigation principale">
-    <button type="button" class="active" aria-current="page">
+    <button type="button" class="active" data-route="accueil" aria-current="page">
       <i class="fas fa-home" aria-hidden="true"></i><span>Accueil</span>
     </button>
-    <button type="button">
+    <button type="button" data-route="reviser">
       <i class="fas fa-book-open" aria-hidden="true"></i><span>Réviser</span>
     </button>
-    <button type="button">
+    <button type="button" data-route="examen">
       <i class="fas fa-pencil-alt" aria-hidden="true"></i><span>Examen</span>
     </button>
-    <button type="button">
+    <button type="button" data-route="progression">
       <i class="fas fa-chart-line" aria-hidden="true"></i><span>Progression</span>
     </button>
-    <button type="button">
+    <button type="button" data-route="profil">
       <i class="fas fa-user" aria-hidden="true"></i><span>Profil</span>
     </button>
   </nav>

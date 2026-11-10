@@ -14,6 +14,9 @@
    v0.3.1 : marque ARVX (X en or dégradé) · barre du bas « luxe »
             (verre dépoli, filet or dégradé, capsule or de l'onglet
             actif, icône en or dégradé façon wordmark).
+   v0.4   : SPA — le document ne se recharge jamais. 5 vues échangées
+            instantanément par le routeur (principe AXIA), URL
+            synchronisée en #/route, micro-fade d'entrée.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -115,7 +118,22 @@ body {
 ::selection { background: rgba(184, 134, 11, 0.28); color: var(--text-light); }
 
 .page { min-height: 100dvh; }
-.content { min-height: 40vh; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUES SPA — une seule page, cinq écrans échangés en JS.
+   Le document ne se recharge jamais : aucune barre de chargement
+   navigateur, navigation instantanée (principe AXIA).
+   La vue entrante porte un micro-fade de 0,18 s (purement cosmétique,
+   le basculement lui-même est synchrone) ; coupé en mouvement réduit.
+   ═══════════════════════════════════════════════════════════════════ */
+.view { min-height: 40vh; }
+
+@keyframes view-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.view.enter { animation: view-enter 0.18s cubic-bezier(0.25, 1, 0.5, 1) both; }
 
 /* ═══════════════════════════════════════════════════════════════════
    BARRE DU HAUT (HEADER) — copie fidèle du header d'accueil

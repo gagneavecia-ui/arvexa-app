@@ -20,6 +20,14 @@
        avec le X en or dégradé (même traitement que le wordmark du
        menu). Un prénom d'utilisateur lié au compte prendra le
        relais à l'étape backend.
+
+   v0.4 :
+     · SPA — le document ne se recharge JAMAIS (principe AXIA :
+       aucune navigation document, donc jamais de barre de
+       chargement du navigateur). Les 5 onglets échangent 5 vues
+       de façon synchrone, URL synchronisée en #/route, titre de
+       l'onglet mis à jour, retour arrière du navigateur géré
+       (événement hashchange), retour en haut à chaque vue.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -134,3 +142,96 @@ refreshBtn?.addEventListener('click', () => {
   refreshBtn.classList.add('spinning');
   setTimeout(() => refreshBtn.classList.remove('spinning'), 800);
 });
+
+/* ═══════════════════════════════════════════════════════════════════
+   ROUTEUR SPA — le document ne se recharge jamais (principe AXIA).
+   Les onglets de la barre du bas échangent des vues présentes dans
+   le DOM : basculement synchrone, aucune requête, aucune barre de
+   chargement navigateur. L'URL suit en #/route (partageable, bouton
+   retour du navigateur fonctionnel), le titre de l'onglet aussi.
+   ═══════════════════════════════════════════════════════════════════ */
+
+const VIEWS = ['accueil', 'reviser', 'examen', 'progression', 'profil'];
+const TITLES = {
+  accueil: 'ARVX',
+  reviser: 'ARVX — Réviser',
+  examen: 'ARVX — Examen',
+  progression: 'ARVX — Progression',
+  profil: 'ARVX — Profil',
+};
+
+const viewSections = new Map(VIEWS.map((n) => [n, document.getElementById('view-' + n)]));
+
+const navButtons = new Map();
+document.querySelectorAll('.bottom-nav button[data-route]').forEach((btn) => {
+  if (VIEWS.includes(btn.dataset.route)) navButtons.set(btn.dataset.route, btn);
+});
+
+let currentView = null;
+
+function showView(name, { animate = true } = {}) {
+  if (!viewSections.has(name)) name = 'accueil';
+  if (name === currentView) return;
+  currentView = name;
+
+  /* Vues : une seule visible (attribut hidden = pas de coût de rendu) */
+  for (const [n, el] of viewSections) {
+    if (!el) continue;
+    const active = n === name;
+    el.hidden = !active;
+    el.classList.toggle('enter', active && animate);
+    if (active && animate) {
+      /* re-déclenche l'animation même si la classe était déjà posée */
+      el.classList.remove('enter');
+      void el.offsetWidth;
+      el.classList.add('enter');
+    }
+  }
+
+  /* Onglets : état actif + aria-current */
+  for (const [n, btn] of navButtons) {
+    const active = n === name;
+    btn.classList.toggle('active', active);
+    if (active) btn.setAttribute('aria-current', 'page');
+    else btn.removeAttribute('aria-current');
+  }
+
+  /* Titre de l'onglet navigateur / app */
+  document.title = TITLES[name] || 'ARVX';
+
+  /* Chaque vue s'ouvre en haut, instantanément */
+  window.scrollTo(0, 0);
+}
+
+function parseHash() {
+  const h = decodeURIComponent(location.hash.replace(/^#\/?/, '')).split('?')[0];
+  return VIEWS.includes(h) ? h : 'accueil';
+}
+
+/* Clic sur un onglet : on change le hash, le routeur fait le reste.
+   Aucune autre action — jamais de rechargement. */
+for (const [name, btn] of navButtons) {
+  btn.addEventListener('click', () => {
+    const target = '#/' + name;
+    if (location.hash === target) {
+      showView(name, { animate: false }); /* déjà là : rien à animer */
+      return;
+    }
+    location.hash = target;
+  });
+}
+
+/* Retour/avant du navigateur, lien #/... : une seule source de vérité */
+window.addEventListener('hashchange', () => showView(parseHash()));
+
+/* Logo du menu → Accueil + fermeture du tiroir (pas de rechargement) */
+const logoLink = document.querySelector('.sidebar .logo');
+logoLink?.addEventListener('click', () => openMenu(false));
+
+/* Amorçage : vue demandée dans l'URL, sinon Accueil.
+   Hash inconnu au démarrage → réécrit proprement sans polluer l'historique. */
+if (location.hash) {
+  const h = location.hash.replace(/^#\/?/, '').split('?')[0];
+  if (!VIEWS.includes(h)) location.replace('#/accueil');
+}
+showView(parseHash(), { animate: false });
