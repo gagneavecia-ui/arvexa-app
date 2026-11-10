@@ -64,14 +64,19 @@
        passer en clair) ↔ lune (mode clair → passer en sombre),
        libellés traduits (FR/AN), instantané, aucun rechargement.
 
-   v0.6 :
-     · vue Accueil — BLOC 1 « carte objectif » : objectif de l'élève
-       (examen + date), compte à rebours J-x et mini barre de
-       progression vers la date (inspiré du compte à rebours BAC de
-       l'original, réduit et générique — ARVX est polyvalent).
-       Valeur d'exemple tant que le flux « choisir mon objectif »
-       n'existe pas : localStorage 'arvexa-goal' { label, date, start }
-       prendra le relais. Le bouton rafraîchir recalcule le compte.
+   v0.6 / v0.6.1 :
+     · vue Accueil — BLOC 1 « carte statistiques » : la carte prend
+       UN QUART du cadre entre la barre du haut et la barre du bas.
+       Polyvalente (toutes matières — pas seulement le BAC) :
+       à gauche le NOMBRE DE COURS de l'élève (+ cours lus et
+       complétés), à droite un ANNEAU DE PROGRESSION (statistique
+       visuelle, SVG), en bas la CITATION façon site original
+       (2 citations au démarrage, tirée au hasard ; le bouton
+       rafraîchir en propose une autre). Typographie expressive :
+       Playfair Display pour le chiffre, le label et la citation.
+       Valeurs d'exemple tant que les cours réels n'existent pas :
+       localStorage 'arvexa-stats' { courses, done } prendra le
+       relais.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -169,12 +174,9 @@ const I18N = {
     'salut.soir': 'Bonsoir',
     'theme.toLight': 'Passer en mode clair',
     'theme.toDark': 'Passer en mode sombre',
-    'accueil.objectif': 'Objectif',
-    'accueil.j': 'J',
-    'accueil.status.temps': '🌱 Tu as le temps',
-    'accueil.status.course': '⏳ La course est lancée',
-    'accueil.status.sprint': '🔥 Sprint final',
-    'accueil.status.fin': '🏁 Bonne chance !',
+    'accueil.eyebrow': 'Mes cours',
+    'accueil.coursLabel': 'cours',
+    'accueil.lus': 'lus et complétés',
     'profil.defaultName': 'Élève',
     'plan.gratuit': 'Gratuit',
     'plan.premium': 'Premium',
@@ -211,12 +213,9 @@ const I18N = {
     'salut.soir': 'Good evening',
     'theme.toLight': 'Switch to light mode',
     'theme.toDark': 'Switch to dark mode',
-    'accueil.objectif': 'Goal',
-    'accueil.j': 'D',
-    'accueil.status.temps': '🌱 You have time',
-    'accueil.status.course': '⏳ The race is on',
-    'accueil.status.sprint': '🔥 Final sprint',
-    'accueil.status.fin': '🏁 Good luck!',
+    'accueil.eyebrow': 'My courses',
+    'accueil.coursLabel': 'courses',
+    'accueil.lus': 'read & completed',
     'profil.defaultName': 'Student',
     'plan.gratuit': 'Free',
     'plan.premium': 'Premium',
@@ -278,7 +277,7 @@ function applyLang() {
   applyGreeting();
   applyProfileCard();
   applyThemeButton();
-  updateGoalCard();
+  updateStatsCard();
 }
 
 function setLang(next) {
@@ -361,71 +360,66 @@ function applyProfileCard() {
   planEl.classList.toggle('gratuit', plan !== 'premium');
 }
 
-/* ── VUE ACCUEIL — BLOC 1 : CARTE OBJECTIF (v0.6) ──
-   Objectif de l'élève (examen + date) + compte à rebours J-x +
-   progression du temps vers la date — même esprit que le compte à
-   rebours BAC de l'original, réduit et générique (toutes matières).
-   Tant que le flux « choisir mon objectif » n'existe pas, la carte
-   affiche un exemple ; localStorage 'arvexa-goal' { label, date,
-   start } prendra le relais (profil / backend). La fonction est
-   déclarée ici mais appelée dès le boot par applyLang() (hoisting) :
-   aucune constante module-level, donc aucun risque de TDZ. ── */
+/* ── VUE ACCUEIL — BLOC 1 : CARTE STATISTIQUES (v0.6.1) ──
+   Polyvalente (toutes matières) : nombre de cours de l'élève,
+   cours lus et complétés, anneau de progression et citation
+   (façon le hero-quote de l'original — 2 citations pour débuter,
+   tirée au hasard au démarrage, la langue bascule sans changer de
+   citation). Tant que les cours réels n'existent pas, la carte
+   affiche des valeurs d'exemple ; localStorage 'arvexa-stats'
+   { courses, done } prendra le relais (backend / import de cours).
+   La fonction est déclarée ici mais appelée dès le boot par
+   applyLang() (hoisting) : aucune constante module-level, donc
+   aucun risque de TDZ. ── */
 
-function dayDiff(from, to) {
-  const a = Date.UTC(to.getFullYear(), to.getMonth(), to.getDate());
-  const b = Date.UTC(from.getFullYear(), from.getMonth(), from.getDate());
-  return Math.round((a - b) / 86400000);
-}
+function updateStatsCard(pickNewQuote) {
+  /* Citations ARVX — 2 pour débuter, traduites FR / AN. */
+  const QUOTES = [
+    { fr: 'Chaque page lue rapproche ton objectif.', an: 'Every page you read brings your goal closer.' },
+    { fr: 'Toute matière se dompte, un cours à la fois.', an: 'Any subject can be mastered, one course at a time.' },
+  ];
 
-function updateGoalCard() {
-  const titleEl = document.getElementById('goalTitle');
-  const metaEl = document.getElementById('goalMeta');
-  const countEl = document.getElementById('goalCount');
-  const fillEl = document.getElementById('goalFill');
-  if (!titleEl || !metaEl || !countEl || !fillEl) return;
+  /* Citation tirée au hasard au démarrage et stable ensuite
+     (la langue peut changer sans changer de citation) ; le
+     bouton rafraîchir en tire une nouvelle (pickNewQuote). */
+  if (pickNewQuote || updateStatsCard._qi === undefined) {
+    updateStatsCard._qi = Math.floor(Math.random() * QUOTES.length);
+  }
 
-  /* Objectif : localStorage 'arvexa-goal' { label, date, start }
-     si présent, sinon l'exemple affiché par défaut (démo). */
-  const GOAL_KEY = 'arvexa-goal';
-  const GOAL_DEMO = { label: 'Baccalauréat 2027', date: '2027-06-15', start: '2026-09-15' };
-  let goal = GOAL_DEMO;
+  const coursesEl = document.getElementById('statCourses');
+  const doneEl = document.getElementById('statDone');
+  const ringFill = document.getElementById('ringFill');
+  const ringPct = document.getElementById('ringPct');
+  const quoteEl = document.getElementById('quoteText');
+  if (!coursesEl || !doneEl || !ringFill || !ringPct || !quoteEl) return;
+
+  /* Statistiques : localStorage 'arvexa-stats' { courses, done }
+     si présent, sinon les valeurs d'exemple (démo). */
+  const STATS_KEY = 'arvexa-stats';
+  const STATS_DEMO = { courses: 12, done: 7 };
+  let stats = STATS_DEMO;
   try {
-    const g = JSON.parse(localStorage.getItem(GOAL_KEY) || 'null');
-    if (g && g.label && g.date) goal = g;
+    const s = JSON.parse(localStorage.getItem(STATS_KEY) || 'null');
+    if (s && Number.isFinite(s.courses) && s.courses > 0) stats = s;
   } catch { /* JSON invalide : on garde l'exemple */ }
 
-  const now = new Date();
-  const [gy, gm, gd] = String(goal.date).split('-').map(Number);
-  const exam = new Date(gy, (gm || 1) - 1, gd || 1);
-  const days = dayDiff(now, exam);
+  const courses = Math.max(0, Math.round(stats.courses));
+  const done = Math.min(courses, Math.max(0, Math.round(stats.done || 0)));
+  const pct = courses > 0 ? Math.round((done / courses) * 100) : 0;
 
-  titleEl.textContent = goal.label;
+  coursesEl.textContent = String(courses);
+  doneEl.textContent = String(done);
 
-  /* Compte à rebours : J-216 en français, D-216 en anglais. */
-  countEl.textContent = days > 0 ? t('accueil.j') + '-' + days : '🏁';
+  /* Anneau de progression : circonférence = 2π × 30 ≈ 188.5.
+     L'arc rempli représente la part de cours lus et complétés. */
+  const C = 2 * Math.PI * 30;
+  ringFill.style.strokeDasharray = String(C);
+  ringFill.style.strokeDashoffset = String(C * (1 - pct / 100));
+  ringPct.innerHTML = pct + '<small>%</small>';
 
-  /* Statut selon le temps restant — même esprit que l'original
-     (« 🌱 Tu as le temps » quand la date est encore loin). */
-  let statusKey = 'accueil.status.temps';
-  if (days <= 0) statusKey = 'accueil.status.fin';
-  else if (days <= 60) statusKey = 'accueil.status.sprint';
-  else if (days <= 180) statusKey = 'accueil.status.course';
-
-  const dateStr = new Intl.DateTimeFormat(lang === 'an' ? 'en-GB' : 'fr-FR',
-    { day: 'numeric', month: 'long', year: 'numeric' }).format(exam);
-  metaEl.textContent = dateStr + ' · ' + t(statusKey);
-
-  /* Barre : progression du temps entre le début des révisions et
-     l'examen (comme la barre du compte à rebours de l'original). */
-  let pct = 0;
-  const [sy, sm, sd] = String(goal.start || '').split('-').map(Number);
-  if (sy) {
-    const start = new Date(sy, (sm || 1) - 1, sd || 1);
-    const total = dayDiff(start, exam);
-    const done = dayDiff(start, now);
-    if (total > 0) pct = Math.min(100, Math.max(0, Math.round((done / total) * 100)));
-  }
-  fillEl.style.width = pct + '%';
+  /* Citation : « … » — même esprit que le hero-quote de l'original. */
+  const q = QUOTES[updateStatsCard._qi];
+  quoteEl.textContent = '« ' + (lang === 'an' ? q.an : q.fr) + ' »';
 }
 
 /* ── MENU TIROIR (fidèle au site original, index.html:3947-3954) ── */
@@ -453,7 +447,7 @@ const refreshBtn = document.getElementById('refreshBtn');
 
 refreshBtn?.addEventListener('click', () => {
   refreshBtn.classList.add('spinning');
-  updateGoalCard(); /* recalcule le compte à rebours de l'objectif */
+  updateStatsCard(true); /* recalcule les stats + nouvelle citation */
   setTimeout(() => refreshBtn.classList.remove('spinning'), 800);
 });
 

@@ -142,23 +142,37 @@
          Le contenu de chaque vue arrive étape par étape.
          ══════════════════════════════════════════════════════ -->
     <section class="view" id="view-accueil" data-view="accueil">
-      <!-- ═══ BLOC 1 — CARTE OBJECTIF (v0.6) ═══
-           Héros compact : objectif de l'élève (examen + date),
-           compte à rebours J-x et mini barre de progression.
-           Inspire du compte à rebours BAC de l'original (30-40 %),
-           réduit et générique : ARVX est polyvalent. La valeur
-           affichée est un exemple tant que le flux « choisir mon
-           objectif » n'existe pas (localStorage 'arvexa-goal'). -->
-      <div class="goal-card">
-        <div class="goal-top">
-          <div class="goal-left">
-            <span class="goal-eyebrow"><i class="fas fa-bullseye" aria-hidden="true"></i><span data-i18n="accueil.objectif">Objectif</span></span>
-            <span class="goal-title" id="goalTitle">Baccalauréat 2027</span>
-            <span class="goal-meta" id="goalMeta">15 juin 2027 · 🌱 Tu as le temps</span>
+      <!-- ═══ BLOC 1 — CARTE STATISTIQUES (v0.6.1) ═══
+           Héros compact = 1/4 du cadre entre la barre du haut et
+           la barre du bas. Polyvalent (toutes matières) :
+           à gauche le nombre de cours de l'élève + les cours
+           lus et complétés ; à droite un anneau de progression
+           (statistique visuelle) ; en bas la citation, façon
+           site original (2 citations au démarrage, tirée au
+           hasard — le bouton rafraîchir en propose une autre).
+           Typographie expressive : Playfair Display pour le
+           chiffre, le mot « cours » et la citation.
+           Valeurs d'exemple tant que les cours réels n'existent
+           pas (localStorage 'arvexa-stats'). -->
+      <div class="stats-card">
+        <div class="stats-top">
+          <div class="stats-left">
+            <span class="stats-eyebrow"><i class="fas fa-layer-group" aria-hidden="true"></i><span data-i18n="accueil.eyebrow">Mes cours</span></span>
+            <span class="stats-num"><span class="stats-number" id="statCourses">12</span><span class="stats-numlabel" data-i18n="accueil.coursLabel">cours</span></span>
+            <span class="stats-sub"><span class="stats-done" id="statDone">7</span> <span data-i18n="accueil.lus">lus et complétés</span></span>
           </div>
-          <span class="goal-count" id="goalCount">J-216</span>
+          <div class="stats-ring" aria-hidden="true">
+            <svg viewBox="0 0 72 72" role="presentation">
+              <circle class="stats-ring-track" cx="36" cy="36" r="30"></circle>
+              <circle class="stats-ring-fill" id="ringFill" cx="36" cy="36" r="30"></circle>
+            </svg>
+            <span class="stats-ring-pct" id="ringPct">58<small>%</small></span>
+          </div>
         </div>
-        <div class="goal-track" aria-hidden="true"><div class="goal-fill" id="goalFill"></div></div>
+        <div class="stats-quote">
+          <span class="stats-quote-text" id="quoteText">« Chaque page lue rapproche ton objectif. »</span>
+          <span class="stats-quote-author">— ARVX</span>
+        </div>
       </div>
     </section>
     <section class="view" id="view-reviser" data-view="reviser" hidden><!-- contenu — étapes suivantes --></section>

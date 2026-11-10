@@ -3,33 +3,33 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.6 Accueil : bloc 1 « carte objectif »
+## Étape actuelle — v0.6.1 Accueil : bloc 1 « carte statistiques »
 
-- **Carte objectif** en tête de l'accueil — héros **compact** qui résume
-  l'objectif de l'élève en un coup d'œil (inspiration 30-40 % du compte à
-  rebours BAC de l'original, réduite et **générique** : ARVX est polyvalent,
-  pas seulement BAC) :
-  - sur-titre **🎯 OBJECTIF** (petit, or, espacé) ;
-  - nom de l'objectif (ex. « Baccalauréat 2027 ») ;
-  - date de l'examen + statut selon le temps restant
-    (🌱 Tu as le temps → ⏳ La course est lancée → 🔥 Sprint final → 🏁 Bonne chance !) ;
-  - **compte à rebours** en pastille or : **J-217** (AN : **D-217**), calculé
-    en direct depuis la date du jour — le bouton **rafraîchir** le recalcule ;
-  - **mini barre de progression** or (temps écoulé entre le début des
-    révisions et l'examen, comme la barre du compte à rebours original).
-- **Valeur d'exemple affichée** tant que le flux « choisir mon objectif »
-  n'existe pas : dès qu'il sera branché (profil/backend), localStorage
-  `'arvexa-goal' { label, date, start }` prendra le relais automatiquement
-  (testé : « Concours médecine 2027 » s'affiche instantanément).
-- **Le cadre fixe est respecté** : blocs à hauteur constante, vue accueil
-  centrée (`max-width 720px`), aucun défilement vertical de la page.
-- **Traduit instantanément** (FR/AN) : OBJECTIF/GOAL, statuts, J-/D-, date
-  formatée (`15 juin 2027` ↔ `15 June 2027`). Adaptable aux deux thèmes :
-  matériaux identiques à la carte profil (radial or), or foncé lisible sur
-  papier en mode clair, ombres chaudes.
-- Preuves SPA re-vérifiées : marque mémoire `42` intacte après bascules
-  thème + langue + navigation, `performance navigation = 1` (aucun
-  rechargement du document).
+- **La carte prend UN QUART du cadre** entre la barre du haut et la barre du bas
+  (`min-height : (100dvh − header − barre du bas) / 4`), centrée, jamais de
+  défilement vertical de la page.
+- **100 % polyvalente** (toutes matières — plus aucune mention BAC) :
+  - **à gauche** : sur-titre **MES COURS**, le **nombre de cours** de l'élève
+    en gros chiffre **Playfair Display** (or dégradé, façon le X du wordmark),
+    le mot « cours » en italique serif, puis « **7 lus et complétés** » ;
+  - **à droite** : un **anneau de progression** (SVG, trait or arrondi) avec
+    le **pourcentage au centre** en Playfair — la part de cours lus et
+    complétés (statistique visuelle, comme demandé) ;
+  - **en bas** : la **citation façon site original** — Playfair italique +
+    auteur « — ARVX » en petites capitales. **2 citations pour débuter**,
+    tirée au hasard au démarrage ; le bouton **rafraîchir en propose une
+    autre** ; la langue bascule (FR/AN) **sans changer de citation**.
+- **Typographie expressive** (fini les écritures simples) : chiffre, label
+  « cours » et citation en **Playfair Display** (serif de la marque) ;
+  petits libellés UI en Inter — propre et cohérent.
+- **Valeurs d'exemple** tant que les cours réels n'existent pas : dès que les
+  cours existeront, localStorage `'arvexa-stats' { courses, done }` prendra le
+  relais automatiquement (testé : { courses: 25, done: 10 } s'affiche
+  instantanément avec l'anneau à 40 %).
+- Traduit instantanément (FR/AN) : MES COURS / MY COURSes, « cours /
+  courses », « lus et complétés / read & completed », citation. Adaptable aux
+  deux thèmes : or foncé lisible sur papier en mode clair, ombres chaudes.
+- Preuves SPA re-vérifiées : marque mémoire 42 intacte, `navigation = 1`.
 
 ## v0.5.1 — Bouton thème (clair/sombre) + menu v2
 
@@ -99,7 +99,7 @@ HTML5 · CSS3 (custom properties) · JavaScript ES modules — aucune dépendanc
 2. ✅ Barre de tâches fixe en bas (5 onglets)
 3. ✅ Barre du haut (menu, salutation + nom, notifications, profil, rafraîchir)
 4. ✅ SPA : navigation instantanée entre les 5 vues (principe AXIA, zéro rechargement)
-5. ✅ Page d'accueil — bloc 1 « carte objectif » (blocs suivants : continuer, actions rapides, matières, question du jour)
+5. ✅ Page d'accueil — bloc 1 « carte statistiques » (1/4 du cadre : cours + anneau + citation ; blocs suivants : continuer, actions rapides, matières, question du jour)
 6. Navigation, matières, contenus
 7. Service worker : cache complet, ouverture instantanée + hors ligne
 8. Backend (Firebase) + fonctionnalités

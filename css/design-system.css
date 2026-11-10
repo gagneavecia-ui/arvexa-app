@@ -163,26 +163,32 @@ body {
 .view.enter { animation: view-enter 0.18s cubic-bezier(0.25, 1, 0.5, 1) both; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 1 : CARTE OBJECTIF (v0.6)
-   Héros compact : objectif de l'élève + compte à rebours J-x +
-   mini barre de progression vers la date. Inspire du compte à
-   rebours BAC de l'original (30-40 %), réduit et générique.
-   La vue reste dans le cadre fixe : hauteur de bloc constante,
-   jamais de défilement vertical de la page.
+   VUE ACCUEIL — BLOC 1 : CARTE STATISTIQUES (v0.6.1)
+   Héros compact = 1/4 du cadre entre la barre du haut et la barre
+   du bas. Polyvalent (toutes matières) : nombre de cours à gauche,
+   anneau de progression à droite, citation en bas (façon original).
+   Typographie expressive : Playfair Display (chiffre, label,
+   citation) — jamais d'écriture simple ; les petits libellés UI
+   restent en Inter pour la cohérence de l'ensemble.
    ═══════════════════════════════════════════════════════════════════ */
 #view-accueil {
   display: flex;
   flex-direction: column;
-  gap: 14px;
   padding: 16px 16px 10px;
   width: 100%;
   max-width: 720px;   /* centré et propre sur grand écran */
   margin: 0 auto;
 }
 
-.goal-card {
+.stats-card {
   flex-shrink: 0;
-  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+  /* UN QUART du cadre utile entre la barre du haut et la barre du bas */
+  min-height: calc((100dvh - var(--header-height) - calc(57px + var(--safe-bottom))) / 4);
+  padding: 16px 18px 13px;
   border-radius: var(--radius);
   /* Mêmes matériaux que la carte profil du menu (radial or doux) */
   background:
@@ -192,24 +198,24 @@ body {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-.goal-top {
+.stats-top {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 14px;
 }
 
-.goal-left {
+.stats-left {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 3px;
+  gap: 5px;
   min-width: 0;
 }
 
-/* Sur-titre « OBJECTIF » : tout petit, or, espacé — même style
-   que les badges du menu (profile-plan, lang-btn) */
-.goal-eyebrow {
+/* Sur-titre « MES COURS » : tout petit, or, espacé — même style
+   que les badges du menu */
+.stats-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -220,61 +226,135 @@ body {
   color: var(--accent-bright);
 }
 
-.goal-eyebrow i { font-size: 10px; }
+.stats-eyebrow i { font-size: 10px; }
 
-.goal-title {
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 0.01em;
-  color: var(--text-light);
-  max-width: 100%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.stats-num {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
 }
 
-.goal-meta {
-  font-size: 12px;
+/* Le chiffre : Playfair Display, or dégradé — façon le X du
+   wordmark ARVX. Une écriture riche, jamais simple. */
+.stats-number {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  background: linear-gradient(120deg, var(--accent), var(--accent-bright) 55%, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stats-numlabel {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--text-light);
+}
+
+.stats-sub {
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--text-dim);
+}
+
+.stats-done {
+  font-weight: 800;
+  color: var(--accent-bright);
+}
+
+/* Anneau de progression : SVG 72×72, trait or, arrondi.
+   Le pourcentage au centre est en Playfair. */
+.stats-ring {
+  position: relative;
+  width: 84px;
+  height: 84px;
+  flex-shrink: 0;
+}
+
+.stats-ring svg { width: 100%; height: 100%; display: block; }
+
+.stats-ring-track {
+  fill: none;
+  stroke: rgba(var(--rgb-soft), 0.07);
+  stroke-width: 6;
+}
+
+.stats-ring-fill {
+  fill: none;
+  stroke: var(--accent-bright);
+  stroke-width: 6;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.stats-ring-pct {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.stats-ring-pct small {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-dim);
+  margin-left: 1px;
+}
+
+/* Citation : façon le hero-quote du site original — Playfair
+   italique, auteur en petites capitales discrètes */
+.stats-quote {
+  border-top: 1px solid rgba(184, 134, 11, 0.14);
+  padding-top: 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.stats-quote-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 14.5px;
+  line-height: 1.45;
+  color: var(--text-light);
   overflow-wrap: anywhere;
 }
 
-/* Compte à rebours : pastille or — même traitement que la pastille
-   série 🔥 de l'original (qjStreak) */
-.goal-count {
-  flex-shrink: 0;
-  margin-top: 2px;
-  padding: 8px 13px;
-  border-radius: 999px;
-  background: rgba(224, 184, 74, 0.12);
-  border: 1px solid rgba(224, 184, 74, 0.35);
-  color: var(--accent-bright);
-  font-size: 13px;
+.stats-quote-author {
+  font-size: 9.5px;
   font-weight: 800;
-  white-space: nowrap;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
-/* Mini barre de progression : fine, discrète, remplissage or dégradé */
-.goal-track {
-  height: 6px;
-  margin-top: 13px;
-  border-radius: 999px;
-  background: rgba(var(--rgb-soft), 0.07);
-  overflow: hidden;
-}
-
-.goal-fill {
-  height: 100%;
-  width: 0%;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
-  box-shadow: 0 0 8px rgba(224, 184, 74, 0.35);
-  transition: width 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+/* Petits écrans en hauteur : la carte reste un quart du cadre,
+   tout s'ajuste sans jamais déborder */
+@media (max-height: 720px) {
+  .stats-card { padding: 13px 16px 11px; }
+  .stats-number { font-size: 38px; }
+  .stats-numlabel { font-size: 15.5px; }
+  .stats-ring { width: 72px; height: 72px; }
+  .stats-ring-pct { font-size: 16.5px; }
+  .stats-quote-text { font-size: 13.5px; }
 }
 
 /* Thème clair « papier & encre » : mêmes matériaux, or foncé
    lisible, ombre chaude — jamais de gris froid sur papier */
-html[data-theme="light"] .goal-card {
+html[data-theme="light"] .stats-card {
   background:
     radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.1), rgba(184, 134, 11, 0.02) 62%),
     rgba(255, 255, 255, 0.65);
@@ -282,20 +362,19 @@ html[data-theme="light"] .goal-card {
   box-shadow: 0 8px 24px rgba(74, 58, 24, 0.1);
 }
 
-html[data-theme="light"] .goal-eyebrow { color: var(--gold-text, #9A7209); }
+html[data-theme="light"] .stats-eyebrow { color: var(--gold-text, #9A7209); }
 
-html[data-theme="light"] .goal-count {
-  color: var(--gold-text, #9A7209);
-  background: rgba(184, 134, 11, 0.12);
-  border-color: rgba(184, 134, 11, 0.35);
+html[data-theme="light"] .stats-number {
+  background-image: linear-gradient(120deg, #9A7209, #C79A2A 55%, #9A7209);
 }
 
-html[data-theme="light"] .goal-track { background: rgba(32, 27, 18, 0.08); }
+html[data-theme="light"] .stats-done { color: var(--gold-text, #9A7209); }
 
-html[data-theme="light"] .goal-fill {
-  background: linear-gradient(90deg, #B8860B, #9A7209);
-  box-shadow: none;
-}
+html[data-theme="light"] .stats-ring-track { stroke: rgba(32, 27, 18, 0.08); }
+
+html[data-theme="light"] .stats-ring-fill { stroke: #9A7209; }
+
+html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2); }
 
 /* ═══════════════════════════════════════════════════════════════════
    BARRE DU HAUT (HEADER) — copie fidèle du header d'accueil
