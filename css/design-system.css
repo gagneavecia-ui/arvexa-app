@@ -6,8 +6,10 @@
    Actuation par js/main.js (localStorage 'arvexa-theme', anti-flash
    inline dans le <head>, meta theme-color synchronisée).
 
-   v0.1.1 : écran couleur seule — aucun style visible au-delà du fond.
-   Les styles d'interface viendront étape par étape.
+   v0.1.1 : écran couleur seule.
+   v0.2   : barre de tâches fixe en bas — design fidèle à la barre
+            MathMind du site original (voile 96 %, blur 18px, liseré
+            doré, actif or lumineux + halo, safe-area).
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -43,6 +45,13 @@
   /* Structure */
   --radius: 16px;
   --transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+
+  /* Barres translucides — arvexa-ui.css:83 (thème sombre) */
+  --rgb-veil: 10, 10, 10;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Barre de tâches : couleur inactive — MathMind (la barre d'origine) */
+  --nav-muted: #757563;
 }
 
 /* ── THÈME CLAIR "papier & encre" ──────────────────────────────── */
@@ -70,9 +79,13 @@ html[data-theme="light"] {
   /* Or foncé pour le texte sur papier */
   --gold-text: #9A7209;
   --on-gold: #141210;
+
+  /* Barres translucides — arvexa-ui.css:168 (thème clair) */
+  --rgb-veil: 250, 247, 240;
+  --nav-muted: #948D7C;
 }
 
-/* ── BASE (fond couleur seule) ─────────────────────────────────── */
+/* ── BASE ──────────────────────────────────────────────────────── */
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
 html { scroll-behavior: smooth; width: 100%; overflow-x: hidden; }
@@ -83,9 +96,67 @@ body {
   color: var(--text-light);
   font-size: 14px;
   min-height: 100dvh;
+  /* Place réservée pour la barre de tâches fixe */
+  padding-bottom: calc(57px + var(--safe-bottom));
 }
 
 ::selection { background: rgba(184, 134, 11, 0.28); color: var(--text-light); }
+
+/* ── BARRE DE TÂCHES FIXE EN BAS ─────────────────────────────────
+   Reproduction fidèle de .bottom-nav (mathmind.html, lignes 963-978) :
+   fixed bas · voile rgba(10,10,10,.96) · blur(18px) · liseré doré
+   rgba(184,134,11,.1) · boutons colonne icône 17px + label 7px/700
+   · actif --accent-bright + halo drop-shadow · safe-area en bas.   */
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 70;
+  display: flex;
+  padding: 7px 6px calc(7px + var(--safe-bottom));
+  background: rgba(var(--rgb-veil), 0.96);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-top: 1px solid rgba(184, 134, 11, 0.1);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.bottom-nav button {
+  flex: 1;
+  min-height: 43px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--nav-muted);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: var(--transition);
+}
+
+.bottom-nav button i {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.bottom-nav button.active { color: var(--accent-bright); }
+
+.bottom-nav button.active i {
+  filter: drop-shadow(0 0 7px rgba(224, 184, 74, 0.3));
+}
+
+/* Thème clair : liseré un peu plus présent + actif en or foncé lisible */
+html[data-theme="light"] .bottom-nav { border-top-color: rgba(184, 134, 11, 0.18); }
+html[data-theme="light"] .bottom-nav button.active { color: var(--gold-text, #9A7209); }
+html[data-theme="light"] .bottom-nav button.active i { filter: none; }
 
 /* ── ACCESSIBILITÉ ─────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {

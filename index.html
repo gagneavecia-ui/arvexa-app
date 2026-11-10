@@ -13,15 +13,40 @@
   <!-- Anti-flash thème : même mécanique que ARVEXA School (localStorage 'arvexa-theme') -->
   <script>(function(){try{if(localStorage.getItem('arvexa-theme')==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}})();</script>
 
+  <!-- Font Awesome : même CDN et même version que le site original -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <link rel="stylesheet" href="css/design-system.css">
   <script type="module" src="js/main.js"></script>
 </head>
 <body>
+
   <!-- ══════════════════════════════════════════════════════
-       ÉCRAN COULEUR SEULE — v0.1.1
-       Rien sur l'écran. Uniquement la couleur ARVEXA.
-       La fondation (tokens + moteur de thème) est en place
-       pour les étapes suivantes.
+       BARRE DE TÂCHES FIXE EN BAS — v0.2
+       Design fidèle à la barre MathMind du site original :
+       voile sombre 96 %, verre dépoli 18px, liseré doré,
+       onglet actif or lumineux avec halo, safe-area Android/iOS.
+       5 onglets : Accueil · Réviser · Examen · Progression · Profil
+       (inerte pour l'instant : la navigation viendra à l'étape
+       des pages correspondantes.)
        ══════════════════════════════════════════════════════ -->
+  <nav class="bottom-nav" aria-label="Navigation principale">
+    <button type="button" class="active" aria-current="page">
+      <i class="fas fa-home" aria-hidden="true"></i><span>Accueil</span>
+    </button>
+    <button type="button">
+      <i class="fas fa-book-open" aria-hidden="true"></i><span>Réviser</span>
+    </button>
+    <button type="button">
+      <i class="fas fa-pencil-alt" aria-hidden="true"></i><span>Examen</span>
+    </button>
+    <button type="button">
+      <i class="fas fa-chart-line" aria-hidden="true"></i><span>Progression</span>
+    </button>
+    <button type="button">
+      <i class="fas fa-user" aria-hidden="true"></i><span>Profil</span>
+    </button>
+  </nav>
+
 </body>
 </html>
