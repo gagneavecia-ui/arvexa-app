@@ -3,15 +3,21 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.4 SPA : navigation instantanée, zéro rechargement
+## Étape actuelle — v0.4.1 Menu complet (3 sections)
 
+- **Menu tiroir rempli** :
+  - **MON COMPTE** — Profil (→ `#/profil`), Mon abonnement
+  - **INVITER DES GENS** — Inviter des camarades, Parrainage
+  - **AIDE ET SUPPORT** — Rappels et notifications, Compte et suppression, Contacter le support
+  - Labels de section en tout petit caractère (9 px, majuscules espacées), items dans le
+    style exact de la sidebar originale, état actif or synchronisé avec la vue.
 - **Principe AXIA appliqué** : une seule page qui **ne se recharge jamais** — aucune
   barre de chargement du navigateur, navigation synchrone entre les écrans.
 - **5 vues SPA** (Accueil, Réviser, Examen, Progression, Profil) échangées par le
   routeur JS ; les vues sont vides, leur contenu arrive étape par étape.
 - URL synchronisée (`#/accueil`, `#/reviser`…), titre d'onglet mis à jour,
   bouton retour du navigateur géré, retour en haut à chaque vue.
-- Barre du haut : menu (tiroir vide à compléter), salutation dynamique
+- Barre du haut : menu (tiroir), salutation dynamique
   (Bonjour 🌅 / Bon après-midi ☀️ / Bonsoir 🌙) + nom, notifications, profil,
   rafraîchissement.
 - **Marque ARVX** : X en or dégradé (même traitement que le span doré du logo

@@ -28,6 +28,13 @@
        de façon synchrone, URL synchronisée en #/route, titre de
        l'onglet mis à jour, retour arrière du navigateur géré
        (événement hashchange), retour en haut à chaque vue.
+
+   v0.4.1 :
+     · menu tiroir rempli — 3 sections (Mon compte / Inviter des
+       gens / Aide et support). Chaque item ferme le tiroir ; le
+       profil navigue vers #/profil, les autres écrans seront
+       branchés à leur étape. État actif de l'item « Profil »
+       synchronisé avec la vue courante.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -196,6 +203,11 @@ function showView(name, { animate = true } = {}) {
     else btn.removeAttribute('aria-current');
   }
 
+  /* Menu tiroir : item « Profil » actif quand la vue correspond */
+  document.querySelectorAll('.sidebar .nav-item[data-route]').forEach((el) => {
+    el.classList.toggle('active', el.dataset.route === name);
+  });
+
   /* Titre de l'onglet navigateur / app */
   document.title = TITLES[name] || 'ARVX';
 
@@ -227,6 +239,14 @@ window.addEventListener('hashchange', () => showView(parseHash()));
 /* Logo du menu → Accueil + fermeture du tiroir (pas de rechargement) */
 const logoLink = document.querySelector('.sidebar .logo');
 logoLink?.addEventListener('click', () => openMenu(false));
+
+/* Éléments du menu : fermer le tiroir au clic. « Profil » navigue
+   vers #/profil (le hash fait le reste) ; les autres écrans
+   (abonnement, camarades, parrainage, rappels, compte, support)
+   seront branchés chacun à leur étape — même principe SPA. */
+document.querySelectorAll('.sidebar .nav-item').forEach((el) => {
+  el.addEventListener('click', () => openMenu(false));
+});
 
 /* Amorçage : vue demandée dans l'URL, sinon Accueil.
    Hash inconnu au démarrage → réécrit proprement sans polluer l'historique. */
