@@ -8,8 +8,9 @@
 
    v0.1.1 : écran couleur seule.
    v0.2   : barre de tâches fixe en bas — design fidèle à la barre
-            MathMind du site original (voile 96 %, blur 18px, liseré
-            doré, actif or lumineux + halo, safe-area).
+            MathMind du site original.
+   v0.3   : barre du haut (header d'accueil fidèle) + menu tiroir
+            (sidebar fidèle, nav vide pour l'instant).
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -33,6 +34,8 @@
   /* Surfaces */
   --bg-dark: #0A0A0A;
   --bg: #0A0A0A;
+  --bg-deep: #060606;
+  --bg-elev: #1A1A1A;
   --bg-surface: #141414;
   --bg-card: rgba(20, 20, 20, 0.7);
   --card-border: rgba(184, 134, 11, 0.06);
@@ -42,12 +45,16 @@
   --text-dim: #8A8A7A;
   --text-muted: #5A5A4A;
 
+  /* Triplets RGB (arvexa-ui.css:81-85) — voiles / cartes / fills subtils */
+  --rgb-veil: 10, 10, 10;
+  --rgb-card: 20, 20, 20;
+  --rgb-soft: 255, 255, 255;
+
   /* Structure */
   --radius: 16px;
   --transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-
-  /* Barres translucides — arvexa-ui.css:83 (thème sombre) */
-  --rgb-veil: 10, 10, 10;
+  --header-height: 64px;
+  --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 
   /* Barre de tâches : couleur inactive — MathMind (la barre d'origine) */
@@ -80,8 +87,10 @@ html[data-theme="light"] {
   --gold-text: #9A7209;
   --on-gold: #141210;
 
-  /* Barres translucides — arvexa-ui.css:168 (thème clair) */
+  /* Triplets RGB (thème clair) */
   --rgb-veil: 250, 247, 240;
+  --rgb-card: 255, 255, 255;
+  --rgb-soft: 0, 0, 0;
   --nav-muted: #948D7C;
 }
 
@@ -102,11 +111,178 @@ body {
 
 ::selection { background: rgba(184, 134, 11, 0.28); color: var(--text-light); }
 
-/* ── BARRE DE TÂCHES FIXE EN BAS ─────────────────────────────────
-   Reproduction fidèle de .bottom-nav (mathmind.html, lignes 963-978) :
-   fixed bas · voile rgba(10,10,10,.96) · blur(18px) · liseré doré
-   rgba(184,134,11,.1) · boutons colonne icône 17px + label 7px/700
-   · actif --accent-bright + halo drop-shadow · safe-area en bas.   */
+.page { min-height: 100dvh; }
+.content { min-height: 40vh; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   BARRE DU HAUT (HEADER) — copie fidèle du header d'accueil
+   du site original (index.html, lignes 153-187)
+   ═══════════════════════════════════════════════════════════════════ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(10px + var(--safe-top)) 16px 10px;
+  background: rgba(var(--rgb-veil), 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(184, 134, 11, 0.06);
+  gap: 12px;
+  min-height: var(--header-height);
+}
+
+.header .header-left { display: flex; align-items: center; gap: 12px; }
+
+.header .menu-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1px solid rgba(var(--rgb-soft), 0.05);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 16px;
+}
+
+.header .menu-toggle:hover { border-color: rgba(184, 134, 11, 0.14); color: var(--text-light); }
+
+.header .greeting {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: clamp(13px, 1.5vw, 15px);
+  font-weight: 600;
+  color: var(--text-light);
+}
+
+.header .greeting #greetingText { color: var(--text-dim); font-weight: 400; }
+.header .greeting #userFirstName { color: var(--accent-bright); font-weight: 700; }
+.header .greeting #greetingEmoji { font-size: 16px; line-height: 1; }
+
+.header .header-actions { display: flex; align-items: center; gap: 6px; }
+
+.header .header-actions button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(var(--rgb-soft), 0.04);
+  color: var(--text-dim);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.header .header-actions button:hover { background: rgba(var(--rgb-soft), 0.07); color: var(--text-light); }
+
+.header .header-actions button .notif-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--danger);
+  border: 2px solid var(--bg-dark);
+  display: none;
+}
+
+.header .header-actions button .notif-dot.show { display: block; }
+
+/* Bouton rafraîchir : rotation de l'icône pendant l'action */
+@keyframes spin { to { transform: rotate(360deg); } }
+.header .header-actions button.spinning i { animation: spin 0.7s cubic-bezier(0.45, 0, 0.55, 1); }
+
+/* Thème clair : le nom en or foncé pour rester lisible sur papier */
+html[data-theme="light"] .header .greeting #userFirstName { color: var(--gold-text, #9A7209); }
+html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); }
+
+/* Tailles mobiles — mêmes paliers que le site original */
+@media (max-width: 767px) { .header .greeting { font-size: 13px; } }
+@media (max-width: 640px) { .header .header-actions button { width: 32px; height: 32px; font-size: 13px; } }
+@media (max-width: 480px) { .header .greeting { font-size: 11px; } }
+
+/* ═══════════════════════════════════════════════════════════════════
+   MENU TIROIR (SIDEBAR) — copie fidèle de la sidebar du site
+   original (index.html, lignes 89-130). Nav vide pour l'instant.
+   ═══════════════════════════════════════════════════════════════════ */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -280px;
+  width: 280px;
+  height: 100vh;
+  background: rgba(var(--rgb-veil), 0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-right: 1px solid rgba(184, 134, 11, 0.06);
+  padding: calc(24px + var(--safe-top)) 16px calc(24px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+  transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.sidebar.open { left: 0; }
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Playfair Display', 'Georgia', serif;
+  letter-spacing: 2px;
+  padding-bottom: 20px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid rgba(var(--rgb-soft), 0.04);
+}
+
+.sidebar .logo span {
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright), var(--accent));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+  margin-left: 4px;
+}
+
+.sidebar .nav { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   BARRE DE TÂCHES FIXE EN BAS
+   Reproduction fidèle de .bottom-nav (mathmind.html, lignes 963-978)
+   ═══════════════════════════════════════════════════════════════════ */
 .bottom-nav {
   position: fixed;
   left: 0;
@@ -160,6 +336,6 @@ html[data-theme="light"] .bottom-nav button.active i { filter: none; }
 
 /* ── ACCESSIBILITÉ ─────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
+  * { transition: none !important; animation: none !important; }
   html { scroll-behavior: auto; }
 }

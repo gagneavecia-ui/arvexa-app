@@ -5,7 +5,7 @@
   <title>ARVEXA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#0A0A0A">
-  <meta name="description" content="ARVEXA.">
+  <meta name="description" content="ARVEXA — toutes les matières, une seule application.">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.png" type="image/png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -22,13 +22,60 @@
 <body>
 
   <!-- ══════════════════════════════════════════════════════
-       BARRE DE TÂCHES FIXE EN BAS — v0.2
-       Design fidèle à la barre MathMind du site original :
-       voile sombre 96 %, verre dépoli 18px, liseré doré,
-       onglet actif or lumineux avec halo, safe-area Android/iOS.
-       5 onglets : Accueil · Réviser · Examen · Progression · Profil
-       (inerte pour l'instant : la navigation viendra à l'étape
-       des pages correspondantes.)
+       MENU (tiroir) — design fidèle à la sidebar du site
+       original. La navigation est vide pour l'instant :
+       elle sera complétée à une prochaine étape.
+       Le logo ARVEXA s'affiche en haut du menu, comme
+       dans le site original.
+       ══════════════════════════════════════════════════════ -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <aside class="sidebar" id="sidebar" aria-label="Menu">
+    <a href="#" class="logo" aria-label="ARVEXA">ARVEX<span>A</span></a>
+    <nav class="nav">
+      <!-- Vide — sera complété -->
+    </nav>
+  </aside>
+
+  <!-- ══════════════════════════════════════════════════════
+       PAGE
+       ══════════════════════════════════════════════════════ -->
+  <main class="page">
+
+    <!-- ===== BARRE DU HAUT — identique au header d'accueil
+         du site original : menu, salutation + nom, notifications,
+         profil, rafraîchissement ===== -->
+    <header class="header">
+      <div class="header-left">
+        <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="greeting">
+          <span id="greetingText">Bonjour</span>
+          <span id="userFirstName">Élève</span>
+          <span id="greetingEmoji">👋</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="notifBtn" aria-label="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notif-dot" id="notifDot"></span>
+        </button>
+        <button id="profileBtn" aria-label="Profil">
+          <i class="fas fa-user"></i>
+        </button>
+        <button id="refreshBtn" aria-label="Rafraîchir" title="Rafraîchir les données">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Contenu de l'accueil — étapes suivantes -->
+    <section class="content"></section>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════
+       BARRE DE TÂCHES FIXE EN BAS — design fidèle à MathMind
        ══════════════════════════════════════════════════════ -->
   <nav class="bottom-nav" aria-label="Navigation principale">
     <button type="button" class="active" aria-current="page">
