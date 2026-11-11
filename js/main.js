@@ -144,6 +144,26 @@
      passent au matériau EXACT de la carte matière « Sciences de
      la vie et de la Terre » : filet or .38, glow or, radius 18,
      pastilles or dégradées + encre #141210.
+
+   v0.10 — AUTHENTIFICATION (Firebase, même projet que ARVEXA
+     School) :
+     · SIXIÈME VUE « auth » (#/auth) — connexion + inscription
+       sur UNE SEULE page (design identique aux pages originales,
+       js/auth.js) ; les barres du haut et du bas sont masquées
+       (body.auth-mode) quand la vue est active ;
+     · GARDE DE ROUTE — non connecté, toute route mène à #/auth
+       (la route demandée est mémorisée en sessionStorage et
+       restaurée après connexion) ; connecté, #/auth ramène à
+       l'accueil ;
+     · VOILE DE DÉMARRAGE — couvre l'app pendant la vérification
+       de session (zéro flash) ; filet de sécurité 6 s si
+       Firebase est injoignable ;
+     · FIN DES DONNÉES FICTIVES — la carte statistiques affiche
+       les VRAIES valeurs du profil Firestore (stats.courses /
+       stats.done, 0 au départ) ; la salutation et la carte
+       profil utilisent le vrai prénom du compte ;
+     · déconnexion RÉELLE — signOut Firebase puis retour #/auth ;
+     · i18n FR/AN complète de la page auth.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -196,6 +216,9 @@ window.addEventListener('storage', (e) => {
     lang = storedLang();
     applyLang();
     document.title = titleFor(currentView || 'accueil');
+    /* Les autres modules (page auth) réagissent comme à un vrai
+       changement de langue (setLang). */
+    window.dispatchEvent(new CustomEvent('arvexa-langchange', { detail: { lang } }));
   }
 });
 
@@ -291,6 +314,59 @@ const I18N = {
     'deco.message': 'Tu devras te <strong>reconnecter</strong> pour accéder à ton compte.',
     'deco.ok': 'Se déconnecter',
     'deco.cancel': 'Annuler',
+    'auth.tab.login': 'Connexion',
+    'auth.tab.register': 'Inscription',
+    'auth.header.versInscription': 'Pas encore membre ?',
+    'auth.header.versConnexion': 'Connexion',
+    'auth.login.badge': 'Bon retour parmi nous',
+    'auth.login.titre1': 'Content de te',
+    'auth.login.titre2': 'revoir',
+    'auth.login.titre3': ' !',
+    'auth.login.sousTitre': 'Retrouve ton espace personnel et continue ta préparation pour le BAC.',
+    'auth.champ.email': 'Adresse e-mail',
+    'auth.champ.mdp': 'Mot de passe',
+    'auth.champ.prenom': 'Prénom',
+    'auth.champ.nom': 'Nom',
+    'auth.champ.etablissement': 'Établissement',
+    'auth.champ.optionnel': 'optionnel',
+    'auth.champ.confirm': 'Confirmer le mot de passe',
+    'ph.login.email': 'exemple@email.com',
+    'ph.login.mdp': 'Entre ton mot de passe',
+    'ph.register.prenom': 'Ton prénom',
+    'ph.register.nom': 'Ton nom',
+    'ph.register.email': 'exemple@email.com',
+    'ph.register.etab': 'Nom de ton lycée',
+    'ph.register.mdp': 'Minimum 6 caractères',
+    'ph.register.confirm': 'Retape ton mot de passe',
+    'auth.login.souvenir': 'Se souvenir de moi',
+    'auth.login.oublie': 'Mot de passe oublié ?',
+    'auth.login.bouton': 'Se connecter',
+    'auth.divider': 'ou',
+    'auth.login.creerCompte': 'Créer un nouveau compte',
+    'auth.login.securite': 'Connexion sécurisée par Firebase',
+    'auth.footer.droits': 'Tous droits réservés',
+    'auth.footer.aide': 'Aide',
+    'auth.footer.dejaMembre': 'Déjà membre ?',
+    'auth.footer.seConnecter': 'Se connecter',
+    'auth.register.badge': 'Étape 1 sur 2',
+    'auth.register.titre1': 'Crée ton compte',
+    'auth.register.titre2': 'ARVEXA',
+    'auth.register.sousTitre': 'Rejoins la communauté des élèves qui préparent leur BAC avec méthode et sérénité.',
+    'auth.register.etape': 'Inscription',
+    'auth.register.force': 'Force du mot de passe',
+    'auth.register.conditions1': 'J’accepte les',
+    'auth.register.conditions2': 'Conditions d’utilisation',
+    'auth.register.conditions3': 'et la',
+    'auth.register.conditions4': 'Politique de confidentialité',
+    'auth.register.conditions5': 'd’ARVEXA School.',
+    'auth.register.termsErreur': 'Tu dois accepter les conditions pour continuer.',
+    'auth.register.bouton': 'Créer mon compte',
+    'auth.register.securite': 'Inscription sécurisée par Firebase',
+    'auth.force.tresFaible': 'Très faible',
+    'auth.force.faible': 'Faible',
+    'auth.force.moyen': 'Moyen',
+    'auth.force.fort': 'Fort',
+    'auth.force.tresFort': 'Très fort',
   },
   an: {
     'salut.matin': 'Good morning',
@@ -348,6 +424,59 @@ const I18N = {
     'deco.message': 'You will need to <strong>log in</strong> again to access your account.',
     'deco.ok': 'Log out',
     'deco.cancel': 'Cancel',
+    'auth.tab.login': 'Sign in',
+    'auth.tab.register': 'Sign up',
+    'auth.header.versInscription': 'Not a member yet?',
+    'auth.header.versConnexion': 'Sign in',
+    'auth.login.badge': 'Welcome back among us',
+    'auth.login.titre1': 'Good to see',
+    'auth.login.titre2': 'you again',
+    'auth.login.titre3': '!',
+    'auth.login.sousTitre': 'Back to your personal space — keep preparing for the BAC.',
+    'auth.champ.email': 'Email address',
+    'auth.champ.mdp': 'Password',
+    'auth.champ.prenom': 'First name',
+    'auth.champ.nom': 'Last name',
+    'auth.champ.etablissement': 'School',
+    'auth.champ.optionnel': 'optional',
+    'auth.champ.confirm': 'Confirm password',
+    'ph.login.email': 'name@email.com',
+    'ph.login.mdp': 'Enter your password',
+    'ph.register.prenom': 'Your first name',
+    'ph.register.nom': 'Your last name',
+    'ph.register.email': 'name@email.com',
+    'ph.register.etab': 'Your school name',
+    'ph.register.mdp': 'At least 6 characters',
+    'ph.register.confirm': 'Retype your password',
+    'auth.login.souvenir': 'Remember me',
+    'auth.login.oublie': 'Forgot password?',
+    'auth.login.bouton': 'Sign in',
+    'auth.divider': 'or',
+    'auth.login.creerCompte': 'Create a new account',
+    'auth.login.securite': 'Secure sign-in powered by Firebase',
+    'auth.footer.droits': 'All rights reserved',
+    'auth.footer.aide': 'Help',
+    'auth.footer.dejaMembre': 'Already a member?',
+    'auth.footer.seConnecter': 'Sign in',
+    'auth.register.badge': 'Step 1 of 2',
+    'auth.register.titre1': 'Create your account',
+    'auth.register.titre2': 'ARVEXA',
+    'auth.register.sousTitre': 'Join the students preparing for the BAC with method and serenity.',
+    'auth.register.etape': 'Sign up',
+    'auth.register.force': 'Password strength',
+    'auth.register.conditions1': 'I accept the',
+    'auth.register.conditions2': 'Terms of use',
+    'auth.register.conditions3': 'and the',
+    'auth.register.conditions4': 'Privacy policy',
+    'auth.register.conditions5': 'of ARVEXA School.',
+    'auth.register.termsErreur': 'You must accept the terms to continue.',
+    'auth.register.bouton': 'Create my account',
+    'auth.register.securite': 'Secure sign-up powered by Firebase',
+    'auth.force.tresFaible': 'Very weak',
+    'auth.force.faible': 'Weak',
+    'auth.force.moyen': 'Medium',
+    'auth.force.fort': 'Strong',
+    'auth.force.tresFort': 'Very strong',
   },
 };
 
@@ -501,15 +630,24 @@ function updateStatsCard(pickNewQuote) {
   const quoteEl = document.getElementById('quoteText');
   if (!coursesEl || !doneEl || !ringFill || !ringPct || !quoteEl) return;
 
-  /* Statistiques : localStorage 'arvexa-stats' { courses, done }
-     si présent, sinon les valeurs d'exemple (démo). */
+  /* Statistiques RÉELLES (v0.10 — fin des données fictives) :
+     le profil Firestore (window.ARVXA_PROFILE, posé par js/auth.js)
+     fait foi — stats.courses / stats.done, 0 au départ. Le
+     localStorage 'arvexa-stats' reste un cache d'appareil ; aucune
+     valeur d'exemple n'est plus utilisée. */
   const STATS_KEY = 'arvexa-stats';
-  const STATS_DEMO = { courses: 12, done: 7 };
-  let stats = STATS_DEMO;
-  try {
-    const s = JSON.parse(localStorage.getItem(STATS_KEY) || 'null');
-    if (s && Number.isFinite(s.courses) && s.courses > 0) stats = s;
-  } catch { /* JSON invalide : on garde l'exemple */ }
+  let stats = null;
+  const profile = window.ARVXA_PROFILE || null;
+  if (profile && profile.stats && Number.isFinite(profile.stats.courses)) {
+    stats = { courses: profile.stats.courses, done: profile.stats.done || 0 };
+  }
+  if (!stats) {
+    try {
+      const s = JSON.parse(localStorage.getItem(STATS_KEY) || 'null');
+      if (s && Number.isFinite(s.courses) && s.courses > 0) stats = s;
+    } catch { /* JSON invalide */ }
+  }
+  if (!stats) stats = { courses: 0, done: 0 };
 
   const courses = Math.max(0, Math.round(stats.courses));
   const done = Math.min(courses, Math.max(0, Math.round(stats.done || 0)));
@@ -575,13 +713,14 @@ refreshBtn?.addEventListener('click', () => {
    retour du navigateur fonctionnel), le titre de l'onglet aussi.
    ═══════════════════════════════════════════════════════════════════ */
 
-const VIEWS = ['accueil', 'reviser', 'examen', 'progression', 'profil'];
+const VIEWS = ['accueil', 'reviser', 'examen', 'progression', 'profil', 'auth'];
 const TITLES = {
   accueil: { fr: 'ARVX', an: 'ARVX' },
   reviser: { fr: 'ARVX — Réviser', an: 'ARVX — Revise' },
   examen: { fr: 'ARVX — Examen', an: 'ARVX — Exam' },
   progression: { fr: 'ARVX — Progression', an: 'ARVX — Progress' },
   profil: { fr: 'ARVX — Profil', an: 'ARVX — Profile' },
+  auth: { fr: 'ARVX — Connexion', an: 'ARVX — Sign in' },
 };
 
 function titleFor(name) {
@@ -602,6 +741,10 @@ function showView(name, { animate = true } = {}) {
   if (!viewSections.has(name)) name = 'accueil';
   if (name === currentView) return;
   currentView = name;
+
+  /* Mode auth (v0.10) : les deux barres s'effacent, la vue auth
+     occupe tout l'écran (CSS body.auth-mode). */
+  document.body.classList.toggle('auth-mode', name === 'auth');
 
   /* Vues : une seule visible (attribut hidden = pas de coût de rendu) */
   for (const [n, el] of viewSections) {
@@ -758,13 +901,19 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && confirmModal?.classList.contains('show')) closeArvexaConfirm();
 });
 
-/* ── DÉCONNEXION — mêmes textes que le site original
-   (handleLogout, index.html:3928-3936). La confirmation exécutera
-   Firebase Auth signOut + redirection à l'étape backend. ── */
+/* ── DÉCONNEXION — RÉELLE depuis v0.10 : signOut Firebase (js/auth.js)
+   expose window.ARVXA_AUTH.signOut), puis onAuthStateChanged(null)
+   renvoie automatiquement à #/auth (garde de route). Mêmes textes
+   que le site original (handleLogout, index.html:3928-3936). ── */
 
-function performLogout() {
-  /* Backend à venir : signOut(auth) puis écran d'accueil/connexion.
-     Pour l'instant rien de plus — aucun compte n'est encore branché. */
+async function performLogout() {
+  try {
+    if (window.ARVXA_AUTH && typeof window.ARVXA_AUTH.signOut === 'function') {
+      await window.ARVXA_AUTH.signOut();
+    }
+  } catch (e) {
+    console.warn('[Auth] Déconnexion :', e.code || e.message);
+  }
 }
 
 const logoutBtn = document.getElementById('logoutBtn');
@@ -877,3 +1026,48 @@ function filterLibrary() {
 }
 
 libSearch?.addEventListener('input', filterLibrary);
+
+/* ═══════════════════════════════════════════════════════════════════
+   V0.10 — PONT AVEC L'AUTHENTIFICATION (js/auth.js)
+   · window.ARVXA_t : le module auth traduit ses messages via le
+     même dictionnaire i18n (une seule source de vérité).
+   · 'arvexa-profile' : js/auth.js a posé le profil Firestore réel
+     (window.ARVXA_PROFILE + localStorage 'arvexa_user') → on
+     rafraîchit salutation, carte profil et carte statistiques.
+   · Voile de démarrage : filet de sécurité 6 s — si Firebase est
+     injoignable (hors ligne), on dévoile la page auth plutôt que
+     de laisser l'écran bloqué.
+   ═══════════════════════════════════════════════════════════════════ */
+
+window.ARVXA_t = (key) => t(key);
+window.ARVXA_lang = () => lang;
+
+window.addEventListener('arvexa-profile', () => {
+  applyGreeting();
+  applyProfileCard();
+  updateStatsCard();
+});
+
+function hideBootVeil() {
+  const veil = document.getElementById('bootVeil');
+  if (veil && !veil.classList.contains('done')) {
+    veil.classList.add('done');
+    setTimeout(() => veil.remove(), 400);
+  }
+}
+window.ARVXA_hideVeil = hideBootVeil;
+
+setTimeout(() => {
+  if (!window.ARVXA_AUTH_READY) {
+    /* Firebase injoignable : on dévoile la page auth (les boutons
+       réessaieront la connexion dès le retour du réseau). */
+    if (currentView !== 'auth') {
+      if (VIEWS.includes(parseHash()) && parseHash() !== 'auth') {
+        try { sessionStorage.setItem('arvx_pending_route', parseHash()); } catch { /* stockage indisponible */ }
+      }
+      if (location.hash === '#/auth') showView('auth', { animate: false });
+      else location.replace('#/auth');
+    }
+    hideBootVeil();
+  }
+}, 6000);

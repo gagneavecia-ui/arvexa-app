@@ -24,8 +24,23 @@
 
   <link rel="stylesheet" href="css/design-system.css">
   <script type="module" src="js/main.js"></script>
+  <script type="module" src="js/auth.js"></script>
 </head>
 <body>
+
+  <!-- ══════════════════════════════════════════════════════
+       VOILE DE DÉMARRAGE (v0.10) — plein écran, marque ARVX.
+       Couvre l'app pendant la vérification de la session
+       Firebase (IndexedDB, ~200-400 ms) : l'utilisateur ne
+       voit JAMAIS d'écran intermédiaire, ni l'app sans auth
+       ni l'auth sans app. Retiré par js/auth.js dès que
+       l'état d'authentification est connu (et par un filet
+       de sécurité 6 s côté main.js si Firebase est injoignable).
+       ══════════════════════════════════════════════════════ -->
+  <div class="boot-veil" id="bootVeil" aria-hidden="true">
+    <span class="boot-veil-logo">ARV<span>X</span></span>
+    <span class="boot-veil-dot"></span>
+  </div>
 
   <!-- ══════════════════════════════════════════════════════
        MENU (tiroir) — design fidèle à la sidebar du site
@@ -144,6 +159,318 @@
          jamais de barre de chargement du navigateur).
          Le contenu de chaque vue arrive étape par étape.
          ══════════════════════════════════════════════════════ -->
+    <!-- ══════════════════════════════════════════════════════
+         VUE AUTH (v0.10) — CONNEXION + INSCRIPTION SUR UNE
+         SEULE PAGE. Design copié À L'IDENTIQUE des pages
+         login.html / register.html du site ARVEXA School
+         (mêmes héros, mêmes champs, mêmes matériaux) — les
+         deux écrans cohabitent dans deux panneaux échangés
+         sans rechargement par le contrôle segmenté (transition
+         glissement + fondu 220 ms, principe AXIA : zéro
+         navigation document). Barres masquées en mode auth
+         (body.auth-mode) ; la page défile À L'INTÉRIEUR du
+         cadre si le contenu dépasse — le document ne défile
+         jamais. Connexion réelle à Firebase (js/auth.js).
+         Le lien de démonstration « Essayer sans compte » est
+         retiré : plus de données fictives.
+         ══════════════════════════════════════════════════════ -->
+    <section class="view view-auth" id="view-auth" data-view="auth" hidden>
+      <div class="auth-bg-layer" aria-hidden="true"></div>
+      <div class="auth-glow auth-glow-1" aria-hidden="true"></div>
+      <div class="auth-glow auth-glow-2" aria-hidden="true"></div>
+      <div class="auth-grain" aria-hidden="true"></div>
+
+      <!-- ===== HEADER ===== -->
+      <header class="auth-header">
+        <a href="#/auth" class="auth-logo" id="authLogo" aria-label="ARVEXA School">
+          ARVEX<span class="auth-gold">A School</span>
+        </a>
+        <button type="button" class="auth-header-link" id="authHeaderLink">
+          <i class="fas fa-user-plus" id="authHeaderLinkIcon" aria-hidden="true"></i>
+          <span id="authHeaderLinkText">Pas encore membre ?</span>
+        </button>
+      </header>
+
+      <!-- ===== CONTRÔLE SEGMENTÉ — les deux pages en une ===== -->
+      <div class="auth-tabs" id="authTabs" role="tablist" aria-label="Connexion ou inscription">
+        <span class="auth-tabs-indicator" id="authTabsIndicator" aria-hidden="true"></span>
+        <button type="button" class="auth-tab active" id="authTabLogin" role="tab"
+                aria-selected="true" aria-controls="authPanelLogin" data-i18n="auth.tab.login">Connexion</button>
+        <button type="button" class="auth-tab" id="authTabRegister" role="tab"
+                aria-selected="false" aria-controls="authPanelRegister" data-i18n="auth.tab.register">Inscription</button>
+      </div>
+
+      <div class="auth-page">
+
+        <!-- ═══════════ PANEL 1 : CONNEXION (design login.html) ═══════════ -->
+        <div class="auth-panel active" id="authPanelLogin" data-panel="login" role="tabpanel">
+
+          <!-- HERO -->
+          <section class="auth-hero">
+            <div class="auth-hero-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                <circle cx="12" cy="16.5" r="1.2" fill="currentColor" stroke="none"></circle>
+              </svg>
+            </div>
+            <div class="auth-hero-badge">
+              <i class="fas fa-star"></i>
+              <span data-i18n="auth.login.badge">Bon retour parmi nous</span>
+            </div>
+            <h1 class="auth-hero-title">
+              <span data-i18n="auth.login.titre1">Content de te</span>
+              <em data-i18n="auth.login.titre2">revoir</em>
+              <span data-i18n="auth.login.titre3"> !</span>
+            </h1>
+            <p class="auth-hero-subtitle" data-i18n="auth.login.sousTitre">
+              Retrouve ton espace personnel et continue ta préparation pour le BAC.
+            </p>
+          </section>
+
+          <!-- FORM CARD -->
+          <div class="auth-form-card">
+            <form id="authLoginForm" novalidate>
+
+              <!-- EMAIL -->
+              <div class="field">
+                <label class="field-label" for="authLoginEmail" data-i18n="auth.champ.email">Adresse e-mail</label>
+                <div class="field-input-wrap" id="authLoginEmailWrap">
+                  <span class="icon"><i class="fas fa-envelope"></i></span>
+                  <input type="email" id="authLoginEmail" placeholder="exemple@email.com"
+                         autocomplete="email" inputmode="email" required data-i18n-ph="ph.login.email">
+                  <span class="field-status" id="authLoginEmailStatus"></span>
+                </div>
+                <div class="field-help" id="authLoginEmailHelp"></div>
+              </div>
+
+              <!-- PASSWORD -->
+              <div class="field">
+                <label class="field-label" for="authLoginPassword" data-i18n="auth.champ.mdp">Mot de passe</label>
+                <div class="field-input-wrap" id="authLoginPwdWrap">
+                  <span class="icon"><i class="fas fa-lock"></i></span>
+                  <input type="password" id="authLoginPassword" placeholder="Entre ton mot de passe"
+                         autocomplete="current-password" required minlength="6" data-i18n-ph="ph.login.mdp">
+                  <button type="button" class="toggle-pwd" id="authLoginToggle" aria-label="Afficher le mot de passe">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <span class="field-status" id="authLoginPwdStatus" aria-live="polite"></span>
+                </div>
+                <div class="field-help" id="authLoginPwdHelp"></div>
+              </div>
+
+              <!-- OPTIONS -->
+              <div class="login-options">
+                <label class="remember-checkbox">
+                  <input type="checkbox" id="authRememberMe">
+                  <label for="authRememberMe" data-i18n="auth.login.souvenir">Se souvenir de moi</label>
+                </label>
+                <button type="button" class="forgot-link" id="authForgot" data-i18n="auth.login.oublie">Mot de passe oublié ?</button>
+              </div>
+
+              <!-- SUBMIT -->
+              <button type="submit" class="btn-submit" id="authLoginBtn" disabled>
+                <span class="btn-icon"><i class="fas fa-sign-in-alt"></i></span>
+                <span class="btn-text" data-i18n="auth.login.bouton">Se connecter</span>
+                <span class="spinner"></span>
+              </button>
+            </form>
+
+            <!-- DIVIDER -->
+            <div class="divider">
+              <span class="line"></span>
+              <span class="text" data-i18n="auth.divider">ou</span>
+              <span class="line"></span>
+            </div>
+
+            <!-- REGISTER SWITCH -->
+            <button type="button" class="btn-register" id="authGoRegister">
+              <i class="fas fa-user-plus"></i>
+              <span data-i18n="auth.login.creerCompte">Créer un nouveau compte</span>
+            </button>
+
+            <!-- SECURITY -->
+            <div class="security-note">
+              <i class="fas fa-shield-alt"></i>
+              <span data-i18n="auth.login.securite">Connexion sécurisée par Firebase</span>
+            </div>
+          </div>
+
+          <!-- FOOTER -->
+          <footer class="auth-footer">
+            <p>
+              © 2026 ARVEXA School — <span data-i18n="auth.footer.droits">Tous droits réservés</span>
+              &nbsp;•&nbsp;
+              <a href="#" onclick="return false;" data-i18n="auth.footer.aide">Aide</a>
+            </p>
+          </footer>
+        </div>
+
+        <!-- ═══════════ PANEL 2 : INSCRIPTION (design register.html) ═══════════ -->
+        <div class="auth-panel" id="authPanelRegister" data-panel="register" role="tabpanel" hidden>
+
+          <!-- HERO -->
+          <section class="auth-hero">
+            <div class="auth-hero-badge">
+              <i class="fas fa-rocket"></i>
+              <span data-i18n="auth.register.badge">Étape 1 sur 2</span>
+            </div>
+            <h1 class="auth-hero-title">
+              <span data-i18n="auth.register.titre1">Crée ton compte</span><br>
+              <em data-i18n="auth.register.titre2">ARVEXA</em>
+            </h1>
+            <p class="auth-hero-subtitle" data-i18n="auth.register.sousTitre">
+              Rejoins la communauté des élèves qui préparent leur BAC avec méthode et sérénité.
+            </p>
+          </section>
+
+          <!-- PROGRESS STEPS -->
+          <div class="progress-steps">
+            <div class="step-dot active"></div>
+            <div class="step-dot"></div>
+            <span class="step-label" data-i18n="auth.register.etape">Inscription</span>
+          </div>
+
+          <!-- FORM CARD -->
+          <div class="auth-form-card">
+            <form id="authRegisterForm" novalidate autocomplete="on">
+
+              <!-- Prénom + Nom -->
+              <div class="name-row">
+                <div class="field">
+                  <label class="field-label" for="authFirstName" data-i18n="auth.champ.prenom">Prénom</label>
+                  <div class="field-input-wrap" id="authFirstNameWrap">
+                    <span class="icon"><i class="fas fa-user"></i></span>
+                    <input type="text" id="authFirstName" name="given-name" placeholder="Ton prénom"
+                           autocomplete="given-name" required maxlength="40" data-i18n-ph="ph.register.prenom">
+                    <span class="field-status" id="authFirstNameStatus"></span>
+                  </div>
+                  <div class="field-help" id="authFirstNameHelp"></div>
+                </div>
+                <div class="field">
+                  <label class="field-label" for="authLastName" data-i18n="auth.champ.nom">Nom</label>
+                  <div class="field-input-wrap" id="authLastNameWrap">
+                    <span class="icon"><i class="fas fa-user"></i></span>
+                    <input type="text" id="authLastName" name="family-name" placeholder="Ton nom"
+                           autocomplete="family-name" required maxlength="40" data-i18n-ph="ph.register.nom">
+                    <span class="field-status" id="authLastNameStatus"></span>
+                  </div>
+                  <div class="field-help" id="authLastNameHelp"></div>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="field">
+                <label class="field-label" for="authRegisterEmail" data-i18n="auth.champ.email">Adresse e-mail</label>
+                <div class="field-input-wrap" id="authRegisterEmailWrap">
+                  <span class="icon"><i class="fas fa-envelope"></i></span>
+                  <input type="email" id="authRegisterEmail" name="email" placeholder="exemple@email.com"
+                         autocomplete="email" inputmode="email" required data-i18n-ph="ph.register.email">
+                  <span class="field-status" id="authRegisterEmailStatus"></span>
+                </div>
+                <div class="field-help" id="authRegisterEmailHelp"></div>
+              </div>
+
+              <!-- Établissement -->
+              <div class="field">
+                <label class="field-label" for="authEstablishment">
+                  <span data-i18n="auth.champ.etablissement">Établissement</span>
+                  <span class="optional" data-i18n="auth.champ.optionnel">optionnel</span>
+                </label>
+                <div class="field-input-wrap" id="authEstablishmentWrap">
+                  <span class="icon"><i class="fas fa-school"></i></span>
+                  <input type="text" id="authEstablishment" name="organization" placeholder="Nom de ton lycée"
+                         autocomplete="organization" maxlength="60" data-i18n-ph="ph.register.etab">
+                  <span class="field-status" id="authEstablishmentStatus"></span>
+                </div>
+                <div class="field-help" id="authEstablishmentHelp"></div>
+              </div>
+
+              <!-- Mot de passe -->
+              <div class="field">
+                <label class="field-label" for="authRegisterPassword" data-i18n="auth.champ.mdp">Mot de passe</label>
+                <div class="field-input-wrap" id="authRegisterPwdWrap">
+                  <span class="icon"><i class="fas fa-lock"></i></span>
+                  <input type="password" id="authRegisterPassword" name="new-password" placeholder="Minimum 6 caractères"
+                         autocomplete="new-password" required minlength="6" data-i18n-ph="ph.register.mdp">
+                  <button type="button" class="toggle-pwd" id="authRegisterToggle" aria-label="Afficher le mot de passe">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+                <div class="pwd-strength" id="authPwdStrength">
+                  <div class="pwd-strength-bar">
+                    <div class="pwd-strength-segment" data-seg="1"></div>
+                    <div class="pwd-strength-segment" data-seg="2"></div>
+                    <div class="pwd-strength-segment" data-seg="3"></div>
+                    <div class="pwd-strength-segment" data-seg="4"></div>
+                    <div class="pwd-strength-segment" data-seg="5"></div>
+                  </div>
+                  <div class="pwd-strength-text">
+                    <span data-i18n="auth.register.force">Force du mot de passe</span>
+                    <span class="label" id="authPwdStrengthLabel">Très faible</span>
+                  </div>
+                </div>
+                <div class="field-help" id="authRegisterPwdHelp"></div>
+              </div>
+
+              <!-- Confirmation -->
+              <div class="field">
+                <label class="field-label" for="authConfirmPassword" data-i18n="auth.champ.confirm">Confirmer le mot de passe</label>
+                <div class="field-input-wrap" id="authConfirmWrap">
+                  <span class="icon"><i class="fas fa-check-circle"></i></span>
+                  <input type="password" id="authConfirmPassword" name="confirm-password" placeholder="Retape ton mot de passe"
+                         autocomplete="new-password" required data-i18n-ph="ph.register.confirm">
+                  <button type="button" class="toggle-pwd" id="authConfirmToggle" aria-label="Afficher le mot de passe">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                  <span class="field-status" id="authConfirmStatus"></span>
+                </div>
+                <div class="field-help" id="authConfirmHelp"></div>
+              </div>
+
+              <!-- Conditions -->
+              <label class="terms-box" id="authTermsBox" for="authTermsCheckbox">
+                <input type="checkbox" id="authTermsCheckbox">
+                <span>
+                  <span data-i18n="auth.register.conditions1">J’accepte les</span>
+                  <a href="#" onclick="return false;" data-i18n="auth.register.conditions2">Conditions d’utilisation</a>
+                  <span data-i18n="auth.register.conditions3">et la</span>
+                  <a href="#" onclick="return false;" data-i18n="auth.register.conditions4">Politique de confidentialité</a>
+                  <span data-i18n="auth.register.conditions5">d’ARVEXA School.</span>
+                </span>
+              </label>
+              <div class="terms-error" id="authTermsError" data-i18n="auth.register.termsErreur">
+                Tu dois accepter les conditions pour continuer.
+              </div>
+
+              <!-- Bouton -->
+              <button type="submit" class="btn-submit" id="authRegisterBtn" disabled>
+                <span class="btn-icon"><i class="fas fa-user-plus"></i></span>
+                <span class="btn-text" data-i18n="auth.register.bouton">Créer mon compte</span>
+                <span class="spinner"></span>
+              </button>
+
+              <!-- Note sécurité -->
+              <div class="security-note">
+                <i class="fas fa-shield-alt"></i>
+                <span data-i18n="auth.register.securite">Inscription sécurisée par Firebase</span>
+              </div>
+            </form>
+          </div>
+
+          <!-- FOOTER -->
+          <footer class="auth-footer">
+            <p>
+              <span data-i18n="auth.footer.dejaMembre">Déjà membre ?</span>
+              <button type="button" class="auth-footer-link" id="authGoLogin" data-i18n="auth.footer.seConnecter">Se connecter</button>
+              &nbsp;•&nbsp;
+              <a href="https://wa.me/22774872082" target="_blank" rel="noopener" data-i18n="auth.footer.aide">Aide</a>
+            </p>
+          </footer>
+        </div>
+      </div>
+    </section>
+
     <section class="view" id="view-accueil" data-view="accueil">
       <!-- ═══ BLOC 1 — CARTE PRINCIPALE (v0.6.1 · v0.7.2 · v0.9.2) ═══
            RETOUR AU NORMAL (v0.9.2, demande : « rends la normale »)
@@ -338,6 +665,13 @@
       <i class="fas fa-user" aria-hidden="true"></i><span data-i18n="nav.profil">Profil</span>
     </button>
   </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       TOASTS AUTH (v0.10) — même design que les pages
+       connexion/inscription du site original (injection
+       sécurisée par textContent, icônes succès / erreur).
+       ══════════════════════════════════════════════════════ -->
+  <div class="auth-toast-container" id="authToastContainer" aria-live="polite"></div>
 
   <!-- ══════════════════════════════════════════════════════
        MODALE DE CONFIRMATION — copie à l'identique du site
