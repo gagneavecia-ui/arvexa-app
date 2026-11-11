@@ -299,7 +299,11 @@ body {
    du thème clair.
    ═══════════════════════════════════════════════════════════════════ */
 .stats-card {
-  flex: 0 0 auto;   /* taille FIXE compacte — ne s'étend jamais */
+  /* v0.9.1 : les actions rapides sont supprimées — la carte
+     principale devient l'élément SOUPLE de la colonne : elle s'étire
+     pour remplir EXACTEMENT l'espace jusqu'à la barre du bas
+     (plancher : un quart du cadre, cf. min-height ci-dessous). */
+  flex: 1 1 auto;
   position: relative;
   overflow: hidden; /* contient les rayons, comme .lib-course */
   display: flex;
@@ -392,10 +396,12 @@ body {
 
 /* Le chiffre : Fraunces, or dégradé — façon le X du wordmark ARVX
    (v0.9 : nouvelle identité typographique ARVX, différente de la
-   référence). Une écriture riche, jamais simple. */
+   référence). Une écriture riche, jamais simple. v0.9.1 : légèrement
+   agrandi — la carte principale occupe tout l'espace libéré par les
+   actions rapides et son contenu suit. */
 .stats-number {
   font-family: 'Fraunces', Georgia, serif;
-  font-size: 46px;
+  font-size: 52px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.01em;
@@ -408,7 +414,7 @@ body {
 .stats-numlabel {
   font-family: 'Fraunces', Georgia, serif;
   font-style: italic;
-  font-size: 18px;
+  font-size: 20px;
   color: #F5F0E8;  /* crème littéral : la carte reste verte même en clair */
 }
 
@@ -438,9 +444,9 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 4px 10px;
+  padding: 5px 12px;
   border-radius: 999px;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.02em;
   color: rgba(245, 240, 232, 0.88);
@@ -455,8 +461,8 @@ body {
    Le pourcentage au centre est en Fraunces. */
 .stats-ring {
   position: relative;
-  width: 84px;
-  height: 84px;
+  width: 92px;
+  height: 92px;
   flex-shrink: 0;
 }
 
@@ -486,7 +492,7 @@ body {
   align-items: center;
   justify-content: center;
   font-family: 'Fraunces', Georgia, serif;
-  font-size: 19px;
+  font-size: 21px;
   font-weight: 700;
   color: #F5F0E8;
 }
@@ -616,14 +622,12 @@ body {
    soulève par l'ombre (plus de filet à allumer). Réviser, lui,
    garde ses filets or. */
 .mode-card:active,
-.continue-card:active,
-.quick-tile:active { transform: scale(0.97); }
+.continue-card:active { transform: scale(0.97); }
 
 .lib-subject:active { border-color: rgba(224, 184, 74, 0.5); }
 
 @media (hover: hover) {
-  .mode-card:hover,
-  .quick-tile:hover {
+  .mode-card:hover {
     transform: translateY(-1px);
     box-shadow:
       0 14px 26px -10px rgba(184, 134, 11, 0.38),
@@ -793,152 +797,12 @@ html[data-theme="light"] .mode-icon.focus {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 3 : ACTIONS RAPIDES (v0.6.4 · v0.9)
-   v0.9 (demande : « quelques dispositions pour différencier,
-   supprime les bordures ») : la grille 2×2 — copie de la référence —
-   devient une COLONNE de 4 RANGÉES à chevron (pastille icône,
-   nom, flèche). Sans bordure ni liseré : surfaces douces + ombres.
-   La liste est le SEUL élément souple de la colonne : elle s'étire
-   (flex:1, rangées 1fr) pour remplir EXACTEMENT l'espace restant
-   jusqu'à la barre du bas — ni vide, ni débordement.
+   v0.9.1 — BLOC 3 « ACTIONS RAPIDES » SUPPRIMÉ (demande explicite :
+   « Supprime Action rapide »). Toutes les règles des tuiles (bloc,
+   label, grille, tuiles, pastilles, chevrons, variantes claires)
+   sont retirées : la barre du bas reste l'unique navigation, et
+   l'espace libéré est absorbé par la carte principale (flex:1).
    ═══════════════════════════════════════════════════════════════════ */
-.quick-block {
-  display: flex;
-  flex-direction: column;
-  margin-top: 14px;
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
-.quick-label {
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-bottom: 9px;
-}
-
-/* v0.9 — tiret or dégradé devant le label (signature accueil) */
-.quick-label::before {
-  content: "";
-  width: 16px;
-  height: 3px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
-}
-
-.quick-grid {
-  display: grid;
-  grid-template-columns: 1fr;          /* v0.9 : une seule colonne */
-  grid-template-rows: repeat(4, 1fr);  /* 4 rangées égales qui remplissent */
-  gap: 9px;
-  flex: 1 1 auto;
-  min-height: 0;
-}
-
-.quick-tile {
-  display: flex;
-  flex-direction: row;      /* v0.9 : rangée horizontale à chevron */
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-  min-height: 0;
-  padding: 10px 14px;
-  border-radius: 16px;
-  /* v0.9 SANS BORDURE : dégradé or léger sur voile clair */
-  background:
-    linear-gradient(150deg, rgba(224, 184, 74, 0.08), rgba(224, 184, 74, 0.01) 52%),
-    rgba(var(--rgb-soft), 0.045);
-  border: none;
-  box-shadow:
-    0 10px 22px -12px rgba(184, 134, 11, 0.26),
-    0 2px 6px rgba(0, 0, 0, 0.14);
-  text-align: left;
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
-              box-shadow 0.25s ease;
-}
-
-.quick-tile:active { transform: scale(0.97); }
-
-.quick-tile:focus-visible {
-  outline: 2px solid var(--accent-bright);
-  outline-offset: 3px;
-}
-
-.quick-icon {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12.5px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
-  color: #141210;
-}
-
-/* Deux tons ARVX : or pour Réviser / Examen, vert pour Progression,
-   neutre pour Profil (même grammaire que les mini-cartes de mode) */
-.quick-icon.green {
-  background: rgba(92, 198, 155, 0.13);
-  color: #5CC69B;
-}
-
-.quick-icon.neutral {
-  background: rgba(var(--rgb-soft), 0.07);
-  color: var(--text-dim);
-}
-
-.quick-name {
-  flex: 1;          /* v0.9 : pousse le chevron à droite */
-  font-size: 13.5px;
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--text-light);
-}
-
-/* Chevron de rangée (v0.9) — discret, doré et glissant au survol */
-.quick-chev {
-  flex-shrink: 0;
-  font-size: 11px;
-  color: var(--text-muted);
-  transition: color 0.2s ease, transform 0.18s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.quick-tile:hover .quick-chev {
-  color: var(--accent-bright);
-  transform: translateX(2px);
-}
-
-/* Variante claire des actions rapides — fond blanc plein + dégradé
-   or profond léger ; pastilles or dégradées restent or.
-   (Continuer reste VERTE dans les deux thèmes — pilule de marque
-   v0.9, aucune surcharge claire.) */
-html[data-theme="light"] .quick-tile {
-  background:
-    linear-gradient(150deg, rgba(184, 134, 11, 0.09), rgba(184, 134, 11, 0.015) 52%),
-    var(--bg-card-solid);
-  box-shadow: 0 10px 22px -12px rgba(74, 58, 24, 0.35), 0 2px 6px rgba(74, 58, 24, 0.08);
-}
-
-html[data-theme="light"] .quick-icon.green {
-  background: rgba(26, 58, 42, 0.09);
-  color: #1E5C40;
-}
-
-html[data-theme="light"] .quick-icon.neutral {
-  background: rgba(32, 27, 18, 0.06);
-  color: #6B6250;
-}
 
 /* ═══════════════════════════════════════════════════════════════════
    VUE RÉVISER (v0.7.1 · v0.8) — structure de la page « cours »
@@ -1403,7 +1267,7 @@ html[data-theme="light"] .lib-subject-ok {
 
 /* Petits écrans en hauteur : les cartes restent compactes, le cadre
    ne déborde jamais (pages fixes — aucun défilement vertical). La
-   carte « Continuer » s'efface ici : la grille d'actions absorbe
+   carte « Continuer » s'efface ici : la carte principale absorbe
    tout l'espace restant, rien ne déborde, rien n'est coupé.
    (La règle est placée APRÈS tous les blocs accueil pour gagner.) */
 @media (max-height: 720px) {
@@ -1413,12 +1277,6 @@ html[data-theme="light"] .lib-subject-ok {
   .mode-name { font-size: 14px; }
   .mode-sub { font-size: 10px; }
   .continue-card { display: none; }
-  .quick-block { margin-top: 12px; }
-  .quick-label { margin-bottom: 8px; }
-  .quick-grid { gap: 8px; }
-  .quick-tile { padding: 8px 12px; gap: 10px; }
-  .quick-icon { width: 28px; height: 28px; border-radius: 8px; font-size: 11.5px; }
-  .quick-name { font-size: 12.5px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════

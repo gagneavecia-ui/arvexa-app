@@ -253,7 +253,6 @@ const I18N = {
     'accueil.mode.focusSub': 'Cycles 25/5',
     'accueil.continuer': 'Continuer',
     'accueil.continuerSub': 'Ta dernière révision apparaîtra ici.',
-    'accueil.actionsTitre': 'Actions rapides',
     'reviser.eyebrow': 'Bibliothèque',
     'reviser.titre': 'Mes cours',
     'reviser.ajouter': 'Ajouter',
@@ -313,7 +312,6 @@ const I18N = {
     'accueil.mode.focusSub': '25/5 cycles',
     'accueil.continuer': 'Continue',
     'accueil.continuerSub': 'Your latest revision will appear here.',
-    'accueil.actionsTitre': 'Quick actions',
     'reviser.eyebrow': 'Library',
     'reviser.titre': 'My courses',
     'reviser.ajouter': 'Add',
@@ -545,9 +543,11 @@ function updateStatsCard(pickNewQuote) {
   if (streakEl) streakEl.textContent = String(streak);
   if (timeEl) timeEl.textContent = timeTxt;
 
-  /* Citation : « … » — même esprit que le hero-quote de l'original. */
+  /* Citation : « … » — même esprit que le hero-quote de l'original.
+     Espaces INSÉCABLES (v0.9.1) : les guillemets ne restent jamais
+     seuls sur une ligne quand la citation s'enroule. */
   const q = QUOTES[updateStatsCard._qi];
-  quoteEl.textContent = '« ' + (lang === 'an' ? q.an : q.fr) + ' »';
+  quoteEl.textContent = '«\u00A0' + (lang === 'an' ? q.an : q.fr) + '\u00A0»';
 }
 
 /* ── MENU TIROIR (fidèle au site original, index.html:3947-3954) ── */
@@ -675,12 +675,13 @@ for (const [name, btn] of navButtons) {
   });
 }
 
-/* ── NAVIGATION SPA DEPUIS L'ACCUEIL (v0.6.4) ──
-   Mini-cartes de mode, carte « Continuer » et tuiles d'actions :
-   un seul chemin — le hash, la même source de vérité que la barre
-   du bas. Aucune navigation document, aucune barre de chargement.
-   Les cibles existent (vues déjà créées) ; les écrans DÉTAILLÉS
-   (lecteur de révision, import de cours) viendront à leur étape. */
+/* ── NAVIGATION SPA DEPUIS L'ACCUEIL (v0.6.4 · v0.9.1) ──
+   Mini-cartes de mode et carte « Continuer » : un seul chemin — le
+   hash, la même source de vérité que la barre du bas. Aucune
+   navigation document, aucune barre de chargement. (v0.9.1 : les
+   tuiles « Actions rapides » sont supprimées — la barre du bas
+   couvre toutes les routes.) Les écrans DÉTAILLÉS (lecteur de
+   révision, import de cours) viendront à leur étape. */
 function goRoute(route) {
   if (!VIEWS.includes(route)) return;
   const target = '#/' + route;
@@ -691,9 +692,6 @@ function goRoute(route) {
 document.getElementById('modeQuick')?.addEventListener('click', () => goRoute('reviser'));
 document.getElementById('modeFocus')?.addEventListener('click', () => goRoute('examen'));
 document.getElementById('continueCard')?.addEventListener('click', () => goRoute('reviser'));
-document.querySelectorAll('.quick-tile[data-go]').forEach((tile) => {
-  tile.addEventListener('click', () => goRoute(tile.dataset.go));
-});
 
 /* Retour/avant du navigateur, lien #/... : une seule source de vérité */
 window.addEventListener('hashchange', () => showView(parseHash()));

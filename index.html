@@ -190,7 +190,7 @@
           <span class="stats-chip"><i class="fas fa-hourglass-half" aria-hidden="true"></i><b id="statTime">2h15</b><span data-i18n="accueil.semaine">cette semaine</span></span>
         </div>
         <div class="stats-quote">
-          <span class="stats-quote-text" id="quoteText">« Chaque page lue rapproche ton objectif. »</span>
+          <span class="stats-quote-text" id="quoteText">«&nbsp;Chaque page lue rapproche ton objectif.&nbsp;»</span>
           <span class="stats-quote-author">— ARVX</span>
         </div>
       </div>
@@ -244,41 +244,15 @@
         <span class="continue-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
       </button>
 
-      <!-- ═══ BLOC 3 — ACTIONS RAPIDES (v0.6.4 · v0.9) ═══
-           Raccourcis vers les 4 écrans de l'app. v0.9 (demande :
-           « quelques dispositions pour différencier ») : la grille
-           2×2 — copie de la référence — devient une COLONNE de
-           4 RANGÉES à chevron (pastille icône, nom, flèche), sans
-           bordure (surfaces douces + ombres). La liste s'étire
-           (flex) pour remplir EXACTEMENT l'espace restant jusqu'à
-           la barre du bas. Chaque rangée navigue en SPA — même
-           source de vérité que la barre du bas (le hash), zéro
-           rechargement. -->
-      <div class="quick-block" role="group" aria-label="Actions rapides">
-        <div class="quick-label" data-i18n="accueil.actionsTitre">Actions rapides</div>
-        <div class="quick-grid">
-          <button type="button" class="quick-tile" data-go="reviser">
-            <span class="quick-icon gold" aria-hidden="true"><i class="fas fa-book-open"></i></span>
-            <span class="quick-name" data-i18n="nav.reviser">Réviser</span>
-            <span class="quick-chev" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
-          </button>
-          <button type="button" class="quick-tile" data-go="examen">
-            <span class="quick-icon gold" aria-hidden="true"><i class="fas fa-pencil-alt"></i></span>
-            <span class="quick-name" data-i18n="nav.examen">Examen</span>
-            <span class="quick-chev" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
-          </button>
-          <button type="button" class="quick-tile" data-go="progression">
-            <span class="quick-icon green" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
-            <span class="quick-name" data-i18n="nav.progression">Progression</span>
-            <span class="quick-chev" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
-          </button>
-          <button type="button" class="quick-tile" data-go="profil">
-            <span class="quick-icon neutral" aria-hidden="true"><i class="fas fa-user"></i></span>
-            <span class="quick-name" data-i18n="nav.profil">Profil</span>
-            <span class="quick-chev" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
-          </button>
-        </div>
-      </div>
+      <!-- ═══ v0.9.1 — BLOC 3 « ACTIONS RAPIDES » SUPPRIMÉ (demande
+           explicite : « Supprime Action rapide »). La colonne de
+           raccourcis disparaît : toutes les routes restent accessibles
+           depuis la barre du bas (Accueil · Réviser · Examen ·
+           Progression · Profil — même navigation SPA, zéro
+           rechargement). L'espace libéré est absorbé par la carte
+           principale, qui s'étire pour que la page reste CALÉE entre
+           la barre du haut et la barre du bas — ni vide, ni
+           défilement. -->
     </section>
     <section class="view view-reviser" id="view-reviser" data-view="reviser" hidden>
       <!-- ═══ VUE RÉVISER (v0.7 · v0.8) — STRUCTURE INSPIRÉE DE LA
