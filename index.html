@@ -175,7 +175,7 @@
         </div>
       </div>
 
-      <!-- ═══ BLOC 1bis — LES DEUX MODES (v0.6.2 · v0.6.3) ═══
+      <!-- ═══ BLOC 1bis — LES DEUX MODES (v0.6.2 · v0.6.4) ═══
            Position fidèle à l'app de référence (AXIA) : deux
            mini-cartes côte à côte JUSTE AU-DESSOUS de la carte
            statistiques — pas trop grandes mais bien espacées
@@ -184,21 +184,21 @@
            sous-titre en bas (ici : Mode rapide · 5 min, Mode
            focus · cycles 25/5). On reprend la POSITION, pas les
            couleurs de la référence : badges ARVX (or pour le
-           rapide, vert pour le focus). Simple affichage : ce sont
-           des <div> — AUCUNE navigation, aucun clic, aucun effet
-           d'appui. Chaque mode sera branché à son étape, sur
+           rapide, vert pour le focus). BOUTONS cliquables avec
+           effet d'appui (navigation remise, v0.6.4) ; l'écran
+           cible de chaque mode sera branché à son étape, sur
            demande explicite. -->
       <div class="modes-row" role="group" aria-label="Modes de révision">
-        <div class="mode-card mode-quick" id="modeQuick">
+        <button type="button" class="mode-card mode-quick" id="modeQuick">
           <span class="mode-icon quick" aria-hidden="true"><i class="fas fa-bolt"></i></span>
           <span class="mode-name" data-i18n="accueil.mode.rapide">Mode rapide</span>
           <span class="mode-sub" data-i18n="accueil.mode.rapideSub">Révision éclair · 5 min</span>
-        </div>
-        <div class="mode-card mode-focus" id="modeFocus">
+        </button>
+        <button type="button" class="mode-card mode-focus" id="modeFocus">
           <span class="mode-icon focus" aria-hidden="true"><i class="fas fa-stopwatch"></i></span>
           <span class="mode-name" data-i18n="accueil.mode.focus">Mode focus</span>
           <span class="mode-sub" data-i18n="accueil.mode.focusSub">Cycles 25 / 5</span>
-        </div>
+        </button>
       </div>
     </section>
     <section class="view" id="view-reviser" data-view="reviser" hidden><!-- contenu — étapes suivantes --></section>

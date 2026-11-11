@@ -193,9 +193,11 @@ body {
 .view.enter { animation: view-enter 0.18s cubic-bezier(0.25, 1, 0.5, 1) both; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 1 : CARTE STATISTIQUES (v0.6.1)
+   VUE ACCUEIL — BLOC 1 : CARTE STATISTIQUES (v0.6.1 · v0.6.4)
    Héros compact = 1/4 du cadre entre la barre du haut et la barre
-   du bas. Polyvalent (toutes matières) : nombre de cours à gauche,
+   du bas (retour à la taille compacte validée — la version étendue
+   v0.6.3 débordait sur vrai téléphone : mini-cartes coupées sous la
+   barre). Polyvalent (toutes matières) : nombre de cours à gauche,
    anneau de progression à droite, citation en bas (façon original).
    Typographie expressive : Playfair Display (chiffre, label,
    citation) — jamais d'écriture simple ; les petits libellés UI
@@ -211,12 +213,15 @@ body {
 }
 
 .stats-card {
-  flex: 1 1 auto;   /* s'étend pour REMPLIR l'espace restant (v0.6.3) */
-  min-height: 0;    /* ne déborde jamais du cadre, quel que soit l'écran */
+  flex: 0 0 auto;   /* taille FIXE compacte — ne s'étend jamais */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
+  /* UN QUART du cadre utile entre la barre du haut et la barre du bas
+     (repli 100vh pour les navigateurs sans dvh, v0.6.4) */
+  min-height: calc((100vh - var(--header-height) - calc(57px + var(--safe-bottom))) / 4);
+  min-height: calc((100dvh - var(--header-height) - calc(57px + var(--safe-bottom))) / 4);
   padding: 16px 18px 13px;
   border-radius: var(--radius);
   /* Mêmes matériaux que la carte profil du menu (radial or doux) */
@@ -228,8 +233,6 @@ body {
 }
 
 .stats-top {
-  flex: 1 1 auto;   /* dans la carte étendue : chiffres + anneau centrés,
-                       citation toujours calée en bas */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -407,12 +410,13 @@ html[data-theme="light"] .stats-ring-fill { stroke: #9A7209; }
 html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 1bis : LES DEUX MODES (v0.6.2 · v0.6.3)
+   VUE ACCUEIL — BLOC 1bis : LES DEUX MODES (v0.6.2 · v0.6.4)
    Position fidèle à l'app de référence (AXIA) : deux mini-cartes
    côte à côte JUSTE AU-DESSOUS de la carte statistiques — pas trop
    grandes mais bien espacées : un espace vertical net (margin-top)
-   les détache de la carte principale. Simple affichage : AUCUNE
-   navigation, aucun clic, aucun effet d'appui — les modes seront
+   les détache de la carte principale. Ce sont des BOUTONS cliquables
+   (navigation remise, v0.6.4) : cursor + effet d'appui, comme les
+   tool-cards de l'original. Les écrans cibles de chaque mode seront
    branchés chacun à leur étape, sur demande explicite.
    ═══════════════════════════════════════════════════════════════════ */
 .modes-row {
@@ -423,8 +427,9 @@ html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2
   flex-shrink: 0;                 /* compactes, calées au-dessus de la barre */
 }
 
-/* Simple affichage — PAS un bouton : ni cursor, ni appui, ni focus.
-   La transition ne sert qu'au fondu doux clair ↔ sombre (v0.5.1). */
+/* Boutons cliquables — navigation remise (v0.6.4) : cursor,
+   feedback d'appui et contour de focus, comme les tool-cards de
+   l'original. La transition garde aussi le fondu clair ↔ sombre. */
 .mode-card {
   display: flex;
   flex-direction: column;
@@ -441,7 +446,17 @@ html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2
   text-align: left;
   font: inherit;
   color: inherit;
-  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Feedback tactile, comme les tool-cards de l'original */
+.mode-card:active { transform: scale(0.97); }
+
+.mode-card:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
 }
 
 /* Badge de l'icône : or pour « Mode rapide » */

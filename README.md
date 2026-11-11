@@ -3,29 +3,36 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.6.3 Accueil : cadre verrouillé, espace net, remplissage
+## Étape actuelle — v0.6.4 Réparation : carte compacte + navigation remise
 
-- **ZÉRO défilement, nulle part, jamais** (v0.6.3) : `html`, `body` et `.page`
-  ont la hauteur **exacte** de l'écran (`100dvh`) + `overflow: hidden` +
-  `overscroll-behavior: none` — défiler vers le bas est **impossible** sur
-  toutes les pages, y compris le rebond Android. Chaque vue remplit
-  **exactement** l'espace entre la barre du haut et la barre du bas
-  (`flex: 1`, sans jamais passer sous la barre du bas).
-- **Espace net sous la carte principale** : les deux mini-cartes n'étaient
-  plus collées — `margin-top: 16px` (13px sur petits écrans) les détache
-  proprement de la carte statistiques.
-- **L'espace restant est REMPLI, tout reste calé** : la carte statistiques
-  s'étend pour occuper tout l'espace libre au-dessus des mini-cartes
-  (chiffres + anneau centrés verticalement, citation toujours calée en bas),
-  les mini-cartes restent compactes juste au-dessus de la barre du bas.
-  Vérifié au compteur : écart carte→mini-cartes 16px, mini-cartes→barre 12px,
-  `scrollHeight = clientHeight` (360×780 et 360×640).
-- **AUCUNE navigation sur les mini-cartes** : ce sont de simples `<div>` —
-  plus de `<button>`, plus de `cursor: pointer`, plus d'effet d'appui, plus
-  de contour de focus, et **aucun handler JS**. Chaque mode sera branché à
-  son étape, sur demande explicite.
-- Preuves SPA re-vérifiées : tentative de défilement 500px → `scrollY = 0`,
-  marque mémoire 42 intacte après navigation, `navigation = 1`.
+- **Retour à la taille compacte validée** : la version v0.6.3 (« la carte
+  remplit l'espace ») débordait sur vrai téléphone — carte géante et
+  **mini-cartes coupées sous la barre du bas**. v0.6.4 ramène la carte
+  statistiques à **1/4 du cadre** (`min-height` /4, avec repli `100vh`
+  pour les navigateurs sans `dvh`), taille FIXE qui ne s'étend jamais :
+  le contenu total (~350px) tient sur **n'importe quel écran**, plus
+  aucune coupure possible.
+- **Navigation remise sur les deux mini-cartes** : redeviennent des
+  **`<button>` cliquables** — `cursor: pointer`, **effet d'appui**
+  (échelle 0,97) et contour de focus, comme les tool-cards de l'original.
+  Les écrans cibles de chaque mode seront branchés chacun à leur étape.
+- **Conservé de v0.6.3** (demandes explicites) :
+  - **Espace net de 16px** entre la carte principale et les mini-cartes
+    (13px sur petits écrans) — plus rien de collé ;
+  - **Cadre verrouillé** — zéro défilement (`100dvh` + `overflow: hidden`
+    + `overscroll-behavior: none`), tout reste calé entre les deux barres.
+- Vérifié au compteur (360×780 et 360×600) : carte 170px, écart 16px,
+  mini-cartes **entières** au-dessus de la barre, `scrollY = 0` après
+  tentative de défilement, 2 boutons cliquables.
+- Preuves SPA re-vérifiées : marque mémoire 42 intacte, `navigation = 1`,
+  deux thèmes, FR/AN instantané.
+
+## v0.6.3 — (remplacée par v0.6.4)
+
+- Tentative « la carte remplit l'espace restant » : correcte en
+  émulateur, **mais débordait sur vrai téléphone** (carte géante,
+  mini-cartes coupées sous la barre). Annulée par v0.6.4 ; seuls le
+  verrouillage du cadre et l'espace de 16px sont conservés.
 
 ## v0.6.2 — Accueil : bloc 1bis « les deux modes »
 

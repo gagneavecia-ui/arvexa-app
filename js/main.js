@@ -88,18 +88,19 @@
        (FR/AN) via data-i18n — aucun handler pour l'instant, les
        modes seront branchés à leur étape.
 
-   v0.6.3 :
+   v0.6.3 / v0.6.4 :
      · CADRE VERROUILLÉ — plus AUCUN défilement nulle part : html,
        body et .page ont une hauteur exacte (100dvh) + overflow
        hidden + overscroll-behavior none ; chaque .view remplit
        exactement l'espace entre la barre du haut et la barre du
-       bas. La carte statistiques s'étend pour REMPLIR l'espace
-       libre (citation toujours calée en bas) et un espace net
-       (margin-top) sépare la carte des deux mini-cartes, qui
-       deviennent de simples <div> — ni bouton, ni cursor, ni
-       appui : AUCUNE navigation sur elles (rien ne sera branché
-       sans demande explicite). JS inchangé : aucun handler n'a
-       jamais été posé sur les modes.
+       bas. v0.6.3 avait aussi étendu la carte statistiques pour
+       « remplir » l'espace : sur vrai téléphone elle débordait
+       (mini-cartes coupées sous la barre du bas) — v0.6.4 la
+       ramène à sa taille compacte (1/4 du cadre) et REMET la
+       navigation sur les deux mini-cartes (boutons + effet
+       d'appui), tout en gardant l'espace net de 16px entre la
+       carte et elles. Les écrans cibles des modes seront branchés
+       chacun à leur étape.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
