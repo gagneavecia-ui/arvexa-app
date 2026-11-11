@@ -3,9 +3,40 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.7 Réviser : copie identique de la page « cours » AXIA (+ v0.6.4 accueil rempli)
+## Étape actuelle — v0.7.1 Réviser recolorée aux couleurs EXACTES du site
 
-### v0.7 — La vue Réviser est la page Cours d'AXIA, à l'identique
+### v0.7.1 — La vue Réviser passe aux couleurs ARVX (structure AXIA conservée)
+
+Le squelette de la page « cours » d'AXIA reste identique (mesuré au
+computed style sur https://axia-chi.vercel.app/cours), mais **toutes les
+teintes sont désormais celles du site** — aucun héritage de couleur
+AXIA ne subsiste :
+
+- **Fond de page** : `var(--bg)` — sombre `#0A0A0A` / papier `#F5F1E8`
+  (thème clair suit automatiquement les tokens du site) ;
+- **Carte héros « À rouvrir en premier »** : **vert de marque**
+  `var(--primary)` `#1A3A2A` + **radial or** dans le coin haut-gauche
+  (le matériau exact des cartes accueil) + filet or 0.22 ; **rayons
+  aurora** recalibrés sur le vert de marque (deux rampes : émeraude
+  bleutée / vert-or sombre), anneau de progression **or**
+  (`--accent-bright`), textes crème `#F5F0E8` ;
+- **Bouton Réviser ce cours →** : **dégradé or signature du site**
+  `linear-gradient(135deg, var(--accent), var(--accent-bright))`,
+  encre `#141210`, glow or `rgba(184,134,11,.45)` — le même matériau
+  que les pastilles Premium / avatar du menu ;
+- **Pastilles matières** : dégradé or signature + encre `#141210` ;
+  **bordures or** `rgba(184,134,11,.38)` + glow `rgba(184,134,11,.12)`
+  (le rôle visuel des bordures ambre d'AXIA, teinte ARVX exacte) ;
+- **Badges « À jour »** : **vert exact du site** `--success-light`
+  `#3AB67E` sur voile `rgba(45,125,90,.16)` ;
+- **Encres et textes** : tokens du site partout (`--text-light`,
+  `--text-dim`, `--text-muted`), filet or de la recherche
+  `rgba(184,134,11,.22)` ;
+- **Thème clair** : papier + encre chaude automatiques via les tokens,
+  la carte héros reste verte (marque) comme l'ardoise restait sombre
+  chez AXIA.
+
+### v0.7 — La vue Réviser est la page Cours d'AXIA, à l'identique (structure)
 
 Copie mesurée **au computed style** sur https://axia-chi.vercel.app/cours
 (compte de test créé pour inspecter la page remplie, thèmes clair/sombre
@@ -13,19 +44,16 @@ et libellés français exacts) :
 
 - **En-tête bibliothèque** : eyebrow `BIBLIOTHÈQUE` (11px/600, +1.32px),
   titre **Mes cours** (26px/800), avatar doré ARVX, bouton **+ Ajouter**
-  (pill 40px, radius 999 — clair sur sombre, sombre sur clair) ;
+  (pill 40px, radius 999 — crème sur sombre, encre sur papier) ;
 - **Recherche** h42 radius 14 — **filtre réellement** cours et matières
   (instantané, SPA), état vide « Aucun résultat. » ;
-- **Carte héros « À rouvrir en premier »** : ardoise `#1F2933`, **rayons
-  aurora** (SVG 47 segments, deux rampes de teintes mesurées, position
-  exacte −131px/−193px, opacité 0.55), anneau de progression 66px
-  (piste blanche 12 %), sous-titre matière · chapitre · fiches dues,
-  **≈ 7 min** et bouton vert pill **Réviser ce cours →** (dégradé EXACT
-  `#34A853 → #1E7E3A`, glow vert `rgba(52,168,83,.6)`) ;
+- **Carte héros « À rouvrir en premier »** : voir v0.7.1 ci-dessus —
+  **rayons aurora** (SVG 47 segments, deux rampes recalibrées, position
+  exacte −131px/−193px, opacité 0.55), anneau de progression 66px,
+  sous-titre matière · chapitre · fiches dues, **≈ 7 min** et bouton
+  pill **Réviser ce cours →** ;
 - **Mes matières** + compteur (« 1 matière · 1 cours »), cartes 2
-  colonnes radius 18 : bordure ambre `rgba(251,188,5,.45)` + glow,
-  pastille 34px `#F5A800`, badge rond, badge **« À jour »** vert ;
-- **Couleurs de page** : sombre `#0F1419`, clair blanc pur — comme AXIA ;
+  colonnes radius 18 (voir v0.7.1) ;
 - **Libellés FR/AN exacts** (Bibliothèque/Library, Mes cours/My courses,
   À rouvrir en premier/Reopen first, Réviser ce cours/Revise this
   course, Mes matières/My subjects, À jour/Up to date…) ;

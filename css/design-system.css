@@ -40,10 +40,17 @@
             (carte Continuer + rangée d'actions rapides 2×2 qui
             s'étire jusqu'à la barre du bas).
    v0.7    : vue RÉVISER — copie identique de la page « cours »
-            d'AXIA (couleurs mesurées au computed : ardoise
-            #1F2933, rayons aurora, vert #34A853→#1E7E3A, ambre
-            #FBBC05). La liste défile À L'INTÉRIEUR du cadre,
-            exactement comme AXIA — le document ne défile jamais.
+            d'AXIA (structure mesurée au computed style). La liste
+            défile À L'INTÉRIEUR du cadre, exactement comme AXIA —
+            le document ne défile jamais.
+   v0.7.1  : la vue Réviser passe aux COULEURS EXACTES DU SITE :
+            fond --bg, carte héros verte --primary + radial or
+            (matériau des cartes accueil), rayons recalibrés vert
+            émeraude / vert-or, bouton dégradé or signature
+            (accent → accent-bright, encre #141210), pastilles
+            matières or, bordures or rgba(184,134,11,…), badges
+            « À jour » en vert --success. Structure AXIA conservée
+            à l'identique — seules les teintes deviennent ARVX.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -732,12 +739,14 @@ html[data-theme="light"] .quick-icon.neutral {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE RÉVISER (v0.7) — COPIE IDENTIQUE DE LA PAGE « COURS » D'AXIA
-   (axia-chi.vercel.app/cours). Couleurs mesurées au computed style
-   sur AXIA lui-même : page sombre #0F1419 (claire : blanc pur),
-   carte héros ardoise #1F2933 + rayons aurora (opacité 0.55),
-   dégradé vert exact du bouton #34A853 → #1E7E3A, ambre #FBBC05
-   (bordures matières rgba(251,188,5,.45) + pastille #F5A800).
+   VUE RÉVISER (v0.7.1) — structure de la page « cours » d'AXIA
+   (axia-chi.vercel.app/cours), COULEURS EXACTES DU SITE ARVX :
+   fond --bg (sombre #0A0A0A / papier #F5F1E8), carte héros verte
+   --primary avec radial or (le matériau exact des cartes accueil)
+   + rayons « aurora » recalibrés sur le vert de marque, bouton
+   dégradé or signature (accent → accent-bright, encre #141210),
+   pastilles matières or, bordures or rgba(184,134,11,…), badges
+   « À jour » en vert --success du site.
    Les deux barres restent FIXÉES : la liste défile À L'INTÉRIEUR
    du cadre (overflow-y local), exactement comme AXIA — le document,
    lui, ne défile JAMAIS (html/body verrouillés, cf. cadre fixe).
@@ -748,7 +757,7 @@ html[data-theme="light"] .quick-icon.neutral {
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
-  background: #0F1419;
+  background: var(--bg);         /* couleur exacte du site (sombre / papier) */
   overflow-y: auto;              /* défilement interne — comme AXIA */
   overscroll-behavior: contain;
   scrollbar-width: none;
@@ -772,7 +781,7 @@ html[data-theme="light"] .quick-icon.neutral {
   font-weight: 600;
   letter-spacing: 1.32px;
   text-transform: uppercase;
-  color: #7C8794;
+  color: var(--text-dim);
 }
 
 .lib-title-row {
@@ -789,7 +798,7 @@ html[data-theme="light"] .quick-icon.neutral {
   font-weight: 800;
   letter-spacing: -0.52px;
   line-height: 1.15;
-  color: #F1EEE7;
+  color: var(--text-light);
 }
 
 .lib-avatar {
@@ -803,7 +812,7 @@ html[data-theme="light"] .quick-icon.neutral {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 17px;
   font-weight: 700;
-  color: #FFF6DC;
+  color: #FFF6DC;  /* crème or de l'avatar — déjà signature ARVX */
   background:
     radial-gradient(120% 150% at 30% 20%, #E0B84A, #B8860B 70%);
   box-shadow: 0 4px 12px rgba(184, 134, 11, 0.35);
@@ -817,8 +826,9 @@ html[data-theme="light"] .quick-icon.neutral {
   padding: 0 16px;
   border: none;
   border-radius: 999px;
-  background: #F1EEE7;
-  color: #0F1419;
+  /* Crème (sombre) / encre (clair) — contraste inversé, tokens du site */
+  background: var(--text-light);
+  color: var(--bg);
   font: inherit;
   font-size: 13px;
   font-weight: 700;
@@ -830,7 +840,7 @@ html[data-theme="light"] .quick-icon.neutral {
 .lib-add:active { transform: scale(0.96); }
 
 .lib-add:focus-visible {
-  outline: 2px solid #34A853;
+  outline: 2px solid var(--accent-bright);
   outline-offset: 3px;
 }
 
@@ -842,14 +852,14 @@ html[data-theme="light"] .quick-icon.neutral {
   margin-top: 16px;
   padding: 0 12px;
   border-radius: 14px;
-  background: #171D24;
-  border: 1px solid #28313A;
+  background: var(--bg-surface);
+  border: 1px solid rgba(184, 134, 11, 0.22);  /* filet or du site */
   cursor: text;
 }
 
 .lib-search i {
   font-size: 14px;
-  color: #7C8794;
+  color: var(--text-dim);
 }
 
 .lib-search input {
@@ -861,10 +871,10 @@ html[data-theme="light"] .quick-icon.neutral {
   font: inherit;
   font-size: 14px;
   font-weight: 500;
-  color: #F1EEE7;
+  color: var(--text-light);
 }
 
-.lib-search input::placeholder { color: #7C8794; }
+.lib-search input::placeholder { color: var(--text-dim); }
 .lib-search input::-webkit-search-cancel-button { -webkit-appearance: none; }
 
 /* ── Corps déroulant : carte héros, matières, état vide ── */
@@ -877,11 +887,18 @@ html[data-theme="light"] .quick-icon.neutral {
   overflow: hidden;
   border-radius: 26px;
   padding: 18px;
-  background: #1F2933;
+  /* Vert de marque + radial or : le matériau EXACT des cartes accueil,
+     posé sur --primary (la couleur signature du site). */
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(224, 184, 74, 0.16), rgba(224, 184, 74, 0.02) 62%),
+    var(--primary);
+  border: 1px solid rgba(224, 184, 74, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-/* Rayons « aurora » d'AXIA : disque SVG 590px positionné à
-   l'identique (-131px, -193px), opacité 0.55 (SVG généré par JS) */
+/* Rayons « aurora » : disque SVG 590px aux paramètres géométriques
+   d'AXIA (-131px, -193px), opacité 0.55, teintes recalibrées sur
+   le vert de marque ARVX (SVG généré par JS) */
 .lib-rays {
   position: absolute;
   left: -131px;
@@ -903,7 +920,7 @@ html[data-theme="light"] .quick-icon.neutral {
 .lib-course-eyebrow {
   font-size: 12.5px;
   font-weight: 600;
-  color: rgba(243, 245, 248, 0.72);
+  color: rgba(245, 240, 232, 0.75);
 }
 
 .lib-course-head {
@@ -920,7 +937,7 @@ html[data-theme="light"] .quick-icon.neutral {
   font-weight: 800;
   letter-spacing: -0.21px;
   line-height: 1.19;
-  color: #FFFFFF;
+  color: #F5F0E8;               /* crème exact du site */
 }
 
 .lib-ring {
@@ -938,13 +955,13 @@ html[data-theme="light"] .quick-icon.neutral {
 
 .lib-ring-track {
   fill: none;
-  stroke: rgba(255, 255, 255, 0.12);
+  stroke: rgba(245, 240, 232, 0.16);
   stroke-width: 7;
 }
 
 .lib-ring-fill {
   fill: none;
-  stroke: #FFFFFF;
+  stroke: var(--accent-bright);  /* or exact du site (comme la jauge accueil) */
   stroke-width: 7;
   stroke-linecap: round;
   stroke-dasharray: 169.65;
@@ -959,7 +976,7 @@ html[data-theme="light"] .quick-icon.neutral {
   justify-content: center;
   font-size: 14.5px;
   font-weight: 800;
-  color: #FFFFFF;
+  color: #F5F0E8;
 }
 
 .lib-course-sub {
@@ -967,7 +984,7 @@ html[data-theme="light"] .quick-icon.neutral {
   max-width: 232px;
   font-size: 12.5px;
   line-height: 1.45;
-  color: rgba(243, 245, 248, 0.72);
+  color: rgba(245, 240, 232, 0.75);
 }
 
 .lib-course-foot {
@@ -979,10 +996,11 @@ html[data-theme="light"] .quick-icon.neutral {
 
 .lib-course-min {
   font-size: 12.5px;
-  color: rgba(243, 245, 248, 0.72);
+  color: rgba(245, 240, 232, 0.75);
 }
 
-/* Bouton vert pill — dégradé et glow EXACTS d'AXIA */
+/* Bouton or pill — dégradé or SIGNATURE du site (pastilles
+   premium / avatar du menu) + encre sombre exacte #141210 */
 .lib-revise {
   display: inline-flex;
   align-items: center;
@@ -991,15 +1009,15 @@ html[data-theme="light"] .quick-icon.neutral {
   padding: 0 20px;
   border: none;
   border-radius: 999px;
-  background: linear-gradient(135deg, #34A853, #1E7E3A);
-  color: #FFFFFF;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #141210;
   font: inherit;
   font-size: 13.5px;
   font-weight: 700;
   cursor: pointer;
   box-shadow:
-    rgba(52, 168, 83, 0.6) 0 8px 20px -6px,
-    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+    rgba(184, 134, 11, 0.45) 0 8px 20px -6px,
+    rgba(255, 255, 255, 0.28) 0 1px 0 inset;
   transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -1025,12 +1043,12 @@ html[data-theme="light"] .quick-icon.neutral {
   font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.32px;
-  color: #F1EEE7;
+  color: var(--text-light);
 }
 
 .lib-subjects-count {
   font-size: 13px;
-  color: #A9B1BB;
+  color: var(--text-dim);
 }
 
 .lib-grid {
@@ -1047,9 +1065,13 @@ html[data-theme="light"] .quick-icon.neutral {
   min-width: 0;
   padding: 12px;
   border-radius: 18px;
-  background: #171D24;
-  border: 1px solid rgba(251, 188, 5, 0.45);
-  box-shadow: rgba(251, 188, 5, 0.16) 0 6px 14px;
+  /* Même matériau que les cartes accueil + filet or affirmé
+     (le rôle visuel des bordures ambre d'AXIA, teinte ARVX exacte) */
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
   text-align: left;
   font: inherit;
   color: inherit;
@@ -1060,7 +1082,7 @@ html[data-theme="light"] .quick-icon.neutral {
 .lib-subject:active { transform: scale(0.97); }
 
 .lib-subject:focus-visible {
-  outline: 2px solid #FBBC05;
+  outline: 2px solid var(--accent-bright);
   outline-offset: 3px;
 }
 
@@ -1079,8 +1101,9 @@ html[data-theme="light"] .quick-icon.neutral {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #F5A800;
-  color: #FFFFFF;
+  /* Or signature du site, encre sombre exacte — comme premium */
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #141210;
   font-size: 13px;
   font-weight: 800;
 }
@@ -1092,8 +1115,8 @@ html[data-theme="light"] .quick-icon.neutral {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.07);
-  color: #A9B1BB;
+  background: rgba(245, 240, 232, 0.08);
+  color: var(--text-dim);
   font-size: 12px;
   font-weight: 700;
 }
@@ -1104,13 +1127,13 @@ html[data-theme="light"] .quick-icon.neutral {
   font-weight: 800;
   letter-spacing: -0.145px;
   line-height: 1.24;
-  color: #F1EEE7;
+  color: var(--text-light);
 }
 
 .lib-subject-meta {
   margin-top: 4px;
   font-size: 11.5px;
-  color: #A9B1BB;
+  color: var(--text-dim);
 }
 
 .lib-subject-ok {
@@ -1118,8 +1141,9 @@ html[data-theme="light"] .quick-icon.neutral {
   display: inline-flex;
   padding: 3px 8px;
   border-radius: 999px;
-  background: #E2F3E7;
-  color: #34A853;
+  /* Vert exact du site : --success / --success-light */
+  background: rgba(45, 125, 90, 0.16);
+  color: var(--success-light);
   font-size: 10.5px;
   font-weight: 800;
 }
@@ -1128,46 +1152,34 @@ html[data-theme="light"] .quick-icon.neutral {
   margin: 26px 0 6px;
   text-align: center;
   font-size: 14px;
-  color: #7C8794;
+  color: var(--text-muted);
 }
 
-/* Thème clair « papier » de la vue Réviser — AXIA clair : page
-   blanche, encres #1F2933, même carte héros ardoise et même vert */
-html[data-theme="light"] .view-reviser { background: #FFFFFF; }
-
-html[data-theme="light"] .lib-eyebrow { color: #9AA0A8; }
-
-html[data-theme="light"] .lib-title { color: #1F2933; }
-
+/* Thème clair « papier & encre » de la vue Réviser — mêmes
+   matériaux ARVX : la page passe au papier via var(--bg), les
+   encres suivent les tokens du site ; la carte héros reste verte
+   (marque — comme l'ardoise restait sombre chez AXIA). Seules
+   cinq retouches locales sont nécessaires. */
 html[data-theme="light"] .lib-add {
-  background: #1F2933;
-  color: #FFFFFF;
-  box-shadow: rgba(31, 41, 51, 0.5) 0 6px 16px -6px;
+  box-shadow: rgba(38, 32, 25, 0.35) 0 6px 16px -6px;
 }
 
 html[data-theme="light"] .lib-search {
-  background: #FFFFFF;
-  border-color: #E6E8EC;
+  background: var(--bg-card-solid);
 }
 
-html[data-theme="light"] .lib-search input { color: #1F2933; }
-html[data-theme="light"] .lib-search input::placeholder { color: #9AA0A8; }
-
-html[data-theme="light"] .lib-subjects-title { color: #1F2933; }
-html[data-theme="light"] .lib-subjects-count { color: #6B7280; }
-
 html[data-theme="light"] .lib-subject {
-  background: #FFFFFF;
+  background: var(--bg-card-solid);
 }
 
 html[data-theme="light"] .lib-subject-badge {
-  background: rgba(31, 41, 51, 0.06);
-  color: #6B7280;
+  background: rgba(32, 27, 18, 0.06);
 }
 
-html[data-theme="light"] .lib-subject-name { color: #1F2933; }
-html[data-theme="light"] .lib-subject-meta { color: #6B7280; }
-html[data-theme="light"] .lib-empty { color: #9AA0A8; }
+html[data-theme="light"] .lib-subject-ok {
+  background: rgba(45, 125, 90, 0.12);
+  color: var(--success);
+}
 
 /* Petits écrans en hauteur : les cartes restent compactes, le cadre
    ne déborde jamais (pages fixes — aucun défilement vertical). La

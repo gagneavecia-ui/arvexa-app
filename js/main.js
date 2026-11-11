@@ -114,11 +114,13 @@
        ni vide, ni débordement ; sur les écrans courts (≤720px de
        hauteur) la carte Continuer s'efface et tout reste calé.
 
-   v0.7 — VUE RÉVISER, COPIE IDENTIQUE DE LA PAGE « COURS » D'AXIA :
-     · structure et couleurs mesurées au computed style sur AXIA
-       (ardoise #1F2933 + rayons aurora générés en SVG, anneau de
-       progression, bouton vert #34A853→#1E7E3A, matières bordure
-       ambre, badges « À jour »), libellés FR/AN exacts ;
+   v0.7 — VUE RÉVISER, structure de la page « cours » d'AXIA :
+     · rayons aurora générés en SVG (mêmes paramètres géométriques
+       qu'AXIA), anneau de progression, matières + badges « À jour »,
+       libellés FR/AN exacts ;
+   v0.7.1 — COULEURS EXACTES DU SITE : rayons recalibrés sur le
+     vert de marque (émeraude / vert-or), teintes ARVX partout
+     (voir design-system.css) ;
      · recherche qui FILTRE réellement (instantané, SPA) ;
      · les deux barres restent fixées : la liste défile À
        L'INTÉRIEUR du cadre — le document ne défile jamais.
@@ -756,10 +758,11 @@ logoutBtn?.addEventListener('click', (e) => {
 });
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE RÉVISER (v0.7) — copie identique de la page « cours » d'AXIA.
-   Deux moteurs locaux : les rayons « aurora » de la carte héros
-   (SVG généré une fois au démarrage, mêmes paramètres mesurés sur
-   AXIA) et la recherche qui filtre réellement la bibliothèque
+   VUE RÉVISER (v0.7 / v0.7.1) — structure de la page « cours »
+   d'AXIA, couleurs exactes du site ARVX. Deux moteurs locaux : les
+   rayons « aurora » de la carte héros (SVG généré une fois au
+   démarrage, géométrie AXIA, teintes recalibrées sur le vert de
+   marque) et la recherche qui filtre réellement la bibliothèque
    (instantané, aucun rechargement — SPA).
    Les boutons « Ajouter », « Réviser ce cours » et les cartes
    matière gardent leur effet d'appui : leurs écrans (import de
@@ -767,23 +770,24 @@ logoutBtn?.addEventListener('click', (e) => {
    sur demande explicite.
    ═══════════════════════════════════════════════════════════════════ */
 
-/* ── Rayons « aurora » — mêmes paramètres qu'AXIA : disque SVG
+/* ── Rayons « aurora » — géométrie identique à AXIA : disque SVG
    590px positionné (-131px, -193px), opacité 0.55, 47 segments en
-   deux rampes de teintes mesurées au computed style (ardoise
-   bleutée / ardoise verte). Décoratif : aria-hidden + pointer-events
-   none. ── */
+   deux rampes. Teintes RECALIBRÉES sur le vert de marque ARVX
+   #1A3A2A : rampe 1 → vert émeraude bleuté, rampe 2 → vert-or
+   sombre (l'équivalent des rampes ardoise d'AXIA, teintes ARVX).
+   Décoratif : aria-hidden + pointer-events none. ── */
 (function buildLibRays() {
   const holder = document.getElementById('libRays');
   if (!holder) return;
   const COLORS = [
-    'rgb(27,37,50)', 'rgb(28,39,54)', 'rgb(29,41,58)', 'rgb(30,43,61)',
-    'rgb(30,44,65)', 'rgb(31,46,69)', 'rgb(32,48,73)', 'rgb(33,50,77)',
-    'rgb(33,52,80)', 'rgb(34,54,84)', 'rgb(35,56,88)', 'rgb(36,58,92)',
-    'rgb(36,60,96)', 'rgb(37,61,99)', 'rgb(38,63,103)', 'rgb(39,65,107)',
-    'rgb(40,67,111)', 'rgb(40,69,115)', 'rgb(27,37,48)', 'rgb(28,39,49)',
-    'rgb(28,42,49)', 'rgb(28,44,50)', 'rgb(29,46,51)', 'rgb(29,48,51)',
-    'rgb(30,50,52)', 'rgb(30,53,52)', 'rgb(31,55,53)', 'rgb(31,57,54)',
-    'rgb(31,59,54)', 'rgb(32,61,55)',
+    'rgb(23, 49, 37)', 'rgb(23, 51, 39)', 'rgb(24, 53, 41)', 'rgb(24, 54, 42)',
+    'rgb(25, 56, 44)', 'rgb(25, 58, 46)', 'rgb(26, 60, 48)', 'rgb(26, 61, 49)',
+    'rgb(27, 63, 51)', 'rgb(27, 65, 53)', 'rgb(27, 67, 55)', 'rgb(28, 69, 57)',
+    'rgb(28, 70, 58)', 'rgb(29, 72, 60)', 'rgb(29, 74, 62)', 'rgb(30, 76, 64)',
+    'rgb(30, 77, 65)', 'rgb(31, 79, 67)', 'rgb(31, 81, 69)', 'rgb(24, 51, 38)',
+    'rgb(27, 53, 37)', 'rgb(30, 54, 36)', 'rgb(34, 56, 35)', 'rgb(37, 57, 34)',
+    'rgb(40, 59, 33)', 'rgb(43, 61, 32)', 'rgb(46, 62, 31)', 'rgb(50, 64, 30)',
+    'rgb(53, 65, 29)', 'rgb(56, 67, 28)',
   ];
   const N = 47;
   const R = 295.2;
