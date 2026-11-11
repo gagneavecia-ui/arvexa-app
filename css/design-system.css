@@ -128,14 +128,29 @@ html[data-theme="light"] {
 /* ── BASE ──────────────────────────────────────────────────────── */
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-html { scroll-behavior: smooth; width: 100%; overflow-x: hidden; }
+/* CADRE FIXE (v0.6.3) — le document ne défile JAMAIS. Tout l'écran
+   est un cadre : barre du haut en haut, barre du bas en bas, la vue
+   remplit exactement l'espace entre les deux. overflow:hidden +
+   overscroll-behavior:none suppriment tout défilement et tout rebond
+   (glisser vers le bas = impossible, sur toutes les pages). */
+html {
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
 
 body {
   font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   background: var(--bg-dark);
   color: var(--text-light);
   font-size: 14px;
-  min-height: 100dvh;
+  /* Hauteur EXACTE de l'écran : rien ne dépasse, rien ne défile */
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  overscroll-behavior: none;
   /* Place réservée pour la barre de tâches fixe */
   padding-bottom: calc(57px + var(--safe-bottom));
   /* Fondu doux quand on bascule clair ↔ sombre (v0.5.1) */
@@ -144,7 +159,16 @@ body {
 
 ::selection { background: rgba(184, 134, 11, 0.28); color: var(--text-light); }
 
-.page { min-height: 100dvh; }
+/* Le cadre .page : 100% du corps (lui-même à la hauteur exacte de
+   l'écran, place de la barre du bas déduite) — la vue active remplit
+   tout l'espace entre les deux barres, sans jamais passer SOUS la
+   barre du bas. */
+.page {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* le cadre ne déborde jamais */
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    VUES SPA — une seule page, cinq écrans échangés en JS.
@@ -153,7 +177,13 @@ body {
    La vue entrante porte un micro-fade de 0,18 s (purement cosmétique,
    le basculement lui-même est synchrone) ; coupé en mouvement réduit.
    ═══════════════════════════════════════════════════════════════════ */
-.view { min-height: 40vh; }
+/* Chaque vue remplit EXACTEMENT l'espace entre la barre du haut
+   et la barre du bas — ni plus, ni moins. Aucun défilement. */
+.view {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
 
 @keyframes view-enter {
   from { opacity: 0; transform: translateY(8px); }
@@ -174,20 +204,19 @@ body {
 #view-accueil {
   display: flex;
   flex-direction: column;
-  padding: 16px 16px 10px;
+  padding: 16px 16px 14px;
   width: 100%;
   max-width: 720px;   /* centré et propre sur grand écran */
   margin: 0 auto;
 }
 
 .stats-card {
-  flex-shrink: 0;
+  flex: 1 1 auto;   /* s'étend pour REMPLIR l'espace restant (v0.6.3) */
+  min-height: 0;    /* ne déborde jamais du cadre, quel que soit l'écran */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 10px;
-  /* UN QUART du cadre utile entre la barre du haut et la barre du bas */
-  min-height: calc((100dvh - var(--header-height) - calc(57px + var(--safe-bottom))) / 4);
   padding: 16px 18px 13px;
   border-radius: var(--radius);
   /* Mêmes matériaux que la carte profil du menu (radial or doux) */
@@ -199,6 +228,8 @@ body {
 }
 
 .stats-top {
+  flex: 1 1 auto;   /* dans la carte étendue : chiffres + anneau centrés,
+                       citation toujours calée en bas */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -341,8 +372,7 @@ body {
   color: var(--text-muted);
 }
 
-/* Petits écrans en hauteur : la carte reste un quart du cadre,
-   tout s'ajuste sans jamais déborder */
+/* Petits écrans en hauteur : tout s'ajuste sans jamais déborder */
 @media (max-height: 720px) {
   .stats-card { padding: 13px 16px 11px; }
   .stats-number { font-size: 38px; }
@@ -377,22 +407,24 @@ html[data-theme="light"] .stats-ring-fill { stroke: #9A7209; }
 html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 1bis : LES DEUX MODES (v0.6.2)
+   VUE ACCUEIL — BLOC 1bis : LES DEUX MODES (v0.6.2 · v0.6.3)
    Position fidèle à l'app de référence (AXIA) : deux mini-cartes
    côte à côte JUSTE AU-DESSOUS de la carte statistiques — pas trop
-   grandes mais bien espacées, même structure : icône en haut, titre
-   au milieu, sous-titre en bas. On reprend la POSITION, pas les
-   couleurs de la référence : matériaux ARVX (surface, bordure or
-   subtile) avec badge or pour le mode rapide et badge vert pour le
-   mode focus. Titres en Playfair Display — propre et cohérent.
+   grandes mais bien espacées : un espace vertical net (margin-top)
+   les détache de la carte principale. Simple affichage : AUCUNE
+   navigation, aucun clic, aucun effet d'appui — les modes seront
+   branchés chacun à leur étape, sur demande explicite.
    ═══════════════════════════════════════════════════════════════════ */
 .modes-row {
   display: grid;
   grid-template-columns: 1fr 1fr; /* deux cartes sur la même ligne */
-  gap: 12px;                      /* bien espacées */
-  flex-shrink: 0;
+  gap: 12px;                      /* bien espacées entre elles */
+  margin-top: 16px;               /* espace net sous la carte principale */
+  flex-shrink: 0;                 /* compactes, calées au-dessus de la barre */
 }
 
+/* Simple affichage — PAS un bouton : ni cursor, ni appui, ni focus.
+   La transition ne sert qu'au fondu doux clair ↔ sombre (v0.5.1). */
 .mode-card {
   display: flex;
   flex-direction: column;
@@ -409,17 +441,7 @@ html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2
   text-align: left;
   font: inherit;
   color: inherit;
-  cursor: pointer;
-  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
-              border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-/* Feedback tactile, comme les tool-cards de l'original */
-.mode-card:active { transform: scale(0.97); }
-
-.mode-card:focus-visible {
-  outline: 2px solid var(--accent-bright);
-  outline-offset: 3px;
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
 /* Badge de l'icône : or pour « Mode rapide » */
@@ -459,7 +481,7 @@ html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2
 /* Petits écrans en hauteur : les cartes restent compactes, le cadre
    ne déborde jamais (pages fixes — aucun défilement vertical) */
 @media (max-height: 720px) {
-  .modes-row { gap: 10px; }
+  .modes-row { gap: 10px; margin-top: 13px; }
   .mode-card { padding: 11px 13px 10px; gap: 6px; }
   .mode-icon { width: 32px; height: 32px; font-size: 14px; }
   .mode-name { font-size: 15px; }

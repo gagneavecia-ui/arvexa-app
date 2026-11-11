@@ -3,7 +3,31 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.6.2 Accueil : bloc 1bis « les deux modes »
+## Étape actuelle — v0.6.3 Accueil : cadre verrouillé, espace net, remplissage
+
+- **ZÉRO défilement, nulle part, jamais** (v0.6.3) : `html`, `body` et `.page`
+  ont la hauteur **exacte** de l'écran (`100dvh`) + `overflow: hidden` +
+  `overscroll-behavior: none` — défiler vers le bas est **impossible** sur
+  toutes les pages, y compris le rebond Android. Chaque vue remplit
+  **exactement** l'espace entre la barre du haut et la barre du bas
+  (`flex: 1`, sans jamais passer sous la barre du bas).
+- **Espace net sous la carte principale** : les deux mini-cartes n'étaient
+  plus collées — `margin-top: 16px` (13px sur petits écrans) les détache
+  proprement de la carte statistiques.
+- **L'espace restant est REMPLI, tout reste calé** : la carte statistiques
+  s'étend pour occuper tout l'espace libre au-dessus des mini-cartes
+  (chiffres + anneau centrés verticalement, citation toujours calée en bas),
+  les mini-cartes restent compactes juste au-dessus de la barre du bas.
+  Vérifié au compteur : écart carte→mini-cartes 16px, mini-cartes→barre 12px,
+  `scrollHeight = clientHeight` (360×780 et 360×640).
+- **AUCUNE navigation sur les mini-cartes** : ce sont de simples `<div>` —
+  plus de `<button>`, plus de `cursor: pointer`, plus d'effet d'appui, plus
+  de contour de focus, et **aucun handler JS**. Chaque mode sera branché à
+  son étape, sur demande explicite.
+- Preuves SPA re-vérifiées : tentative de défilement 500px → `scrollY = 0`,
+  marque mémoire 42 intacte après navigation, `navigation = 1`.
+
+## v0.6.2 — Accueil : bloc 1bis « les deux modes »
 
 - **Deux mini-cartes côte à côte JUSTE AU-DESSOUS de la carte statistiques** —
   position fidèle à l'app de référence (AXIA) : pas trop grandes mais bien

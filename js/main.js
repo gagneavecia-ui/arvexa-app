@@ -87,6 +87,19 @@
        or) et MODE FOCUS (badge vert), traduits instantanément
        (FR/AN) via data-i18n — aucun handler pour l'instant, les
        modes seront branchés à leur étape.
+
+   v0.6.3 :
+     · CADRE VERROUILLÉ — plus AUCUN défilement nulle part : html,
+       body et .page ont une hauteur exacte (100dvh) + overflow
+       hidden + overscroll-behavior none ; chaque .view remplit
+       exactement l'espace entre la barre du haut et la barre du
+       bas. La carte statistiques s'étend pour REMPLIR l'espace
+       libre (citation toujours calée en bas) et un espace net
+       (margin-top) sépare la carte des deux mini-cartes, qui
+       deviennent de simples <div> — ni bouton, ni cursor, ni
+       appui : AUCUNE navigation sur elles (rien ne sera branché
+       sans demande explicite). JS inchangé : aucun handler n'a
+       jamais été posé sur les modes.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
