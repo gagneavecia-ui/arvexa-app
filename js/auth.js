@@ -456,6 +456,9 @@ onAuthStateChanged(auth, (user) => {
     resolvingUid = null;
     try { localStorage.removeItem('arvexa_user'); } catch { /* stockage indisponible */ }
     window.ARVXA_PROFILE = null;
+    /* Comme l'original : une session qui se ferme ramène au formulaire
+       de CONNEXION (pas au panneau inscription laissé ouvert). */
+    switchMode('login');
     forceAuthView();
     hideVeil();
   }
