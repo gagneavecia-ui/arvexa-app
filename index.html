@@ -16,10 +16,13 @@
   <!-- Font Awesome : même CDN et même version que le site original -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Polices : mêmes familles que le site original (Inter + Playfair Display) -->
+  <!-- Polices ARVX (v0.9 — demande : « change la police d'écriture »)
+       : Fraunces (chiffre, titres, citations, wordmark) + Manrope
+       (interface) — une identité typographique PROPRE à ARVX,
+       différente de la référence (qui utilise Inter + Playfair). -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/design-system.css">
   <script type="module" src="js/main.js"></script>
@@ -144,23 +147,26 @@
          Le contenu de chaque vue arrive étape par étape.
          ══════════════════════════════════════════════════════ -->
     <section class="view" id="view-accueil" data-view="accueil">
-      <!-- ═══ BLOC 1 — CARTE PRINCIPALE (v0.6.1 · v0.7.2 · v0.8) ═══
+      <!-- ═══ BLOC 1 — CARTE PRINCIPALE (v0.6.1 · v0.7.2 · v0.9) ═══
            Héros compact = 1/4 du cadre entre la barre du haut et
-           la barre du bas. Même arrière-plan que la carte héros de
-           RÉVISER — HÉROS SIGNATURE ARVX (v0.8, retouches
-           anti-copie demandées) : vert de marque --primary +
-           anneaux or haut-droit + éclat or bas-droit + filet or
-           intérieur + rayons « aurora » recadrés (#statsRays,
-           même générateur SVG que #libRays),
-           textes crème, jauge or — la carte reste verte dans les
-           deux thèmes, comme le héros. Polyvalent (toutes
-           matières) : à gauche le nombre de cours de l'élève + les
-           cours lus et complétés ; à droite un anneau de progression
-           (statistique visuelle) ; en bas la citation, façon
-           site original (2 citations au démarrage, tirée au
-           hasard — le bouton rafraîchir en propose une autre).
-           Typographie expressive : Playfair Display pour le
-           chiffre, le mot « cours » et la citation.
+           la barre du bas. v0.9 (demande explicite : « change
+           l'arrière-plan des grandes cartes, supprime les bordures,
+           ajoute des améliorations dans la carte ») : ARRIÈRE-PLAN
+           NEUF SANS AUCUNE BORDURE — vert de marque --primary +
+           lueur or haut-droit + lueur émeraude bas-gauche + voile
+           diagonal (plus d'anneaux, plus de filet), rayons
+           « aurora » recadrés (#statsRays, même générateur SVG que
+           #libRays) — ENRICHIE : tiret or du sur-titre, rangée de
+           pastilles (série de jours + temps de la semaine) sous
+           les chiffres, halo or de l'anneau. Textes crème, jauge
+           or — la carte reste verte dans les deux thèmes.
+           Polyvalent (toutes matières) : à gauche le nombre de
+           cours de l'élève + les cours lus et complétés ; à droite
+           un anneau de progression ; en bas la citation (2
+           citations au démarrage, tirée au hasard — le bouton
+           rafraîchir en propose une autre).
+           Typographie ARVX v0.9 : Fraunces pour le chiffre, le
+           mot « cours » et la citation.
            Valeurs d'exemple tant que les cours réels n'existent
            pas (localStorage 'arvexa-stats'). -->
       <div class="stats-card">
@@ -179,43 +185,53 @@
             <span class="stats-ring-pct" id="ringPct">58<small>%</small></span>
           </div>
         </div>
+        <div class="stats-chips">
+          <span class="stats-chip"><i class="fas fa-fire" aria-hidden="true"></i><b id="statStreak">5</b><span data-i18n="accueil.serie">jours de suite</span></span>
+          <span class="stats-chip"><i class="fas fa-hourglass-half" aria-hidden="true"></i><b id="statTime">2h15</b><span data-i18n="accueil.semaine">cette semaine</span></span>
+        </div>
         <div class="stats-quote">
           <span class="stats-quote-text" id="quoteText">« Chaque page lue rapproche ton objectif. »</span>
           <span class="stats-quote-author">— ARVX</span>
         </div>
       </div>
 
-      <!-- ═══ BLOC 1bis — LES DEUX MODES (v0.6.2 · v0.6.4 · v0.8) ═══
-           Position fidèle à l'app de référence (AXIA) : deux
-           mini-cartes côte à côte JUSTE AU-DESSOUS de la carte
-           statistiques — pas trop grandes mais bien espacées
-           (espace vertical net sous la carte principale), même
-           structure qu'elle : icône en haut, titre au milieu,
-           sous-titre en bas (ici : Mode rapide · 5 min, Mode
-           focus · cycles 25/5). On reprend la POSITION, pas les
-           couleurs de la référence : badges ARVX (or pour le
-           rapide, vert pour le focus). BOUTONS cliquables avec
-           effet d'appui (navigation remise, v0.6.4) ; l'écran
-           cible de chaque mode sera branché à son étape, sur
-           demande explicite. -->
+      <!-- ═══ BLOC 1bis — LES DEUX MODES (v0.6.2 · v0.6.4 · v0.9) ═══
+           Deux mini-cartes côte à côte sous la carte principale.
+           v0.9 (demande : « supprime les bordures, quelques
+           dispositions pour différencier ») : DISPOSITION EN
+           RANGÉES HORIZONTALES — pastille icône À GAUCHE, titre +
+           sous-titre à droite (l'icône-en-haut de la référence est
+           abandonnée). SANS BORDURE ni liseré : surface douce
+           (dégradé or léger sur voile clair), radius « feuille »,
+           ombre portée. Badges ARVX (or pour le rapide, vert pour
+           le focus). BOUTONS cliquables avec effet d'appui
+           (navigation remise, v0.6.4) ; l'écran cible de chaque
+           mode sera branché à son étape, sur demande explicite. -->
       <div class="modes-row" role="group" aria-label="Modes de révision">
         <button type="button" class="mode-card mode-quick" id="modeQuick">
           <span class="mode-icon quick" aria-hidden="true"><i class="fas fa-bolt"></i></span>
-          <span class="mode-name" data-i18n="accueil.mode.rapide">Mode rapide</span>
-          <span class="mode-sub" data-i18n="accueil.mode.rapideSub">Révision éclair · 5 min</span>
+          <span class="mode-txt">
+            <span class="mode-name" data-i18n="accueil.mode.rapide">Mode rapide</span>
+            <span class="mode-sub" data-i18n="accueil.mode.rapideSub">Révision éclair · 5 min</span>
+          </span>
         </button>
         <button type="button" class="mode-card mode-focus" id="modeFocus">
           <span class="mode-icon focus" aria-hidden="true"><i class="fas fa-stopwatch"></i></span>
-          <span class="mode-name" data-i18n="accueil.mode.focus">Mode focus</span>
-          <span class="mode-sub" data-i18n="accueil.mode.focusSub">Cycles 25 / 5</span>
+          <span class="mode-txt">
+            <span class="mode-name" data-i18n="accueil.mode.focus">Mode focus</span>
+            <span class="mode-sub" data-i18n="accueil.mode.focusSub">Cycles 25/5</span>
+          </span>
         </button>
       </div>
 
-      <!-- ═══ BLOC 2 — CONTINUER (v0.6.4) ═══
-           Proposition posée dans l'espace vide sous les mini-cartes
-           (demande explicite) : carte « Continuer » façon AXIA — elle
-           annoncera la dernière révision en cours. Bouton SPA : envoie
-           vers la vue Réviser (aucun rechargement). État vide tant
+      <!-- ═══ BLOC 2 — CONTINUER (v0.6.4 · v0.9) ═══
+           Carte « Continuer » — elle annoncera la dernière révision
+           en cours. v0.9 (demande : « supprime les bordures ») :
+           PILULE VERTE DE MARQUE sans bordure ni liseré — deuxième
+           carte verte de l'accueil avec la carte principale (lien
+           visuel fort), identique dans les deux thèmes, textes
+           crème, icône or dégradée. Bouton SPA : envoie vers la
+           vue Réviser (aucun rechargement). État vide tant
            qu'aucun vrai cours n'existe. Masquée sur les très petits
            écrans en hauteur (max-height 720px) pour que tout reste
            calé entre les deux barres, sans jamais déborder. -->
@@ -228,30 +244,38 @@
         <span class="continue-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
       </button>
 
-      <!-- ═══ BLOC 3 — ACTIONS RAPIDES (v0.6.4) ═══
-           Deuxième proposition dans l'espace vide : raccourcis 2×2
-           vers les 4 écrans de l'app. La grille s'étire (flex) pour
-           remplir EXACTEMENT l'espace restant jusqu'à la barre du bas.
-           Chaque tuile navigue en SPA — même source de vérité que la
-           barre du bas (le hash), zéro rechargement. -->
+      <!-- ═══ BLOC 3 — ACTIONS RAPIDES (v0.6.4 · v0.9) ═══
+           Raccourcis vers les 4 écrans de l'app. v0.9 (demande :
+           « quelques dispositions pour différencier ») : la grille
+           2×2 — copie de la référence — devient une COLONNE de
+           4 RANGÉES à chevron (pastille icône, nom, flèche), sans
+           bordure (surfaces douces + ombres). La liste s'étire
+           (flex) pour remplir EXACTEMENT l'espace restant jusqu'à
+           la barre du bas. Chaque rangée navigue en SPA — même
+           source de vérité que la barre du bas (le hash), zéro
+           rechargement. -->
       <div class="quick-block" role="group" aria-label="Actions rapides">
         <div class="quick-label" data-i18n="accueil.actionsTitre">Actions rapides</div>
         <div class="quick-grid">
           <button type="button" class="quick-tile" data-go="reviser">
             <span class="quick-icon gold" aria-hidden="true"><i class="fas fa-book-open"></i></span>
             <span class="quick-name" data-i18n="nav.reviser">Réviser</span>
+            <span class="quick-chev" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
           </button>
           <button type="button" class="quick-tile" data-go="examen">
             <span class="quick-icon gold" aria-hidden="true"><i class="fas fa-pencil-alt"></i></span>
             <span class="quick-name" data-i18n="nav.examen">Examen</span>
+            <span class="quick-chev" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
           </button>
           <button type="button" class="quick-tile" data-go="progression">
             <span class="quick-icon green" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
             <span class="quick-name" data-i18n="nav.progression">Progression</span>
+            <span class="quick-chev" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
           </button>
           <button type="button" class="quick-tile" data-go="profil">
             <span class="quick-icon neutral" aria-hidden="true"><i class="fas fa-user"></i></span>
             <span class="quick-name" data-i18n="nav.profil">Profil</span>
+            <span class="quick-chev" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
           </button>
         </div>
       </div>
