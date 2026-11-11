@@ -82,8 +82,7 @@
        visuelle, SVG), en bas la CITATION façon site original
        (2 citations au démarrage, tirée au hasard ; le bouton
        rafraîchir en propose une autre). Typographie expressive :
-       Fraunces pour le chiffre, le label et la citation (v0.9 :
-       identité typographique propre à ARVX — Fraunces + Manrope).
+       Playfair Display pour le chiffre, le label et la citation.
        Valeurs d'exemple tant que les cours réels n'existent pas :
        localStorage 'arvexa-stats' { courses, done } prendra le
        relais.
@@ -245,12 +244,10 @@ const I18N = {
     'accueil.eyebrow': 'Mes cours',
     'accueil.coursLabel': 'cours',
     'accueil.lus': 'lus et complétés',
-    'accueil.serie': 'jours de suite',
-    'accueil.semaine': 'cette semaine',
     'accueil.mode.rapide': 'Mode rapide',
     'accueil.mode.rapideSub': 'Révision éclair · 5 min',
     'accueil.mode.focus': 'Mode focus',
-    'accueil.mode.focusSub': 'Cycles 25/5',
+    'accueil.mode.focusSub': 'Cycles 25 / 5',
     'accueil.continuer': 'Continuer',
     'accueil.continuerSub': 'Ta dernière révision apparaîtra ici.',
     'reviser.eyebrow': 'Bibliothèque',
@@ -304,12 +301,10 @@ const I18N = {
     'accueil.eyebrow': 'My courses',
     'accueil.coursLabel': 'courses',
     'accueil.lus': 'read & completed',
-    'accueil.serie': 'day streak',
-    'accueil.semaine': 'this week',
     'accueil.mode.rapide': 'Quick mode',
     'accueil.mode.rapideSub': 'Flash review · 5 min',
     'accueil.mode.focus': 'Focus mode',
-    'accueil.mode.focusSub': '25/5 cycles',
+    'accueil.mode.focusSub': '25 / 5 cycles',
     'accueil.continuer': 'Continue',
     'accueil.continuerSub': 'Your latest revision will appear here.',
     'reviser.eyebrow': 'Library',
@@ -509,7 +504,7 @@ function updateStatsCard(pickNewQuote) {
   /* Statistiques : localStorage 'arvexa-stats' { courses, done }
      si présent, sinon les valeurs d'exemple (démo). */
   const STATS_KEY = 'arvexa-stats';
-  const STATS_DEMO = { courses: 12, done: 7, streak: 5, minutes: 135 };
+  const STATS_DEMO = { courses: 12, done: 7 };
   let stats = STATS_DEMO;
   try {
     const s = JSON.parse(localStorage.getItem(STATS_KEY) || 'null');
@@ -530,24 +525,9 @@ function updateStatsCard(pickNewQuote) {
   ringFill.style.strokeDashoffset = String(C * (1 - pct / 100));
   ringPct.innerHTML = pct + '<small>%</small>';
 
-  /* v0.9 — pastilles de la carte principale : série de jours et
-     temps révisé cette semaine (valeurs d'exemple, mêmes règles
-     que les cours : localStorage 'arvexa-stats' si présent). */
-  const streak = Math.max(0, Math.round(stats.streak || 0));
-  const mins = Math.max(0, Math.round(stats.minutes || 0));
-  const timeTxt = mins >= 60
-    ? Math.floor(mins / 60) + 'h' + String(mins % 60).padStart(2, '0')
-    : mins + ' min';
-  const streakEl = document.getElementById('statStreak');
-  const timeEl = document.getElementById('statTime');
-  if (streakEl) streakEl.textContent = String(streak);
-  if (timeEl) timeEl.textContent = timeTxt;
-
-  /* Citation : « … » — même esprit que le hero-quote de l'original.
-     Espaces INSÉCABLES (v0.9.1) : les guillemets ne restent jamais
-     seuls sur une ligne quand la citation s'enroule. */
+  /* Citation : « … » — même esprit que le hero-quote de l'original. */
   const q = QUOTES[updateStatsCard._qi];
-  quoteEl.textContent = '«\u00A0' + (lang === 'an' ? q.an : q.fr) + '\u00A0»';
+  quoteEl.textContent = '« ' + (lang === 'an' ? q.an : q.fr) + ' »';
 }
 
 /* ── MENU TIROIR (fidèle au site original, index.html:3947-3954) ── */

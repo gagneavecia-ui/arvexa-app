@@ -210,7 +210,7 @@ html {
 }
 
 body {
-  font-family: 'Manrope', 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   background: var(--bg-dark);
   color: var(--text-light);
   font-size: 14px;
@@ -271,9 +271,10 @@ body {
    v0.6.3 débordait sur vrai téléphone : mini-cartes coupées sous la
    barre). Polyvalent (toutes matières) : nombre de cours à gauche,
    anneau de progression à droite, citation en bas (façon original).
-   Typographie expressive ARVX (v0.9) : Fraunces (chiffre, label,
+   Typographie expressive : Playfair Display (chiffre, label,
    citation) — jamais d'écriture simple ; les petits libellés UI
-   restent en Manrope pour la cohérence de l'ensemble.
+   restent en Inter pour la cohérence de l'ensemble (v0.9.2 :
+   retour aux polices d'origine).
    ═══════════════════════════════════════════════════════════════════ */
 #view-accueil {
   display: flex;
@@ -285,25 +286,19 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 1 : CARTE PRINCIPALE (v0.7.2 · v0.9)
-   v0.9 (demande explicite : « change l'arrière-plan des grandes
-   cartes, supprime les bordures, ajoute des améliorations dans la
-   carte ») : SANS AUCUNE BORDURE — plus d'anneaux, plus de filet.
-   Arrière-plan neuf : vert de marque --primary + lueur or en
-   HAUT-DROIT (88% -12%) + lueur émeraude en BAS-GAUCHE + voile
-   diagonal clair. Rayons « aurora » recadrés conservés (SVG JS).
-   ENRICHISSEMENTS : tiret or du sur-titre (::before), rangée
-   .stats-chips (série de jours + temps de la semaine), halo or
-   de l'anneau. La carte reste VERTE dans les deux thèmes ;
-   textes en crème littéral (#F5F0E8) pour ne pas suivre l'encre
-   du thème clair.
+   VUE ACCUEIL — BLOC 1 : CARTE PRINCIPALE (v0.7.2 · v0.9.2)
+   RETOUR AU NORMAL (v0.9.2, demande : « rends la normale ») :
+   matériau validé v0.7.2 — vert de marque --primary + radial or
+   haut-gauche + FILET OR 0.22 + rayons « aurora » (recadrage
+   signature v0.8 conservé, identique au héros de Réviser).
+   Carte compacte (1/4 du cadre), Playfair Display pour le chiffre
+   et la citation, filet or au-dessus de la citation. Les
+   enrichissements v0.9 (tiret, pastilles, halo) sont retirés.
+   La carte reste VERTE dans les deux thèmes ; textes en crème
+   littéral (#F5F0E8) pour ne pas suivre l'encre du thème clair.
    ═══════════════════════════════════════════════════════════════════ */
 .stats-card {
-  /* v0.9.1 : les actions rapides sont supprimées — la carte
-     principale devient l'élément SOUPLE de la colonne : elle s'étire
-     pour remplir EXACTEMENT l'espace jusqu'à la barre du bas
-     (plancher : un quart du cadre, cf. min-height ci-dessous). */
-  flex: 1 1 auto;
+  flex: 0 0 auto;   /* taille FIXE compacte — ne s'étend jamais (v0.9.2) */
   position: relative;
   overflow: hidden; /* contient les rayons, comme .lib-course */
   display: flex;
@@ -315,16 +310,13 @@ body {
   min-height: calc((100vh - var(--header-height) - calc(57px + var(--safe-bottom))) / 4);
   min-height: calc((100dvh - var(--header-height) - calc(57px + var(--safe-bottom))) / 4);
   padding: 16px 18px 13px;
-  border-radius: 26px;  /* le radius du héros */
-  /* HÉROS v0.9 SANS BORDURE : lueur or haut-droit + lueur émeraude
-     bas-gauche + voile diagonal sur le vert de marque */
+  border-radius: 26px;  /* le radius du héros de Réviser */
+  /* Le matériau de la carte héros de Réviser (v0.7.2) */
   background:
-    radial-gradient(90% 130% at 88% -12%, rgba(224, 184, 74, 0.20), rgba(224, 184, 74, 0) 58%),
-    linear-gradient(152deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 44%),
-    radial-gradient(110% 150% at 0% 108%, rgba(58, 182, 126, 0.18), rgba(58, 182, 126, 0) 55%),
+    radial-gradient(120% 150% at 0% 0%, rgba(224, 184, 74, 0.16), rgba(224, 184, 74, 0.02) 62%),
     var(--primary);
-  border: none;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(224, 184, 74, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 /* Rayons « aurora » (v0.8) — RECADRAGE SIGNATURE ARVX : le disque
@@ -378,30 +370,18 @@ body {
 
 .stats-eyebrow i { font-size: 10px; }
 
-/* v0.9 — tiret or dégradé avant le sur-titre (amélioration dans
-   la carte, demande explicite) */
-.stats-eyebrow::before {
-  content: "";
-  width: 14px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--accent-bright), rgba(224, 184, 74, 0));
-}
-
 .stats-num {
   display: flex;
   align-items: baseline;
   gap: 9px;
 }
 
-/* Le chiffre : Fraunces, or dégradé — façon le X du wordmark ARVX
-   (v0.9 : nouvelle identité typographique ARVX, différente de la
-   référence). Une écriture riche, jamais simple. v0.9.1 : légèrement
-   agrandi — la carte principale occupe tout l'espace libéré par les
-   actions rapides et son contenu suit. */
+/* Le chiffre : Playfair Display, or dégradé — façon le X du
+   wordmark ARVX (retour au normal v0.9.2). Une écriture riche,
+   jamais simple. */
 .stats-number {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 52px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 46px;
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.01em;
@@ -412,9 +392,9 @@ body {
 }
 
 .stats-numlabel {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-style: italic;
-  font-size: 20px;
+  font-size: 18px;
   color: #F5F0E8;  /* crème littéral : la carte reste verte même en clair */
 }
 
@@ -429,40 +409,12 @@ body {
   color: var(--accent-bright);
 }
 
-/* v0.9 — éléments ajoutés dans la carte : pastilles « SÉRIE » et
-   « CETTE SEMAINE ». Deux mini-pilules translucides sous les
-   chiffres (valeurs d'exemple tant que les vraies sessions
-   n'existent pas — localStorage 'arvexa-stats'). */
-.stats-chips {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-
-.stats-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 5px 12px;
-  border-radius: 999px;
-  font-size: 10.5px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: rgba(245, 240, 232, 0.88);
-  background: rgba(245, 240, 232, 0.10);
-}
-
-.stats-chip i { font-size: 9px; color: var(--accent-bright); }
-
-.stats-chip b { font-weight: 800; color: #F5F0E8; }
-
 /* Anneau de progression : SVG 72×72, trait or, arrondi.
-   Le pourcentage au centre est en Fraunces. */
+   Le pourcentage au centre est en Playfair. */
 .stats-ring {
   position: relative;
-  width: 92px;
-  height: 92px;
+  width: 84px;
+  height: 84px;
   flex-shrink: 0;
 }
 
@@ -482,7 +434,6 @@ body {
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
   transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-  filter: drop-shadow(0 0 5px rgba(224, 184, 74, 0.35));  /* v0.9 : halo or */
 }
 
 .stats-ring-pct {
@@ -491,26 +442,26 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 21px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 19px;
   font-weight: 700;
   color: #F5F0E8;
 }
 
 .stats-ring-pct small {
-  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
   font-size: 10.5px;
   font-weight: 700;
   color: rgba(245, 240, 232, 0.75);
   margin-left: 1px;
 }
 
-/* Citation : façon le hero-quote du site original — Fraunces
-   italique (v0.9), auteur en petites capitales discrètes.
-   v0.9 : le filet au-dessus de la citation est RETIRÉ (carte
-   sans bordures) — l'espacement suffit à séparer. */
+/* Citation : façon le hero-quote du site original — Playfair
+   italique (retour au normal v0.9.2), auteur en petites capitales
+   discrètes, filet or du héros au-dessus. */
 .stats-quote {
-  padding-top: 2px;
+  border-top: 1px solid rgba(224, 184, 74, 0.22);  /* filet or du héros */
+  padding-top: 9px;
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -518,10 +469,10 @@ body {
 }
 
 .stats-quote-text {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-style: italic;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 14.5px;
+  line-height: 1.45;
   color: #F5F0E8;
   overflow-wrap: anywhere;
 }
@@ -542,7 +493,6 @@ body {
   .stats-ring { width: 72px; height: 72px; }
   .stats-ring-pct { font-size: 16.5px; }
   .stats-quote-text { font-size: 13.5px; }
-  .stats-chip { font-size: 9px; padding: 3px 8px; }
 }
 
 /* La carte principale reste VERTE dans les deux thèmes — comme la
@@ -550,16 +500,14 @@ body {
    claire : textes crème littéraux, or et vert invariables). */
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 1bis : LES DEUX MODES (v0.6.2 · v0.6.4 · v0.9)
-   Deux mini-cartes côte à côte sous la carte principale.
-   v0.9 (demande : « supprime les bordures, quelques dispositions
-   pour différencier ») : DISPOSITION EN RANGÉES HORIZONTALES —
-   la pastille icône passe À GAUCHE, titre + sous-titre à droite
-   (l'icône-en-haut de la référence est abandonnée). SANS BORDURE
-   ni liseré : surface douce (dégradé or léger sur voile clair),
-   radius « feuille » 18/18/18/6, ombre portée. Boutons cliquables
-   (v0.6.4) : cursor + appui + survol réactif. Pastilles icônes :
-   or dégradé pour le rapide, voile vert pour le focus.
+   VUE ACCUEIL — BLOC 1bis : LES DEUX MODES (v0.6.2 · v0.6.4 · v0.9.2)
+   RETOUR AU NORMAL v0.9.2 : disposition d'origine — icône EN HAUT,
+   titre au milieu, sous-titre en bas. MATÉRIAU EXACT de la carte
+   matière « Sciences de la vie et de la Terre » de Réviser (v0.7.1)
+   : radial or, filet or .38, glow or, radius 18. Boutons
+   cliquables (navigation remise, v0.6.4) : cursor + effet d'appui.
+   Pastilles icônes : or dégradé (le style SVT) pour le rapide,
+   voile vert pour le focus (distinction deux tons ARVX).
    ═══════════════════════════════════════════════════════════════════ */
 .modes-row {
   display: grid;
@@ -574,26 +522,24 @@ body {
    l'original. La transition garde aussi le fondu clair ↔ sombre. */
 .mode-card {
   display: flex;
-  flex-direction: row;         /* v0.9 : rangée horizontale */
-  align-items: center;
-  gap: 11px;
+  flex-direction: column;      /* v0.9.2 : icône en haut (disposition d'origine) */
+  align-items: flex-start;
+  gap: 7px;
   min-width: 0;
-  padding: 11px 14px;
-  border-radius: 18px 18px 18px 6px;   /* radius « feuille » ARVX */
-  /* v0.9 SANS BORDURE : dégradé or léger sur voile clair */
+  padding: 13px 14px 12px;
+  border-radius: 18px;
+  /* Matériau EXACT de la carte matière SVT (Réviser, v0.7.1) */
   background:
-    linear-gradient(155deg, rgba(224, 184, 74, 0.10), rgba(224, 184, 74, 0.015) 55%),
-    rgba(var(--rgb-soft), 0.045);
-  border: none;
-  box-shadow:
-    0 10px 22px -12px rgba(184, 134, 11, 0.28),
-    0 2px 6px rgba(0, 0, 0, 0.14);
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
   text-align: left;
   font: inherit;
   color: inherit;
   cursor: pointer;
   transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
-              box-shadow 0.25s ease;
+              border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 /* Feedback tactile, comme les tool-cards de l'original */
@@ -604,9 +550,9 @@ body {
   outline-offset: 3px;
 }
 
-/* ── Liseré or flottant (v0.8) — v0.9 : RETIRÉ de toutes les cartes
-      de l'accueil (sans bordures, demande explicite), conservé
-      côté RÉVISER uniquement (cartes matières) ── */
+/* ── Liseré or flottant (v0.8) — v0.9.2 : l'accueil reprend ses
+      filets or v0.7.2 (sur la carte elle-même) ; le liseré latéral
+      reste propre à la RÉVISER (cartes matières, signature v0.8) ── */
 .lib-subject::before {
   content: "";
   position: absolute;
@@ -618,27 +564,16 @@ body {
   background: linear-gradient(180deg, var(--accent-bright), rgba(184, 134, 11, 0.14));
 }
 
-/* v0.9 : plus de bordures → l'appui garde l'échelle, le survol
-   soulève par l'ombre (plus de filet à allumer). Réviser, lui,
-   garde ses filets or. */
+/* Appui : les cartes d'accueil gardent l'échelle + allument leur
+   filet or (v0.7.2) ; les cartes matière de Réviser aussi (v0.8). */
 .mode-card:active,
 .continue-card:active { transform: scale(0.97); }
 
 .lib-subject:active { border-color: rgba(224, 184, 74, 0.5); }
 
+/* Survol : propre à la RÉVISER uniquement (signature v0.8 — les
+   cartes d'accueil v0.7.2 n'ont pas de survol, comme l'original). */
 @media (hover: hover) {
-  .mode-card:hover {
-    transform: translateY(-1px);
-    box-shadow:
-      0 14px 26px -10px rgba(184, 134, 11, 0.38),
-      0 3px 8px rgba(0, 0, 0, 0.16);
-  }
-
-  .continue-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 16px 30px -12px rgba(10, 26, 18, 0.6);
-  }
-
   .lib-subject:hover {
     border-color: rgba(224, 184, 74, 0.45);
     box-shadow:
@@ -647,12 +582,12 @@ body {
   }
 }
 
-/* Badge de l'icône : or DÉGRADÉ + encre — la pastille de la
-   carte matière SVT, gardée telle quelle */
+/* Badge de l'icône : or DÉGRADÉ + encre — la pastille exacte de la
+   carte matière SVT */
 .mode-icon {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -668,49 +603,25 @@ body {
   color: #5CC69B;
 }
 
-/* Colonne texte de la mini-carte (v0.9) : titre + sous-titre
-   empilés à droite de la pastille icône */
-.mode-txt {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-  flex: 1;
-}
-
-/* Colonne texte de la mini-carte (v0.9) : titre + sous-titre
-   empilés à droite de la pastille icône */
-.mode-txt {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-  flex: 1;
-}
-
 .mode-name {
-  font-family: 'Fraunces', Georgia, serif;
-  font-size: 15px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 16px;
   font-weight: 700;
   line-height: 1.15;
-  white-space: nowrap;   /* v0.9 : le titre tient sur une ligne */
   color: var(--text-light);
 }
 
 .mode-sub {
-  font-size: 10.5px;
+  font-size: 11.5px;
   font-weight: 600;
-  line-height: 1.35;
   color: var(--text-dim);
 }
 
-/* Thème clair « papier & encre » : fond blanc plein + dégradé or
-   profond léger ; la pastille or dégradée reste or (comme Premium). */
+/* Thème clair « papier & encre » : le matériau SVT clair — fond
+   blanc plein, MÊME filet or .38 et glow or (comme la carte matière
+   en clair) ; la pastille or dégradée reste or (comme Premium). */
 html[data-theme="light"] .mode-card {
-  background:
-    linear-gradient(155deg, rgba(184, 134, 11, 0.10), rgba(184, 134, 11, 0.02) 55%),
-    var(--bg-card-solid);
-  box-shadow: 0 10px 22px -12px rgba(74, 58, 24, 0.35), 0 2px 6px rgba(74, 58, 24, 0.08);
+  background: var(--bg-card-solid);
 }
 
 html[data-theme="light"] .mode-icon.focus {
@@ -719,33 +630,31 @@ html[data-theme="light"] .mode-icon.focus {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 2 : CONTINUER (v0.6.4 · v0.9)
-   Bouton SPA → vue Réviser. v0.9 (demande : « supprime les
-   bordures ») : PILULE VERTE DE MARQUE sans bordure ni liseré —
-   la deuxième carte verte de l'accueil avec la carte principale
-   (lien visuel fort), identique dans les deux thèmes (vert
-   invariable, textes crème littéraux).
+   VUE ACCUEIL — BLOC 2 : CONTINUER (v0.6.4 · v0.9.2)
+   Bouton SPA → vue Réviser. RETOUR AU NORMAL v0.9.2 : même
+   matériau carte matière SVT que les mini-cartes (radial or,
+   filet or .38, glow, radius 18), titres Playfair, couleurs de
+   texte du thème.
    ═══════════════════════════════════════════════════════════════════ */
 .continue-card {
   display: flex;
   align-items: center;
   gap: 13px;
   margin-top: 14px;
-  padding: 12px 14px;
-  border-radius: 18px 18px 18px 6px;   /* radius « feuille » ARVX */
-  /* v0.9 : pilule verte de marque, SANS BORDURE */
+  padding: 13px 14px;
+  border-radius: 18px;
   background:
-    linear-gradient(150deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0) 46%),
-    radial-gradient(90% 140% at 92% -14%, rgba(224, 184, 74, 0.16), rgba(224, 184, 74, 0) 56%),
-    var(--primary);
-  border: none;
-  box-shadow: 0 12px 26px -12px rgba(10, 26, 18, 0.55);
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
   text-align: left;
   font: inherit;
+  color: inherit;
   cursor: pointer;
   flex-shrink: 0;
   transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
-              box-shadow 0.25s ease;
+              border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .continue-card:active { transform: scale(0.97); }
@@ -777,31 +686,38 @@ html[data-theme="light"] .mode-icon.focus {
 }
 
 .continue-title {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.15;
-  color: #F5F0E8;   /* crème littéral : pilule verte aux deux thèmes */
+  color: var(--text-light);
 }
 
 .continue-sub {
   font-size: 11.5px;
   font-weight: 600;
-  color: rgba(245, 240, 232, 0.72);
+  color: var(--text-dim);
 }
 
 .continue-arrow {
   flex-shrink: 0;
   font-size: 13px;
-  color: rgba(224, 184, 74, 0.9);
+  color: var(--text-dim);
+}
+
+/* Variante claire du bloc Continuer — même matériau SVT clair :
+   fond blanc plein, filet or .38 et glow or conservés de la base. */
+html[data-theme="light"] .continue-card {
+  background: var(--bg-card-solid);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   v0.9.1 — BLOC 3 « ACTIONS RAPIDES » SUPPRIMÉ (demande explicite :
-   « Supprime Action rapide »). Toutes les règles des tuiles (bloc,
-   label, grille, tuiles, pastilles, chevrons, variantes claires)
-   sont retirées : la barre du bas reste l'unique navigation, et
-   l'espace libéré est absorbé par la carte principale (flex:1).
+   v0.9.2 — LES ACTIONS RAPIDES RESTENT SUPPRIMÉES (v0.9.1, demande
+   explicite : « Supprime Action rapide », confirmée : « sans
+   actions »). Toutes les règles des tuiles restent retirées ; la
+   barre du bas couvre toutes les routes ; l'espace sous la carte
+   « Continuer » est laissé en RESPIRATION (choix explicite) —
+   page aérée, meublée plus tard avec les vrais cours.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -879,7 +795,7 @@ html[data-theme="light"] .mode-icon.focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 17px;
   font-weight: 700;
   color: #FFF6DC;  /* crème or de l'avatar — déjà signature ARVX */
@@ -1267,15 +1183,16 @@ html[data-theme="light"] .lib-subject-ok {
 
 /* Petits écrans en hauteur : les cartes restent compactes, le cadre
    ne déborde jamais (pages fixes — aucun défilement vertical). La
-   carte « Continuer » s'efface ici : la carte principale absorbe
-   tout l'espace restant, rien ne déborde, rien n'est coupé.
+   carte « Continuer » s'efface ici (v0.9.2 : les actions rapides
+   restent supprimées — la carte principale garde sa taille fixe et
+   l'air sous Continuer absorbe la place).
    (La règle est placée APRÈS tous les blocs accueil pour gagner.) */
 @media (max-height: 720px) {
   .modes-row { gap: 10px; margin-top: 13px; }
-  .mode-card { padding: 9px 12px; gap: 10px; }
-  .mode-icon { width: 32px; height: 32px; border-radius: 10px; font-size: 14px; }
-  .mode-name { font-size: 14px; }
-  .mode-sub { font-size: 10px; }
+  .mode-card { padding: 11px 13px 10px; gap: 6px; }
+  .mode-icon { width: 32px; height: 32px; font-size: 14px; }
+  .mode-name { font-size: 15px; }
+  .mode-sub { font-size: 11px; }
   .continue-card { display: none; }
 }
 
@@ -1463,7 +1380,7 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
   color: var(--text-light);
   font-size: 20px;
   font-weight: 700;
-  font-family: 'Fraunces', 'Georgia', serif;
+  font-family: 'Playfair Display', 'Georgia', serif;
   letter-spacing: 2px;
 }
 
@@ -1539,7 +1456,7 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
   justify-content: center;
   background: linear-gradient(135deg, var(--accent), var(--accent-bright));
   color: #141210;
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Playfair Display', Georgia, serif;
   font-size: 18px;
   font-weight: 700;
   font-style: italic;
@@ -1993,7 +1910,7 @@ html[data-theme="light"] .bottom-nav button.active i {
 .arvexa-confirm-title {
   font-size: 22px;
   font-weight: 700;
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Playfair Display', Georgia, serif;
   color: var(--text-light);
   text-align: center;
   margin-bottom: 8px;
@@ -2043,7 +1960,7 @@ html[data-theme="light"] .bottom-nav button.active i {
   font-weight: 700;
   cursor: pointer;
   transition: var(--transition-fast);
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Inter', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
