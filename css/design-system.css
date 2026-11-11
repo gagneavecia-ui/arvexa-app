@@ -51,6 +51,15 @@
             matières or, bordures or rgba(184,134,11,…), badges
             « À jour » en vert --success. Structure AXIA conservée
             à l'identique — seules les teintes deviennent ARVX.
+   v0.7.2  : l'accueil reprend les DESIGN DE RÉVISER — les cartes
+            (mini-cartes de mode, Continuer, tuiles Actions rapides)
+            passent au matériau EXACT de la carte matière « Sciences
+            de la vie et de la Terre » (radial or, filet or .38,
+            glow or, radius 18, pastilles or dégradées) ; la carte
+            PRINCIPALE (stats) prend l'arrière-plan EXACT de la carte
+            héros de Réviser : vert de marque + radial or + rayons
+            « aurora », textes crème, jauge or — identique dans les
+            deux thèmes (comme le héros).
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -234,8 +243,19 @@ body {
   margin: 0 auto;
 }
 
+/* ═══════════════════════════════════════════════════════════════════
+   VUE ACCUEIL — BLOC 1 : CARTE PRINCIPALE (v0.7.2)
+   ARRIÈRE-PLAN EXACT DE LA CARTE HÉROS DE RÉVISER (v0.7.1) :
+   vert de marque --primary + radial or dans le coin haut-gauche
+   + rayons « aurora » (SVG généré par JS, mêmes teintes) + filet
+   or 0.22. La carte reste IDENTIQUE dans les deux thèmes — comme
+   la carte héros, qui reste verte sur papier. Textes en crème
+   littéral (#F5F0E8) pour ne pas suivre l'encre du thème clair.
+   ═══════════════════════════════════════════════════════════════════ */
 .stats-card {
   flex: 0 0 auto;   /* taille FIXE compacte — ne s'étend jamais */
+  position: relative;
+  overflow: hidden; /* contient les rayons, comme .lib-course */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -245,14 +265,32 @@ body {
   min-height: calc((100vh - var(--header-height) - calc(57px + var(--safe-bottom))) / 4);
   min-height: calc((100dvh - var(--header-height) - calc(57px + var(--safe-bottom))) / 4);
   padding: 16px 18px 13px;
-  border-radius: var(--radius);
-  /* Mêmes matériaux que la carte profil du menu (radial or doux) */
+  border-radius: 26px;  /* le radius du héros de Réviser */
+  /* Le matériau EXACT de la carte héros de Réviser */
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.12), rgba(184, 134, 11, 0.02) 62%),
-    rgba(var(--rgb-soft), 0.02);
-  border: 1px solid rgba(184, 134, 11, 0.12);
+    radial-gradient(120% 150% at 0% 0%, rgba(224, 184, 74, 0.16), rgba(224, 184, 74, 0.02) 62%),
+    var(--primary);
+  border: 1px solid rgba(224, 184, 74, 0.22);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
+
+/* Rayons « aurora » — le décor du héros de Réviser, à l'identique
+   (SVG peint par le même générateur JS que #libRays) */
+.stats-rays {
+  position: absolute;
+  left: -131px;
+  top: -193px;
+  width: 590px;
+  height: 590px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.stats-rays svg { display: block; width: 100%; height: 100%; }
+
+/* Les contenus passent AU-DESSUS des rayons */
+.stats-top,
+.stats-quote { position: relative; }
 
 .stats-top {
   display: flex;
@@ -308,13 +346,13 @@ body {
   font-family: 'Playfair Display', Georgia, serif;
   font-style: italic;
   font-size: 18px;
-  color: var(--text-light);
+  color: #F5F0E8;  /* crème littéral : la carte reste verte même en clair */
 }
 
 .stats-sub {
   font-size: 12.5px;
   font-weight: 600;
-  color: var(--text-dim);
+  color: rgba(245, 240, 232, 0.75);  /* crème translucide du héros */
 }
 
 .stats-done {
@@ -335,7 +373,7 @@ body {
 
 .stats-ring-track {
   fill: none;
-  stroke: rgba(var(--rgb-soft), 0.07);
+  stroke: rgba(245, 240, 232, 0.16);  /* même piste que l'anneau du héros */
   stroke-width: 6;
 }
 
@@ -358,21 +396,21 @@ body {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 19px;
   font-weight: 700;
-  color: var(--text-light);
+  color: #F5F0E8;
 }
 
 .stats-ring-pct small {
   font-family: 'Inter', 'Segoe UI', sans-serif;
   font-size: 10.5px;
   font-weight: 700;
-  color: var(--text-dim);
+  color: rgba(245, 240, 232, 0.75);
   margin-left: 1px;
 }
 
 /* Citation : façon le hero-quote du site original — Playfair
    italique, auteur en petites capitales discrètes */
 .stats-quote {
-  border-top: 1px solid rgba(184, 134, 11, 0.14);
+  border-top: 1px solid rgba(224, 184, 74, 0.22);  /* filet or du héros */
   padding-top: 9px;
   display: flex;
   flex-direction: column;
@@ -385,7 +423,7 @@ body {
   font-style: italic;
   font-size: 14.5px;
   line-height: 1.45;
-  color: var(--text-light);
+  color: #F5F0E8;
   overflow-wrap: anywhere;
 }
 
@@ -394,7 +432,7 @@ body {
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: rgba(245, 240, 232, 0.6);
 }
 
 /* Petits écrans en hauteur : tout s'ajuste sans jamais déborder */
@@ -407,39 +445,18 @@ body {
   .stats-quote-text { font-size: 13.5px; }
 }
 
-/* Thème clair « papier & encre » : mêmes matériaux, or foncé
-   lisible, ombre chaude — jamais de gris froid sur papier */
-html[data-theme="light"] .stats-card {
-  background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.1), rgba(184, 134, 11, 0.02) 62%),
-    rgba(255, 255, 255, 0.65);
-  border-color: rgba(184, 134, 11, 0.2);
-  box-shadow: 0 8px 24px rgba(74, 58, 24, 0.1);
-}
-
-html[data-theme="light"] .stats-eyebrow { color: var(--gold-text, #9A7209); }
-
-html[data-theme="light"] .stats-number {
-  background-image: linear-gradient(120deg, #9A7209, #C79A2A 55%, #9A7209);
-}
-
-html[data-theme="light"] .stats-done { color: var(--gold-text, #9A7209); }
-
-html[data-theme="light"] .stats-ring-track { stroke: rgba(32, 27, 18, 0.08); }
-
-html[data-theme="light"] .stats-ring-fill { stroke: #9A7209; }
-
-html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2); }
+/* La carte principale reste VERTE dans les deux thèmes — comme la
+   carte héros de Réviser, elle porte la marque (aucune surcharge
+   claire : textes crème littéraux, or et vert invariables). */
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 1bis : LES DEUX MODES (v0.6.2 · v0.6.4)
-   Position fidèle à l'app de référence (AXIA) : deux mini-cartes
-   côte à côte JUSTE AU-DESSOUS de la carte statistiques — pas trop
-   grandes mais bien espacées : un espace vertical net (margin-top)
-   les détache de la carte principale. Ce sont des BOUTONS cliquables
-   (navigation remise, v0.6.4) : cursor + effet d'appui, comme les
-   tool-cards de l'original. Les écrans cibles de chaque mode seront
-   branchés chacun à leur étape, sur demande explicite.
+   VUE ACCUEIL — BLOC 1bis : LES DEUX MODES (v0.6.2 · v0.6.4 · v0.7.2)
+   Deux mini-cartes côte à côte sous la carte principale. MATÉRIAU
+   EXACT de la carte matière « Sciences de la vie et de la Terre »
+   de Réviser (v0.7.1) : radial or, filet or .38, glow or, radius
+   18. Boutons cliquables (navigation remise, v0.6.4) : cursor +
+   effet d'appui. Pastilles icônes : or dégradé (le style SVT) pour
+   le rapide, voile vert pour le focus (distinction deux tons ARVX).
    ═══════════════════════════════════════════════════════════════════ */
 .modes-row {
   display: grid;
@@ -459,12 +476,13 @@ html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2
   gap: 7px;
   min-width: 0;
   padding: 13px 14px 12px;
-  border-radius: var(--radius);
+  border-radius: 18px;
+  /* Matériau EXACT de la carte matière SVT (Réviser, v0.7.1) */
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.07), rgba(184, 134, 11, 0.01) 62%),
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
     rgba(var(--rgb-soft), 0.02);
-  border: 1px solid rgba(184, 134, 11, 0.1);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
   text-align: left;
   font: inherit;
   color: inherit;
@@ -481,7 +499,8 @@ html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2
   outline-offset: 3px;
 }
 
-/* Badge de l'icône : or pour « Mode rapide » */
+/* Badge de l'icône : or DÉGRADÉ + encre — la pastille exacte de la
+   carte matière SVT */
 .mode-icon {
   width: 36px;
   height: 36px;
@@ -490,8 +509,8 @@ html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  background: rgba(184, 134, 11, 0.12);
-  color: var(--accent-bright);
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #141210;
 }
 
 /* Badge vert pour « Mode focus » — la même distinction deux tons
@@ -515,19 +534,11 @@ html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2
   color: var(--text-dim);
 }
 
-/* Thème clair « papier & encre » : surfaces blanches, or foncé,
-   vert foncé lisible, ombre chaude — jamais de gris froid */
+/* Thème clair « papier & encre » : le matériau SVT clair — fond
+   blanc plein, MÊME filet or .38 et glow or (comme la carte matière
+   en clair) ; la pastille or dégradée reste or (comme Premium). */
 html[data-theme="light"] .mode-card {
-  background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.06), rgba(184, 134, 11, 0.01) 62%),
-    rgba(255, 255, 255, 0.65);
-  border-color: rgba(184, 134, 11, 0.2);
-  box-shadow: 0 6px 18px rgba(74, 58, 24, 0.1);
-}
-
-html[data-theme="light"] .mode-icon {
-  background: rgba(184, 134, 11, 0.12);
-  color: var(--gold-text, #9A7209);
+  background: var(--bg-card-solid);
 }
 
 html[data-theme="light"] .mode-icon.focus {
@@ -536,11 +547,9 @@ html[data-theme="light"] .mode-icon.focus {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 2 : CONTINUER (v0.6.4)
-   Proposition posée dans l'espace vide sous les mini-cartes (demande
-   explicite). Bouton SPA → vue Réviser. Taille compacte fixe ; sur
-   les très petits écrans en hauteur elle s'efface (media plus bas)
-   pour que tout reste calé entre les deux barres.
+   VUE ACCUEIL — BLOC 2 : CONTINUER (v0.6.4 · v0.7.2)
+   Bouton SPA → vue Réviser. Même matériau carte matière SVT que
+   les mini-cartes (radial or, filet or .38, glow, radius 18).
    ═══════════════════════════════════════════════════════════════════ */
 .continue-card {
   display: flex;
@@ -548,12 +557,12 @@ html[data-theme="light"] .mode-icon.focus {
   gap: 13px;
   margin-top: 14px;
   padding: 13px 14px;
-  border-radius: var(--radius);
+  border-radius: 18px;
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.07), rgba(184, 134, 11, 0.01) 62%),
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
     rgba(var(--rgb-soft), 0.02);
-  border: 1px solid rgba(184, 134, 11, 0.1);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
   text-align: left;
   font: inherit;
   color: inherit;
@@ -579,8 +588,8 @@ html[data-theme="light"] .mode-icon.focus {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  background: rgba(184, 134, 11, 0.12);
-  color: var(--accent-bright);
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #141210;
 }
 
 .continue-body {
@@ -655,12 +664,13 @@ html[data-theme="light"] .mode-icon.focus {
   min-width: 0;
   min-height: 0;
   padding: 10px 14px;
-  border-radius: var(--radius);
+  border-radius: 18px;
+  /* Matériau EXACT de la carte matière SVT (Réviser, v0.7.1) */
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.07), rgba(184, 134, 11, 0.01) 62%),
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
     rgba(var(--rgb-soft), 0.02);
-  border: 1px solid rgba(184, 134, 11, 0.1);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
   text-align: left;
   font: inherit;
   color: inherit;
@@ -685,8 +695,8 @@ html[data-theme="light"] .mode-icon.focus {
   align-items: center;
   justify-content: center;
   font-size: 12.5px;
-  background: rgba(184, 134, 11, 0.12);
-  color: var(--accent-bright);
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #141210;
 }
 
 /* Deux tons ARVX : or pour Réviser / Examen, vert pour Progression,
@@ -708,24 +718,12 @@ html[data-theme="light"] .mode-icon.focus {
   color: var(--text-light);
 }
 
-/* Variantes claires des blocs Continuer + Actions rapides */
+/* Variantes claires des blocs Continuer + Actions rapides — même
+   matériau SVT clair : fond blanc plein, filet or .38 et glow or
+   conservés de la base ; pastilles or dégradées restent or. */
 html[data-theme="light"] .continue-card,
 html[data-theme="light"] .quick-tile {
-  background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.06), rgba(184, 134, 11, 0.01) 62%),
-    rgba(255, 255, 255, 0.65);
-  border-color: rgba(184, 134, 11, 0.2);
-  box-shadow: 0 6px 18px rgba(74, 58, 24, 0.1);
-}
-
-html[data-theme="light"] .continue-icon {
-  background: rgba(184, 134, 11, 0.12);
-  color: var(--gold-text, #9A7209);
-}
-
-html[data-theme="light"] .quick-icon {
-  background: rgba(184, 134, 11, 0.12);
-  color: var(--gold-text, #9A7209);
+  background: var(--bg-card-solid);
 }
 
 html[data-theme="light"] .quick-icon.green {

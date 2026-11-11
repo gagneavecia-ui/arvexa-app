@@ -142,11 +142,16 @@
          Le contenu de chaque vue arrive étape par étape.
          ══════════════════════════════════════════════════════ -->
     <section class="view" id="view-accueil" data-view="accueil">
-      <!-- ═══ BLOC 1 — CARTE STATISTIQUES (v0.6.1) ═══
+      <!-- ═══ BLOC 1 — CARTE PRINCIPALE (v0.6.1 · v0.7.2) ═══
            Héros compact = 1/4 du cadre entre la barre du haut et
-           la barre du bas. Polyvalent (toutes matières) :
-           à gauche le nombre de cours de l'élève + les cours
-           lus et complétés ; à droite un anneau de progression
+           la barre du bas. ARRIÈRE-PLAN EXACT de la carte héros de
+           RÉVISER (v0.7.2, demande explicite) : vert de marque
+           --primary + radial or + rayons « aurora » (#statsRays,
+           même générateur SVG que #libRays), filet or 0.22,
+           textes crème, jauge or — la carte reste verte dans les
+           deux thèmes, comme le héros. Polyvalent (toutes
+           matières) : à gauche le nombre de cours de l'élève + les
+           cours lus et complétés ; à droite un anneau de progression
            (statistique visuelle) ; en bas la citation, façon
            site original (2 citations au démarrage, tirée au
            hasard — le bouton rafraîchir en propose une autre).
@@ -155,6 +160,7 @@
            Valeurs d'exemple tant que les cours réels n'existent
            pas (localStorage 'arvexa-stats'). -->
       <div class="stats-card">
+        <div class="stats-rays" id="statsRays" aria-hidden="true"></div>
         <div class="stats-top">
           <div class="stats-left">
             <span class="stats-eyebrow"><i class="fas fa-layer-group" aria-hidden="true"></i><span data-i18n="accueil.eyebrow">Mes cours</span></span>

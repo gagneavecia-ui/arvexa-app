@@ -124,6 +124,17 @@
      · recherche qui FILTRE réellement (instantané, SPA) ;
      · les deux barres restent fixées : la liste défile À
        L'INTÉRIEUR du cadre — le document ne défile jamais.
+
+   v0.7.2 — L'ACCUEIL REPREND LES DESIGN DE RÉVISER (demandes
+     explicites) : la carte principale (stats) a l'arrière-plan
+     EXACT de la carte héros de Réviser — vert de marque + radial
+     or + rayons « aurora » (#statsRays peint par le MÊME
+     générateur que #libRays), textes crème littéraux (la carte
+     reste verte dans les deux thèmes) ; les autres cartes
+     (mini-cartes de mode, Continuer, tuiles Actions rapides)
+     passent au matériau EXACT de la carte matière « Sciences de
+     la vie et de la Terre » : filet or .38, glow or, radius 18,
+     pastilles or dégradées + encre #141210.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -775,10 +786,11 @@ logoutBtn?.addEventListener('click', (e) => {
    deux rampes. Teintes RECALIBRÉES sur le vert de marque ARVX
    #1A3A2A : rampe 1 → vert émeraude bleuté, rampe 2 → vert-or
    sombre (l'équivalent des rampes ardoise d'AXIA, teintes ARVX).
+   UN SEUL GÉNÉRATEUR peint les DEUX cartes depuis v0.7.2 : la
+   carte héros de Réviser (#libRays) ET la carte principale de
+   l'accueil (#statsRays — même arrière-plan, demande explicite).
    Décoratif : aria-hidden + pointer-events none. ── */
-(function buildLibRays() {
-  const holder = document.getElementById('libRays');
-  if (!holder) return;
+(function buildRays() {
   const COLORS = [
     'rgb(23, 49, 37)', 'rgb(23, 51, 39)', 'rgb(24, 53, 41)', 'rgb(24, 54, 42)',
     'rgb(25, 56, 44)', 'rgb(25, 58, 46)', 'rgb(26, 60, 48)', 'rgb(26, 61, 49)',
@@ -801,7 +813,11 @@ logoutBtn?.addEventListener('click', (e) => {
     const y2 = (R + Math.sin(a2) * R).toFixed(1);
     paths += '<path d="M' + R + ' ' + R + 'L' + x1 + ' ' + y1 + 'L' + x2 + ' ' + y2 + 'Z" fill="' + COLORS[i % COLORS.length] + '"></path>';
   }
-  holder.innerHTML = '<svg width="590" height="590" viewBox="0 0 590.4 590.4" focusable="false">' + paths + '</svg>';
+  const svg = '<svg width="590" height="590" viewBox="0 0 590.4 590.4" focusable="false">' + paths + '</svg>';
+  ['libRays', 'statsRays'].forEach((id) => {
+    const holder = document.getElementById(id);
+    if (holder) holder.innerHTML = svg;
+  });
 })();
 
 /* ── Recherche bibliothèque — filtre réel et instantané. Chaque

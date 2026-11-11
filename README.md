@@ -3,7 +3,28 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.7.1 Réviser recolorée aux couleurs EXACTES du site
+## Étape actuelle — v0.7.2 Accueil : les cartes reprennent les design de Réviser
+
+### v0.7.2 — Cartes de l'accueil au style de Réviser (demande explicite)
+
+- **Carte principale (stats)** : **arrière-plan EXACT de la carte héros de
+  Réviser** — vert de marque `--primary` + radial or + **rayons « aurora »**
+  (`#statsRays`, peint par le même générateur SVG que `#libRays`) + filet
+  or 0.22 + radius 26. Textes en **crème littéral** `#F5F0E8` (Playfair
+  pour le chiffre et la citation), jauge or, filet de citation or — la
+  carte reste **verte dans les deux thèmes**, comme le héros ;
+- **Mini-cartes de mode · Continuer · tuiles Actions rapides** : matériau
+  **EXACT de la carte matière « Sciences de la vie et de la Terre »**
+  (Réviser v0.7.1) — radial or `rgba(184,134,11,.08)`, **filet or .38**,
+  glow or `.12`, radius 18 ;
+- **Pastilles icônes or** (Mode rapide, Continuer, tuiles Réviser /
+  Examen) : **dégradé or signature + encre `#141210`** — la pastille
+  exacte de la carte matière ; Mode focus et Progression gardent leur
+  voile vert (distinction deux tons ARVX) ;
+- **Thème clair** : cartes secondaires = matériau SVT clair (fond blanc
+  plein, même filet or .38 et glow or) ; la carte principale reste verte
+  (marque) ;
+- SPA, cadre verrouillé, navigation : inchangés et re-vérifiés.
 
 ### v0.7.1 — La vue Réviser passe aux couleurs ARVX (structure AXIA conservée)
 
