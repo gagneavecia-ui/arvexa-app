@@ -289,11 +289,52 @@ const I18N = {
     'reviser.reviser': 'Réviser ce cours',
     'reviser.fiches': '10 fiches dues',
     'reviser.matieres': 'Mes matières',
-    'reviser.count': '1 matière · 1 cours',
-    'reviser.subjectMeta': '1 cours · 1 chapitre',
-    'reviser.ajour': 'À jour',
     'reviser.vide': 'Aucun cours pour l’instant.',
     'reviser.aucunResultat': 'Aucun résultat.',
+    'reviser.countModel': '{n} matières · {m} chapitres',
+    'reviser.metaModel': '{n} chapitres · {m} notions',
+    'reviser.bac': 'BAC',
+    'reviser.heroMeta': 'Terminale · Chapitre 3',
+    'reviser.ajoutBientot': 'L’import de cours arrive bientôt.',
+    'accueil.serie': 'Série',
+    'accueil.jours': 'j',
+    'accueil.minutes': 'min',
+    'accueil.semaine': '· 7 j',
+    'accueil.continuerAuj': 'Révisé aujourd’hui',
+    'accueil.continuerIlYa': 'Révisé il y a {n} j',
+    'examen.eyebrow': 'Examen',
+    'examen.titre': 'Prépare ton BAC',
+    'examen.countdown': 'Compte à rebours',
+    'examen.jours': 'jours',
+    'examen.countdownSub': 'Un chapitre par jour garde ta longueur d’avance.',
+    'examen.epreuve': 'Épreuve le {date}',
+    'examen.quiz': 'Quiz éclair',
+    'examen.quizSub': '5 questions · générées pour toi',
+    'examen.blanc': 'Examen blanc',
+    'examen.blancSub': 'Dans les conditions réelles',
+    'examen.bientot': 'Bientôt',
+    'examen.bientotToast': 'Bientôt disponible — les clés IA arrivent.',
+    'examen.plan': 'Plan de révision',
+    'examen.planModel': '{n} chapitres · {m} notions à couvrir avant l’épreuve.',
+    'examen.rythme': '≈ {n} chapitres / semaine',
+    'examen.matieres': 'Matières d’examen',
+    'examen.countModel': '{n} matières',
+    'progression.serie': 'Série',
+    'progression.minutes': 'min · 7 j',
+    'progression.quiz': 'Quiz réussis',
+    'progression.activite': 'Activité · 7 derniers jours',
+    'progression.objectif': 'Objectif hebdo',
+    'progression.objectifSub': '5 jours actifs par semaine — la régularité fait la réussite.',
+    'progression.objectifModel': '{n} / 5 j',
+    'profil.eyebrow': 'Mon espace',
+    'profil.titre': 'Profil',
+    'profil.minutes': 'Minutes',
+    'profil.reglages': 'Réglages',
+    'profil.theme': 'Mode sombre',
+    'profil.themeLight': 'Mode clair',
+    'profil.langue': 'Langue',
+    'profil.compte': 'Compte',
+    'profil.defaultName': 'Élève',
     'plan.gratuit': 'Gratuit',
     'plan.premium': 'Premium',
     'menu.section.compte': 'Mon compte',
@@ -407,11 +448,52 @@ const I18N = {
     'reviser.reviser': 'Revise this course',
     'reviser.fiches': '10 cards due',
     'reviser.matieres': 'My subjects',
-    'reviser.count': '1 subject · 1 course',
-    'reviser.subjectMeta': '1 course · 1 chapter',
-    'reviser.ajour': 'Up to date',
     'reviser.vide': 'No courses yet.',
     'reviser.aucunResultat': 'No result.',
+    'reviser.countModel': '{n} subjects · {m} chapters',
+    'reviser.metaModel': '{n} chapters · {m} topics',
+    'reviser.bac': 'BAC',
+    'reviser.heroMeta': 'Grade 12 · Chapter 3',
+    'reviser.ajoutBientot': 'Course import is coming soon.',
+    'accueil.serie': 'Streak',
+    'accueil.jours': 'd',
+    'accueil.minutes': 'min',
+    'accueil.semaine': '· 7 d',
+    'accueil.continuerAuj': 'Revised today',
+    'accueil.continuerIlYa': 'Revised {n} d ago',
+    'examen.eyebrow': 'Exam',
+    'examen.titre': 'Prepare for your BAC',
+    'examen.countdown': 'Countdown',
+    'examen.jours': 'days',
+    'examen.countdownSub': 'One chapter a day keeps you ahead.',
+    'examen.epreuve': 'Exam on {date}',
+    'examen.quiz': 'Flash quiz',
+    'examen.quizSub': '5 questions · generated for you',
+    'examen.blanc': 'Mock exam',
+    'examen.blancSub': 'Under real conditions',
+    'examen.bientot': 'Soon',
+    'examen.bientotToast': 'Coming soon — the AI keys are on the way.',
+    'examen.plan': 'Revision plan',
+    'examen.planModel': '{n} chapters · {m} topics to cover before the exam.',
+    'examen.rythme': '≈ {n} chapters / week',
+    'examen.matieres': 'Exam subjects',
+    'examen.countModel': '{n} subjects',
+    'progression.serie': 'Streak',
+    'progression.minutes': 'min · 7 d',
+    'progression.quiz': 'Quizzes passed',
+    'progression.activite': 'Activity · last 7 days',
+    'progression.objectif': 'Weekly goal',
+    'progression.objectifSub': '5 active days a week — consistency wins.',
+    'progression.objectifModel': '{n} / 5 d',
+    'profil.eyebrow': 'My space',
+    'profil.titre': 'Profile',
+    'profil.minutes': 'Minutes',
+    'profil.reglages': 'Settings',
+    'profil.theme': 'Dark mode',
+    'profil.themeLight': 'Light mode',
+    'profil.langue': 'Language',
+    'profil.compte': 'Account',
+    'profil.defaultName': 'Student',
     'plan.gratuit': 'Free',
     'plan.premium': 'Premium',
     'menu.section.compte': 'My account',
@@ -532,6 +614,10 @@ function applyLang() {
   applyThemeButton();
   updateStatsCard();
   updateProgression();
+  updateContinue();
+  updateLibrary();
+  updateExamen();
+  updateProfil();
 }
 
 function setLang(next) {
@@ -546,7 +632,8 @@ document.querySelectorAll('.lang-btn').forEach((btn) => {
   btn.addEventListener('click', () => setLang(btn.dataset.lang));
 });
 
-applyLang();
+/* (v0.12 : le premier applyLang() est appelé en FIN de module —
+   les données v0.12 doivent être initialisées avant le rendu.) */
 
 /* ── SALUTATION (fidèle au site original, index.html:2560-2564) ── */
 
@@ -626,32 +713,17 @@ function applyProfileCard() {
    applyLang() (hoisting) : aucune constante module-level, donc
    aucun risque de TDZ. ── */
 
-function updateStatsCard(pickNewQuote) {
-  /* Citations ARVX — 2 pour débuter, traduites FR / AN. */
-  const QUOTES = [
-    { fr: 'Chaque page lue rapproche ton objectif.', an: 'Every page you read brings your goal closer.' },
-    { fr: 'Toute matière se dompte, un cours à la fois.', an: 'Any subject can be mastered, one course at a time.' },
-  ];
-
-  /* Citation tirée au hasard au démarrage et stable ensuite
-     (la langue peut changer sans changer de citation) ; le
-     bouton rafraîchir en tire une nouvelle (pickNewQuote). */
-  if (pickNewQuote || updateStatsCard._qi === undefined) {
-    updateStatsCard._qi = Math.floor(Math.random() * QUOTES.length);
-  }
-
+function updateStatsCard() {
   const coursesEl = document.getElementById('statCourses');
   const doneEl = document.getElementById('statDone');
   const ringFill = document.getElementById('ringFill');
   const ringPct = document.getElementById('ringPct');
-  const quoteEl = document.getElementById('quoteText');
-  if (!coursesEl || !doneEl || !ringFill || !ringPct || !quoteEl) return;
+  if (!coursesEl || !doneEl || !ringFill || !ringPct) return;
 
-  /* Statistiques RÉELLES (v0.10 — fin des données fictives) :
-     le profil Firestore (window.ARVXA_PROFILE, posé par js/auth.js)
-     fait foi — stats.courses / stats.done, 0 au départ. Le
-     localStorage 'arvexa-stats' reste un cache d'appareil ; aucune
-     valeur d'exemple n'est plus utilisée. */
+  /* Statistiques RÉELLES (v0.10) : le profil Firestore
+     (window.ARVXA_PROFILE, posé par js/auth.js) fait foi —
+     stats.courses / stats.done, 0 au départ. Le localStorage
+     'arvexa-stats' reste un cache d'appareil. */
   const stats = getRealStats();
 
   const courses = Math.max(0, Math.round(stats.courses));
@@ -661,16 +733,19 @@ function updateStatsCard(pickNewQuote) {
   coursesEl.textContent = String(courses);
   doneEl.textContent = String(done);
 
-  /* Anneau de progression : circonférence = 2π × 30 ≈ 188.5.
-     L'arc rempli représente la part de cours lus et complétés. */
+  /* Anneau de progression : circonférence = 2π × 30 ≈ 188.5. */
   const C = 2 * Math.PI * 30;
   ringFill.style.strokeDasharray = String(C);
   ringFill.style.strokeDashoffset = String(C * (1 - pct / 100));
   ringPct.innerHTML = pct + '<small>%</small>';
 
-  /* Citation : « … » — même esprit que le hero-quote de l'original. */
-  const q = QUOTES[updateStatsCard._qi];
-  quoteEl.textContent = '« ' + (lang === 'an' ? q.an : q.fr) + ' »';
+  /* v0.12 — pastilles statistiques réelles : série (jours
+     consécutifs d'activité) et minutes des 7 derniers jours. */
+  const act = getActivity();
+  const streakEl = document.getElementById('statStreak');
+  const minutesEl = document.getElementById('statMinutes');
+  if (streakEl) streakEl.textContent = String(computeStreak(act.days));
+  if (minutesEl) minutesEl.textContent = String(weekTotalMinutes(act.days));
 }
 
 /* ── SOURCE DE VÉRITÉ PARTAGÉE (v0.11) — les statistiques réelles,
@@ -734,6 +809,9 @@ function updateProgression() {
       : t('accueil.progressionSubVide');
   }
 
+  /* Mini-graphe de la semaine de la grande carte (7 barres or) */
+  buildWeek(document.getElementById('homeWeek'));
+
   /* Vue Progression : grand anneau (r = 41) + compteurs réels */
   setRing(
     document.getElementById('progRingFill'),
@@ -744,6 +822,27 @@ function updateProgression() {
   const leftEl = document.getElementById('progLeft');
   if (doneEl) doneEl.textContent = String(done);
   if (leftEl) leftEl.textContent = String(Math.max(0, courses - done));
+
+  /* v0.12 — tuiles statistiques réelles + activité de la semaine
+     + objectif hebdomadaire (jours actifs / 5). */
+  const act = getActivity();
+  const tStreak = document.getElementById('progStreak');
+  const tMinutes = document.getElementById('progMinutes');
+  const tQuiz = document.getElementById('progQuiz');
+  if (tStreak) tStreak.textContent = String(computeStreak(act.days));
+  if (tMinutes) tMinutes.textContent = String(weekTotalMinutes(act.days));
+  if (tQuiz) tQuiz.textContent = String(act.quiz.correct);
+
+  const days = buildWeek(document.getElementById('progWeek'));
+  const weekTotalEl = document.getElementById('progWeekTotal');
+  if (weekTotalEl) weekTotalEl.textContent = weekTotalMinutes(act.days) + ' min';
+
+  const active = days.filter((d) => d.minutes > 0).length;
+  const goalVal = document.getElementById('progGoalVal');
+  const goalFill = document.getElementById('progGoalFill');
+  if (goalVal) goalVal.textContent = t('progression.objectifModel').replace('{n}', String(active));
+  if (goalFill) goalFill.style.width = Math.min(100, (active / 5) * 100) + '%';
+
   const vide = document.getElementById('progVide');
   if (vide) vide.hidden = courses > 0;
 }
@@ -860,8 +959,17 @@ function showView(name, { animate = true } = {}) {
   /* Titre de l'onglet navigateur / app (selon la langue courante) */
   document.title = titleFor(name);
 
-  /* Chaque vue s'ouvre en haut, instantanément */
+  /* Chaque vue s'ouvre en haut, instantanément — y compris les
+     vues qui défilent À L'INTÉRIEUR du cadre (Réviser, Examen,
+     Progression, Profil) : leur scroll local repart de zéro. */
   window.scrollTo(0, 0);
+  viewSections.forEach((el) => {
+    if (!el) return;
+    el.scrollTop = 0;
+    el.querySelectorAll('.exam-body, .prof-wrap, .prog-wrap, .lib-body').forEach((scroller) => {
+      scroller.scrollTop = 0;
+    });
+  });
 }
 
 function parseHash() {
@@ -1000,19 +1108,7 @@ async function performLogout() {
   }
 }
 
-const logoutBtn = document.getElementById('logoutBtn');
-logoutBtn?.addEventListener('click', (e) => {
-  e.preventDefault();
-  window.arvexaConfirm({
-    title: t('deco.title'),
-    message: t('deco.message'),
-    icon: '⚠️',
-    confirmText: t('deco.ok'),
-    cancelText: t('deco.cancel'),
-    variant: 'danger',
-    onConfirm: performLogout,
-  });
-});
+/* (v0.12 : la déconnexion est câblée dans la section v0.12 — confirmLogout.) */
 
 /* ═══════════════════════════════════════════════════════════════════
    VUE RÉVISER (v0.7 / v0.7.1) — structure de la page « cours »
@@ -1062,7 +1158,7 @@ logoutBtn?.addEventListener('click', (e) => {
     paths += '<path d="M' + R + ' ' + R + 'L' + x1 + ' ' + y1 + 'L' + x2 + ' ' + y2 + 'Z" fill="' + COLORS[i % COLORS.length] + '"></path>';
   }
   const svg = '<svg width="590" height="590" viewBox="0 0 590.4 590.4" focusable="false">' + paths + '</svg>';
-  ['libRays', 'statsRays', 'progRays', 'homeProgRays'].forEach((id) => {
+  ['libRays', 'statsRays', 'progRays', 'homeProgRays', 'examRays', 'profRays'].forEach((id) => {
     const holder = document.getElementById(id);
     if (holder) holder.innerHTML = svg;
   });
@@ -1131,7 +1227,14 @@ window.addEventListener('arvexa-profile', () => {
   applyProfileCard();
   updateStatsCard();
   updateProgression();
+  updateContinue();
+  updateLibrary();
+  updateExamen();
+  updateProfil();
 });
+
+/* Le profil (Réglages → thème) reflète la bascule, où qu'elle vienne. */
+window.addEventListener('arvexa-themechange', () => updateProfil());
 
 function hideBootVeil() {
   const veil = document.getElementById('bootVeil');
@@ -1156,3 +1259,450 @@ setTimeout(() => {
     hideBootVeil();
   }
 }, 6000);
+
+/* ═══════════════════════════════════════════════════════════════════
+   V0.12 — SITE D'ÉDUCATION COMPLET (tout sauf le menu)
+   · DONNÉES D'ACTIVITÉ RÉELLES : localStorage 'arvexa-activity'
+     { days: { 'YYYY-MM-DD': { minutes, revisions } }, quiz: { correct,
+     total }, last: { title, at } } — tout commence à zéro, jamais de
+     chiffre inventé ; les écrans de quiz/examen à venir écriront ici.
+   · MATIÈRES RÉELLES : les 7 matières du dépôt ARVEXA School
+     (bac-*.json) avec leurs VRAIS volumes (chapitres / notions).
+   · BAC : même configuration que bac-date.js du site original
+     (14 juillet) — la prochaine occurrence est calculée en direct.
+   · VUES : Examen (compte à rebours, outils, plan calculé, matières),
+     Profil (identité, stats, thème, langue, compte), Progression
+     enrichie (tuiles, semaine, objectif), Réviser aux 7 matières,
+     grande carte progression avec mini-graphe.
+   ═══════════════════════════════════════════════════════════════════ */
+
+const ACTIVITY_KEY = 'arvexa-activity';
+
+/* ── Lecture de l'activité réelle (repli sûr : tout à zéro) ── */
+function getActivity() {
+  try {
+    const a = JSON.parse(localStorage.getItem(ACTIVITY_KEY) || 'null');
+    if (a && typeof a === 'object') {
+      return {
+        days: (a.days && typeof a.days === 'object') ? a.days : {},
+        quiz: {
+          correct: Number.isFinite(a.quiz && a.quiz.correct) ? a.quiz.correct : 0,
+          total: Number.isFinite(a.quiz && a.quiz.total) ? a.quiz.total : 0,
+        },
+        last: (a.last && typeof a.last === 'object' && a.last.title) ? a.last : null,
+      };
+    }
+  } catch { /* JSON invalide */ }
+  return { days: {}, quiz: { correct: 0, total: 0 }, last: null };
+}
+
+/* Clé de jour locale YYYY-MM-DD (les séries suivent le calendrier
+   de l'appareil, pas celui du serveur). */
+function dayKey(d) {
+  const dt = d instanceof Date ? d : new Date();
+  return dt.getFullYear() + '-' +
+    String(dt.getMonth() + 1).padStart(2, '0') + '-' +
+    String(dt.getDate()).padStart(2, '0');
+}
+
+function dayMinutes(days, key) {
+  const e = days[key];
+  return e && Number.isFinite(e.minutes) && e.minutes > 0 ? Math.round(e.minutes) : 0;
+}
+
+/* SÉRIE — jours consécutifs d'activité, finissant aujourd'hui
+   (ou hier si aujourd'hui n'est pas encore actif : la série du
+   lendemain matin ne casse pas avant la fin de la journée). */
+function computeStreak(days) {
+  let streak = 0;
+  const cursor = new Date();
+  if (dayMinutes(days, dayKey(cursor)) === 0) cursor.setDate(cursor.getDate() - 1);
+  while (dayMinutes(days, dayKey(cursor)) > 0) {
+    streak++;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return streak;
+}
+
+/* Les 7 derniers jours (le plus récent en dernier) — minutes réelles. */
+function last7Days(days) {
+  const out = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const k = dayKey(d);
+    out.push({ key: k, minutes: dayMinutes(days, k), weekday: d.getDay(), date: new Date(d) });
+  }
+  return out;
+}
+
+function weekTotalMinutes(days) {
+  return last7Days(days).reduce((sum, d) => sum + d.minutes, 0);
+}
+
+/* Lettres des jours (indexées par Date.getDay, 0 = dimanche) */
+const DAY_LETTERS = {
+  fr: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
+  an: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+};
+
+/* Construit un mini-graphe hebdomadaire (7 barres or) dans un
+   conteneur ; hauteur relative au maximum de la semaine (plancher
+   30 min pour que les petites valeurs restent lisibles). Retourne
+   les jours pour les compteurs. */
+function buildWeek(container) {
+  if (!container) return last7Days(getActivity().days);
+  const days = last7Days(getActivity().days);
+  const max = Math.max(30, ...days.map((d) => d.minutes));
+  const letters = DAY_LETTERS[lang] || DAY_LETTERS.fr;
+  container.innerHTML = days.map((d, i) => {
+    const h = d.minutes > 0 ? Math.max(14, Math.round((d.minutes / max) * 100)) : 0;
+    const today = i === days.length - 1 ? ' today' : '';
+    return '<span class="pw-col' + today + '">' +
+      '<span class="pw-track"><span class="pw-bar" style="height:' + h + '%"></span></span>' +
+      '<span class="pw-day">' + letters[d.weekday] + '</span>' +
+      '</span>';
+  }).join('');
+  return days;
+}
+
+/* ── LES 7 MATIÈRES RÉELLES — dépôt ARVEXA School (bac-*.json,
+      niveau terminale, examen BAC). Vrais volumes documentés. ── */
+const SUBJECTS = [
+  { id: 'maths',    fr: 'Mathématiques',                     an: 'Mathematics',           icon: 'fa-square-root-variable', chapters: 11, notions: 154 },
+  { id: 'physique', fr: 'Physique',                          an: 'Physics',               icon: 'fa-atom',                 chapters: 17, notions: 238 },
+  { id: 'chimie',   fr: 'Chimie',                            an: 'Chemistry',             icon: 'fa-flask',                chapters: 9,  notions: 126 },
+  { id: 'svt',      fr: 'Sciences de la vie et de la Terre', an: 'Life & Earth Sciences', icon: 'fa-leaf',                 chapters: 20, notions: 280 },
+  { id: 'histoire', fr: 'Histoire',                          an: 'History',               icon: 'fa-landmark',             chapters: 8,  notions: 112 },
+  { id: 'geo',      fr: 'Géographie',                        an: 'Geography',             icon: 'fa-earth-africa',         chapters: 9,  notions: 126 },
+  { id: 'philo',    fr: 'Philosophie',                       an: 'Philosophy',            icon: 'fa-feather-pointed',      chapters: 13, notions: 182 },
+];
+const SUBJECTS_CH = SUBJECTS.reduce((a, s2) => a + s2.chapters, 0);   /* 87  */
+const SUBJECTS_NO = SUBJECTS.reduce((a, s2) => a + s2.notions, 0);    /* 1218 */
+
+/* Matière présélectionnée (connexion Réviser ↔ Examen) */
+let selectedSubject = null;
+
+/* ── BAC — même configuration que bac-date.js du site original :
+      14 juillet ; la prochaine occurrence est calculée en direct. ── */
+const BAC_CONFIG = { month: 6, day: 14 }; /* mois 0-based → 14 juillet */
+
+function nextBacDate() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  let d = new Date(now.getFullYear(), BAC_CONFIG.month, BAC_CONFIG.day);
+  if (d < today) d = new Date(now.getFullYear() + 1, BAC_CONFIG.month, BAC_CONFIG.day);
+  return d;
+}
+
+function daysUntil(date) {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  return Math.max(0, Math.round((date - today) / 86400000));
+}
+
+function capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE ACCUEIL — CARTE « CONTINUER » (v0.12, données réelles)
+   Affiche la dernière révision enregistrée dans l'activité ; état
+   vide tant qu'aucune révision n'existe.
+   ═══════════════════════════════════════════════════════════════════ */
+
+function updateContinue() {
+  const titleEl = document.getElementById('continueTitle');
+  const subEl = document.getElementById('continueSub');
+  if (!titleEl || !subEl) return;
+
+  const last = getActivity().last;
+  if (last && last.title) {
+    titleEl.textContent = last.title.length > 34 ? last.title.slice(0, 33) + '…' : last.title;
+    const days = Math.floor((Date.now() - (last.at || Date.now())) / 86400000);
+    subEl.textContent = days <= 0
+      ? t('accueil.continuerAuj')
+      : t('accueil.continuerIlYa').replace('{n}', String(days));
+  } else {
+    titleEl.textContent = t('accueil.continuer');
+    subEl.textContent = t('accueil.continuerSub');
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE RÉVISER — LES 7 MATIÈRES RÉELLES (v0.12)
+   La grille est générée en JS : libellés traduits FR / AN, vrais
+   volumes (chapitres / notions), pastille BAC. Le clic sur une
+   matière mène à l'Examen avec la matière présélectionnée.
+   ═══════════════════════════════════════════════════════════════════ */
+
+function updateLibrary() {
+  const grid = document.getElementById('libGrid');
+  const count = document.getElementById('libCount');
+  const heroSub = document.getElementById('libHeroSub');
+
+  if (count) {
+    count.textContent = t('reviser.countModel')
+      .replace('{n}', String(SUBJECTS.length))
+      .replace('{m}', String(SUBJECTS_CH));
+  }
+
+  /* Sous-titre du héros : matière réelle + niveau (traduit) */
+  if (heroSub) {
+    const svt = SUBJECTS.find((s2) => s2.id === 'svt');
+    heroSub.textContent = (lang === 'an' ? svt.an : svt.fr) + ' · ' + t('reviser.heroMeta');
+  }
+
+  if (grid) {
+    grid.innerHTML = SUBJECTS.map((s2) =>
+      '<button type="button" class="lib-subject" data-subject="' + s2.id + '">' +
+        '<span class="lib-subject-top">' +
+          '<span class="lib-subject-chip" aria-hidden="true"><i class="fas ' + s2.icon + '"></i></span>' +
+          '<span class="lib-subject-badge" aria-hidden="true">' + s2.chapters + '</span>' +
+        '</span>' +
+        '<span class="lib-subject-name">' + (lang === 'an' ? s2.an : s2.fr) + '</span>' +
+        '<span class="lib-subject-meta">' + t('reviser.metaModel')
+          .replace('{n}', String(s2.chapters)).replace('{m}', String(s2.notions)) + '</span>' +
+        '<span class="lib-subject-ok">' + t('reviser.bac') + '</span>' +
+      '</button>'
+    ).join('');
+
+    /* Clic matière → Examen, matière présélectionnée (SPA). */
+    grid.querySelectorAll('.lib-subject').forEach((card) => {
+      card.addEventListener('click', () => {
+        selectedSubject = card.dataset.subject;
+        goRoute('examen');
+        updateExamen();
+      });
+    });
+  }
+
+  /* La recherche courante se réapplique à la grille fraîche. */
+  filterLibrary();
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE EXAMEN (v0.12) — compte à rebours BAC réel, plan de révision
+   calculé, 7 matières d'examen réelles. Connexion : un clic sur une
+   matière ouvre la Bibliothèque filtrée sur cette matière.
+   ═══════════════════════════════════════════════════════════════════ */
+
+function updateExamen() {
+  /* Compte à rebours (prochaine occurrence du BAC) */
+  const bac = nextBacDate();
+  const daysEl = document.getElementById('examDays');
+  const dateEl = document.getElementById('examDate');
+  const daysLeft = daysUntil(bac);
+  if (daysEl) daysEl.textContent = String(daysLeft);
+  if (dateEl) {
+    const loc = lang === 'an' ? 'en-GB' : 'fr-FR';
+    const dateStr = bac.toLocaleDateString(loc, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    dateEl.textContent = t('examen.epreuve').replace('{date}', capitalize(dateStr));
+  }
+
+  /* Plan de révision : rythme réel (87 chapitres ÷ semaines restantes)
+     et avancement réel (part de cours lus, même source que l'anneau). */
+  const paceEl = document.getElementById('examPace');
+  const planSub = document.getElementById('examPlanSub');
+  const planFill = document.getElementById('examPlanFill');
+  const weeksLeft = Math.max(1, Math.ceil(daysLeft / 7));
+  const perWeek = Math.max(1, Math.ceil(SUBJECTS_CH / weeksLeft));
+  if (paceEl) paceEl.textContent = t('examen.rythme').replace('{n}', String(perWeek));
+  if (planSub) {
+    planSub.textContent = t('examen.planModel')
+      .replace('{n}', String(SUBJECTS_CH)).replace('{m}', String(SUBJECTS_NO));
+  }
+  if (planFill) {
+    const stats = getRealStats();
+    const pct = stats.courses > 0
+      ? Math.min(100, Math.round(((stats.done || 0) / stats.courses) * 100))
+      : 0;
+    planFill.style.width = pct + '%';
+  }
+
+  const countEl = document.getElementById('examCount');
+  if (countEl) countEl.textContent = t('examen.countModel').replace('{n}', String(SUBJECTS.length));
+
+  /* Grille des matières (progression réelle : 0 % au départ —
+     la progression par matière viendra avec les vrais cours). */
+  const grid = document.getElementById('examGrid');
+  if (grid) {
+    grid.innerHTML = SUBJECTS.map((s2) => {
+      const selected = selectedSubject === s2.id ? ' selected' : '';
+      return (
+        '<button type="button" class="exam-card' + selected + '" data-subject="' + s2.id + '">' +
+          '<span class="exam-card-top">' +
+            '<span class="exam-card-chip" aria-hidden="true"><i class="fas ' + s2.icon + '"></i></span>' +
+            '<span class="exam-card-pct">0&nbsp;%</span>' +
+          '</span>' +
+          '<span class="exam-card-name">' + (lang === 'an' ? s2.an : s2.fr) + '</span>' +
+          '<span class="exam-card-meta">' + t('reviser.metaModel')
+            .replace('{n}', String(s2.chapters)).replace('{m}', String(s2.notions)) + '</span>' +
+          '<span class="exam-card-bar" aria-hidden="true"><span></span></span>' +
+        '</button>'
+      );
+    }).join('');
+
+    /* Clic matière → Bibliothèque filtrée sur cette matière (SPA). */
+    grid.querySelectorAll('.exam-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const subject = SUBJECTS.find((s3) => s3.id === card.dataset.subject);
+        if (!subject) return;
+        const search = document.getElementById('libSearch');
+        if (search) {
+          search.value = lang === 'an' ? subject.an : subject.fr;
+          filterLibrary();
+        }
+        goRoute('reviser');
+      });
+    });
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE PROFIL (v0.12) — identité réelle (Firebase), stats réelles,
+   réglages RÉELS (thème + langue), compte et déconnexion.
+   ═══════════════════════════════════════════════════════════════════ */
+
+function updateProfil() {
+  /* Identité : vrai profil Firestore (repli : cache 'arvexa_user') */
+  const nameEl = document.getElementById('profName');
+  const emailEl = document.getElementById('profEmail');
+  const avatarEl = document.getElementById('profAvatar');
+  const planEl = document.getElementById('profPlan');
+
+  let firstName = '';
+  let plan = 'gratuit';
+  const profile = window.ARVXA_PROFILE || null;
+  if (profile) {
+    firstName = profile.firstName || '';
+    plan = profile.plan || 'gratuit';
+  } else {
+    try {
+      const user = JSON.parse(localStorage.getItem('arvexa_user') || 'null');
+      if (user) {
+        firstName = user.firstName || '';
+        if (user.plan === 'premium') plan = 'premium';
+      }
+    } catch { /* JSON invalide */ }
+  }
+
+  const name = firstName || t('profil.defaultName');
+  if (nameEl) nameEl.textContent = name;
+  if (avatarEl) avatarEl.textContent = (name.trim().charAt(0) || 'A').toUpperCase();
+  if (emailEl) {
+    emailEl.textContent = (profile && profile.email) || '—';
+  }
+  if (planEl) {
+    planEl.textContent = t(plan === 'premium' ? 'plan.premium' : 'plan.gratuit');
+    planEl.classList.toggle('premium', plan === 'premium');
+  }
+
+  /* Statistiques réelles (mêmes sources que les autres écrans) */
+  const act = getActivity();
+  const stats = getRealStats();
+  const done = Math.min(Math.max(0, Math.round(stats.courses)), Math.max(0, Math.round(stats.done || 0)));
+  const sDone = document.getElementById('profStatDone');
+  const sStreak = document.getElementById('profStatStreak');
+  const sMinutes = document.getElementById('profStatMinutes');
+  if (sDone) sDone.textContent = String(done);
+  if (sStreak) sStreak.textContent = String(computeStreak(act.days));
+  if (sMinutes) sMinutes.textContent = String(weekTotalMinutes(act.days));
+
+  /* Réglage thème : libellé + interrupteur reflètent l'état réel */
+  const dark = (window.ARVEXA_THEME ? window.ARVEXA_THEME.get() : 'dark') !== 'light';
+  const switchEl = document.getElementById('profThemeSwitch');
+  const themeName = document.getElementById('profThemeName');
+  if (switchEl) switchEl.classList.toggle('on', dark);
+  if (themeName) themeName.textContent = dark ? t('profil.theme') : t('profil.themeLight');
+
+  /* Sélecteur de langue : état actif réel */
+  document.querySelectorAll('.prof-langbtn').forEach((btn) => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+}
+
+/* ── Toasts ARVX — même design que les toasts auth du site
+      original (injection sécurisée par textContent). ── */
+function arvxToast(message, type = 'success', duration = 2600) {
+  const container = document.getElementById('authToastContainer');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = 'toast ' + type;
+  const icon = document.createElement('i');
+  icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+  toast.appendChild(icon);
+  const span = document.createElement('span');
+  span.textContent = String(message);
+  toast.appendChild(span);
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transform = 'translateY(-10px)';
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
+
+/* ── CONNEXIONS INTER-PAGES (v0.12) — chaque carte mène quelque
+      part, sans jamais recharger (SPA). ── */
+
+/* Réviser : héros « Réviser ce cours » → Examen (SVT présélectionnée) */
+document.getElementById('libRevise')?.addEventListener('click', () => {
+  selectedSubject = 'svt';
+  goRoute('examen');
+  updateExamen();
+});
+
+/* Réviser : « Ajouter » → information honnête (import à venir) */
+document.getElementById('libAdd')?.addEventListener('click', () => {
+  arvxToast(t('reviser.ajoutBientot'));
+});
+
+/* Examen : Quiz éclair / Examen blanc → bientôt (clés IA à venir) */
+['examQuiz', 'examWhite'].forEach((id) => {
+  document.getElementById(id)?.addEventListener('click', () => {
+    arvxToast(t('examen.bientotToast'));
+  });
+});
+
+/* Profil : abonnement / rappels → bientôt */
+['profAbo', 'profNotifs'].forEach((id) => {
+  document.getElementById(id)?.addEventListener('click', () => {
+    arvxToast(t('examen.bientotToast'));
+  });
+});
+
+/* Profil : bascule de thème réelle (même moteur que le header) */
+document.getElementById('profThemeRow')?.addEventListener('click', () => {
+  window.ARVEXA_THEME.toggle();
+});
+
+/* Profil : sélecteur de langue réelle (même moteur que le menu) */
+document.querySelectorAll('.prof-langbtn').forEach((btn) => {
+  btn.addEventListener('click', () => setLang(btn.dataset.lang));
+});
+
+/* Profil : déconnexion — la même modale de confirmation que le menu */
+function confirmLogout() {
+  window.arvexaConfirm({
+    title: t('deco.title'),
+    message: t('deco.message'),
+    icon: '⚠️',
+    confirmText: t('deco.ok'),
+    cancelText: t('deco.cancel'),
+    variant: 'danger',
+    onConfirm: performLogout,
+  });
+}
+document.getElementById('profLogout')?.addEventListener('click', confirmLogout);
+const prevLogout = document.getElementById('logoutBtn');
+if (prevLogout && !prevLogout.dataset.arvxLogoutBound) {
+  prevLogout.dataset.arvxLogoutBound = '1';
+  prevLogout.addEventListener('click', (e) => {
+    e.preventDefault();
+    confirmLogout();
+  });
+}
+
+/* ── AMORÇAGE v0.12 — premier rendu complet, données initialisées ── */
+applyLang();

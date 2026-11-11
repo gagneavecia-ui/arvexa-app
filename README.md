@@ -3,7 +3,58 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.8 Signature ARVX + rafraîchissement rétabli
+## Étape actuelle — v0.12 Site d'éducation complet
+
+### v0.12 — TOUT retapé SAUF le menu (« site d'éducation complète »)
+
+**Demande** : « tu retapes tout sauf le menu, les cartes principales et tout,
+tu finalises toutes les pages avec de nouveaux éléments, genre site
+d'éducation complète » + grande carte progression détaillée à l'accueil.
+
+- **ACCUEIL retapé** — carte principale : la citation décorative cède sa
+  place à deux pastilles STATISTIQUES RÉELLES (Série en jours consécutifs
+  d'activité, Minutes des 7 derniers jours) ; mini-cartes de mode avec
+  flèche d'action ; « Continuer » affiche la VRAIE dernière révision
+  (titre + « il y a n j ») ; GRANDE CARTE PROGRESSION DÉTAILLÉE :
+  anneau or + compteurs + MINI-GRAPHE de la semaine (7 barres or,
+  minutes réelles par jour, lettre du jour en or) + barre + message —
+  clic → Progression.
+- **RÉVISER** — les 7 VRAIES matières du dépôt ARVEXA School
+  (bac-*.json : Mathématiques 11 chapitres / 154 notions, Physique 17/238,
+  Chimie 9/126, SVT 20/280, Histoire 8/112, Géographie 9/126,
+  Philosophie 13/182 = 87 chapitres · 1218 notions), générées en JS
+  (traduites FR/AN) ; héros = chapitre réel (SVT ch. 3 « La reproduction
+  conforme ») ; clic matière → Examen présélectionnée.
+- **EXAMEN (était vide)** — COMPTE À REBOURS BAC réel (même config que
+  bac-date.js : 14 juillet, prochaine occurrence calculée en direct,
+  date traduite) ; Quiz éclair + Examen blanc (Bientôt — les clés IA
+  viennent) ; PLAN DE RÉVISION calculé sur les vrais volumes et les
+  vrais jours restants (≈ n chapitres/semaine) ; les 7 matières
+  d'examen avec progression réelle ; clic matière → Bibliothèque
+  filtrée sur la matière.
+- **PROGRESSION enrichie** — 3 tuiles réelles (Série / Minutes 7 j /
+  Quiz réussis), ACTIVITÉ · 7 DERNIERS JOURS (grand graphe), OBJECTIF
+  HEBDO (jours actifs / 5, barre réelle), état vide réel.
+- **PROFIL (était vide)** — carte identité (avatar or, vrai nom + e-mail
+  Firebase, badge plan), 3 stats réelles, RÉGLAGES RÉELS (bascule de
+  thème + sélecteur de langue FR/AN, mêmes moteurs que header/menu),
+  Compte (abonnement Bientôt, rappels, support WhatsApp réel,
+  DÉCONNEXION avec la modale existante), version ARVX v0.12.
+- **Données d'activité réelles** — 'arvexa-activity' { days, quiz, last }
+  : tout commence à zéro, jamais de chiffre inventé ; les futurs quiz /
+  révisions écriront dedans. Même source partout (accueil, progression,
+  profil).
+- **Corrections** — déconnexion câblée proprement (un seul écouteur),
+  clé i18n manquante 'profil.defaultName' ajoutée (bug latent), premier
+  applyLang() déplacé en fin de module (TDZ), chaque vue s'ouvre en haut
+  (reset du scroll interne), lettres de jours localisées.
+- **Testé** (Playwright, 51 vérifications) : SPA zéro-refresh (marque 42
+  survit à 5 navigations, 1 seule navigation document), zéro défilement,
+  cadre exact (marge 12px au-dessus de la barre du bas), 7 matières,
+  countdown 245 j = valeur attendue, filtres dans les deux sens
+  (Réviser↔Examen), thème clair/sombre, FR/AN, 360×780 ET 360×700.
+
+### v0.8 — Retouches anti-copie (« on s'inspire, on ne copie pas ») + RAFRAÎCHIR
 
 ### v0.8 — Retouches anti-copie (« on s'inspire, on ne copie pas ») + RAFRAÎCHIR
 

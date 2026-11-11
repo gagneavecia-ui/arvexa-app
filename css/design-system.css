@@ -456,33 +456,46 @@ body {
   margin-left: 1px;
 }
 
-/* Citation : façon le hero-quote du site original — Playfair
-   italique (retour au normal v0.9.2), auteur en petites capitales
-   discrètes, filet or du héros au-dessus. */
-.stats-quote {
-  border-top: 1px solid rgba(224, 184, 74, 0.22);  /* filet or du héros */
-  padding-top: 9px;
+/* ── v0.12 — PASTILLES STATISTIQUES RÉELLES ──
+   La citation décorative cède sa place à deux pastilles de vraies
+   données : SÉRIE (jours consécutifs d'activité) et MINUTES (7
+   derniers jours). Voile crème translucide du héros, icône or. */
+.stats-pills {
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 3px;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.stats-pill {
+  flex: 1;
   min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 7px 10px;
+  border-radius: 12px;
+  background: rgba(245, 240, 232, 0.08);
+  border: 1px solid rgba(245, 240, 232, 0.14);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(245, 240, 232, 0.78);
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.stats-quote-text {
+.stats-pill i {
+  font-size: 10.5px;
+  color: var(--accent-bright);
+}
+
+.stats-pill b {
   font-family: 'Playfair Display', Georgia, serif;
-  font-style: italic;
-  font-size: 14.5px;
-  line-height: 1.45;
+  font-size: 15px;
+  font-weight: 700;
   color: #F5F0E8;
-  overflow-wrap: anywhere;
-}
-
-.stats-quote-author {
-  font-size: 9.5px;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(245, 240, 232, 0.6);
+  margin-left: 2px;
 }
 
 /* Petits écrans en hauteur : tout s'ajuste sans jamais déborder */
@@ -492,7 +505,8 @@ body {
   .stats-numlabel { font-size: 15.5px; }
   .stats-ring { width: 72px; height: 72px; }
   .stats-ring-pct { font-size: 16.5px; }
-  .stats-quote-text { font-size: 13.5px; }
+  .stats-pill { padding: 6px 9px; font-size: 11px; }
+  .stats-pill b { font-size: 13.5px; }
 }
 
 /* La carte principale reste VERTE dans les deux thèmes — comme la
@@ -3319,3 +3333,1041 @@ html[data-theme="light"] .view-auth .terms-box input[type="checkbox"] {
 /* Filet de sécurité v0.10 : l'attribut hidden doit TOUJOURS gagner
    sur .auth-panel.active (sinon le panneau « caché » resterait peint). */
 .view-auth .auth-panel[hidden] { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   V0.12 — SITE D'ÉDUCATION COMPLET (tout sauf le menu)
+   Demande : « tu retapes tout sauf le menu, les cartes principales
+   et tout, tu finalises toutes les pages avec de nouveaux éléments,
+   genre site d'éducation complète ». Les matériaux signature sont
+   conservés (héros vert + radial or + filet or 0.22 + rayons
+   aurora ; cartes or radial + filet .38 + glow + radius 18) —
+   ce sont les NOUVEAUX ÉLÉMENTS qui les habillent :
+   · ACCUEIL    : pastilles stats réelles + mini-graphe semaine
+   · RÉVISER    : 7 vraies matières (grille JS, vrais volumes)
+   · EXAMEN     : page complète (compte à rebours BAC réel, outils,
+                  plan de révision calculé, 7 matières d'examen)
+   · PROGRESSION: tuiles stats réelles + activité semaine + objectif
+   · PROFIL     : page complète (identité, stats, thème, langue,
+                  compte, déconnexion)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── GRANDE CARTE PROGRESSION — additions v0.12 ─────────────────── */
+
+/* Pied de la grande carte : barre or + message (colonne compacte) */
+.progress-foot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-height: 0;
+}
+
+/* ── MINI-GRAPHE DE LA SEMAINE (accueil + vue Progression) ──
+   7 colonnes : barre or (minutes réelles du jour) + lettre du jour.
+   Hauteur relative au maximum de la semaine — un jour sans activité
+   reste une piste vide (données réelles, jamais inventées). */
+.progress-week {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+  min-height: 0;
+}
+
+.pw-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.pw-track {
+  width: 100%;
+  height: 34px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  border-radius: 7px;
+  background: rgba(245, 240, 232, 0.07);
+  overflow: hidden;
+}
+
+.pw-bar {
+  width: 58%;
+  min-height: 0;
+  border-radius: 7px 7px 3px 3px;
+  background: linear-gradient(180deg, var(--accent-bright), var(--accent));
+  box-shadow: 0 0 8px rgba(224, 184, 74, 0.28);
+  transition: height 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.pw-day {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(245, 240, 232, 0.55);
+}
+
+/* Le jour courant se distingue (lettre or) */
+.pw-col.today .pw-day { color: var(--accent-bright); }
+
+/* Version GRANDE de la vue Progression (pistes plus hautes) */
+.prog-week .pw-track { height: 64px; border-radius: 9px; }
+.prog-week .pw-day { font-size: 10px; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE EXAMEN (v0.12) — préparation au BAC
+   En-tête + corps déroulant À L'INTÉRIEUR du cadre (comme Réviser) ;
+   le document ne défile jamais.
+   ═══════════════════════════════════════════════════════════════════ */
+.view-examen {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--bg);
+}
+
+.exam-head {
+  padding: 14px 16px 0;
+  flex-shrink: 0;
+}
+
+.exam-titlerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.exam-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 13px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #141210;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  box-shadow: 0 6px 14px -6px rgba(184, 134, 11, 0.5);
+  flex-shrink: 0;
+}
+
+.exam-badge i { font-size: 12px; }
+
+.exam-body {
+  padding: 18px 16px 24px;
+  overflow-y: auto;          /* défilement interne — comme Réviser */
+  scrollbar-width: none;
+}
+
+.exam-body::-webkit-scrollbar { display: none; }
+
+/* ── Compte à rebours — matériau héros signature (vert + radial or
+      + filet 0.22 + rayons aurora #examRays) ── */
+.exam-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border-radius: 26px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(224, 184, 74, 0.16), rgba(224, 184, 74, 0.02) 62%),
+    var(--primary);
+  border: 1px solid rgba(224, 184, 74, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.exam-hero-eyebrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.72);
+}
+
+.exam-hero-eyebrow i { color: var(--accent-bright); font-size: 11px; }
+
+.exam-hero-main {
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.exam-days {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+}
+
+.exam-days-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 54px;
+  font-weight: 700;
+  line-height: 0.95;
+  background: linear-gradient(120deg, var(--accent), var(--accent-bright) 55%, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.exam-days-label {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: 18px;
+  color: #F5F0E8;
+}
+
+.exam-hero-date {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(245, 240, 232, 0.78);
+}
+
+.exam-hero-sub {
+  position: relative;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: rgba(245, 240, 232, 0.62);
+}
+
+/* ── Outils d'examen : deux cartes or côte à côte ── */
+.exam-tools {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.exam-tool {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+  padding: 13px;
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.exam-tool:active { transform: scale(0.97); }
+
+.exam-tool:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+.exam-tool-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #141210;
+}
+
+.exam-tool-icon.green {
+  background: rgba(92, 198, 155, 0.13);
+  color: #5CC69B;
+}
+
+.exam-tool-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.exam-tool-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-light);
+}
+
+.exam-tool-sub {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+/* Pastille « Bientôt » — or sobre, jamais criarde */
+.exam-soon {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: rgba(184, 134, 11, 0.14);
+  border: 1px solid rgba(184, 134, 11, 0.32);
+  color: var(--accent-bright);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+html[data-theme="light"] .exam-soon {
+  background: rgba(184, 134, 11, 0.10);
+  color: var(--gold-text);
+}
+
+/* ── Plan de révision (calcul réel) — carte or pleine largeur ── */
+.exam-plan {
+  margin-top: 12px;
+  padding: 14px 15px;
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+}
+
+.exam-plan-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.exam-plan-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.exam-plan-pace {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent-bright);
+  white-space: nowrap;
+}
+
+html[data-theme="light"] .exam-plan-pace { color: var(--gold-text); }
+
+.exam-plan-sub {
+  margin-top: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.exam-plan-bar {
+  margin-top: 10px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(var(--rgb-soft), 0.08);
+  border: 1px solid rgba(184, 134, 11, 0.18);
+  overflow: hidden;
+}
+
+.exam-plan-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  box-shadow: 0 0 10px rgba(224, 184, 74, 0.35);
+  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ── Matières d'examen : 2 colonnes, matériau carte or ── */
+.exam-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.exam-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 18px 18px 18px 6px;
+  background:
+    radial-gradient(circle at 100% 0%, transparent 0 46px, rgba(224, 184, 74, 0.13) 46px 48px, transparent 48px 72px, rgba(224, 184, 74, 0.07) 72px 74px, transparent 74px),
+    linear-gradient(150deg, rgba(224, 184, 74, 0.09), rgba(224, 184, 74, 0) 52%),
+    rgba(var(--rgb-soft), 0.03);
+  border: 1px solid rgba(184, 134, 11, 0.34);
+  box-shadow:
+    0 10px 22px -10px rgba(184, 134, 11, 0.30),
+    0 3px 8px rgba(0, 0, 0, 0.16);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.25s ease;
+}
+
+.exam-card:active { transform: scale(0.97); }
+
+.exam-card:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .exam-card:hover {
+    border-color: rgba(224, 184, 74, 0.45);
+    box-shadow:
+      0 14px 26px -10px rgba(184, 134, 11, 0.38),
+      0 3px 8px rgba(0, 0, 0, 0.16);
+  }
+}
+
+/* Matière présélectionnée depuis une autre vue (Réviser) */
+.exam-card.selected {
+  border-color: rgba(224, 184, 74, 0.75);
+  box-shadow:
+    0 0 0 1px rgba(224, 184, 74, 0.45),
+    0 12px 24px -10px rgba(184, 134, 11, 0.45);
+}
+
+.exam-card-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.exam-card-chip {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #141210;
+  font-size: 14px;
+}
+
+.exam-card-pct {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent-bright);
+}
+
+html[data-theme="light"] .exam-card-pct { color: var(--gold-text); }
+
+.exam-card-name {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.145px;
+  line-height: 1.24;
+  color: var(--text-light);
+}
+
+.exam-card-meta {
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.exam-card-bar {
+  width: 100%;
+  margin-top: 10px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(var(--rgb-soft), 0.08);
+  overflow: hidden;
+}
+
+.exam-card-bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE PROGRESSION — additions v0.12 (tuiles, semaine, objectif)
+   ═══════════════════════════════════════════════════════════════════ */
+.prog-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.prog-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+  padding: 11px 12px;
+  border-radius: 16px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+}
+
+.prog-tile-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-bright);
+}
+
+html[data-theme="light"] .prog-tile-num { color: var(--gold-text); }
+
+.prog-tile-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.prog-tile-label i { font-size: 10px; color: var(--accent-bright); }
+
+html[data-theme="light"] .prog-tile-label i { color: var(--gold-text); }
+
+/* Activité de la semaine — carte or pleine largeur */
+.prog-weekcard {
+  margin-top: 12px;
+  padding: 14px 15px;
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+}
+
+.prog-week-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.prog-week-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.prog-week-total {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent-bright);
+  white-space: nowrap;
+}
+
+html[data-theme="light"] .prog-week-total { color: var(--gold-text); }
+
+.prog-week {
+  display: flex;
+  align-items: stretch;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+/* Sur carte claire (or), les pistes prennent le voile encre */
+.prog-weekcard .pw-track { background: rgba(var(--rgb-soft), 0.07); }
+.prog-weekcard .pw-day { color: var(--text-muted); }
+
+/* Objectif hebdomadaire */
+.prog-goal {
+  margin-top: 12px;
+  padding: 14px 15px;
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+}
+
+.prog-goal-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.prog-goal-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.prog-goal-val {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--accent-bright);
+  white-space: nowrap;
+}
+
+html[data-theme="light"] .prog-goal-val { color: var(--gold-text); }
+
+.prog-goal-bar {
+  margin-top: 10px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(var(--rgb-soft), 0.08);
+  border: 1px solid rgba(184, 134, 11, 0.18);
+  overflow: hidden;
+}
+
+.prog-goal-fill {
+  display: block;
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.prog-goal-sub {
+  display: block;
+  margin-top: 9px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+/* La vue Progression défile À L'INTÉRIEUR du cadre si le contenu
+   dépasse (sécurité petits écrans) — le document ne défile jamais. */
+.view-progression {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.view-progression .prog-wrap {
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.view-progression .prog-wrap::-webkit-scrollbar { display: none; }
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE PROFIL (v0.12) — identité, stats réelles, réglages, compte
+   ═══════════════════════════════════════════════════════════════════ */
+.view-profil {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--bg);
+}
+
+.prof-wrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 18px;
+  overflow-y: auto;          /* défilement interne — comme Réviser */
+  scrollbar-width: none;
+}
+
+.prof-wrap::-webkit-scrollbar { display: none; }
+
+/* Carte identité — matériau héros signature */
+.prof-id {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 17px 16px;
+  border-radius: 26px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(224, 184, 74, 0.16), rgba(224, 184, 74, 0.02) 62%),
+    var(--primary);
+  border: 1px solid rgba(224, 184, 74, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.prof-avatar {
+  position: relative;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #FFF6DC;
+  background: radial-gradient(120% 150% at 30% 20%, #E0B84A, #B8860B 70%);
+  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.35);
+}
+
+.prof-id-body {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.prof-name {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #F5F0E8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prof-email {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(245, 240, 232, 0.66);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prof-plan-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 11px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  background: rgba(245, 240, 232, 0.10);
+  border: 1px solid rgba(245, 240, 232, 0.20);
+  color: rgba(245, 240, 232, 0.85);
+}
+
+.prof-plan-badge.premium {
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  border-color: transparent;
+  color: #141210;
+  box-shadow: 0 4px 12px -4px rgba(184, 134, 11, 0.5);
+}
+
+/* Statistiques réelles — 3 tuiles alignées */
+.prof-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.prof-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 16px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+}
+
+.prof-stat-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 23px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-bright);
+}
+
+html[data-theme="light"] .prof-stat-num { color: var(--gold-text); }
+
+.prof-stat-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Groupes de réglages / compte */
+.prof-group {
+  margin-top: 16px;
+}
+
+.prof-group-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.prof-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 13px;
+  border: none;
+  border-radius: 16px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.06), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.26);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.25s ease;
+}
+
+.prof-row + .prof-row { margin-top: 8px; }
+
+.prof-row:active { transform: scale(0.98); }
+
+.prof-row:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+.prof-row-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13.5px;
+  background: rgba(var(--rgb-soft), 0.06);
+  border: 1px solid rgba(184, 134, 11, 0.20);
+  color: var(--text-dim);
+}
+
+.prof-row-icon.gold {
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  border-color: transparent;
+  color: #141210;
+}
+
+.prof-row-icon.green {
+  background: rgba(45, 125, 90, 0.14);
+  border-color: rgba(45, 125, 90, 0.30);
+  color: var(--success-light);
+}
+
+html[data-theme="light"] .prof-row-icon.green {
+  color: var(--success);
+}
+
+.prof-row-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-light);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prof-row-end {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+
+/* Bascule de thème (interrupteur) */
+.prof-switch {
+  width: 42px;
+  height: 24px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  position: relative;
+  background: rgba(var(--rgb-soft), 0.12);
+  border: 1px solid rgba(184, 134, 11, 0.24);
+  transition: background 0.25s ease;
+}
+
+.prof-switch-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), background 0.25s ease;
+}
+
+.prof-switch.on {
+  background: rgba(184, 134, 11, 0.30);
+}
+
+.prof-switch.on .prof-switch-knob {
+  transform: translateX(18px);
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  box-shadow: 0 0 8px rgba(224, 184, 74, 0.45);
+}
+
+/* Sélecteur de langue (mini segmenté, comme le menu) */
+.prof-langseg {
+  display: inline-flex;
+  flex-shrink: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(184, 134, 11, 0.24);
+  overflow: hidden;
+}
+
+.prof-langbtn {
+  padding: 5px 12px;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-dim);
+  cursor: pointer;
+}
+
+.prof-langbtn.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  color: #141210;
+}
+
+/* Déconnexion + version */
+.prof-logout {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 16px;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #F5F0E8;
+  background: linear-gradient(135deg, #B85C3A, #A34A2C);
+  box-shadow: 0 10px 22px -10px rgba(184, 92, 58, 0.55);
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.prof-logout:active { transform: scale(0.98); }
+
+.prof-logout:focus-visible {
+  outline: 2px solid var(--danger);
+  outline-offset: 3px;
+}
+
+.prof-version {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   V0.12 — PETITS ÉCRANS EN HAUTEUR (≤ 720px)
+   La carte « Ma progression » de l'accueil reste PRIORITAIRE et
+   compacte ; Continuer s'efface (règle v0.9.2 conservée) ; les
+   nouvelles pages se compactent sans jamais déborder.
+   ═══════════════════════════════════════════════════════════════════ */
+@media (max-height: 720px) {
+  .progress-week { gap: 5px; }
+  .pw-track { height: 26px; }
+  .progress-foot { gap: 5px; }
+
+  .exam-head { padding-top: 12px; }
+  .exam-body { padding: 14px 16px 18px; }
+  .exam-hero { padding: 15px 16px; gap: 8px; }
+  .exam-days-num { font-size: 44px; }
+  .exam-days-label { font-size: 15.5px; }
+
+  .prog-wrap { padding-top: 13px; }
+  .prog-tiles { gap: 8px; margin-top: 10px; }
+  .prog-tile { padding: 9px 11px; }
+  .prog-tile-num { font-size: 20px; }
+  .prog-week .pw-track { height: 46px; }
+  .prog-goal { padding: 12px 13px; }
+
+  .prof-wrap { padding-top: 13px; }
+  .prof-id { padding: 14px; margin-top: 11px; }
+  .prof-avatar { width: 46px; height: 46px; font-size: 19px; }
+  .prof-stat { padding: 10px 11px; }
+  .prof-stat-num { font-size: 19px; }
+  .prof-row { padding: 10px 12px; }
+}
+
+/* Écrans étroits : la grille d'examen passe à une colonne */
+@media (max-width: 340px) {
+  .exam-grid { grid-template-columns: 1fr; }
+}

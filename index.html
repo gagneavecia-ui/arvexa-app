@@ -472,89 +472,85 @@
     </section>
 
     <section class="view" id="view-accueil" data-view="accueil">
-      <!-- ═══ BLOC 1 — CARTE PRINCIPALE (v0.6.1 · v0.7.2 · v0.9.2) ═══
-           RETOUR AU NORMAL (v0.9.2, demande : « rends la normale »)
-           : l'accueil reprend EXACTEMENT le look validé v0.7.2 —
-           carte compacte (1/4 du cadre), arrière-plan du héros
-           (vert --primary + radial or), filet or 0.22, rayons
-           « aurora » (#statsRays, même générateur que #libRays),
-           Playfair Display pour le chiffre et la citation. Les
-           pastilles série/temps de v0.9 sont retirées. Actions
-           rapides : SUPPRIMÉES (v0.9.1, demande conservée). -->
+      <!-- ═══ BLOC 1 — CARTE PRINCIPALE (v0.12 · retapée) ═══
+           Le matériau héros validé est conservé (vert --primary +
+           radial or + filet or 0.22 + rayons aurora #statsRays).
+           NOUVEAU v0.12 : la citation décorative s'efface au profit
+           de STATISTIQUES RÉELLES — rangée de deux pastilles :
+           SÉRIE (jours consécutifs d'activité) et MINUTES (7 derniers
+           jours). Données : profil Firestore + 'arvexa-activity'. -->
       <div class="stats-card">
         <div class="stats-rays" id="statsRays" aria-hidden="true"></div>
         <div class="stats-top">
           <div class="stats-left">
             <span class="stats-eyebrow"><i class="fas fa-layer-group" aria-hidden="true"></i><span data-i18n="accueil.eyebrow">Mes cours</span></span>
-            <span class="stats-num"><span class="stats-number" id="statCourses">12</span><span class="stats-numlabel" data-i18n="accueil.coursLabel">cours</span></span>
-            <span class="stats-sub"><span class="stats-done" id="statDone">7</span> <span data-i18n="accueil.lus">lus et complétés</span></span>
+            <span class="stats-num"><span class="stats-number" id="statCourses">0</span><span class="stats-numlabel" data-i18n="accueil.coursLabel">cours</span></span>
+            <span class="stats-sub"><span class="stats-done" id="statDone">0</span> <span data-i18n="accueil.lus">lus et complétés</span></span>
           </div>
           <div class="stats-ring" aria-hidden="true">
             <svg viewBox="0 0 72 72" role="presentation">
               <circle class="stats-ring-track" cx="36" cy="36" r="30"></circle>
               <circle class="stats-ring-fill" id="ringFill" cx="36" cy="36" r="30"></circle>
             </svg>
-            <span class="stats-ring-pct" id="ringPct">58<small>%</small></span>
+            <span class="stats-ring-pct" id="ringPct">0<small>%</small></span>
           </div>
         </div>
-        <div class="stats-quote">
-          <span class="stats-quote-text" id="quoteText">« Chaque page lue rapproche ton objectif. »</span>
-          <span class="stats-quote-author">— ARVX</span>
+        <div class="stats-pills">
+          <span class="stats-pill">
+            <i class="fas fa-fire" aria-hidden="true"></i>
+            <span data-i18n="accueil.serie">Série</span><b id="statStreak">0</b><span data-i18n="accueil.jours">j</span>
+          </span>
+          <span class="stats-pill">
+            <i class="fas fa-clock" aria-hidden="true"></i>
+            <b id="statMinutes">0</b><span data-i18n="accueil.minutes">min</span><span data-i18n="accueil.semaine">· 7 j</span>
+          </span>
         </div>
       </div>
 
-      <!-- ═══ BLOC 1bis — LES DEUX MODES (v0.6.2 · v0.6.4 · v0.9.2) ═══
-           RETOUR AU NORMAL v0.9.2 : disposition d'origine — icône
-           EN HAUT, titre au milieu, sous-titre en bas ; matériau
-           carte matière SVT (radial or, filet or .38, glow or,
-           radius 18). Badges ARVX (or pour le rapide, vert pour
-           le focus). BOUTONS cliquables (navigation SPA v0.6.4). -->
+      <!-- ═══ BLOC 1bis — LES DEUX MODES (v0.12 · retapés) ═══
+           Même matériau carte or validé (radial or, filet .38, glow,
+           radius 18) + flèche d'action discrète. Navigation SPA
+           conservée : Mode rapide → Réviser, Mode focus → Examen. -->
       <div class="modes-row" role="group" aria-label="Modes de révision">
         <button type="button" class="mode-card mode-quick" id="modeQuick">
           <span class="mode-icon quick" aria-hidden="true"><i class="fas fa-bolt"></i></span>
           <span class="mode-name" data-i18n="accueil.mode.rapide">Mode rapide</span>
           <span class="mode-sub" data-i18n="accueil.mode.rapideSub">Révision éclair · 5 min</span>
+          <span class="mode-go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
         </button>
         <button type="button" class="mode-card mode-focus" id="modeFocus">
           <span class="mode-icon focus" aria-hidden="true"><i class="fas fa-stopwatch"></i></span>
           <span class="mode-name" data-i18n="accueil.mode.focus">Mode focus</span>
           <span class="mode-sub" data-i18n="accueil.mode.focusSub">Cycles 25 / 5</span>
+          <span class="mode-go" aria-hidden="true"><i class="fas fa-arrow-right"></i></span>
         </button>
       </div>
 
-      <!-- ═══ BLOC 2 — CONTINUER (v0.6.4 · v0.9.2) ═══
-           RETOUR AU NORMAL v0.9.2 : matériau carte matière SVT
-           (radial or, filet or .38, glow or, radius 18), titres
-           Playfair, couleurs de texte du thème (plus la pilule
-           verte de v0.9). Bouton SPA → vue Réviser. État vide
-           tant qu'aucun vrai cours n'existe. Masquée sur les très
-           petits écrans en hauteur (max-height 720px). -->
+      <!-- ═══ BLOC 2 — CONTINUER (v0.12 · réel) ═══
+           Affiche la DERNIÈRE RÉVISION réelle (localStorage
+           'arvexa-activity' → last) : titre du cours + « il y a n j ».
+           État vide tant qu'aucune révision. Clic → vue Réviser. -->
       <button type="button" class="continue-card" id="continueCard">
         <span class="continue-icon" aria-hidden="true"><i class="fas fa-rotate-right"></i></span>
         <span class="continue-body">
-          <span class="continue-title" data-i18n="accueil.continuer">Continuer</span>
-          <span class="continue-sub" data-i18n="accueil.continuerSub">Ta dernière révision apparaîtra ici.</span>
+          <span class="continue-title" id="continueTitle">Continuer</span>
+          <span class="continue-sub" id="continueSub">Ta dernière révision apparaîtra ici.</span>
         </span>
         <span class="continue-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
       </button>
 
-      <!-- ═══ BLOC 3 — MA PROGRESSION, GRANDE CARTE DÉTAILLÉE
-           (v0.11.1, demande : « je ne parle pas d'une toute petite
-           carte mais d'une carte progression bien détaillée qui
-           finalise la page totale en laissant juste une toute
-           petite marge entre la barre du bas, donc un peu de
-           statistique ») ═══
-           La carte OCCUPE TOUT L'ESPACE RESTANT (flex 1) jusqu'à
-           une petite marge au-dessus de la barre du bas. Matériau
-           héros SIGNATURE (vert --primary + radial or + filet or
-           0.22 + rayons aurora #homeProgRays, même générateur) —
-           elle répond à la carte verte du haut : le cadre est
-           scellé. Contenu RÉEL (profil Firestore, 0 au départ) :
-           anneau or 84px + pourcentage, deux compteurs (Cours
-           lus / À compléter), barre de progression or, message
-           d'état. CLIC → vue Progression (connexion demandée,
-           goRoute SPA). Sur écrans ≤ 720px, Continuer se masque
-           (règle v0.9.2 conservée) : la carte respire davantage. -->
+      <!-- ═══ BLOC 3 — GRANDE CARTE « MA PROGRESSION » (v0.12.1) ═══
+           La carte OCCUPE TOUT L'ESPACE RESTANT (flex 1) jusqu'à une
+           petite marge au-dessus de la barre du bas. Matériau héros
+           SIGNATURE (vert + radial or + filet or 0.22 + rayons
+           #homeProgRays, même générateur). Contenu DÉTAILLÉ réel :
+           · tête : MA PROGRESSION + chevron
+           · corps : anneau or + % + 2 compteurs (Cours lus / À
+             compléter)
+           · MINI-GRAPHE de la semaine : 7 barres or (minutes
+             réelles par jour, #homeWeek)
+           · pied : barre de progression or + message d'état
+           CLIC → vue Progression (goRoute SPA). -->
       <button type="button" class="progress-card" id="progressCard">
         <span class="prog-rays" id="homeProgRays" aria-hidden="true"></span>
         <span class="progress-head">
@@ -580,48 +576,24 @@
             </span>
           </span>
         </span>
-        <span class="progress-bar" aria-hidden="true">
-          <span class="progress-bar-fill" id="progressBarFill"></span>
+        <span class="progress-week" id="homeWeek" aria-hidden="true"></span>
+        <span class="progress-foot">
+          <span class="progress-bar" aria-hidden="true">
+            <span class="progress-bar-fill" id="progressBarFill"></span>
+          </span>
+          <span class="progress-sub" id="progressSub">Commence ta première révision.</span>
         </span>
-        <span class="progress-sub" id="progressSub">Commence ta première révision.</span>
       </button>
-
-      <!-- ═══ v0.9.2 — LES ACTIONS RAPIDES RESTENT SUPPRIMÉES ═══
-           (v0.9.1, demande explicite : « Supprime Action rapide »,
-           confirmée v0.9.2 : « sans actions »). La barre du bas
-           couvre toutes les routes. La page se termine par la
-           carte « Ma progression » (v0.11) : l'accueil est
-           COMPLET — stats, modes, continuer, progression. -->
     </section>
+
+    <!-- ═══ VUE RÉVISER (v0.12 · bibliothèque aux 7 VRAIES matières) ═══
+         Structure validée conservée (eyebrow, titre + Ajouter,
+         recherche filtrante, carte héros, grille). NOUVEAU : la
+         grille affiche les 7 MATIÈRES RÉELLES de l'app (celles du
+         dépôt ARVEXA School — bac-*.json) avec leurs VRAIS volumes
+         (chapitres / notions), générées en JS pour l'i18n. Clic sur
+         une matière → vue Examen (matière présélectionnée). -->
     <section class="view view-reviser" id="view-reviser" data-view="reviser" hidden>
-      <!-- ═══ VUE RÉVISER (v0.7 · v0.8) — STRUCTURE INSPIRÉE DE LA
-           PAGE « COURS » D'AXIA, SIGNATURE ARVX ═══
-           Structure reprise (demande explicite), matériaux
-           SIGNATURE ARVX depuis v0.8 (retouches anti-copie), avec
-           couleurs mesurées au computed style sur AXIA :
-           · eyebrow BIBLIOTHÈQUE (11px, 600, +1.32px d'interlettrage)
-           · titre « Mes cours » 26px/800 + avatar + bouton Ajouter
-             (pill, radius 999, h40)
-           · barre de recherche h42 radius 14 — filtre réél et
-             instantané (SPA, zéro rechargement)
-           · carte héros « À rouvrir en premier » : vert de marque
-             ARVX --primary + HÉROS SIGNATURE v0.8 (anneaux or,
-             éclat bas-droit, filet intérieur) + rayons « aurora »
-             (SVG 47 segments, teintes recalibrées vert émeraude /
-             vert-or, recadrage signature -148/-206 pivot 6°),
-             anneau de progression 66px en or, bouton or pill Réviser
-             ce cours (dégradé signature accent → accent-bright,
-             encre #141210, glow or)
-           · « Mes matières » + compteur, cartes matière 2 colonnes
-             (radius feuille 18/18/18/6, liseré or flottant, soleil
-             or haut-droit, pastille 34px dégradé or, badge,
-             badge « À jour » vert --success)
-           · état vide « Aucun cours pour l'instant. »
-           Les deux barres restent FIXÉES : la liste défile À
-           L'INTÉRIEUR du cadre, exactement comme sur AXIA — le
-           document, lui, ne défile jamais (pages fixes).
-           Valeurs d'exemple tant qu'aucun vrai cours n'existe
-           (elles viendront du vrai import de cours). -->
       <div class="lib-head">
         <span class="lib-eyebrow" data-i18n="reviser.eyebrow">Bibliothèque</span>
         <div class="lib-title-row">
@@ -641,12 +613,13 @@
       </div>
 
       <div class="lib-body">
+        <!-- Carte héros : premier cours réel (SVT · Terminale · BAC) -->
         <article class="lib-course" id="libCourse">
           <div class="lib-rays" id="libRays" aria-hidden="true"></div>
           <div class="lib-course-in">
             <span class="lib-course-eyebrow" data-i18n="reviser.rouvrir">À rouvrir en premier</span>
             <div class="lib-course-head">
-              <span class="lib-course-name">Structure de la cellule et division</span>
+              <span class="lib-course-name">La reproduction conforme</span>
               <span class="lib-ring" aria-hidden="true">
                 <svg viewBox="0 0 66 66" role="presentation">
                   <circle class="lib-ring-track" cx="33" cy="33" r="27"></circle>
@@ -655,9 +628,9 @@
                 <span class="lib-ring-pct">0&nbsp;%</span>
               </span>
             </div>
-            <span class="lib-course-sub">Sciences de la vie et de la Terre · La cellule · <span data-i18n="reviser.fiches">10 fiches dues</span></span>
+            <span class="lib-course-sub" id="libHeroSub">Sciences de la vie et de la Terre · Terminale · Chapitre 3</span>
             <div class="lib-course-foot">
-              <span class="lib-course-min">≈ 7 min</span>
+              <span class="lib-course-min">BAC · SVT</span>
               <button type="button" class="lib-revise" id="libRevise">
                 <span data-i18n="reviser.reviser">Réviser ce cours</span>
                 <i class="fas fa-arrow-right" aria-hidden="true"></i>
@@ -668,37 +641,101 @@
 
         <div class="lib-subjects-head">
           <span class="lib-subjects-title" data-i18n="reviser.matieres">Mes matières</span>
-          <span class="lib-subjects-count" data-i18n="reviser.count">1 matière · 1 cours</span>
+          <span class="lib-subjects-count" id="libCount">7 matières</span>
         </div>
-        <div class="lib-grid" id="libGrid">
-          <button type="button" class="lib-subject">
-            <span class="lib-subject-top">
-              <span class="lib-subject-chip" aria-hidden="true">SV</span>
-              <span class="lib-subject-badge" aria-hidden="true">0</span>
-            </span>
-            <span class="lib-subject-name">Sciences de la vie et de la Terre</span>
-            <span class="lib-subject-meta" data-i18n="reviser.subjectMeta">1 cours · 1 chapitre</span>
-            <span class="lib-subject-ok" data-i18n="reviser.ajour">À jour</span>
-          </button>
-        </div>
-        <p class="lib-empty" id="libEmpty" hidden data-i18n="reviser.vide">Aucun cours pour l'instant.</p>
+        <div class="lib-grid" id="libGrid"></div>
+        <p class="lib-empty" id="libEmpty" hidden data-i18n="reviser.vide">Aucun cours pour l’instant.</p>
       </div>
     </section>
-    <section class="view" id="view-examen" data-view="examen" hidden><!-- contenu — étapes suivantes --></section>
-    <!-- ═══ VUE PROGRESSION (v0.11, demande : « lorsqu'on va à la
-         page de progression tu les connectes entre eux ») ═══
-         MÊME SOURCE DE VÉRITÉ que la carte « Ma progression » de
-         l'accueil : window.ARVXA_PROFILE.stats (profil Firestore
-         réel, posé par js/auth.js) — la carte de l'accueil mène
-         ici, cette page détaillée fait écho à la carte. Matériau
-         héros de l'accueil (vert + radial or, rayons aurora),
-         grand anneau + deux compteurs RÉELS (cours lus, à
-         compléter) + état vide tant qu'aucun cours n'existe.
-         Page fixe entre les barres, zéro défilement. -->
-    <section class="view" id="view-progression" data-view="progression" hidden>
+
+    <!-- ═══ VUE EXAMEN (v0.12 — page complète, était vide) ═══
+         Préparation à l'examen, entièrement connectée :
+         · COMPTE À REBOURS BAC réel (même configuration que
+           bac-date.js du site original — 14 juillet, prochaine
+           occurrence calculée en direct)
+         · deux outils : Quiz éclair (généré par IA — bientôt, les
+           clés API viennent) et Examen blanc (bientôt)
+         · PLAN DE RÉVISION calculé sur les vrais volumes (87
+           chapitres · 1218 notions) et les vrais jours restants
+         · les 7 MATIÈRES d'examen réelles avec progression réelle
+           (0 % au départ) — clic → bibliothèque filtrée sur la
+           matière
+         La liste défile À L'INTÉRIEUR du cadre (comme Réviser) —
+         le document ne défile jamais. -->
+    <section class="view view-examen" id="view-examen" data-view="examen" hidden>
+      <div class="exam-head">
+        <span class="lib-eyebrow" data-i18n="examen.eyebrow">Examen</span>
+        <div class="exam-titlerow">
+          <span class="lib-title" data-i18n="examen.titre">Prépare ton BAC</span>
+          <span class="exam-badge"><i class="fas fa-award" aria-hidden="true"></i>BAC</span>
+        </div>
+      </div>
+
+      <div class="exam-body">
+        <!-- Compte à rebours (matériau héros signature) -->
+        <div class="exam-hero">
+          <span class="lib-rays" id="examRays" aria-hidden="true"></span>
+          <span class="exam-hero-eyebrow"><i class="fas fa-hourglass-half" aria-hidden="true"></i><span data-i18n="examen.countdown">Compte à rebours</span></span>
+          <span class="exam-hero-main">
+            <span class="exam-days">
+              <span class="exam-days-num" id="examDays">—</span>
+              <span class="exam-days-label" data-i18n="examen.jours">jours</span>
+            </span>
+            <span class="exam-hero-date" id="examDate">—</span>
+          </span>
+          <span class="exam-hero-sub" data-i18n="examen.countdownSub">Un chapitre par jour garde ta longueur d’avance.</span>
+        </div>
+
+        <!-- Outils d'examen -->
+        <div class="exam-tools">
+          <button type="button" class="exam-tool" id="examQuiz">
+            <span class="exam-tool-icon gold" aria-hidden="true"><i class="fas fa-bolt"></i></span>
+            <span class="exam-tool-body">
+              <span class="exam-tool-name" data-i18n="examen.quiz">Quiz éclair</span>
+              <span class="exam-tool-sub" data-i18n="examen.quizSub">5 questions · générées pour toi</span>
+            </span>
+            <span class="exam-soon" data-i18n="examen.bientot">Bientôt</span>
+          </button>
+          <button type="button" class="exam-tool" id="examWhite">
+            <span class="exam-tool-icon green" aria-hidden="true"><i class="fas fa-file-circle-check"></i></span>
+            <span class="exam-tool-body">
+              <span class="exam-tool-name" data-i18n="examen.blanc">Examen blanc</span>
+              <span class="exam-tool-sub" data-i18n="examen.blancSub">Dans les conditions réelles</span>
+            </span>
+            <span class="exam-soon" data-i18n="examen.bientot">Bientôt</span>
+          </button>
+        </div>
+
+        <!-- Plan de révision (calcul réel) -->
+        <div class="exam-plan">
+          <div class="exam-plan-head">
+            <span class="exam-plan-title" data-i18n="examen.plan">Plan de révision</span>
+            <span class="exam-plan-pace" id="examPace">—</span>
+          </div>
+          <p class="exam-plan-sub" id="examPlanSub">—</p>
+          <div class="exam-plan-bar" aria-hidden="true"><span class="exam-plan-fill" id="examPlanFill"></span></div>
+        </div>
+
+        <!-- Matières d'examen (7 réelles, générées en JS) -->
+        <div class="lib-subjects-head">
+          <span class="lib-subjects-title" data-i18n="examen.matieres">Matières d’examen</span>
+          <span class="lib-subjects-count" id="examCount">7 matières</span>
+        </div>
+        <div class="exam-grid" id="examGrid"></div>
+      </div>
+    </section>
+
+    <!-- ═══ VUE PROGRESSION (v0.12.1 — enrichie, toujours connectée
+         à la carte « Ma progression » de l'accueil : MÊME SOURCE
+         getRealStats + activité réelle). NOUVEAU : trois tuiles de
+         statistiques réelles (Série / Minutes 7 j / Quiz réussis),
+         l'ACTIVITÉ DE LA SEMAINE (7 barres or), l'OBJECTIF HEBDO
+         (jours actifs / 5) et l'état vide réel. -->
+    <section class="view view-progression" id="view-progression" data-view="progression" hidden>
       <div class="prog-wrap">
         <span class="prog-eyebrow"><i class="fas fa-chart-line" aria-hidden="true"></i><span data-i18n="progression.eyebrow">Parcours</span></span>
         <span class="prog-title" data-i18n="progression.titre">Ma progression</span>
+
         <div class="prog-hero">
           <div class="prog-rays" id="progRays" aria-hidden="true"></div>
           <div class="prog-ring" aria-hidden="true">
@@ -719,10 +756,134 @@
             </div>
           </div>
         </div>
-        <p class="prog-vide" id="progVide" data-i18n="progression.vide">Ton parcours s'affichera ici dès ta première révision.</p>
+
+        <!-- Tuiles statistiques réelles -->
+        <div class="prog-tiles">
+          <div class="prog-tile">
+            <span class="prog-tile-num" id="progStreak">0</span>
+            <span class="prog-tile-label"><i class="fas fa-fire" aria-hidden="true"></i><span data-i18n="progression.serie">Série</span></span>
+          </div>
+          <div class="prog-tile">
+            <span class="prog-tile-num" id="progMinutes">0</span>
+            <span class="prog-tile-label"><i class="fas fa-clock" aria-hidden="true"></i><span data-i18n="progression.minutes">min · 7 j</span></span>
+          </div>
+          <div class="prog-tile">
+            <span class="prog-tile-num" id="progQuiz">0</span>
+            <span class="prog-tile-label"><i class="fas fa-circle-check" aria-hidden="true"></i><span data-i18n="progression.quiz">Quiz réussis</span></span>
+          </div>
+        </div>
+
+        <!-- Activité de la semaine (7 barres or, minutes réelles) -->
+        <div class="prog-weekcard">
+          <div class="prog-week-head">
+            <span class="prog-week-title" data-i18n="progression.activite">Activité · 7 derniers jours</span>
+            <span class="prog-week-total" id="progWeekTotal">0 min</span>
+          </div>
+          <div class="prog-week" id="progWeek" aria-hidden="true"></div>
+        </div>
+
+        <!-- Objectif hebdomadaire (réel : jours actifs / 5) -->
+        <div class="prog-goal">
+          <div class="prog-goal-head">
+            <span class="prog-goal-title" data-i18n="progression.objectif">Objectif hebdo</span>
+            <span class="prog-goal-val" id="progGoalVal">0 / 5</span>
+          </div>
+          <div class="prog-goal-bar" aria-hidden="true"><span class="prog-goal-fill" id="progGoalFill"></span></div>
+          <span class="prog-goal-sub" data-i18n="progression.objectifSub">5 jours actifs par semaine — la régularité fait la réussite.</span>
+        </div>
+
+        <p class="prog-vide" id="progVide" data-i18n="progression.vide">Ton parcours s’affichera ici dès ta première révision.</p>
       </div>
     </section>
-    <section class="view" id="view-profil" data-view="profil" hidden><!-- contenu — étapes suivantes --></section>
+
+    <!-- ═══ VUE PROFIL (v0.12 — page complète, était vide) ═══
+         · CARTE IDENTITÉ (matériau héros) : avatar or, vrai nom et
+           e-mail du compte Firebase, badge du plan (Gratuit /
+           Premium)
+         · trois statistiques réelles (Cours lus / Série / Minutes)
+         · RÉGLAGES RÉELS : bascule de thème (même moteur que le
+           bouton du header) + sélecteur de langue FR / AN (même
+           moteur que le menu)
+         · COMPTE : abonnement (bientôt), rappels (bientôt), support
+           WhatsApp (lien réel), déconnexion (modale réelle existante)
+         La liste défile À L'INTÉRIEUR du cadre si besoin — le
+         document ne défile jamais. -->
+    <section class="view view-profil" id="view-profil" data-view="profil" hidden>
+      <div class="prof-wrap">
+        <span class="prog-eyebrow"><i class="fas fa-user" aria-hidden="true"></i><span data-i18n="profil.eyebrow">Mon espace</span></span>
+        <span class="prog-title" data-i18n="profil.titre">Profil</span>
+
+        <!-- Identité -->
+        <div class="prof-id">
+          <span class="lib-rays" id="profRays" aria-hidden="true"></span>
+          <span class="prof-avatar" id="profAvatar" aria-hidden="true">É</span>
+          <span class="prof-id-body">
+            <span class="prof-name" id="profName">Élève</span>
+            <span class="prof-email" id="profEmail">—</span>
+          </span>
+          <span class="prof-plan-badge" id="profPlan">Gratuit</span>
+        </div>
+
+        <!-- Statistiques réelles -->
+        <div class="prof-stats">
+          <div class="prof-stat">
+            <span class="prof-stat-num" id="profStatDone">0</span>
+            <span class="prof-stat-label" data-i18n="progression.coursLus">Cours lus</span>
+          </div>
+          <div class="prof-stat">
+            <span class="prof-stat-num" id="profStatStreak">0</span>
+            <span class="prof-stat-label" data-i18n="progression.serie">Série</span>
+          </div>
+          <div class="prof-stat">
+            <span class="prof-stat-num" id="profStatMinutes">0</span>
+            <span class="prof-stat-label" data-i18n="profil.minutes">Minutes</span>
+          </div>
+        </div>
+
+        <!-- Réglages -->
+        <div class="prof-group">
+          <span class="prof-group-label" data-i18n="profil.reglages">Réglages</span>
+          <button type="button" class="prof-row" id="profThemeRow">
+            <span class="prof-row-icon" aria-hidden="true"><i class="fas fa-circle-half-stroke"></i></span>
+            <span class="prof-row-name" id="profThemeName">Mode sombre</span>
+            <span class="prof-switch on" id="profThemeSwitch" aria-hidden="true"><span class="prof-switch-knob"></span></span>
+          </button>
+          <div class="prof-row">
+            <span class="prof-row-icon" aria-hidden="true"><i class="fas fa-globe"></i></span>
+            <span class="prof-row-name" data-i18n="profil.langue">Langue</span>
+            <span class="prof-langseg" role="group" aria-label="Langue">
+              <button type="button" class="prof-langbtn" data-lang="fr">FR</button>
+              <button type="button" class="prof-langbtn" data-lang="an">AN</button>
+            </span>
+          </div>
+        </div>
+
+        <!-- Compte -->
+        <div class="prof-group">
+          <span class="prof-group-label" data-i18n="profil.compte">Compte</span>
+          <button type="button" class="prof-row" id="profAbo">
+            <span class="prof-row-icon gold" aria-hidden="true"><i class="fas fa-crown"></i></span>
+            <span class="prof-row-name" data-i18n="menu.abonnement">Mon abonnement</span>
+            <span class="prof-row-end"><span class="exam-soon" data-i18n="examen.bientot">Bientôt</span></span>
+          </button>
+          <button type="button" class="prof-row" id="profNotifs">
+            <span class="prof-row-icon" aria-hidden="true"><i class="fas fa-bell"></i></span>
+            <span class="prof-row-name" data-i18n="menu.notifications">Rappels et notifications</span>
+            <span class="prof-row-end"><i class="fas fa-chevron-right" aria-hidden="true"></i></span>
+          </button>
+          <a class="prof-row" href="https://wa.me/22774872082" target="_blank" rel="noopener">
+            <span class="prof-row-icon green" aria-hidden="true"><i class="fab fa-whatsapp"></i></span>
+            <span class="prof-row-name" data-i18n="menu.support">Contacter le support</span>
+            <span class="prof-row-end"><i class="fas fa-chevron-right" aria-hidden="true"></i></span>
+          </a>
+        </div>
+
+        <button type="button" class="prof-logout" id="profLogout">
+          <i class="fas fa-sign-out-alt" aria-hidden="true"></i><span data-i18n="menu.deconnexion">Déconnexion</span>
+        </button>
+        <p class="prof-version">ARVX v0.12 · Firebase</p>
+      </div>
+    </section>
 
   </main>
 
