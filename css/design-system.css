@@ -712,6 +712,115 @@ html[data-theme="light"] .continue-card {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
+   VUE ACCUEIL — BLOC 3 : CARTE « MA PROGRESSION » (v0.11)
+   Demande : « juste après ce qu'il y a tu mets la progression de
+   l'élève ». Même matériau que la carte Continuer (radial or,
+   filet or .38, glow, radius 18) — la famille visuelle reste
+   cohérente. Petit anneau or (52 px) + titre Playfair + sous-titre
+   RÉEL (profil Firestore) + chevron : le CLIC mène à la vue
+   Progression (connexion demandée, navigation SPA). Sur les
+   écrans ≤ 720 px de haut, Continuer se masque (règle v0.9.2)
+   et CETTE carte reste : la progression est prioritaire.
+   ═══════════════════════════════════════════════════════════════════ */
+.progress-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.38);
+  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.progress-card:active { transform: scale(0.97); }
+
+.progress-card:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+/* Petit anneau or 52 px — écho de l'anneau de la carte principale */
+.progress-ring {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.progress-ring svg { width: 100%; height: 100%; display: block; }
+
+.progress-ring-track {
+  fill: none;
+  stroke: rgba(184, 134, 11, 0.18);
+  stroke-width: 5;
+}
+
+.progress-ring-fill {
+  fill: none;
+  stroke: var(--accent-bright);
+  stroke-width: 5;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.progress-pct {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-light);
+}
+
+.progress-pct small { font-size: 9px; font-weight: 600; margin-left: 1px; }
+
+.progress-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.progress-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-light);
+}
+
+.progress-sub {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Variante claire — même matériau SVT clair que Continuer */
+html[data-theme="light"] .progress-card {
+  background: var(--bg-card-solid);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
    v0.9.2 — LES ACTIONS RAPIDES RESTENT SUPPRIMÉES (v0.9.1, demande
    explicite : « Supprime Action rapide », confirmée : « sans
    actions »). Toutes les règles des tuiles restent retirées ; la
@@ -719,6 +828,177 @@ html[data-theme="light"] .continue-card {
    « Continuer » est laissé en RESPIRATION (choix explicite) —
    page aérée, meublée plus tard avec les vrais cours.
    ═══════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE PROGRESSION (v0.11) — « lorsqu'on va à la page de progression
+   tu les connectes entre eux » : MÊME SOURCE que la carte « Ma
+   progression » de l'accueil (window.ARVXA_PROFILE.stats — profil
+   Firestore réel). Matériau héros de l'accueil (vert --primary +
+   radial or + filet or 0.22 + rayons aurora), grand anneau or,
+   deux compteurs réels (cours lus / à compléter), état vide.
+   Page fixe entre les barres : tout tient, zéro défilement.
+   ═══════════════════════════════════════════════════════════════════ */
+#view-progression {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.prog-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 14px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.prog-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.32px;   /* même eyebrow que Bibliothèque (Réviser) */
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.prog-eyebrow i { color: var(--accent-bright); font-size: 10px; }
+
+.prog-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text-light);
+  margin-top: 5px;
+}
+
+/* Héros = matériau EXACT de la carte principale de l'accueil
+   (v0.7.2 · v0.9.2) : vert de marque + radial or haut-gauche,
+   filet or 0.22, rayons aurora (même générateur JS). */
+.prog-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 14px;
+  padding: 20px 18px;
+  border-radius: 26px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(224, 184, 74, 0.16), rgba(224, 184, 74, 0.02) 62%),
+    var(--primary);
+  border: 1px solid rgba(224, 184, 74, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.prog-rays {
+  position: absolute;
+  left: -148px;
+  top: -206px;
+  width: 590px;
+  height: 590px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.prog-ring {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+
+.prog-ring svg { width: 100%; height: 100%; display: block; }
+
+.prog-ring-track {
+  fill: none;
+  stroke: rgba(245, 240, 232, 0.16);  /* même piste que l'anneau du héros */
+  stroke-width: 7;
+}
+
+.prog-ring-fill {
+  fill: none;
+  stroke: var(--accent-bright);
+  stroke-width: 7;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.prog-ring-pct {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #F5F0E8;   /* crème littéral : la carte reste verte en clair */
+}
+
+.prog-ring-pct small { font-size: 12px; font-weight: 600; margin-left: 1px; }
+
+.prog-nums {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.prog-chip {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 9px 13px;
+  border-radius: 14px;
+  background: rgba(245, 240, 232, 0.08);
+  border: 1px solid rgba(245, 240, 232, 0.14);
+}
+
+.prog-chip-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-bright);
+}
+
+.prog-chip-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(245, 240, 232, 0.75);
+}
+
+/* État vide — réel (v0.10 : fin des données fictives) : tant
+   qu'aucun cours n'existe, la page l'assume clairement. */
+.prog-vide {
+  margin-top: 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+/* Petits écrans en hauteur : même logique que l'accueil v0.9.2 —
+   on compacte ; la carte Continuer se masque (elle), la carte
+   « Ma progression » de l'accueil RESTE (priorité). */
+@media (max-height: 720px) {
+  .prog-wrap { padding: 13px 16px 12px; }
+  .prog-title { font-size: 22px; }
+  .prog-hero { margin-top: 11px; padding: 16px; gap: 14px; }
+  .prog-ring { width: 84px; height: 84px; }
+  .prog-ring-pct { font-size: 19px; }
+  .prog-chip { padding: 7px 11px; }
+  .prog-chip-num { font-size: 20px; }
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    VUE RÉVISER (v0.7.1 · v0.8) — structure de la page « cours »

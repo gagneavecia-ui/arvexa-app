@@ -273,6 +273,14 @@ const I18N = {
     'accueil.mode.focusSub': 'Cycles 25 / 5',
     'accueil.continuer': 'Continuer',
     'accueil.continuerSub': 'Ta dernière révision apparaîtra ici.',
+    'accueil.progression': 'Ma progression',
+    'accueil.progressionSubVide': 'Commence ta première révision.',
+    'accueil.progressionSubOk': '{done} cours lus sur {total}',
+    'progression.eyebrow': 'Parcours',
+    'progression.titre': 'Ma progression',
+    'progression.coursLus': 'Cours lus',
+    'progression.aCompleter': 'À compléter',
+    'progression.vide': 'Ton parcours s’affichera ici dès ta première révision.',
     'reviser.eyebrow': 'Bibliothèque',
     'reviser.titre': 'Mes cours',
     'reviser.ajouter': 'Ajouter',
@@ -383,6 +391,14 @@ const I18N = {
     'accueil.mode.focusSub': '25 / 5 cycles',
     'accueil.continuer': 'Continue',
     'accueil.continuerSub': 'Your latest revision will appear here.',
+    'accueil.progression': 'My progress',
+    'accueil.progressionSubVide': 'Start your first review.',
+    'accueil.progressionSubOk': '{done} of {total} courses read',
+    'progression.eyebrow': 'Journey',
+    'progression.titre': 'My progress',
+    'progression.coursLus': 'Courses read',
+    'progression.aCompleter': 'To complete',
+    'progression.vide': 'Your journey will appear here after your first review.',
     'reviser.eyebrow': 'Library',
     'reviser.titre': 'My courses',
     'reviser.ajouter': 'Add',
@@ -515,6 +531,7 @@ function applyLang() {
   applyProfileCard();
   applyThemeButton();
   updateStatsCard();
+  updateProgression();
 }
 
 function setLang(next) {
@@ -635,19 +652,7 @@ function updateStatsCard(pickNewQuote) {
      fait foi — stats.courses / stats.done, 0 au départ. Le
      localStorage 'arvexa-stats' reste un cache d'appareil ; aucune
      valeur d'exemple n'est plus utilisée. */
-  const STATS_KEY = 'arvexa-stats';
-  let stats = null;
-  const profile = window.ARVXA_PROFILE || null;
-  if (profile && profile.stats && Number.isFinite(profile.stats.courses)) {
-    stats = { courses: profile.stats.courses, done: profile.stats.done || 0 };
-  }
-  if (!stats) {
-    try {
-      const s = JSON.parse(localStorage.getItem(STATS_KEY) || 'null');
-      if (s && Number.isFinite(s.courses) && s.courses > 0) stats = s;
-    } catch { /* JSON invalide */ }
-  }
-  if (!stats) stats = { courses: 0, done: 0 };
+  const stats = getRealStats();
 
   const courses = Math.max(0, Math.round(stats.courses));
   const done = Math.min(courses, Math.max(0, Math.round(stats.done || 0)));
@@ -667,6 +672,78 @@ function updateStatsCard(pickNewQuote) {
   const q = QUOTES[updateStatsCard._qi];
   quoteEl.textContent = '« ' + (lang === 'an' ? q.an : q.fr) + ' »';
 }
+
+/* ── SOURCE DE VÉRITÉ PARTAGÉE (v0.11) — les statistiques réelles,
+   lues par la carte principale ET la carte « Ma progression » ET la
+   vue Progression : une seule fonction, jamais de divergence.
+   Profil Firestore (window.ARVXA_PROFILE) fait foi, cache
+   localStorage en repli, 0/0 par défaut. ── */
+function getRealStats() {
+  const profile = window.ARVXA_PROFILE || null;
+  if (profile && profile.stats && Number.isFinite(profile.stats.courses)) {
+    return { courses: profile.stats.courses, done: profile.stats.done || 0 };
+  }
+  try {
+    const s = JSON.parse(localStorage.getItem('arvexa-stats') || 'null');
+    if (s && Number.isFinite(s.courses) && s.courses > 0) return s;
+  } catch { /* JSON invalide */ }
+  return { courses: 0, done: 0 };
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   V0.11 — « MA PROGRESSION » : carte de l'accueil + vue Progression
+   Demande : « juste après ce qu'il y a tu mets la progression de
+   l'élève » + « lorsqu'on va à la page de progression tu les
+   connectes entre eux ». Les DEUX écrans lisent la MÊME source
+   (getRealStats) : la carte de l'accueil mène à la vue (goRoute,
+   SPA), la vue fait écho à la carte. Vraies données uniquement —
+   état vide tant qu'aucun cours n'existe.
+   ═══════════════════════════════════════════════════════════════════ */
+
+function setRing(fillEl, pctEl, radius, pct) {
+  if (!fillEl || !pctEl) return;
+  const C = 2 * Math.PI * radius;
+  fillEl.style.strokeDasharray = String(C);
+  fillEl.style.strokeDashoffset = String(C * (1 - pct / 100));
+  pctEl.innerHTML = pct + '<small>%</small>';
+}
+
+function updateProgression() {
+  const stats = getRealStats();
+  const courses = Math.max(0, Math.round(stats.courses));
+  const done = Math.min(courses, Math.max(0, Math.round(stats.done || 0)));
+  const pct = courses > 0 ? Math.round((done / courses) * 100) : 0;
+
+  /* Carte de l'accueil : petit anneau (r = 22) + sous-titre réel */
+  setRing(
+    document.getElementById('progressRingFill'),
+    document.getElementById('progressPct'),
+    22, pct
+  );
+  const sub = document.getElementById('progressSub');
+  if (sub) {
+    sub.textContent = courses > 0
+      ? t('accueil.progressionSubOk').replace('{done}', String(done)).replace('{total}', String(courses))
+      : t('accueil.progressionSubVide');
+  }
+
+  /* Vue Progression : grand anneau (r = 41) + compteurs réels */
+  setRing(
+    document.getElementById('progRingFill'),
+    document.getElementById('progRingPct'),
+    41, pct
+  );
+  const doneEl = document.getElementById('progDone');
+  const leftEl = document.getElementById('progLeft');
+  if (doneEl) doneEl.textContent = String(done);
+  if (leftEl) leftEl.textContent = String(Math.max(0, courses - done));
+  const vide = document.getElementById('progVide');
+  if (vide) vide.hidden = courses > 0;
+}
+
+/* Connexion demandée : la carte « Ma progression » de l'accueil
+   ouvre la vue Progression (navigation SPA, zéro rechargement). */
+document.getElementById('progressCard')?.addEventListener('click', () => goRoute('progression'));
 
 /* ── MENU TIROIR (fidèle au site original, index.html:3947-3954) ── */
 
@@ -978,7 +1055,7 @@ logoutBtn?.addEventListener('click', (e) => {
     paths += '<path d="M' + R + ' ' + R + 'L' + x1 + ' ' + y1 + 'L' + x2 + ' ' + y2 + 'Z" fill="' + COLORS[i % COLORS.length] + '"></path>';
   }
   const svg = '<svg width="590" height="590" viewBox="0 0 590.4 590.4" focusable="false">' + paths + '</svg>';
-  ['libRays', 'statsRays'].forEach((id) => {
+  ['libRays', 'statsRays', 'progRays'].forEach((id) => {
     const holder = document.getElementById(id);
     if (holder) holder.innerHTML = svg;
   });
@@ -1046,6 +1123,7 @@ window.addEventListener('arvexa-profile', () => {
   applyGreeting();
   applyProfileCard();
   updateStatsCard();
+  updateProgression();
 });
 
 function hideBootVeil() {

@@ -538,13 +538,40 @@
         <span class="continue-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
       </button>
 
+      <!-- ═══ BLOC 3 — MA PROGRESSION (v0.11, demande : « juste après
+           ce qu'il y a tu mets la progression de l'élève ») ═══
+           Même matériau que la carte Continuer (radial or, filet
+           or .38, radius 18). VRAIES DONNÉES uniquement (v0.10 :
+           fin des données fictives) — profil Firestore posé par
+           js/auth.js (window.ARVXA_PROFILE.stats), 0 au départ :
+           état vide élégant tant qu'aucune révision n'existe.
+           CLIC → vue Progression (connexion demandée : « lorsqu'on
+           va à la page de progression tu les connectes entre
+           eux ») — navigation SPA goRoute, zéro rechargement.
+           Sur les écrans ≤ 720px de haut, la carte Continuer se
+           masque (règle v0.9.2 conservée) et celle-ci reste : la
+           progression est l'élément prioritaire. -->
+      <button type="button" class="progress-card" id="progressCard">
+        <span class="progress-ring" aria-hidden="true">
+          <svg viewBox="0 0 52 52" role="presentation">
+            <circle class="progress-ring-track" cx="26" cy="26" r="22"></circle>
+            <circle class="progress-ring-fill" id="progressRingFill" cx="26" cy="26" r="22"></circle>
+          </svg>
+          <span class="progress-pct" id="progressPct">0<small>%</small></span>
+        </span>
+        <span class="progress-body">
+          <span class="progress-title" data-i18n="accueil.progression">Ma progression</span>
+          <span class="progress-sub" id="progressSub">Commence ta première révision.</span>
+        </span>
+        <span class="continue-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+      </button>
+
       <!-- ═══ v0.9.2 — LES ACTIONS RAPIDES RESTENT SUPPRIMÉES ═══
            (v0.9.1, demande explicite : « Supprime Action rapide »,
            confirmée v0.9.2 : « sans actions »). La barre du bas
-           couvre toutes les routes. L'espace sous la carte
-           « Continuer » est laissé en RESPIRATION (choix
-           explicite) : page aérée, meublée plus tard avec les
-           vrais cours. Les deux barres et le menu sont intacts. -->
+           couvre toutes les routes. La page se termine par la
+           carte « Ma progression » (v0.11) : l'accueil est
+           COMPLET — stats, modes, continuer, progression. -->
     </section>
     <section class="view view-reviser" id="view-reviser" data-view="reviser" hidden>
       <!-- ═══ VUE RÉVISER (v0.7 · v0.8) — STRUCTURE INSPIRÉE DE LA
@@ -638,7 +665,43 @@
       </div>
     </section>
     <section class="view" id="view-examen" data-view="examen" hidden><!-- contenu — étapes suivantes --></section>
-    <section class="view" id="view-progression" data-view="progression" hidden><!-- contenu — étapes suivantes --></section>
+    <!-- ═══ VUE PROGRESSION (v0.11, demande : « lorsqu'on va à la
+         page de progression tu les connectes entre eux ») ═══
+         MÊME SOURCE DE VÉRITÉ que la carte « Ma progression » de
+         l'accueil : window.ARVXA_PROFILE.stats (profil Firestore
+         réel, posé par js/auth.js) — la carte de l'accueil mène
+         ici, cette page détaillée fait écho à la carte. Matériau
+         héros de l'accueil (vert + radial or, rayons aurora),
+         grand anneau + deux compteurs RÉELS (cours lus, à
+         compléter) + état vide tant qu'aucun cours n'existe.
+         Page fixe entre les barres, zéro défilement. -->
+    <section class="view" id="view-progression" data-view="progression" hidden>
+      <div class="prog-wrap">
+        <span class="prog-eyebrow"><i class="fas fa-chart-line" aria-hidden="true"></i><span data-i18n="progression.eyebrow">Parcours</span></span>
+        <span class="prog-title" data-i18n="progression.titre">Ma progression</span>
+        <div class="prog-hero">
+          <div class="prog-rays" id="progRays" aria-hidden="true"></div>
+          <div class="prog-ring" aria-hidden="true">
+            <svg viewBox="0 0 96 96" role="presentation">
+              <circle class="prog-ring-track" cx="48" cy="48" r="41"></circle>
+              <circle class="prog-ring-fill" id="progRingFill" cx="48" cy="48" r="41"></circle>
+            </svg>
+            <span class="prog-ring-pct" id="progRingPct">0<small>%</small></span>
+          </div>
+          <div class="prog-nums">
+            <div class="prog-chip">
+              <span class="prog-chip-num" id="progDone">0</span>
+              <span class="prog-chip-label" data-i18n="progression.coursLus">Cours lus</span>
+            </div>
+            <div class="prog-chip">
+              <span class="prog-chip-num" id="progLeft">0</span>
+              <span class="prog-chip-label" data-i18n="progression.aCompleter">À compléter</span>
+            </div>
+          </div>
+        </div>
+        <p class="prog-vide" id="progVide" data-i18n="progression.vide">Ton parcours s'affichera ici dès ta première révision.</p>
+      </div>
+    </section>
     <section class="view" id="view-profil" data-view="profil" hidden><!-- contenu — étapes suivantes --></section>
 
   </main>
