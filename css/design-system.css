@@ -712,49 +712,108 @@ html[data-theme="light"] .continue-card {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 3 : CARTE « MA PROGRESSION » (v0.11)
-   Demande : « juste après ce qu'il y a tu mets la progression de
-   l'élève ». Même matériau que la carte Continuer (radial or,
-   filet or .38, glow, radius 18) — la famille visuelle reste
-   cohérente. Petit anneau or (52 px) + titre Playfair + sous-titre
-   RÉEL (profil Firestore) + chevron : le CLIC mène à la vue
-   Progression (connexion demandée, navigation SPA). Sur les
-   écrans ≤ 720 px de haut, Continuer se masque (règle v0.9.2)
-   et CETTE carte reste : la progression est prioritaire.
+   VUE ACCUEIL — BLOC 3 : GRANDE CARTE « MA PROGRESSION » (v0.11.1)
+   Demande : « je ne parle pas d'une toute petite carte mais d'une
+   carte progression bien détaillée qui finalise la page totale en
+   laissant juste une toute petite marge entre la barre du bas, donc
+   un peu de statistique ». La carte FLEXE (flex 1 1 auto) pour
+   OCCUPER TOUT L'ESPACE RESTANT du cadre — petite marge naturelle
+   au-dessus de la barre du bas (padding de la vue). Matériau héros
+   SIGNATURE (celui de la carte principale) : vert --primary +
+   radial or haut-gauche + filet or 0.22 + rayons aurora — elle
+   répond à la carte verte du haut, le cadre est scellé. Contenu
+   réel : anneau or 84px + %, compteurs Cours lus / À compléter,
+   barre de progression or, message d'état. La carte reste VERTE
+   dans les deux thèmes (crème littéral, comme la carte stats).
    ═══════════════════════════════════════════════════════════════════ */
 .progress-card {
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 auto;          /* OCCUPE l'espace restant — finalise la page */
+  min-height: 0;           /* autorise la compression, zéro défilement */
   display: flex;
-  align-items: center;
-  gap: 13px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 9px;
   margin-top: 12px;
-  padding: 12px 14px;
-  border-radius: 18px;
+  padding: 15px 17px 13px;
+  border-radius: 26px;     /* le radius du héros */
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
-    rgba(var(--rgb-soft), 0.02);
-  border: 1px solid rgba(184, 134, 11, 0.38);
-  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+    radial-gradient(120% 150% at 0% 0%, rgba(224, 184, 74, 0.16), rgba(224, 184, 74, 0.02) 62%),
+    var(--primary);
+  border: 1px solid rgba(224, 184, 74, 0.22);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
   text-align: left;
   font: inherit;
   color: inherit;
   cursor: pointer;
-  flex-shrink: 0;
   transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
               border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.progress-card:active { transform: scale(0.97); }
+.progress-card:active { transform: scale(0.985); }
 
 .progress-card:focus-visible {
   outline: 2px solid var(--accent-bright);
   outline-offset: 3px;
 }
 
-/* Petit anneau or 52 px — écho de l'anneau de la carte principale */
+/* Rayons aurora — MÊME générateur que #statsRays / #libRays */
+.progress-card .prog-rays {
+  position: absolute;
+  left: -148px;
+  top: -206px;
+  width: 590px;
+  height: 590px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Tête : label + chevron */
+.progress-head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.progress-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.32px;   /* même eyebrow que Bibliothèque / PARCOURS */
+  text-transform: uppercase;
+  color: rgba(245, 240, 232, 0.72);
+}
+
+.progress-label::before {
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 1px;
+  margin-right: 8px;
+  vertical-align: middle;
+  background: linear-gradient(90deg, transparent, var(--accent-bright));
+}
+
+.progress-chevron {
+  font-size: 12px;
+  color: rgba(245, 240, 232, 0.55);
+}
+
+/* Corps : anneau 84px + deux compteurs réels */
+.progress-main {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 0;
+}
+
 .progress-ring {
   position: relative;
-  width: 48px;
-  height: 48px;
+  width: 84px;
+  height: 84px;
   flex-shrink: 0;
 }
 
@@ -762,14 +821,14 @@ html[data-theme="light"] .continue-card {
 
 .progress-ring-track {
   fill: none;
-  stroke: rgba(184, 134, 11, 0.18);
-  stroke-width: 5;
+  stroke: rgba(245, 240, 232, 0.16);  /* même piste que le héros */
+  stroke-width: 6;
 }
 
 .progress-ring-fill {
   fill: none;
   stroke: var(--accent-bright);
-  stroke-width: 5;
+  stroke-width: 6;
   stroke-linecap: round;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
@@ -783,41 +842,73 @@ html[data-theme="light"] .continue-card {
   align-items: center;
   justify-content: center;
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 13px;
+  font-size: 19px;
   font-weight: 700;
-  color: var(--text-light);
+  color: #F5F0E8;   /* crème littéral : la carte reste verte en clair */
 }
 
-.progress-pct small { font-size: 9px; font-weight: 600; margin-left: 1px; }
+.progress-pct small { font-size: 11px; font-weight: 600; margin-left: 1px; }
 
-.progress-body {
+.progress-chips {
   flex: 1;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 8px;
 }
 
-.progress-title {
+.progress-chip {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 8px 13px;
+  border-radius: 14px;
+  background: rgba(245, 240, 232, 0.08);
+  border: 1px solid rgba(245, 240, 232, 0.14);
+}
+
+.progress-chip-num {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 700;
-  line-height: 1.15;
-  color: var(--text-light);
+  line-height: 1;
+  color: var(--accent-bright);
 }
 
+.progress-chip-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: rgba(245, 240, 232, 0.75);
+}
+
+/* Barre de progression or — lecture immédiate du pourcentage */
+.progress-bar {
+  position: relative;
+  display: block;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(245, 240, 232, 0.14);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;                /* posé par updateProgression() */
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  box-shadow: 0 0 10px rgba(224, 184, 74, 0.35);
+  transition: width 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Message d'état réel (vide tant qu'aucun cours / récapitulatif) */
 .progress-sub {
   font-size: 11.5px;
   font-weight: 600;
-  color: var(--text-dim);
+  color: rgba(245, 240, 232, 0.75);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-/* Variante claire — même matériau SVT clair que Continuer */
-html[data-theme="light"] .progress-card {
-  background: var(--bg-card-solid);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1474,6 +1565,14 @@ html[data-theme="light"] .lib-subject-ok {
   .mode-name { font-size: 15px; }
   .mode-sub { font-size: 11px; }
   .continue-card { display: none; }
+  /* Grande carte progression : compacte mais TOUJOURS visible
+     (v0.11.1 : la progression est l'élément prioritaire de l'accueil) */
+  .progress-card { gap: 7px; margin-top: 11px; padding: 12px 15px 11px; }
+  .progress-ring { width: 68px; height: 68px; }
+  .progress-pct { font-size: 16px; }
+  .progress-chip { padding: 6px 11px; }
+  .progress-chip-num { font-size: 18px; }
+  .progress-main { gap: 13px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════

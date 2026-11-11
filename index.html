@@ -538,32 +538,52 @@
         <span class="continue-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
       </button>
 
-      <!-- ═══ BLOC 3 — MA PROGRESSION (v0.11, demande : « juste après
-           ce qu'il y a tu mets la progression de l'élève ») ═══
-           Même matériau que la carte Continuer (radial or, filet
-           or .38, radius 18). VRAIES DONNÉES uniquement (v0.10 :
-           fin des données fictives) — profil Firestore posé par
-           js/auth.js (window.ARVXA_PROFILE.stats), 0 au départ :
-           état vide élégant tant qu'aucune révision n'existe.
-           CLIC → vue Progression (connexion demandée : « lorsqu'on
-           va à la page de progression tu les connectes entre
-           eux ») — navigation SPA goRoute, zéro rechargement.
-           Sur les écrans ≤ 720px de haut, la carte Continuer se
-           masque (règle v0.9.2 conservée) et celle-ci reste : la
-           progression est l'élément prioritaire. -->
+      <!-- ═══ BLOC 3 — MA PROGRESSION, GRANDE CARTE DÉTAILLÉE
+           (v0.11.1, demande : « je ne parle pas d'une toute petite
+           carte mais d'une carte progression bien détaillée qui
+           finalise la page totale en laissant juste une toute
+           petite marge entre la barre du bas, donc un peu de
+           statistique ») ═══
+           La carte OCCUPE TOUT L'ESPACE RESTANT (flex 1) jusqu'à
+           une petite marge au-dessus de la barre du bas. Matériau
+           héros SIGNATURE (vert --primary + radial or + filet or
+           0.22 + rayons aurora #homeProgRays, même générateur) —
+           elle répond à la carte verte du haut : le cadre est
+           scellé. Contenu RÉEL (profil Firestore, 0 au départ) :
+           anneau or 84px + pourcentage, deux compteurs (Cours
+           lus / À compléter), barre de progression or, message
+           d'état. CLIC → vue Progression (connexion demandée,
+           goRoute SPA). Sur écrans ≤ 720px, Continuer se masque
+           (règle v0.9.2 conservée) : la carte respire davantage. -->
       <button type="button" class="progress-card" id="progressCard">
-        <span class="progress-ring" aria-hidden="true">
-          <svg viewBox="0 0 52 52" role="presentation">
-            <circle class="progress-ring-track" cx="26" cy="26" r="22"></circle>
-            <circle class="progress-ring-fill" id="progressRingFill" cx="26" cy="26" r="22"></circle>
-          </svg>
-          <span class="progress-pct" id="progressPct">0<small>%</small></span>
+        <span class="prog-rays" id="homeProgRays" aria-hidden="true"></span>
+        <span class="progress-head">
+          <span class="progress-label" data-i18n="accueil.progression">Ma progression</span>
+          <span class="progress-chevron" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
         </span>
-        <span class="progress-body">
-          <span class="progress-title" data-i18n="accueil.progression">Ma progression</span>
-          <span class="progress-sub" id="progressSub">Commence ta première révision.</span>
+        <span class="progress-main">
+          <span class="progress-ring" aria-hidden="true">
+            <svg viewBox="0 0 84 84" role="presentation">
+              <circle class="progress-ring-track" cx="42" cy="42" r="35"></circle>
+              <circle class="progress-ring-fill" id="progressRingFill" cx="42" cy="42" r="35"></circle>
+            </svg>
+            <span class="progress-pct" id="progressPct">0<small>%</small></span>
+          </span>
+          <span class="progress-chips">
+            <span class="progress-chip">
+              <span class="progress-chip-num" id="homeProgDone">0</span>
+              <span class="progress-chip-label" data-i18n="progression.coursLus">Cours lus</span>
+            </span>
+            <span class="progress-chip">
+              <span class="progress-chip-num" id="homeProgLeft">0</span>
+              <span class="progress-chip-label" data-i18n="progression.aCompleter">À compléter</span>
+            </span>
+          </span>
         </span>
-        <span class="continue-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+        <span class="progress-bar" aria-hidden="true">
+          <span class="progress-bar-fill" id="progressBarFill"></span>
+        </span>
+        <span class="progress-sub" id="progressSub">Commence ta première révision.</span>
       </button>
 
       <!-- ═══ v0.9.2 — LES ACTIONS RAPIDES RESTENT SUPPRIMÉES ═══

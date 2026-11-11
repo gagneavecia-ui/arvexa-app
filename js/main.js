@@ -714,12 +714,19 @@ function updateProgression() {
   const done = Math.min(courses, Math.max(0, Math.round(stats.done || 0)));
   const pct = courses > 0 ? Math.round((done / courses) * 100) : 0;
 
-  /* Carte de l'accueil : petit anneau (r = 22) + sous-titre réel */
+  /* Carte de l'accueil (v0.11.1 — grande carte détaillée) :
+     anneau 84px (r = 35) + compteurs réels + barre or + sous-titre */
   setRing(
     document.getElementById('progressRingFill'),
     document.getElementById('progressPct'),
-    22, pct
+    35, pct
   );
+  const homeDone = document.getElementById('homeProgDone');
+  const homeLeft = document.getElementById('homeProgLeft');
+  if (homeDone) homeDone.textContent = String(done);
+  if (homeLeft) homeLeft.textContent = String(Math.max(0, courses - done));
+  const barFill = document.getElementById('progressBarFill');
+  if (barFill) barFill.style.width = pct + '%';
   const sub = document.getElementById('progressSub');
   if (sub) {
     sub.textContent = courses > 0
@@ -1055,7 +1062,7 @@ logoutBtn?.addEventListener('click', (e) => {
     paths += '<path d="M' + R + ' ' + R + 'L' + x1 + ' ' + y1 + 'L' + x2 + ' ' + y2 + 'Z" fill="' + COLORS[i % COLORS.length] + '"></path>';
   }
   const svg = '<svg width="590" height="590" viewBox="0 0 590.4 590.4" focusable="false">' + paths + '</svg>';
-  ['libRays', 'statsRays', 'progRays'].forEach((id) => {
+  ['libRays', 'statsRays', 'progRays', 'homeProgRays'].forEach((id) => {
     const holder = document.getElementById(id);
     if (holder) holder.innerHTML = svg;
   });
