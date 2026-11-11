@@ -101,6 +101,27 @@
        d'appui), tout en gardant l'espace net de 16px entre la
        carte et elles. Les écrans cibles des modes seront branchés
        chacun à leur étape.
+
+   v0.6.4 (suite) — NAVIGATION RÉELLE + ESPACE VIDE REMPLI :
+     · les mini-cartes NAVIGUENT : Mode rapide → Réviser, Mode
+       focus → Examen (SPA : le hash est la seule source de vérité,
+       aucun rechargement — même moteur que la barre du bas) ;
+     · l'espace vide sous les mini-cartes est rempli par les
+       propositions demandées : carte « Continuer » (→ Réviser) et
+       rangée « Actions rapides » 2×2 (Réviser / Examen /
+       Progression / Profil) — la grille s'étire pour remplir
+       EXACTEMENT l'espace jusqu'à la barre du bas (flex + min/max),
+       ni vide, ni débordement ; sur les écrans courts (≤720px de
+       hauteur) la carte Continuer s'efface et tout reste calé.
+
+   v0.7 — VUE RÉVISER, COPIE IDENTIQUE DE LA PAGE « COURS » D'AXIA :
+     · structure et couleurs mesurées au computed style sur AXIA
+       (ardoise #1F2933 + rayons aurora générés en SVG, anneau de
+       progression, bouton vert #34A853→#1E7E3A, matières bordure
+       ambre, badges « À jour »), libellés FR/AN exacts ;
+     · recherche qui FILTRE réellement (instantané, SPA) ;
+     · les deux barres restent fixées : la liste défile À
+       L'INTÉRIEUR du cadre — le document ne défile jamais.
    ═══════════════════════════════════════════════════════════════════ */
 
 const KEY = 'arvexa-theme';
@@ -205,7 +226,22 @@ const I18N = {
     'accueil.mode.rapideSub': 'Révision éclair · 5 min',
     'accueil.mode.focus': 'Mode focus',
     'accueil.mode.focusSub': 'Cycles 25 / 5',
-    'profil.defaultName': 'Élève',
+    'accueil.continuer': 'Continuer',
+    'accueil.continuerSub': 'Ta dernière révision apparaîtra ici.',
+    'accueil.actionsTitre': 'Actions rapides',
+    'reviser.eyebrow': 'Bibliothèque',
+    'reviser.titre': 'Mes cours',
+    'reviser.ajouter': 'Ajouter',
+    'reviser.recherche': 'Rechercher un cours, une matière…',
+    'reviser.rouvrir': 'À rouvrir en premier',
+    'reviser.reviser': 'Réviser ce cours',
+    'reviser.fiches': '10 fiches dues',
+    'reviser.matieres': 'Mes matières',
+    'reviser.count': '1 matière · 1 cours',
+    'reviser.subjectMeta': '1 cours · 1 chapitre',
+    'reviser.ajour': 'À jour',
+    'reviser.vide': 'Aucun cours pour l’instant.',
+    'reviser.aucunResultat': 'Aucun résultat.',
     'plan.gratuit': 'Gratuit',
     'plan.premium': 'Premium',
     'menu.section.compte': 'Mon compte',
@@ -248,7 +284,22 @@ const I18N = {
     'accueil.mode.rapideSub': 'Flash review · 5 min',
     'accueil.mode.focus': 'Focus mode',
     'accueil.mode.focusSub': '25 / 5 cycles',
-    'profil.defaultName': 'Student',
+    'accueil.continuer': 'Continue',
+    'accueil.continuerSub': 'Your latest revision will appear here.',
+    'accueil.actionsTitre': 'Quick actions',
+    'reviser.eyebrow': 'Library',
+    'reviser.titre': 'My courses',
+    'reviser.ajouter': 'Add',
+    'reviser.recherche': 'Search for a course, a subject…',
+    'reviser.rouvrir': 'Reopen first',
+    'reviser.reviser': 'Revise this course',
+    'reviser.fiches': '10 cards due',
+    'reviser.matieres': 'My subjects',
+    'reviser.count': '1 subject · 1 course',
+    'reviser.subjectMeta': '1 course · 1 chapter',
+    'reviser.ajour': 'Up to date',
+    'reviser.vide': 'No courses yet.',
+    'reviser.aucunResultat': 'No result.',
     'plan.gratuit': 'Free',
     'plan.premium': 'Premium',
     'menu.section.compte': 'My account',
@@ -300,6 +351,11 @@ function applyLang() {
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     const value = t(el.dataset.i18n);
     if (typeof value === 'string') el.textContent = value;
+  });
+  /* placeholders (barre de recherche de la bibliothèque, v0.7) */
+  document.querySelectorAll('[data-i18n-ph]').forEach((el) => {
+    const value = t(el.dataset.i18nPh);
+    if (typeof value === 'string') el.setAttribute('placeholder', value);
   });
   document.querySelectorAll('.lang-btn').forEach((btn) => {
     const active = btn.dataset.lang === lang;
@@ -571,6 +627,26 @@ for (const [name, btn] of navButtons) {
   });
 }
 
+/* ── NAVIGATION SPA DEPUIS L'ACCUEIL (v0.6.4) ──
+   Mini-cartes de mode, carte « Continuer » et tuiles d'actions :
+   un seul chemin — le hash, la même source de vérité que la barre
+   du bas. Aucune navigation document, aucune barre de chargement.
+   Les cibles existent (vues déjà créées) ; les écrans DÉTAILLÉS
+   (lecteur de révision, import de cours) viendront à leur étape. */
+function goRoute(route) {
+  if (!VIEWS.includes(route)) return;
+  const target = '#/' + route;
+  if (location.hash === target) showView(route, { animate: false });
+  else location.hash = target;
+}
+
+document.getElementById('modeQuick')?.addEventListener('click', () => goRoute('reviser'));
+document.getElementById('modeFocus')?.addEventListener('click', () => goRoute('examen'));
+document.getElementById('continueCard')?.addEventListener('click', () => goRoute('reviser'));
+document.querySelectorAll('.quick-tile[data-go]').forEach((tile) => {
+  tile.addEventListener('click', () => goRoute(tile.dataset.go));
+});
+
 /* Retour/avant du navigateur, lien #/... : une seule source de vérité */
 window.addEventListener('hashchange', () => showView(parseHash()));
 
@@ -678,3 +754,91 @@ logoutBtn?.addEventListener('click', (e) => {
     onConfirm: performLogout,
   });
 });
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE RÉVISER (v0.7) — copie identique de la page « cours » d'AXIA.
+   Deux moteurs locaux : les rayons « aurora » de la carte héros
+   (SVG généré une fois au démarrage, mêmes paramètres mesurés sur
+   AXIA) et la recherche qui filtre réellement la bibliothèque
+   (instantané, aucun rechargement — SPA).
+   Les boutons « Ajouter », « Réviser ce cours » et les cartes
+   matière gardent leur effet d'appui : leurs écrans (import de
+   cours, lecteur de révision) seront branchés chacun à leur étape,
+   sur demande explicite.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Rayons « aurora » — mêmes paramètres qu'AXIA : disque SVG
+   590px positionné (-131px, -193px), opacité 0.55, 47 segments en
+   deux rampes de teintes mesurées au computed style (ardoise
+   bleutée / ardoise verte). Décoratif : aria-hidden + pointer-events
+   none. ── */
+(function buildLibRays() {
+  const holder = document.getElementById('libRays');
+  if (!holder) return;
+  const COLORS = [
+    'rgb(27,37,50)', 'rgb(28,39,54)', 'rgb(29,41,58)', 'rgb(30,43,61)',
+    'rgb(30,44,65)', 'rgb(31,46,69)', 'rgb(32,48,73)', 'rgb(33,50,77)',
+    'rgb(33,52,80)', 'rgb(34,54,84)', 'rgb(35,56,88)', 'rgb(36,58,92)',
+    'rgb(36,60,96)', 'rgb(37,61,99)', 'rgb(38,63,103)', 'rgb(39,65,107)',
+    'rgb(40,67,111)', 'rgb(40,69,115)', 'rgb(27,37,48)', 'rgb(28,39,49)',
+    'rgb(28,42,49)', 'rgb(28,44,50)', 'rgb(29,46,51)', 'rgb(29,48,51)',
+    'rgb(30,50,52)', 'rgb(30,53,52)', 'rgb(31,55,53)', 'rgb(31,57,54)',
+    'rgb(31,59,54)', 'rgb(32,61,55)',
+  ];
+  const N = 47;
+  const R = 295.2;
+  let paths = '';
+  for (let i = 0; i < N; i++) {
+    const a1 = (i / N) * Math.PI * 2;
+    const a2 = ((i + 1) / N) * Math.PI * 2;
+    const x1 = (R + Math.cos(a1) * R).toFixed(1);
+    const y1 = (R + Math.sin(a1) * R).toFixed(1);
+    const x2 = (R + Math.cos(a2) * R).toFixed(1);
+    const y2 = (R + Math.sin(a2) * R).toFixed(1);
+    paths += '<path d="M' + R + ' ' + R + 'L' + x1 + ' ' + y1 + 'L' + x2 + ' ' + y2 + 'Z" fill="' + COLORS[i % COLORS.length] + '"></path>';
+  }
+  holder.innerHTML = '<svg width="590" height="590" viewBox="0 0 590.4 590.4" focusable="false">' + paths + '</svg>';
+})();
+
+/* ── Recherche bibliothèque — filtre réel et instantané. Chaque
+   caractère compare le texte de la carte héros et des cartes
+   matière ; l'état vide affiche « Aucun résultat. » quand rien ne
+   correspond, « Aucun cours pour l'instant. » quand tout est vide. ── */
+const libSearch = document.getElementById('libSearch');
+const libCourse = document.getElementById('libCourse');
+const libGrid = document.getElementById('libGrid');
+const libEmpty = document.getElementById('libEmpty');
+const libSubjectsHead = document.querySelector('.lib-subjects-head');
+
+function filterLibrary() {
+  if (!libSearch) return;
+  const q = libSearch.value.trim().toLowerCase();
+  let visible = 0;
+  let subjectVisible = 0;
+
+  if (libCourse) {
+    const hit = !q || libCourse.textContent.toLowerCase().includes(q);
+    libCourse.hidden = !hit;
+    if (hit) visible++;
+  }
+
+  if (libGrid) {
+    libGrid.querySelectorAll('.lib-subject').forEach((card) => {
+      const hit = !q || card.textContent.toLowerCase().includes(q);
+      card.hidden = !hit;
+      if (hit) { visible++; subjectVisible++; }
+    });
+  }
+
+  /* L'entête « Mes matières » disparaît si plus aucune matière */
+  if (libSubjectsHead) {
+    libSubjectsHead.hidden = !!q && subjectVisible === 0;
+  }
+
+  if (libEmpty) {
+    libEmpty.hidden = visible > 0;
+    libEmpty.textContent = q ? t('reviser.aucunResultat') : t('reviser.vide');
+  }
+}
+
+libSearch?.addEventListener('input', filterLibrary);

@@ -200,8 +200,138 @@
           <span class="mode-sub" data-i18n="accueil.mode.focusSub">Cycles 25 / 5</span>
         </button>
       </div>
+
+      <!-- ═══ BLOC 2 — CONTINUER (v0.6.4) ═══
+           Proposition posée dans l'espace vide sous les mini-cartes
+           (demande explicite) : carte « Continuer » façon AXIA — elle
+           annoncera la dernière révision en cours. Bouton SPA : envoie
+           vers la vue Réviser (aucun rechargement). État vide tant
+           qu'aucun vrai cours n'existe. Masquée sur les très petits
+           écrans en hauteur (max-height 720px) pour que tout reste
+           calé entre les deux barres, sans jamais déborder. -->
+      <button type="button" class="continue-card" id="continueCard">
+        <span class="continue-icon" aria-hidden="true"><i class="fas fa-rotate-right"></i></span>
+        <span class="continue-body">
+          <span class="continue-title" data-i18n="accueil.continuer">Continuer</span>
+          <span class="continue-sub" data-i18n="accueil.continuerSub">Ta dernière révision apparaîtra ici.</span>
+        </span>
+        <span class="continue-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+      </button>
+
+      <!-- ═══ BLOC 3 — ACTIONS RAPIDES (v0.6.4) ═══
+           Deuxième proposition dans l'espace vide : raccourcis 2×2
+           vers les 4 écrans de l'app. La grille s'étire (flex) pour
+           remplir EXACTEMENT l'espace restant jusqu'à la barre du bas.
+           Chaque tuile navigue en SPA — même source de vérité que la
+           barre du bas (le hash), zéro rechargement. -->
+      <div class="quick-block" role="group" aria-label="Actions rapides">
+        <div class="quick-label" data-i18n="accueil.actionsTitre">Actions rapides</div>
+        <div class="quick-grid">
+          <button type="button" class="quick-tile" data-go="reviser">
+            <span class="quick-icon gold" aria-hidden="true"><i class="fas fa-book-open"></i></span>
+            <span class="quick-name" data-i18n="nav.reviser">Réviser</span>
+          </button>
+          <button type="button" class="quick-tile" data-go="examen">
+            <span class="quick-icon gold" aria-hidden="true"><i class="fas fa-pencil-alt"></i></span>
+            <span class="quick-name" data-i18n="nav.examen">Examen</span>
+          </button>
+          <button type="button" class="quick-tile" data-go="progression">
+            <span class="quick-icon green" aria-hidden="true"><i class="fas fa-chart-line"></i></span>
+            <span class="quick-name" data-i18n="nav.progression">Progression</span>
+          </button>
+          <button type="button" class="quick-tile" data-go="profil">
+            <span class="quick-icon neutral" aria-hidden="true"><i class="fas fa-user"></i></span>
+            <span class="quick-name" data-i18n="nav.profil">Profil</span>
+          </button>
+        </div>
+      </div>
     </section>
-    <section class="view" id="view-reviser" data-view="reviser" hidden><!-- contenu — étapes suivantes --></section>
+    <section class="view view-reviser" id="view-reviser" data-view="reviser" hidden>
+      <!-- ═══ VUE RÉVISER (v0.7) — COPIE IDENTIQUE DE LA PAGE
+           « COURS » D'AXIA (axia-chi.vercel.app/cours) ═══
+           Structure copiée à l'identique (demande explicite), avec
+           couleurs mesurées au computed style sur AXIA :
+           · eyebrow BIBLIOTHÈQUE (11px, 600, +1.32px d'interlettrage)
+           · titre « Mes cours » 26px/800 + avatar + bouton Ajouter
+             (pill, radius 999, h40)
+           · barre de recherche h42 radius 14 — filtre réél et
+             instantané (SPA, zéro rechargement)
+           · carte héros « À rouvrir en premier » : fond ardoise
+             #1F2933 + rayons « aurora » (SVG 47 segments, opacité
+             0.55, position exacte d'AXIA), anneau de progression
+             66px, bouton vert pill Réviser ce cours (dégradé exact
+             #34A853 → #1E7E3A, glow vert)
+           · « Mes matières » + compteur, cartes matière 2 colonnes
+             (radius 18, bordure ambre rgba(251,188,5,.45), pastille
+             34px #F5A800, badge, badge « À jour » vert #34A853)
+           · état vide « Aucun cours pour l'instant. »
+           Les deux barres restent FIXÉES : la liste défile À
+           L'INTÉRIEUR du cadre, exactement comme sur AXIA — le
+           document, lui, ne défile jamais (pages fixes).
+           Valeurs d'exemple tant qu'aucun vrai cours n'existe
+           (elles viendront du vrai import de cours). -->
+      <div class="lib-head">
+        <span class="lib-eyebrow" data-i18n="reviser.eyebrow">Bibliothèque</span>
+        <div class="lib-title-row">
+          <span class="lib-title" data-i18n="reviser.titre">Mes cours</span>
+          <span class="lib-avatar" aria-hidden="true">É</span>
+          <button type="button" class="lib-add" id="libAdd">
+            <i class="fas fa-plus" aria-hidden="true"></i>
+            <span data-i18n="reviser.ajouter">Ajouter</span>
+          </button>
+        </div>
+        <label class="lib-search">
+          <i class="fas fa-magnifying-glass" aria-hidden="true"></i>
+          <input type="search" id="libSearch" autocomplete="off"
+                 placeholder="Rechercher un cours, une matière…"
+                 data-i18n-ph="reviser.recherche">
+        </label>
+      </div>
+
+      <div class="lib-body">
+        <article class="lib-course" id="libCourse">
+          <div class="lib-rays" id="libRays" aria-hidden="true"></div>
+          <div class="lib-course-in">
+            <span class="lib-course-eyebrow" data-i18n="reviser.rouvrir">À rouvrir en premier</span>
+            <div class="lib-course-head">
+              <span class="lib-course-name">Structure de la cellule et division</span>
+              <span class="lib-ring" aria-hidden="true">
+                <svg viewBox="0 0 66 66" role="presentation">
+                  <circle class="lib-ring-track" cx="33" cy="33" r="27"></circle>
+                  <circle class="lib-ring-fill" id="libRingFill" cx="33" cy="33" r="27"></circle>
+                </svg>
+                <span class="lib-ring-pct">0&nbsp;%</span>
+              </span>
+            </div>
+            <span class="lib-course-sub">Sciences de la vie et de la Terre · La cellule · <span data-i18n="reviser.fiches">10 fiches dues</span></span>
+            <div class="lib-course-foot">
+              <span class="lib-course-min">≈ 7 min</span>
+              <button type="button" class="lib-revise" id="libRevise">
+                <span data-i18n="reviser.reviser">Réviser ce cours</span>
+                <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <div class="lib-subjects-head">
+          <span class="lib-subjects-title" data-i18n="reviser.matieres">Mes matières</span>
+          <span class="lib-subjects-count" data-i18n="reviser.count">1 matière · 1 cours</span>
+        </div>
+        <div class="lib-grid" id="libGrid">
+          <button type="button" class="lib-subject">
+            <span class="lib-subject-top">
+              <span class="lib-subject-chip" aria-hidden="true">SV</span>
+              <span class="lib-subject-badge" aria-hidden="true">0</span>
+            </span>
+            <span class="lib-subject-name">Sciences de la vie et de la Terre</span>
+            <span class="lib-subject-meta" data-i18n="reviser.subjectMeta">1 cours · 1 chapitre</span>
+            <span class="lib-subject-ok" data-i18n="reviser.ajour">À jour</span>
+          </button>
+        </div>
+        <p class="lib-empty" id="libEmpty" hidden data-i18n="reviser.vide">Aucun cours pour l'instant.</p>
+      </div>
+    </section>
     <section class="view" id="view-examen" data-view="examen" hidden><!-- contenu — étapes suivantes --></section>
     <section class="view" id="view-progression" data-view="progression" hidden><!-- contenu — étapes suivantes --></section>
     <section class="view" id="view-profil" data-view="profil" hidden><!-- contenu — étapes suivantes --></section>

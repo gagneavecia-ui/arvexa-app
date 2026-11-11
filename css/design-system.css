@@ -33,6 +33,17 @@
             tokens de l'original (or foncé #9A7209 lisible, encre
             chaude 32,27,18, bordures 0.22, barres de défilement
             papier) + fondu doux à la bascule clair/sombre.
+   v0.6.x  : carte statistiques · deux mini-cartes de mode · cadre
+            fixe (zéro défilement, tout calé entre les deux barres).
+   v0.6.4  : navigation remise (mini-cartes + cartes et tuiles
+            cliquables, SPA) · l'espace vide de l'accueil est rempli
+            (carte Continuer + rangée d'actions rapides 2×2 qui
+            s'étire jusqu'à la barre du bas).
+   v0.7    : vue RÉVISER — copie identique de la page « cours »
+            d'AXIA (couleurs mesurées au computed : ardoise
+            #1F2933, rayons aurora, vert #34A853→#1E7E3A, ambre
+            #FBBC05). La liste défile À L'INTÉRIEUR du cadre,
+            exactement comme AXIA — le document ne défile jamais.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -184,6 +195,10 @@ body {
   min-height: 0;
   overflow: hidden;
 }
+
+/* Filet de sécurité : certaines vues posent display:flex — l'attribut
+   hidden doit TOUJOURS gagner, sinon la vue « cachée » resterait peinte. */
+.view[hidden] { display: none !important; }
 
 @keyframes view-enter {
   from { opacity: 0; transform: translateY(8px); }
@@ -493,16 +508,6 @@ html[data-theme="light"] .stats-quote { border-top-color: rgba(184, 134, 11, 0.2
   color: var(--text-dim);
 }
 
-/* Petits écrans en hauteur : les cartes restent compactes, le cadre
-   ne déborde jamais (pages fixes — aucun défilement vertical) */
-@media (max-height: 720px) {
-  .modes-row { gap: 10px; margin-top: 13px; }
-  .mode-card { padding: 11px 13px 10px; gap: 6px; }
-  .mode-icon { width: 32px; height: 32px; font-size: 14px; }
-  .mode-name { font-size: 15px; }
-  .mode-sub { font-size: 11px; }
-}
-
 /* Thème clair « papier & encre » : surfaces blanches, or foncé,
    vert foncé lisible, ombre chaude — jamais de gris froid */
 html[data-theme="light"] .mode-card {
@@ -521,6 +526,667 @@ html[data-theme="light"] .mode-icon {
 html[data-theme="light"] .mode-icon.focus {
   background: rgba(26, 58, 42, 0.09);
   color: #1E5C40;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE ACCUEIL — BLOC 2 : CONTINUER (v0.6.4)
+   Proposition posée dans l'espace vide sous les mini-cartes (demande
+   explicite). Bouton SPA → vue Réviser. Taille compacte fixe ; sur
+   les très petits écrans en hauteur elle s'efface (media plus bas)
+   pour que tout reste calé entre les deux barres.
+   ═══════════════════════════════════════════════════════════════════ */
+.continue-card {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 14px;
+  padding: 13px 14px;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.07), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.1);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.continue-card:active { transform: scale(0.97); }
+
+.continue-card:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+.continue-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  background: rgba(184, 134, 11, 0.12);
+  color: var(--accent-bright);
+}
+
+.continue-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.continue-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--text-light);
+}
+
+.continue-sub {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.continue-arrow {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE ACCUEIL — BLOC 3 : ACTIONS RAPIDES (v0.6.4)
+   Raccourcis 2×2 vers les 4 écrans. La grille est le SEUL élément
+   souple de la colonne : elle s'étire (flex:1) pour remplir
+   EXACTEMENT l'espace restant jusqu'à la barre du bas — ni vide,
+   ni débordement, sur toutes les hauteurs d'écran.
+   ═══════════════════════════════════════════════════════════════════ */
+.quick-block {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.quick-label {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 9px;
+}
+
+.quick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-height: 132px;   /* plancher absolu (2 rangées utilisables) */
+  max-height: 244px;   /* plafond : les tuiles ne gonflent pas à l'infini */
+}
+
+.quick-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+  min-height: 0;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.07), rgba(184, 134, 11, 0.01) 62%),
+    rgba(var(--rgb-soft), 0.02);
+  border: 1px solid rgba(184, 134, 11, 0.1);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.quick-tile:active { transform: scale(0.97); }
+
+.quick-tile:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+.quick-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12.5px;
+  background: rgba(184, 134, 11, 0.12);
+  color: var(--accent-bright);
+}
+
+/* Deux tons ARVX : or pour Réviser / Examen, vert pour Progression,
+   neutre pour Profil (même grammaire que les mini-cartes de mode) */
+.quick-icon.green {
+  background: rgba(92, 198, 155, 0.13);
+  color: #5CC69B;
+}
+
+.quick-icon.neutral {
+  background: rgba(var(--rgb-soft), 0.07);
+  color: var(--text-dim);
+}
+
+.quick-name {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-light);
+}
+
+/* Variantes claires des blocs Continuer + Actions rapides */
+html[data-theme="light"] .continue-card,
+html[data-theme="light"] .quick-tile {
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.06), rgba(184, 134, 11, 0.01) 62%),
+    rgba(255, 255, 255, 0.65);
+  border-color: rgba(184, 134, 11, 0.2);
+  box-shadow: 0 6px 18px rgba(74, 58, 24, 0.1);
+}
+
+html[data-theme="light"] .continue-icon {
+  background: rgba(184, 134, 11, 0.12);
+  color: var(--gold-text, #9A7209);
+}
+
+html[data-theme="light"] .quick-icon {
+  background: rgba(184, 134, 11, 0.12);
+  color: var(--gold-text, #9A7209);
+}
+
+html[data-theme="light"] .quick-icon.green {
+  background: rgba(26, 58, 42, 0.09);
+  color: #1E5C40;
+}
+
+html[data-theme="light"] .quick-icon.neutral {
+  background: rgba(32, 27, 18, 0.06);
+  color: #6B6250;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VUE RÉVISER (v0.7) — COPIE IDENTIQUE DE LA PAGE « COURS » D'AXIA
+   (axia-chi.vercel.app/cours). Couleurs mesurées au computed style
+   sur AXIA lui-même : page sombre #0F1419 (claire : blanc pur),
+   carte héros ardoise #1F2933 + rayons aurora (opacité 0.55),
+   dégradé vert exact du bouton #34A853 → #1E7E3A, ambre #FBBC05
+   (bordures matières rgba(251,188,5,.45) + pastille #F5A800).
+   Les deux barres restent FIXÉES : la liste défile À L'INTÉRIEUR
+   du cadre (overflow-y local), exactement comme AXIA — le document,
+   lui, ne défile JAMAIS (html/body verrouillés, cf. cadre fixe).
+   ═══════════════════════════════════════════════════════════════════ */
+.view-reviser {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  background: #0F1419;
+  overflow-y: auto;              /* défilement interne — comme AXIA */
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.view-reviser::-webkit-scrollbar { display: none; }
+
+/* Filet de sécurité : cartes cours/matières filtrées via [hidden] —
+   display:flex/grid l'écraserait sans ce garde-fou. */
+.view-reviser [hidden] { display: none !important; }
+
+/* ── En-tête bibliothèque : eyebrow, titre + avatar + Ajouter,
+      barre de recherche ── */
+.lib-head {
+  padding: 14px 16px 0;
+  flex-shrink: 0;
+}
+
+.lib-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.32px;
+  text-transform: uppercase;
+  color: #7C8794;
+}
+
+.lib-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.lib-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.52px;
+  line-height: 1.15;
+  color: #F1EEE7;
+}
+
+.lib-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #FFF6DC;
+  background:
+    radial-gradient(120% 150% at 30% 20%, #E0B84A, #B8860B 70%);
+  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.35);
+}
+
+.lib-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 999px;
+  background: #F1EEE7;
+  color: #0F1419;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 16px -6px rgba(0, 0, 0, 0.5);
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.lib-add:active { transform: scale(0.96); }
+
+.lib-add:focus-visible {
+  outline: 2px solid #34A853;
+  outline-offset: 3px;
+}
+
+.lib-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 42px;
+  margin-top: 16px;
+  padding: 0 12px;
+  border-radius: 14px;
+  background: #171D24;
+  border: 1px solid #28313A;
+  cursor: text;
+}
+
+.lib-search i {
+  font-size: 14px;
+  color: #7C8794;
+}
+
+.lib-search input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #F1EEE7;
+}
+
+.lib-search input::placeholder { color: #7C8794; }
+.lib-search input::-webkit-search-cancel-button { -webkit-appearance: none; }
+
+/* ── Corps déroulant : carte héros, matières, état vide ── */
+.lib-body {
+  padding: 26px 16px 24px;
+}
+
+.lib-course {
+  position: relative;
+  overflow: hidden;
+  border-radius: 26px;
+  padding: 18px;
+  background: #1F2933;
+}
+
+/* Rayons « aurora » d'AXIA : disque SVG 590px positionné à
+   l'identique (-131px, -193px), opacité 0.55 (SVG généré par JS) */
+.lib-rays {
+  position: absolute;
+  left: -131px;
+  top: -193px;
+  width: 590px;
+  height: 590px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.lib-rays svg { display: block; width: 100%; height: 100%; }
+
+.lib-course-in {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.lib-course-eyebrow {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: rgba(243, 245, 248, 0.72);
+}
+
+.lib-course-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 2px;
+}
+
+.lib-course-name {
+  min-width: 0;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -0.21px;
+  line-height: 1.19;
+  color: #FFFFFF;
+}
+
+.lib-ring {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  flex-shrink: 0;
+}
+
+.lib-ring svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.lib-ring-track {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 7;
+}
+
+.lib-ring-fill {
+  fill: none;
+  stroke: #FFFFFF;
+  stroke-width: 7;
+  stroke-linecap: round;
+  stroke-dasharray: 169.65;
+  stroke-dashoffset: 169.65;
+}
+
+.lib-ring-pct {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.lib-course-sub {
+  margin-top: 10px;
+  max-width: 232px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(243, 245, 248, 0.72);
+}
+
+.lib-course-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.lib-course-min {
+  font-size: 12.5px;
+  color: rgba(243, 245, 248, 0.72);
+}
+
+/* Bouton vert pill — dégradé et glow EXACTS d'AXIA */
+.lib-revise {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #34A853, #1E7E3A);
+  color: #FFFFFF;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow:
+    rgba(52, 168, 83, 0.6) 0 8px 20px -6px,
+    rgba(255, 255, 255, 0.25) 0 1px 0 inset;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.lib-revise:active { transform: scale(0.97); }
+
+.lib-revise:focus-visible {
+  outline: 2px solid #E0B84A;
+  outline-offset: 3px;
+}
+
+.lib-revise i { font-size: 13px; }
+
+/* ── Mes matières : titre + compteur, cartes 2 colonnes ── */
+.lib-subjects-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 26px;
+}
+
+.lib-subjects-title {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.32px;
+  color: #F1EEE7;
+}
+
+.lib-subjects-count {
+  font-size: 13px;
+  color: #A9B1BB;
+}
+
+.lib-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.lib-subject {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 18px;
+  background: #171D24;
+  border: 1px solid rgba(251, 188, 5, 0.45);
+  box-shadow: rgba(251, 188, 5, 0.16) 0 6px 14px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.lib-subject:active { transform: scale(0.97); }
+
+.lib-subject:focus-visible {
+  outline: 2px solid #FBBC05;
+  outline-offset: 3px;
+}
+
+.lib-subject-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.lib-subject-chip {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F5A800;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.lib-subject-badge {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  color: #A9B1BB;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.lib-subject-name {
+  margin-top: 12px;
+  font-size: 14.5px;
+  font-weight: 800;
+  letter-spacing: -0.145px;
+  line-height: 1.24;
+  color: #F1EEE7;
+}
+
+.lib-subject-meta {
+  margin-top: 4px;
+  font-size: 11.5px;
+  color: #A9B1BB;
+}
+
+.lib-subject-ok {
+  margin-top: 10px;
+  display: inline-flex;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #E2F3E7;
+  color: #34A853;
+  font-size: 10.5px;
+  font-weight: 800;
+}
+
+.lib-empty {
+  margin: 26px 0 6px;
+  text-align: center;
+  font-size: 14px;
+  color: #7C8794;
+}
+
+/* Thème clair « papier » de la vue Réviser — AXIA clair : page
+   blanche, encres #1F2933, même carte héros ardoise et même vert */
+html[data-theme="light"] .view-reviser { background: #FFFFFF; }
+
+html[data-theme="light"] .lib-eyebrow { color: #9AA0A8; }
+
+html[data-theme="light"] .lib-title { color: #1F2933; }
+
+html[data-theme="light"] .lib-add {
+  background: #1F2933;
+  color: #FFFFFF;
+  box-shadow: rgba(31, 41, 51, 0.5) 0 6px 16px -6px;
+}
+
+html[data-theme="light"] .lib-search {
+  background: #FFFFFF;
+  border-color: #E6E8EC;
+}
+
+html[data-theme="light"] .lib-search input { color: #1F2933; }
+html[data-theme="light"] .lib-search input::placeholder { color: #9AA0A8; }
+
+html[data-theme="light"] .lib-subjects-title { color: #1F2933; }
+html[data-theme="light"] .lib-subjects-count { color: #6B7280; }
+
+html[data-theme="light"] .lib-subject {
+  background: #FFFFFF;
+}
+
+html[data-theme="light"] .lib-subject-badge {
+  background: rgba(31, 41, 51, 0.06);
+  color: #6B7280;
+}
+
+html[data-theme="light"] .lib-subject-name { color: #1F2933; }
+html[data-theme="light"] .lib-subject-meta { color: #6B7280; }
+html[data-theme="light"] .lib-empty { color: #9AA0A8; }
+
+/* Petits écrans en hauteur : les cartes restent compactes, le cadre
+   ne déborde jamais (pages fixes — aucun défilement vertical). La
+   carte « Continuer » s'efface ici : la grille d'actions absorbe
+   tout l'espace restant, rien ne déborde, rien n'est coupé.
+   (La règle est placée APRÈS tous les blocs accueil pour gagner.) */
+@media (max-height: 720px) {
+  .modes-row { gap: 10px; margin-top: 13px; }
+  .mode-card { padding: 11px 13px 10px; gap: 6px; }
+  .mode-icon { width: 32px; height: 32px; font-size: 14px; }
+  .mode-name { font-size: 15px; }
+  .mode-sub { font-size: 11px; }
+  .continue-card { display: none; }
+  .quick-block { margin-top: 12px; }
+  .quick-label { margin-bottom: 8px; }
+  .quick-grid { gap: 9px; min-height: 126px; }
+  .quick-tile { padding: 9px 12px; gap: 4px; }
+  .quick-icon { width: 26px; height: 26px; border-radius: 8px; font-size: 11.5px; }
+  .quick-name { font-size: 12.5px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════

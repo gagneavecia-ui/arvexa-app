@@ -3,29 +3,55 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.6.4 Réparation : carte compacte + navigation remise
+## Étape actuelle — v0.7 Réviser : copie identique de la page « cours » AXIA (+ v0.6.4 accueil rempli)
 
-- **Retour à la taille compacte validée** : la version v0.6.3 (« la carte
-  remplit l'espace ») débordait sur vrai téléphone — carte géante et
-  **mini-cartes coupées sous la barre du bas**. v0.6.4 ramène la carte
-  statistiques à **1/4 du cadre** (`min-height` /4, avec repli `100vh`
-  pour les navigateurs sans `dvh`), taille FIXE qui ne s'étend jamais :
-  le contenu total (~350px) tient sur **n'importe quel écran**, plus
-  aucune coupure possible.
-- **Navigation remise sur les deux mini-cartes** : redeviennent des
-  **`<button>` cliquables** — `cursor: pointer`, **effet d'appui**
-  (échelle 0,97) et contour de focus, comme les tool-cards de l'original.
-  Les écrans cibles de chaque mode seront branchés chacun à leur étape.
-- **Conservé de v0.6.3** (demandes explicites) :
-  - **Espace net de 16px** entre la carte principale et les mini-cartes
-    (13px sur petits écrans) — plus rien de collé ;
-  - **Cadre verrouillé** — zéro défilement (`100dvh` + `overflow: hidden`
-    + `overscroll-behavior: none`), tout reste calé entre les deux barres.
-- Vérifié au compteur (360×780 et 360×600) : carte 170px, écart 16px,
-  mini-cartes **entières** au-dessus de la barre, `scrollY = 0` après
-  tentative de défilement, 2 boutons cliquables.
-- Preuves SPA re-vérifiées : marque mémoire 42 intacte, `navigation = 1`,
-  deux thèmes, FR/AN instantané.
+### v0.7 — La vue Réviser est la page Cours d'AXIA, à l'identique
+
+Copie mesurée **au computed style** sur https://axia-chi.vercel.app/cours
+(compte de test créé pour inspecter la page remplie, thèmes clair/sombre
+et libellés français exacts) :
+
+- **En-tête bibliothèque** : eyebrow `BIBLIOTHÈQUE` (11px/600, +1.32px),
+  titre **Mes cours** (26px/800), avatar doré ARVX, bouton **+ Ajouter**
+  (pill 40px, radius 999 — clair sur sombre, sombre sur clair) ;
+- **Recherche** h42 radius 14 — **filtre réellement** cours et matières
+  (instantané, SPA), état vide « Aucun résultat. » ;
+- **Carte héros « À rouvrir en premier »** : ardoise `#1F2933`, **rayons
+  aurora** (SVG 47 segments, deux rampes de teintes mesurées, position
+  exacte −131px/−193px, opacité 0.55), anneau de progression 66px
+  (piste blanche 12 %), sous-titre matière · chapitre · fiches dues,
+  **≈ 7 min** et bouton vert pill **Réviser ce cours →** (dégradé EXACT
+  `#34A853 → #1E7E3A`, glow vert `rgba(52,168,83,.6)`) ;
+- **Mes matières** + compteur (« 1 matière · 1 cours »), cartes 2
+  colonnes radius 18 : bordure ambre `rgba(251,188,5,.45)` + glow,
+  pastille 34px `#F5A800`, badge rond, badge **« À jour »** vert ;
+- **Couleurs de page** : sombre `#0F1419`, clair blanc pur — comme AXIA ;
+- **Libellés FR/AN exacts** (Bibliothèque/Library, Mes cours/My courses,
+  À rouvrir en premier/Reopen first, Réviser ce cours/Revise this
+  course, Mes matières/My subjects, À jour/Up to date…) ;
+- **Cadre respecté** : les deux barres restent fixées, la liste défile
+  **à l'intérieur** du cadre exactement comme AXIA — le document, lui,
+  ne défile jamais (`scrollY = 0` vérifié après tentative à 800px) ;
+- Valeurs d'exemple tant qu'aucun vrai cours n'existe (l'import de
+  cours et le lecteur de révision viendront à leurs étapes).
+
+### v0.6.4 — Navigation remise + espace vide rempli (demandes explicites)
+
+- **Mini-cartes qui naviguent** : Mode rapide → **Réviser**, Mode focus →
+  **Examen** — SPA pure (`location.hash`, même source de vérité que la
+  barre du bas ; marque mémoire 42 intacte, `navigation = 1`) ;
+- **L'espace vide sous les mini-cartes est rempli** :
+  - carte **« Continuer »** (→ Réviser), façon AXIA, avec chevron ;
+  - rangée **« Actions rapides » 2×2** (Réviser · Examen · Progression ·
+    Profil) — chaque tuile navigue en SPA ;
+  - la grille s'étire (`flex:1`, min 132 / max 244px) pour remplir
+    **exactement** l'espace jusqu'à la barre du bas : plus aucun vide,
+    rien ne déborde (vérifié à 360×780, ×740 et ×640) ;
+  - sur les écrans courts (≤ 720px de hauteur) la carte Continuer
+    s'efface et tout reste calé ;
+- Filet ajouté : `.view[hidden]` et `.view-reviser [hidden]` ne peuvent
+  plus être écrasés par `display:flex` ;
+- 2 thèmes + FR/AN instantané re-vérifiés sur tous les nouveaux blocs.
 
 ## v0.6.3 — (remplacée par v0.6.4)
 
