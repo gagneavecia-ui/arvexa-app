@@ -3,7 +3,64 @@
 Nouvelle application **ARVX** (ex-ARVEXA) : **toutes les matières** (au-delà du BAC uniquement).
 Base web moderne → deviendra une **application Android installable (APK)**.
 
-## Étape actuelle — v0.7.2 Accueil : les cartes reprennent les design de Réviser
+## Étape actuelle — v0.8 Signature ARVX + rafraîchissement rétabli
+
+### v0.8 — Retouches anti-copie (« on s'inspire, on ne copie pas ») + RAFRAÎCHIR
+
+**Objectif** (demande explicite) : quelqu'un qui connaît AXIA ne doit plus
+pouvoir dire que les cartes d'ARVX sont une copie — mêmes rôles visuels,
+mais des matériaux, une géométrie et des interactions désormais propres à
+ARVX, plus abouties que la référence.
+
+**1. Les cartes (mini-modes, Continuer, tuiles Actions rapides, matières
+de Réviser) passent au matériau « CARTES SIGNATURE ARVX »** :
+
+- **Éclat or DIAGONAL** `linear-gradient(150deg, …)` — là où la référence
+  pose un radial dans le coin haut-gauche, ARVX balaie la carte en
+  diagonale (plus lumineux, moins reconnaissable) ;
+- **« Soleil ARVX »** : deux **anneaux or concentriques** au coin
+  haut-droit (empreinte de marque que la référence n'a pas) ;
+- **Liseré or flottant à gauche** (`::before`, 3 px, arrondi, dégradé
+  `--accent-bright` → translucide) — une « épingle de blason » sur chaque
+  carte ;
+- **Radius « feuille »** `18px 18px 18px 6px` — le coin bas-gauche
+  adouci casse la géométrie uniforme de la référence ;
+- **Ombre or portée vers le bas** + **appui réactif** (le filet d'or
+  s'allume à l'appui) + **survol soulevé** sur souris — la référence est
+  statique ;
+- Bordure or assise `rgba(184,134,11,.34)` ;
+- **Thème clair** : fond blanc plein + anneaux et éclat en **or profond**
+  (`rgba(184,134,11,…)`) lisibles sur papier.
+
+**2. La carte principale (accueil) et la carte héros (Réviser) passent au
+matériau « HÉROS SIGNATURE ARVX »** (identique sur les deux vues) :
+
+- Vert de marque `--primary` conservé ;
+- **Anneaux or haut-droit** (rayons 140 / 176 px, arcs fins 2 px) ;
+- **Éclat or bas-droit** — le radial or quitte le coin haut-gauche de la
+  référence pour éclairer le bas de la carte (miroir) ;
+- **Filet or INTÉRIEUR** (`inset 0 0 0 1px rgba(224,184,74,.10)`) —
+  double encadrement « luxe » que la référence n'a pas ;
+- **Rayons « aurora » RECADRÉS** : déplacés de (-131/-193, 590 px) à
+  **(-148/-206, 640 px)**, opacité 0.5 et **pivot 6°** — la disposition
+  des rais n'est plus superposable à celle d'AXIA ;
+- La carte reste verte dans les deux thèmes (marque), textes crème
+  littéraux, jauge or.
+
+**3. RAFRAÎCHISSEMENT rétabli** (demande explicite : « j'essaie de
+rafraîchir la page, ça refuse, c'est bloqué ») :
+
+- `overscroll-behavior:none` **retiré** de `html`/`body` (et `contain`
+  de la liste de Réviser) : le geste **« tirer pour rafraîchir »** du
+  navigateur fonctionne à nouveau — le document, lui, ne défile toujours
+  pas (cadre fixe intact) ;
+- Le bouton **⟳ Rafraîchir** de la barre du haut **recharge vraiment la
+  page** (rotation de l'icône puis `location.reload()`) — la route est
+  restaurée au boot depuis le hash `#/…` : l'app se rouvre exactement où
+  elle était ;
+- **SPA intacte** : aucune navigation interne ne recharge jamais la page
+  (marque 42, `performance.getEntriesByType('navigation')` reste à 1
+  entre deux onglets).
 
 ### v0.7.2 — Cartes de l'accueil au style de Réviser (demande explicite)
 

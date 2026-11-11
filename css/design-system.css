@@ -60,6 +60,24 @@
             héros de Réviser : vert de marque + radial or + rayons
             « aurora », textes crème, jauge or — identique dans les
             deux thèmes (comme le héros).
+   v0.8    : SIGNATURE ARVX (retouches anti-copie, demande
+            explicite — « on s'inspire, on ne copie pas ») :
+            · CARTES = matériau signature propre : éclat or DIAGONAL
+              (au lieu du radial de la référence), « soleil ARVX »
+              (deux anneaux or au coin haut-droit), liseré or
+              flottant à gauche (::before), radius « feuille »
+              18/18/18/6, ombre or portée vers le bas, appui et
+              survol réactifs (la référence est statique) ;
+            · HÉROS = vert de marque + anneaux or haut-droit +
+              éclat or bas-droit (miroir du radial haut-gauche de
+              la référence) + filet or INTÉRIEUR (double
+              encadrement) ;
+            · rayons « aurora » RECADRÉS (-148/-206, 640, pivot
+              6°) — empreinte géométrique distincte ;
+            · RAFRAÎCHISSEMENT rétabli (demande explicite) :
+              overscroll-behavior:none retiré — le geste « tirer
+              pour rafraîchir » du navigateur fonctionne à
+              nouveau ; le document, lui, ne défile toujours pas.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── THÈME SOMBRE (défaut) ─────────────────────────────────────── */
@@ -155,17 +173,19 @@ html[data-theme="light"] {
 /* ── BASE ──────────────────────────────────────────────────────── */
 * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-/* CADRE FIXE (v0.6.3) — le document ne défile JAMAIS. Tout l'écran
-   est un cadre : barre du haut en haut, barre du bas en bas, la vue
-   remplit exactement l'espace entre les deux. overflow:hidden +
-   overscroll-behavior:none suppriment tout défilement et tout rebond
-   (glisser vers le bas = impossible, sur toutes les pages). */
+/* CADRE FIXE (v0.6.3 · v0.8) — le document ne défile JAMAIS. Tout
+   l'écran est un cadre : barre du haut en haut, barre du bas en bas,
+   la vue remplit exactement l'espace entre les deux. overflow:hidden
+   supprime tout défilement. v0.8 (demande explicite) :
+   « overscroll-behavior:none » est RETIRÉ — le geste « tirer pour
+   rafraîchir » du navigateur fonctionne à nouveau ; ce gesture ne
+   fait pas défiler la page, il déclenche le rechargement (route
+   restaurée au boot depuis le hash). */
 html {
   width: 100%;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  overscroll-behavior: none;
 }
 
 body {
@@ -173,11 +193,11 @@ body {
   background: var(--bg-dark);
   color: var(--text-light);
   font-size: 14px;
-  /* Hauteur EXACTE de l'écran : rien ne dépasse, rien ne défile */
+  /* Hauteur EXACTE de l'écran : rien ne dépasse, rien ne défile
+     (v0.8 : overscroll-behavior retiré — rafraîchissement rétabli) */
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
-  overscroll-behavior: none;
   /* Place réservée pour la barre de tâches fixe */
   padding-bottom: calc(57px + var(--safe-bottom));
   /* Fondu doux quand on bascule clair ↔ sombre (v0.5.1) */
@@ -244,13 +264,16 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 1 : CARTE PRINCIPALE (v0.7.2)
-   ARRIÈRE-PLAN EXACT DE LA CARTE HÉROS DE RÉVISER (v0.7.1) :
-   vert de marque --primary + radial or dans le coin haut-gauche
-   + rayons « aurora » (SVG généré par JS, mêmes teintes) + filet
-   or 0.22. La carte reste IDENTIQUE dans les deux thèmes — comme
-   la carte héros, qui reste verte sur papier. Textes en crème
-   littéral (#F5F0E8) pour ne pas suivre l'encre du thème clair.
+   VUE ACCUEIL — BLOC 1 : CARTE PRINCIPALE (v0.7.2 · v0.8)
+   HÉROS SIGNATURE ARVX (v0.8 — retouches anti-copie, demande
+   explicite) : vert de marque --primary, « soleil ARVX » (deux
+   anneaux or concentriques au coin haut-droit), éclat or déplacé
+   au coin bas-droit (miroir du radial haut-gauche de la référence),
+   filet or INTÉRIEUR (double encadrement), rayons « aurora »
+   recadrés et pivotés (SVG généré par JS). Même matériau que la
+   carte héros de Réviser — les DEUX restent vertes dans les deux
+   thèmes. Textes en crème littéral (#F5F0E8) pour ne pas suivre
+   l'encre du thème clair.
    ═══════════════════════════════════════════════════════════════════ */
 .stats-card {
   flex: 0 0 auto;   /* taille FIXE compacte — ne s'étend jamais */
@@ -265,24 +288,31 @@ body {
   min-height: calc((100vh - var(--header-height) - calc(57px + var(--safe-bottom))) / 4);
   min-height: calc((100dvh - var(--header-height) - calc(57px + var(--safe-bottom))) / 4);
   padding: 16px 18px 13px;
-  border-radius: 26px;  /* le radius du héros de Réviser */
-  /* Le matériau EXACT de la carte héros de Réviser */
+  border-radius: 26px;  /* le radius du héros */
+  /* HÉROS SIGNATURE ARVX (v0.8) : anneaux or haut-droit + éclat
+     bas-droit + vert de marque — même matériau que .lib-course */
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(224, 184, 74, 0.16), rgba(224, 184, 74, 0.02) 62%),
+    radial-gradient(circle at 100% 0%, transparent 0 139px, rgba(224, 184, 74, 0.11) 139px 141px, transparent 141px 175px, rgba(224, 184, 74, 0.06) 175px 177px, transparent 177px),
+    radial-gradient(120% 150% at 100% 100%, rgba(224, 184, 74, 0.13), rgba(224, 184, 74, 0.02) 58%),
     var(--primary);
-  border: 1px solid rgba(224, 184, 74, 0.22);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(224, 184, 74, 0.24);
+  box-shadow:
+    inset 0 0 0 1px rgba(224, 184, 74, 0.10),   /* filet or intérieur */
+    0 12px 32px rgba(0, 0, 0, 0.30);
 }
 
-/* Rayons « aurora » — le décor du héros de Réviser, à l'identique
-   (SVG peint par le même générateur JS que #libRays) */
+/* Rayons « aurora » (v0.8) — RECADRAGE SIGNATURE ARVX : le disque
+   n'est plus aux paramètres de la référence (-131/-193, 590) mais
+   déplacé, agrandi et pivoté — SVG peint par le même générateur
+   JS que #libRays */
 .stats-rays {
   position: absolute;
-  left: -131px;
-  top: -193px;
-  width: 590px;
-  height: 590px;
-  opacity: 0.55;
+  left: -148px;
+  top: -206px;
+  width: 640px;
+  height: 640px;
+  opacity: 0.5;
+  transform: rotate(6deg);   /* disposition des rais distincte */
   pointer-events: none;
 }
 
@@ -450,13 +480,17 @@ body {
    claire : textes crème littéraux, or et vert invariables). */
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 1bis : LES DEUX MODES (v0.6.2 · v0.6.4 · v0.7.2)
+   VUE ACCUEIL — BLOC 1bis : LES DEUX MODES (v0.6.2 · v0.6.4 · v0.8)
    Deux mini-cartes côte à côte sous la carte principale. MATÉRIAU
-   EXACT de la carte matière « Sciences de la vie et de la Terre »
-   de Réviser (v0.7.1) : radial or, filet or .38, glow or, radius
-   18. Boutons cliquables (navigation remise, v0.6.4) : cursor +
-   effet d'appui. Pastilles icônes : or dégradé (le style SVT) pour
-   le rapide, voile vert pour le focus (distinction deux tons ARVX).
+   CARTES SIGNATURE ARVX (v0.8 — retouches anti-copie, demande
+   explicite) : éclat or DIAGONAL (au lieu du radial de la référence),
+   « soleil ARVX » (anneaux or au coin haut-droit), liseré or
+   flottant à gauche (::before), radius « feuille » 18/18/18/6,
+   ombre or portée vers le bas. Inspiré de la carte matière de
+   Réviser, mais plus copié trait pour trait. Boutons cliquables
+   (navigation remise, v0.6.4) : cursor + appui + survol réactif.
+   Pastilles icônes : or dégradé (le style SVT) pour le rapide,
+   voile vert pour le focus (distinction deux tons ARVX).
    ═══════════════════════════════════════════════════════════════════ */
 .modes-row {
   display: grid;
@@ -470,19 +504,24 @@ body {
    feedback d'appui et contour de focus, comme les tool-cards de
    l'original. La transition garde aussi le fondu clair ↔ sombre. */
 .mode-card {
+  position: relative;      /* ancre du liseré signature (::before) */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 7px;
   min-width: 0;
   padding: 13px 14px 12px;
-  border-radius: 18px;
-  /* Matériau EXACT de la carte matière SVT (Réviser, v0.7.1) */
+  border-radius: 18px 18px 18px 6px;   /* radius « feuille » ARVX */
+  /* CARTES SIGNATURE ARVX (v0.8) : soleil haut-droit + éclat
+     diagonal — matériau commun aux 4 familles de cartes */
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
-    rgba(var(--rgb-soft), 0.02);
-  border: 1px solid rgba(184, 134, 11, 0.38);
-  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+    radial-gradient(circle at 100% 0%, transparent 0 46px, rgba(224, 184, 74, 0.13) 46px 48px, transparent 48px 72px, rgba(224, 184, 74, 0.07) 72px 74px, transparent 74px),
+    linear-gradient(150deg, rgba(224, 184, 74, 0.09), rgba(224, 184, 74, 0) 52%),
+    rgba(var(--rgb-soft), 0.03);
+  border: 1px solid rgba(184, 134, 11, 0.34);
+  box-shadow:
+    0 10px 22px -10px rgba(184, 134, 11, 0.30),
+    0 3px 8px rgba(0, 0, 0, 0.16);
   text-align: left;
   font: inherit;
   color: inherit;
@@ -499,8 +538,45 @@ body {
   outline-offset: 3px;
 }
 
-/* Badge de l'icône : or DÉGRADÉ + encre — la pastille exacte de la
-   carte matière SVT */
+/* ── SIGNATURE ARVX (v0.8) — partagée par les 4 familles de cartes
+      (mini-modes, Continuer, actions rapides, matières de Réviser) ──
+   · Liseré or flottant à gauche (épingle de blason) ;
+   · Appui : le filet d'or s'allume ;
+   · Survol (souris) : filet allumé + ombre soulevée — une
+     réactivité que la référence n'a pas. */
+.mode-card::before,
+.continue-card::before,
+.quick-tile::before,
+.lib-subject::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 15px;
+  bottom: 15px;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--accent-bright), rgba(184, 134, 11, 0.14));
+}
+
+.mode-card:active,
+.continue-card:active,
+.quick-tile:active,
+.lib-subject:active { border-color: rgba(224, 184, 74, 0.5); }
+
+@media (hover: hover) {
+  .mode-card:hover,
+  .continue-card:hover,
+  .quick-tile:hover,
+  .lib-subject:hover {
+    border-color: rgba(224, 184, 74, 0.45);
+    box-shadow:
+      0 14px 26px -10px rgba(184, 134, 11, 0.38),
+      0 3px 8px rgba(0, 0, 0, 0.16);
+  }
+}
+
+/* Badge de l'icône : or DÉGRADÉ + encre — la pastille de la
+   carte matière SVT, gardée telle quelle */
 .mode-icon {
   width: 36px;
   height: 36px;
@@ -534,11 +610,15 @@ body {
   color: var(--text-dim);
 }
 
-/* Thème clair « papier & encre » : le matériau SVT clair — fond
-   blanc plein, MÊME filet or .38 et glow or (comme la carte matière
-   en clair) ; la pastille or dégradée reste or (comme Premium). */
+/* Thème clair « papier & encre » : le matériau cartes clair — fond
+   blanc plein, anneaux or + éclat diagonal en or profond ; la
+   pastille or dégradée reste or (comme Premium). */
 html[data-theme="light"] .mode-card {
-  background: var(--bg-card-solid);
+  background:
+    radial-gradient(circle at 100% 0%, transparent 0 46px, rgba(184, 134, 11, 0.16) 46px 48px, transparent 48px 72px, rgba(184, 134, 11, 0.09) 72px 74px, transparent 74px),
+    linear-gradient(150deg, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0) 52%),
+    var(--bg-card-solid);
+  box-shadow: 0 10px 22px -12px rgba(74, 58, 24, 0.35), 0 2px 6px rgba(74, 58, 24, 0.08);
 }
 
 html[data-theme="light"] .mode-icon.focus {
@@ -547,22 +627,27 @@ html[data-theme="light"] .mode-icon.focus {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE ACCUEIL — BLOC 2 : CONTINUER (v0.6.4 · v0.7.2)
-   Bouton SPA → vue Réviser. Même matériau carte matière SVT que
-   les mini-cartes (radial or, filet or .38, glow, radius 18).
+   VUE ACCUEIL — BLOC 2 : CONTINUER (v0.6.4 · v0.8)
+   Bouton SPA → vue Réviser. Même matériau CARTES SIGNATURE ARVX
+   que les mini-cartes (v0.8 — voir Bloc 1bis).
    ═══════════════════════════════════════════════════════════════════ */
 .continue-card {
+  position: relative;      /* ancre du liseré signature (::before) */
   display: flex;
   align-items: center;
   gap: 13px;
   margin-top: 14px;
   padding: 13px 14px;
-  border-radius: 18px;
+  border-radius: 18px 18px 18px 6px;   /* radius « feuille » ARVX */
+  /* CARTES SIGNATURE ARVX (v0.8) — voir Bloc 1bis */
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
-    rgba(var(--rgb-soft), 0.02);
-  border: 1px solid rgba(184, 134, 11, 0.38);
-  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+    radial-gradient(circle at 100% 0%, transparent 0 46px, rgba(224, 184, 74, 0.13) 46px 48px, transparent 48px 72px, rgba(224, 184, 74, 0.07) 72px 74px, transparent 74px),
+    linear-gradient(150deg, rgba(224, 184, 74, 0.09), rgba(224, 184, 74, 0) 52%),
+    rgba(var(--rgb-soft), 0.03);
+  border: 1px solid rgba(184, 134, 11, 0.34);
+  box-shadow:
+    0 10px 22px -10px rgba(184, 134, 11, 0.30),
+    0 3px 8px rgba(0, 0, 0, 0.16);
   text-align: left;
   font: inherit;
   color: inherit;
@@ -656,6 +741,7 @@ html[data-theme="light"] .mode-icon.focus {
 }
 
 .quick-tile {
+  position: relative;      /* ancre du liseré signature (::before) */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -664,13 +750,16 @@ html[data-theme="light"] .mode-icon.focus {
   min-width: 0;
   min-height: 0;
   padding: 10px 14px;
-  border-radius: 18px;
-  /* Matériau EXACT de la carte matière SVT (Réviser, v0.7.1) */
+  border-radius: 18px 18px 18px 6px;   /* radius « feuille » ARVX */
+  /* CARTES SIGNATURE ARVX (v0.8) — voir Bloc 1bis */
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
-    rgba(var(--rgb-soft), 0.02);
-  border: 1px solid rgba(184, 134, 11, 0.38);
-  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+    radial-gradient(circle at 100% 0%, transparent 0 46px, rgba(224, 184, 74, 0.13) 46px 48px, transparent 48px 72px, rgba(224, 184, 74, 0.07) 72px 74px, transparent 74px),
+    linear-gradient(150deg, rgba(224, 184, 74, 0.09), rgba(224, 184, 74, 0) 52%),
+    rgba(var(--rgb-soft), 0.03);
+  border: 1px solid rgba(184, 134, 11, 0.34);
+  box-shadow:
+    0 10px 22px -10px rgba(184, 134, 11, 0.30),
+    0 3px 8px rgba(0, 0, 0, 0.16);
   text-align: left;
   font: inherit;
   color: inherit;
@@ -718,12 +807,16 @@ html[data-theme="light"] .mode-icon.focus {
   color: var(--text-light);
 }
 
-/* Variantes claires des blocs Continuer + Actions rapides — même
-   matériau SVT clair : fond blanc plein, filet or .38 et glow or
-   conservés de la base ; pastilles or dégradées restent or. */
+/* Variantes claires des blocs Continuer + Actions rapides —
+   matériau cartes clair : fond blanc plein, anneaux or + éclat
+   diagonal en or profond ; pastilles or dégradées restent or. */
 html[data-theme="light"] .continue-card,
 html[data-theme="light"] .quick-tile {
-  background: var(--bg-card-solid);
+  background:
+    radial-gradient(circle at 100% 0%, transparent 0 46px, rgba(184, 134, 11, 0.16) 46px 48px, transparent 48px 72px, rgba(184, 134, 11, 0.09) 72px 74px, transparent 74px),
+    linear-gradient(150deg, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0) 52%),
+    var(--bg-card-solid);
+  box-shadow: 0 10px 22px -12px rgba(74, 58, 24, 0.35), 0 2px 6px rgba(74, 58, 24, 0.08);
 }
 
 html[data-theme="light"] .quick-icon.green {
@@ -737,13 +830,15 @@ html[data-theme="light"] .quick-icon.neutral {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   VUE RÉVISER (v0.7.1) — structure de la page « cours » d'AXIA
-   (axia-chi.vercel.app/cours), COULEURS EXACTES DU SITE ARVX :
-   fond --bg (sombre #0A0A0A / papier #F5F1E8), carte héros verte
-   --primary avec radial or (le matériau exact des cartes accueil)
-   + rayons « aurora » recalibrés sur le vert de marque, bouton
+   VUE RÉVISER (v0.7.1 · v0.8) — structure de la page « cours »
+   d'AXIA (axia-chi.vercel.app/cours), COULEURS EXACTES DU SITE
+   ARVX : fond --bg (sombre #0A0A0A / papier #F5F1E8), carte héros
+   verte --primary au HÉROS SIGNATURE ARVX (v0.8 : anneaux or
+   haut-droit, éclat bas-droit, filet intérieur, rayons recadrés —
+   le matériau de la carte principale de l'accueil), cartes
+   matières au matériau CARTES SIGNATURE ARVX, bouton
    dégradé or signature (accent → accent-bright, encre #141210),
-   pastilles matières or, bordures or rgba(184,134,11,…), badges
+   pastilles matières or, bordures or, badges
    « À jour » en vert --success du site.
    Les deux barres restent FIXÉES : la liste défile À L'INTÉRIEUR
    du cadre (overflow-y local), exactement comme AXIA — le document,
@@ -756,9 +851,11 @@ html[data-theme="light"] .quick-icon.neutral {
   max-width: 720px;
   margin: 0 auto;
   background: var(--bg);         /* couleur exacte du site (sombre / papier) */
-  overflow-y: auto;              /* défilement interne — comme AXIA */
-  overscroll-behavior: contain;
-  scrollbar-width: none;
+  overflow-y: auto;              /* défilement interne — comme la référence */
+  scrollbar-width: none;         /* v0.8 : « overscroll-behavior: contain »
+                                    retiré — le « tirer pour rafraîchir »
+                                    marche aussi depuis la liste (le
+                                    document, lui, ne bouge jamais) */
 }
 
 .view-reviser::-webkit-scrollbar { display: none; }
@@ -885,25 +982,31 @@ html[data-theme="light"] .quick-icon.neutral {
   overflow: hidden;
   border-radius: 26px;
   padding: 18px;
-  /* Vert de marque + radial or : le matériau EXACT des cartes accueil,
-     posé sur --primary (la couleur signature du site). */
+  /* HÉROS SIGNATURE ARVX (v0.8) — le même matériau que la carte
+     principale de l'accueil : anneaux or haut-droit, éclat or
+     bas-droit, filet or intérieur, posé sur le vert de marque. */
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(224, 184, 74, 0.16), rgba(224, 184, 74, 0.02) 62%),
+    radial-gradient(circle at 100% 0%, transparent 0 139px, rgba(224, 184, 74, 0.11) 139px 141px, transparent 141px 175px, rgba(224, 184, 74, 0.06) 175px 177px, transparent 177px),
+    radial-gradient(120% 150% at 100% 100%, rgba(224, 184, 74, 0.13), rgba(224, 184, 74, 0.02) 58%),
     var(--primary);
-  border: 1px solid rgba(224, 184, 74, 0.22);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(224, 184, 74, 0.24);
+  box-shadow:
+    inset 0 0 0 1px rgba(224, 184, 74, 0.10),   /* filet or intérieur */
+    0 12px 32px rgba(0, 0, 0, 0.30);
 }
 
-/* Rayons « aurora » : disque SVG 590px aux paramètres géométriques
-   d'AXIA (-131px, -193px), opacité 0.55, teintes recalibrées sur
-   le vert de marque ARVX (SVG généré par JS) */
+/* Rayons « aurora » (v0.8) : disque SVG RECADRÉ signature ARVX
+   (-148px, -206px, 640px, opacité 0.5, pivot 6°) — la disposition
+   n'est plus celle de la référence ; teintes recalibrées sur le
+   vert de marque ARVX (SVG généré par JS) */
 .lib-rays {
   position: absolute;
-  left: -131px;
-  top: -193px;
-  width: 590px;
-  height: 590px;
-  opacity: 0.55;
+  left: -148px;
+  top: -206px;
+  width: 640px;
+  height: 640px;
+  opacity: 0.5;
+  transform: rotate(6deg);
   pointer-events: none;
 }
 
@@ -1057,19 +1160,23 @@ html[data-theme="light"] .quick-icon.neutral {
 }
 
 .lib-subject {
+  position: relative;      /* ancre du liseré signature (::before) */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   min-width: 0;
   padding: 12px;
-  border-radius: 18px;
-  /* Même matériau que les cartes accueil + filet or affirmé
-     (le rôle visuel des bordures ambre d'AXIA, teinte ARVX exacte) */
+  border-radius: 18px 18px 18px 6px;   /* radius « feuille » ARVX */
+  /* CARTES SIGNATURE ARVX (v0.8) — le même matériau que les cartes
+     de l'accueil : soleil haut-droit, éclat diagonal, liseré or. */
   background:
-    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0.01) 62%),
-    rgba(var(--rgb-soft), 0.02);
-  border: 1px solid rgba(184, 134, 11, 0.38);
-  box-shadow: rgba(184, 134, 11, 0.12) 0 6px 14px;
+    radial-gradient(circle at 100% 0%, transparent 0 46px, rgba(224, 184, 74, 0.13) 46px 48px, transparent 48px 72px, rgba(224, 184, 74, 0.07) 72px 74px, transparent 74px),
+    linear-gradient(150deg, rgba(224, 184, 74, 0.09), rgba(224, 184, 74, 0) 52%),
+    rgba(var(--rgb-soft), 0.03);
+  border: 1px solid rgba(184, 134, 11, 0.34);
+  box-shadow:
+    0 10px 22px -10px rgba(184, 134, 11, 0.30),
+    0 3px 8px rgba(0, 0, 0, 0.16);
   text-align: left;
   font: inherit;
   color: inherit;
@@ -1167,7 +1274,11 @@ html[data-theme="light"] .lib-search {
 }
 
 html[data-theme="light"] .lib-subject {
-  background: var(--bg-card-solid);
+  background:
+    radial-gradient(circle at 100% 0%, transparent 0 46px, rgba(184, 134, 11, 0.16) 46px 48px, transparent 48px 72px, rgba(184, 134, 11, 0.09) 72px 74px, transparent 74px),
+    linear-gradient(150deg, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0) 52%),
+    var(--bg-card-solid);
+  box-shadow: 0 10px 22px -12px rgba(74, 58, 24, 0.35), 0 2px 6px rgba(74, 58, 24, 0.08);
 }
 
 html[data-theme="light"] .lib-subject-badge {

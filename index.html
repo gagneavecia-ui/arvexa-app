@@ -108,7 +108,9 @@
 
     <!-- ===== BARRE DU HAUT — header d'accueil du site original :
          menu, salutation + nom, notifications, BASCULE DE THÈME
-         (clair / sombre en un clic, v0.5.1), rafraîchissement ===== -->
+         (clair / sombre en un clic, v0.5.1), RAFRAÎCHIR (v0.8 :
+         recharge la page — route restaurée depuis le hash, et le
+         geste « tirer pour rafraîchir » est rétabli) ===== -->
     <header class="header">
       <div class="header-left">
         <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false">
@@ -128,7 +130,7 @@
         <button id="themeBtn" aria-label="Passer en mode clair" title="Mode clair / mode sombre">
           <i class="fas fa-sun" id="themeIcon" aria-hidden="true"></i>
         </button>
-        <button id="refreshBtn" aria-label="Rafraîchir" title="Rafraîchir les données">
+        <button id="refreshBtn" aria-label="Rafraîchir la page" title="Rafraîchir la page">
           <i class="fas fa-sync-alt"></i>
         </button>
       </div>
@@ -142,12 +144,14 @@
          Le contenu de chaque vue arrive étape par étape.
          ══════════════════════════════════════════════════════ -->
     <section class="view" id="view-accueil" data-view="accueil">
-      <!-- ═══ BLOC 1 — CARTE PRINCIPALE (v0.6.1 · v0.7.2) ═══
+      <!-- ═══ BLOC 1 — CARTE PRINCIPALE (v0.6.1 · v0.7.2 · v0.8) ═══
            Héros compact = 1/4 du cadre entre la barre du haut et
-           la barre du bas. ARRIÈRE-PLAN EXACT de la carte héros de
-           RÉVISER (v0.7.2, demande explicite) : vert de marque
-           --primary + radial or + rayons « aurora » (#statsRays,
-           même générateur SVG que #libRays), filet or 0.22,
+           la barre du bas. Même arrière-plan que la carte héros de
+           RÉVISER — HÉROS SIGNATURE ARVX (v0.8, retouches
+           anti-copie demandées) : vert de marque --primary +
+           anneaux or haut-droit + éclat or bas-droit + filet or
+           intérieur + rayons « aurora » recadrés (#statsRays,
+           même générateur SVG que #libRays),
            textes crème, jauge or — la carte reste verte dans les
            deux thèmes, comme le héros. Polyvalent (toutes
            matières) : à gauche le nombre de cours de l'élève + les
@@ -181,7 +185,7 @@
         </div>
       </div>
 
-      <!-- ═══ BLOC 1bis — LES DEUX MODES (v0.6.2 · v0.6.4) ═══
+      <!-- ═══ BLOC 1bis — LES DEUX MODES (v0.6.2 · v0.6.4 · v0.8) ═══
            Position fidèle à l'app de référence (AXIA) : deux
            mini-cartes côte à côte JUSTE AU-DESSOUS de la carte
            statistiques — pas trop grandes mais bien espacées
@@ -253,9 +257,10 @@
       </div>
     </section>
     <section class="view view-reviser" id="view-reviser" data-view="reviser" hidden>
-      <!-- ═══ VUE RÉVISER (v0.7) — COPIE IDENTIQUE DE LA PAGE
-           « COURS » D'AXIA (axia-chi.vercel.app/cours) ═══
-           Structure copiée à l'identique (demande explicite), avec
+      <!-- ═══ VUE RÉVISER (v0.7 · v0.8) — STRUCTURE INSPIRÉE DE LA
+           PAGE « COURS » D'AXIA, SIGNATURE ARVX ═══
+           Structure reprise (demande explicite), matériaux
+           SIGNATURE ARVX depuis v0.8 (retouches anti-copie), avec
            couleurs mesurées au computed style sur AXIA :
            · eyebrow BIBLIOTHÈQUE (11px, 600, +1.32px d'interlettrage)
            · titre « Mes cours » 26px/800 + avatar + bouton Ajouter
@@ -263,15 +268,17 @@
            · barre de recherche h42 radius 14 — filtre réél et
              instantané (SPA, zéro rechargement)
            · carte héros « À rouvrir en premier » : vert de marque
-             ARVX --primary + radial or (matériau des cartes accueil)
-             + rayons « aurora » (SVG 47 segments, teintes recalibrées
-             vert émeraude / vert-or, opacité 0.55, géométrie AXIA),
+             ARVX --primary + HÉROS SIGNATURE v0.8 (anneaux or,
+             éclat bas-droit, filet intérieur) + rayons « aurora »
+             (SVG 47 segments, teintes recalibrées vert émeraude /
+             vert-or, recadrage signature -148/-206 pivot 6°),
              anneau de progression 66px en or, bouton or pill Réviser
              ce cours (dégradé signature accent → accent-bright,
              encre #141210, glow or)
            · « Mes matières » + compteur, cartes matière 2 colonnes
-             (radius 18, bordure or rgba(184,134,11,.38), pastille
-             34px dégradé or, badge, badge « À jour » vert --success)
+             (radius feuille 18/18/18/6, liseré or flottant, soleil
+             or haut-droit, pastille 34px dégradé or, badge,
+             badge « À jour » vert --success)
            · état vide « Aucun cours pour l'instant. »
            Les deux barres restent FIXÉES : la liste défile À
            L'INTÉRIEUR du cadre, exactement comme sur AXIA — le

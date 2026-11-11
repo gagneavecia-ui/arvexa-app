@@ -6,6 +6,15 @@
      · synchronisation entre onglets (événement storage)
      · API publique window.ARVEXA_THEME { get, set, toggle }
 
+   v0.8 :
+     · bouton RAFRAÎCHIR = vrai rechargement de la page (demande
+       explicite) — la route est restaurée au boot depuis le hash ;
+       le geste « tirer pour rafraîchir » du navigateur est rétabli
+       (overscroll-behavior retiré côté CSS ; le document ne
+       défile toujours pas).
+     · rayons « aurora » recadrés signature ARVX (-148/-206, 640,
+       pivot 6°) — empreinte géométrique distincte de la référence.
+
    v0.3 :
      · salutation dynamique — logique fidèle au site original :
        05h-12h Bonjour 🌅 · 12h-18h Bon après-midi ☀️ · sinon Bonsoir 🌙
@@ -542,14 +551,22 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') openMenu(false);
 });
 
-/* ── RAFRAÎCHIR (visuel — les données suivront avec le backend) ── */
+/* ── RAFRAÎCHIR (v0.8) — le bouton RAFRAÎCHIT VRAIMENT la page.
+   Demande explicite : « j'essaie de rafraîchir la page, ça refuse,
+   c'est bloqué ». Rétabli de deux façons :
+   · le geste navigateur « tirer pour rafraîchir » fonctionne à
+     nouveau (overscroll-behavior:none retiré — le document, lui,
+     ne défile toujours pas) ;
+   · ce bouton recharge la page : la route est restaurée au boot
+     depuis le hash (#/…), l'app se rouvre exactement où elle
+     était. Aucune navigation INTERNE ne recharge jamais (SPA). ── */
 
 const refreshBtn = document.getElementById('refreshBtn');
 
 refreshBtn?.addEventListener('click', () => {
   refreshBtn.classList.add('spinning');
-  updateStatsCard(true); /* recalcule les stats + nouvelle citation */
-  setTimeout(() => refreshBtn.classList.remove('spinning'), 800);
+  /* 280 ms : le temps de voir la rotation, puis rechargement réel */
+  setTimeout(() => window.location.reload(), 280);
 });
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -781,9 +798,11 @@ logoutBtn?.addEventListener('click', (e) => {
    sur demande explicite.
    ═══════════════════════════════════════════════════════════════════ */
 
-/* ── Rayons « aurora » — géométrie identique à AXIA : disque SVG
-   590px positionné (-131px, -193px), opacité 0.55, 47 segments en
-   deux rampes. Teintes RECALIBRÉES sur le vert de marque ARVX
+/* ── Rayons « aurora » — v0.8 : RECADRAGE SIGNATURE ARVX. Le disque
+   SVG est positionné par le CSS (-148px, -206px, 640px, opacité
+   0.5, pivot 6°) : la disposition n'est plus celle de la référence
+   (-131px, -193px, 590px, opacité 0.55). 47 segments en deux
+   rampes. Teintes RECALIBRÉES sur le vert de marque ARVX
    #1A3A2A : rampe 1 → vert émeraude bleuté, rampe 2 → vert-or
    sombre (l'équivalent des rampes ardoise d'AXIA, teintes ARVX).
    UN SEUL GÉNÉRATEUR peint les DEUX cartes depuis v0.7.2 : la
