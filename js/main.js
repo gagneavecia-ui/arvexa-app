@@ -416,6 +416,105 @@ const I18N = {
     'auth.force.moyen': 'Moyen',
     'auth.force.fort': 'Fort',
     'auth.force.tresFort': 'Très fort',
+    /* ── v0.13 : séance du jour ── */
+    'accueil.jour.eyebrow': 'Ta séance du jour',
+    'accueil.jour.mainDue': '{n} fiche à réviser',
+    'accueil.jour.mainDuePl': '{n} fiches à réviser',
+    'accueil.jour.mainNew': '{n} nouvelles fiches t’attendent',
+    'accueil.jour.mainNewPl': '{n} nouvelles fiches t’attendent',
+    'accueil.jour.mainOk': 'Tout est à jour — bien joué',
+    'accueil.jour.sub': '≈ {m} min · {s} matières',
+    'accueil.jour.subNew': '≈ {m} min · nouvelles fiches',
+    'accueil.jour.subVide': 'Le mode rapide prépare tes premières fiches.',
+    /* ── v0.13 : séance ── */
+    'seance.conf0': 'Je ne sais pas',
+    'seance.conf1': 'Je crois savoir',
+    'seance.conf2': 'Je sais',
+    'seance.reveler': 'Révéler',
+    'seance.j0': 'À revoir',
+    'seance.j1': 'Difficile',
+    'seance.j2': 'Bien',
+    'seance.j3': 'Facile',
+    'seance.hintConf': 'Choisis ton niveau de confiance.',
+    'seance.hintReveal': 'Réponds dans ta tête, puis révèle.',
+    'seance.hintJudge': 'Le vrai moment : comment tu l’as trouvé ?',
+    'seance.retour': 'Revient dans {i}',
+    'seance.ivlMin': '{n} min',
+    'seance.ivlJour': '{n} j',
+    'seance.quitTitle': 'Quitter la séance ?',
+    'seance.quitMsg': 'Ta progression est <strong>sauvegardée</strong> — les fiches restantes reviendront.',
+    'seance.quitOk': 'Quitter',
+    'seance.saved': 'Séance sauvegardée',
+    'seance.finTitre': 'Séance terminée',
+    'seance.finRev': 'fiches revues',
+    'seance.finOk': 'bien mémorisées',
+    'seance.finMin': 'minutes',
+    'seance.finRetour': 'Retour à l’accueil',
+    'seance.pauseTitre': 'Pause',
+    'seance.pauseSub': 'Les fiches sont verrouillées — elles reviennent à la fin de la pause.',
+    'seance.pausePasser': 'Passer la pause',
+    'seance.cycle': 'Cycle {n} / {t}',
+    /* ── v0.13 : mode rapide (page indépendante) ── */
+    'rapide.eyebrow': 'Mode rapide',
+    'rapide.titre': 'Révision éclair',
+    'rapide.dueModel': '{n} fiche à réviser',
+    'rapide.dueModelPl': '{n} fiches à réviser',
+    'rapide.dueNew': 'Prêtes dans toutes tes matières',
+    'rapide.tonContenu': 'Ton contenu',
+    'rapide.countModel': '{n} matières · {m} fiches',
+    'rapide.metaModel': '{n} chapitres · {m} fiches',
+    'rapide.go': 'GO — 5 minutes',
+    'rapide.prepare': 'Je prépare ta séance…',
+    'rapide.ready': 'C’est parti !',
+    /* ── v0.13 : mode focus (page indépendante) ── */
+    'focus.eyebrow': 'Mode focus',
+    'focus.titre': 'Concentration profonde',
+    'focus.tabTimer': 'Minuteur seul',
+    'focus.tabSession': 'Séance minutée',
+    'focus.clockSub': 'Minuteur de concentration',
+    'focus.lancer': 'Lancer le minuteur',
+    'focus.lancerSession': 'Lancer la séance minutée',
+    'focus.cycleTravail': 'Travail — fiches actives',
+    'focus.cyclePause': 'Pause — fiches verrouillées',
+    'focus.cycleNb': 'Cycles',
+    'focus.note': 'Les minutes de concentration rejoignent ton activité réelle.',
+    'focus.runSub': 'Concentration en cours — reste ici.',
+    'focus.stop': 'Arrêter',
+    'focus.finie': 'Minuteur terminé — {m} min ajoutées à ton activité.',
+    'focus.cyclesFin': 'Séance minutée terminée — {m} min de travail.',
+    /* ── v0.13 : page bienvenue (publique) ── */
+    'wel.entrer': 'Se connecter',
+    'wel.kicker': 'L’école, partout — même sans cours',
+    'wel.t1': 'Toutes les matières.',
+    'wel.t2': 'Un seul réflexe.',
+    'wel.sousTitre': 'Révise le vrai programme du BAC, fiche par fiche, à ton rythme — l’application connaît exactement ce que tu dois revoir aujourd’hui.',
+    'wel.cta': 'Commencer gratuitement',
+    'wel.statMatieres': 'matières',
+    'wel.statChapitres': 'chapitres',
+    'wel.statNotions': 'notions',
+    'wel.statFiches': 'fiches',
+    'wel.f1': 'Séance du jour',
+    'wel.f1sub': 'Les fiches exactes à revoir — calculées pour toi, chaque jour.',
+    'wel.f2': 'Mode focus',
+    'wel.f2sub': 'Des cycles travail / pause pour tenir sans te disperser.',
+    'wel.f3': 'Ta série',
+    'wel.f3sub': 'Chaque jour actif fait grandir ta série — la régularité paie.',
+    'wel.f4': 'Vrai programme',
+    'wel.f4sub': '87 chapitres · 1218 notions alignés sur l’épreuve du BAC.',
+    'wel.faqTitre': 'Questions fréquentes',
+    'wel.q1': 'Est-ce que c’est vraiment gratuit ?',
+    'wel.r1': 'Oui — créer un compte, réviser et suivre ta progression est gratuit. Aucune carte bancaire demandée.',
+    'wel.q2': 'Le programme correspond-il à mon BAC ?',
+    'wel.r2': 'Oui — 7 matières de terminale, du programme officiel, avec les définitions, les points clés et les pièges d’examen.',
+    'wel.q3': 'Combien de temps par jour ?',
+    'wel.r3': 'Une séance de 5 minutes suffit pour commencer. Le mode rapide est fait pour ça — GO, et tu révises.',
+    'wel.finalTitre': 'Prêt à commencer ?',
+    'wel.cta2': 'Créer mon compte',
+    'wel.droits': 'Tous droits réservés',
+    /* ── v0.13 : profil — inviter ── */
+    'profil.inviter': 'Inviter un camarade',
+    'profil.inviteOk': 'Lien d’invitation copié — envoie-le à un camarade !',
+    'profil.inviteShare': 'Révise le BAC avec moi sur ARVX :',
   },
   an: {
     'salut.matin': 'Good morning',
@@ -575,6 +674,105 @@ const I18N = {
     'auth.force.moyen': 'Medium',
     'auth.force.fort': 'Strong',
     'auth.force.tresFort': 'Very strong',
+    /* ── v0.13 : séance du jour ── */
+    'accueil.jour.eyebrow': 'Your session today',
+    'accueil.jour.mainDue': '{n} card to review',
+    'accueil.jour.mainDuePl': '{n} cards to review',
+    'accueil.jour.mainNew': '{n} new cards waiting',
+    'accueil.jour.mainNewPl': '{n} new cards waiting',
+    'accueil.jour.mainOk': 'All caught up — well done',
+    'accueil.jour.sub': '≈ {m} min · {s} subjects',
+    'accueil.jour.subNew': '≈ {m} min · new cards',
+    'accueil.jour.subVide': 'Quick mode will prepare your first cards.',
+    /* ── v0.13 : séance ── */
+    'seance.conf0': 'I don’t know',
+    'seance.conf1': 'I think I know',
+    'seance.conf2': 'I know',
+    'seance.reveler': 'Reveal',
+    'seance.j0': 'Again',
+    'seance.j1': 'Hard',
+    'seance.j2': 'Good',
+    'seance.j3': 'Easy',
+    'seance.hintConf': 'Pick your confidence level.',
+    'seance.hintReveal': 'Answer in your head, then reveal.',
+    'seance.hintJudge': 'The real moment: how did it feel?',
+    'seance.retour': 'Back in {i}',
+    'seance.ivlMin': '{n} min',
+    'seance.ivlJour': '{n} d',
+    'seance.quitTitle': 'Leave the session?',
+    'seance.quitMsg': 'Your progress is <strong>saved</strong> — remaining cards will come back.',
+    'seance.quitOk': 'Leave',
+    'seance.saved': 'Session saved',
+    'seance.finTitre': 'Session complete',
+    'seance.finRev': 'cards reviewed',
+    'seance.finOk': 'well memorized',
+    'seance.finMin': 'minutes',
+    'seance.finRetour': 'Back to home',
+    'seance.pauseTitre': 'Break',
+    'seance.pauseSub': 'Cards are locked — they return when the break ends.',
+    'seance.pausePasser': 'Skip break',
+    'seance.cycle': 'Cycle {n} / {t}',
+    /* ── v0.13 : mode rapide (page indépendante) ── */
+    'rapide.eyebrow': 'Quick mode',
+    'rapide.titre': 'Flash review',
+    'rapide.dueModel': '{n} card to review',
+    'rapide.dueModelPl': '{n} cards to review',
+    'rapide.dueNew': 'Ready across all your subjects',
+    'rapide.tonContenu': 'Your content',
+    'rapide.countModel': '{n} subjects · {m} cards',
+    'rapide.metaModel': '{n} chapters · {m} cards',
+    'rapide.go': 'GO — 5 minutes',
+    'rapide.prepare': 'I’m preparing your session…',
+    'rapide.ready': 'Let’s go!',
+    /* ── v0.13 : mode focus (page indépendante) ── */
+    'focus.eyebrow': 'Focus mode',
+    'focus.titre': 'Deep focus',
+    'focus.tabTimer': 'Timer only',
+    'focus.tabSession': 'Timed session',
+    'focus.clockSub': 'Focus timer',
+    'focus.lancer': 'Start the timer',
+    'focus.lancerSession': 'Start the timed session',
+    'focus.cycleTravail': 'Work — cards active',
+    'focus.cyclePause': 'Break — cards locked',
+    'focus.cycleNb': 'Cycles',
+    'focus.note': 'Focus minutes flow into your real activity.',
+    'focus.runSub': 'Focus in progress — stay here.',
+    'focus.stop': 'Stop',
+    'focus.finie': 'Timer done — {m} min added to your activity.',
+    'focus.cyclesFin': 'Timed session done — {m} min of work.',
+    /* ── v0.13 : page bienvenue (publique) ── */
+    'wel.entrer': 'Sign in',
+    'wel.kicker': 'School everywhere — even without a tutor',
+    'wel.t1': 'Every subject.',
+    'wel.t2': 'One single habit.',
+    'wel.sousTitre': 'Revise the real BAC syllabus, card by card, at your own pace — the app knows exactly what you should review today.',
+    'wel.cta': 'Start for free',
+    'wel.statMatieres': 'subjects',
+    'wel.statChapitres': 'chapters',
+    'wel.statNotions': 'topics',
+    'wel.statFiches': 'cards',
+    'wel.f1': 'Today’s session',
+    'wel.f1sub': 'The exact cards to review — computed for you, every day.',
+    'wel.f2': 'Focus mode',
+    'wel.f2sub': 'Work / break cycles that keep you going without drifting.',
+    'wel.f3': 'Your streak',
+    'wel.f3sub': 'Every active day grows your streak — consistency pays.',
+    'wel.f4': 'Real syllabus',
+    'wel.f4sub': '87 chapters · 1218 topics aligned with the BAC exam.',
+    'wel.faqTitre': 'Frequent questions',
+    'wel.q1': 'Is it really free?',
+    'wel.r1': 'Yes — creating an account, revising and tracking your progress is free. No card required.',
+    'wel.q2': 'Does the syllabus match my BAC?',
+    'wel.r2': 'Yes — 7 grade-12 subjects, from the official syllabus, with definitions, key points and exam traps.',
+    'wel.q3': 'How much time per day?',
+    'wel.r3': 'A 5-minute session is enough to start. Quick mode is made for that — GO, and you revise.',
+    'wel.finalTitre': 'Ready to start?',
+    'wel.cta2': 'Create my account',
+    'wel.droits': 'All rights reserved',
+    /* ── v0.13 : profil — inviter ── */
+    'profil.inviter': 'Invite a classmate',
+    'profil.inviteOk': 'Invite link copied — send it to a classmate!',
+    'profil.inviteShare': 'Revise the BAC with me on ARVX:',
   },
 };
 
@@ -614,10 +812,15 @@ function applyLang() {
   applyThemeButton();
   updateStatsCard();
   updateProgression();
-  updateContinue();
   updateLibrary();
   updateExamen();
   updateProfil();
+  /* v0.13 — nouvelles pages (fonctions déclarées plus bas, hoisting) */
+  updateJour();
+  updateRapide();
+  updateFocus();
+  updateBienvenue();
+  updateSeanceLabels();
 }
 
 function setLang(next) {
@@ -896,13 +1099,17 @@ refreshBtn?.addEventListener('click', () => {
    retour du navigateur fonctionnel), le titre de l'onglet aussi.
    ═══════════════════════════════════════════════════════════════════ */
 
-const VIEWS = ['accueil', 'reviser', 'examen', 'progression', 'profil', 'auth'];
+const VIEWS = ['accueil', 'reviser', 'examen', 'progression', 'profil', 'seance', 'rapide', 'focus', 'bienvenue', 'auth'];
 const TITLES = {
   accueil: { fr: 'ARVX', an: 'ARVX' },
   reviser: { fr: 'ARVX — Réviser', an: 'ARVX — Revise' },
   examen: { fr: 'ARVX — Examen', an: 'ARVX — Exam' },
   progression: { fr: 'ARVX — Progression', an: 'ARVX — Progress' },
   profil: { fr: 'ARVX — Profil', an: 'ARVX — Profile' },
+  seance: { fr: 'ARVX — Séance', an: 'ARVX — Session' },
+  rapide: { fr: 'ARVX — Mode rapide', an: 'ARVX — Quick mode' },
+  focus: { fr: 'ARVX — Mode focus', an: 'ARVX — Focus mode' },
+  bienvenue: { fr: 'ARVX — Bienvenue', an: 'ARVX — Welcome' },
   auth: { fr: 'ARVX — Connexion', an: 'ARVX — Sign in' },
 };
 
@@ -923,11 +1130,29 @@ let currentView = null;
 function showView(name, { animate = true } = {}) {
   if (!viewSections.has(name)) name = 'accueil';
   if (name === currentView) return;
+  const prev = currentView;
   currentView = name;
 
+  /* v0.13 — quitter la page focus pendant le minuteur : les minutes
+     réellement écoulées rejoignent l'activité (honnêteté : jamais de
+     minute "fantôme" qui continue hors écran). Sonde via window
+     (ARVXA_FOC) : FOC_TIMER peut être en TDZ au premier rendu. */
+  const ft = window.ARVXA_FOC;
+  if (prev === 'focus' && name !== 'focus' && ft && ft.running) {
+    const mins = Math.max(0, Math.round((Date.now() - ft.startedAt) / 60000));
+    stopFocusTimer(true);
+    if (mins > 0) {
+      addActivityMinutes(mins, 0, null);
+      arvxToast(t('focus.finie').replace('{m}', String(mins)));
+    }
+  }
+
   /* Mode auth (v0.10) : les deux barres s'effacent, la vue auth
-     occupe tout l'écran (CSS body.auth-mode). */
+     occupe tout l'écran (CSS body.auth-mode).
+     Mode bienvenue (v0.13) : la page publique occupe aussi tout
+     l'écran (CSS body.welcome-mode — même mécanique). */
   document.body.classList.toggle('auth-mode', name === 'auth');
+  document.body.classList.toggle('welcome-mode', name === 'bienvenue');
 
   /* Vues : une seule visible (attribut hidden = pas de coût de rendu) */
   for (const [n, el] of viewSections) {
@@ -959,14 +1184,21 @@ function showView(name, { animate = true } = {}) {
   /* Titre de l'onglet navigateur / app (selon la langue courante) */
   document.title = titleFor(name);
 
+  /* v0.13 — rafraîchir la vue entrante (données réelles, libellés) */
+  if (name === 'seance') { renderSeance(); window.ARVXA_BAKO?.set?.('sit', true); }
+  if (name === 'rapide') updateRapide();
+  if (name === 'focus') updateFocus();
+  if (name === 'bienvenue') updateBienvenue();
+  if (name === 'accueil') { updateJour(); }
+
   /* Chaque vue s'ouvre en haut, instantanément — y compris les
      vues qui défilent À L'INTÉRIEUR du cadre (Réviser, Examen,
-     Progression, Profil) : leur scroll local repart de zéro. */
+     Progression, Profil, Bienvenue) : leur scroll local repart de zéro. */
   window.scrollTo(0, 0);
   viewSections.forEach((el) => {
     if (!el) return;
     el.scrollTop = 0;
-    el.querySelectorAll('.exam-body, .prof-wrap, .prog-wrap, .lib-body').forEach((scroller) => {
+    el.querySelectorAll('.exam-body, .prof-wrap, .prog-wrap, .lib-body, .wel-scroll, .rap-list').forEach((scroller) => {
       scroller.scrollTop = 0;
     });
   });
@@ -990,13 +1222,11 @@ for (const [name, btn] of navButtons) {
   });
 }
 
-/* ── NAVIGATION SPA DEPUIS L'ACCUEIL (v0.6.4 · v0.9.1) ──
-   Mini-cartes de mode et carte « Continuer » : un seul chemin — le
-   hash, la même source de vérité que la barre du bas. Aucune
-   navigation document, aucune barre de chargement. (v0.9.1 : les
-   tuiles « Actions rapides » sont supprimées — la barre du bas
-   couvre toutes les routes.) Les écrans DÉTAILLÉS (lecteur de
-   révision, import de cours) viendront à leur étape. */
+/* ── NAVIGATION SPA DEPUIS L'ACCUEIL (v0.13 · corrigée) ──
+   Mode rapide → #/rapide (PAGE INDÉPENDANTE — plus de pont
+   vers Réviser) · Mode focus → #/focus (page dédiée — plus de
+   pont vers Examen) · Carte séance du jour → #/seance. Un seul
+   chemin : le hash, la même source de vérité que la barre du bas. */
 function goRoute(route) {
   if (!VIEWS.includes(route)) return;
   const target = '#/' + route;
@@ -1004,9 +1234,9 @@ function goRoute(route) {
   else location.hash = target;
 }
 
-document.getElementById('modeQuick')?.addEventListener('click', () => goRoute('reviser'));
-document.getElementById('modeFocus')?.addEventListener('click', () => goRoute('examen'));
-document.getElementById('continueCard')?.addEventListener('click', () => goRoute('reviser'));
+document.getElementById('modeQuick')?.addEventListener('click', () => goRoute('rapide'));
+document.getElementById('modeFocus')?.addEventListener('click', () => goRoute('focus'));
+document.getElementById('jourCard')?.addEventListener('click', () => goRoute('seance'));
 
 /* Retour/avant du navigateur, lien #/... : une seule source de vérité */
 window.addEventListener('hashchange', () => showView(parseHash()));
@@ -1024,12 +1254,13 @@ document.querySelectorAll('.sidebar .nav-item').forEach((el) => {
 });
 
 /* Amorçage : vue demandée dans l'URL, sinon Accueil.
-   Hash inconnu au démarrage → réécrit proprement sans polluer l'historique. */
+   Hash inconnu au démarrage → réécrit proprement sans polluer l'historique.
+   (v0.13 : l'appel showView() initial est DÉPLACÉ en fin de module —
+   les données v0.13 doivent être déclarées avant le premier rendu.) */
 if (location.hash) {
   const h = location.hash.replace(/^#\/?/, '').split('?')[0];
   if (!VIEWS.includes(h)) location.replace('#/accueil');
 }
-showView(parseHash(), { animate: false });
 
 /* ═══════════════════════════════════════════════════════════════════
    MODALE DE CONFIRMATION — copie fidèle du site original
@@ -1227,10 +1458,10 @@ window.addEventListener('arvexa-profile', () => {
   applyProfileCard();
   updateStatsCard();
   updateProgression();
-  updateContinue();
   updateLibrary();
   updateExamen();
   updateProfil();
+  updateJour();
 });
 
 /* Le profil (Réglages → thème) reflète la bascule, où qu'elle vienne. */
@@ -1248,10 +1479,12 @@ window.ARVXA_hideVeil = hideBootVeil;
 setTimeout(() => {
   if (!window.ARVXA_AUTH_READY) {
     /* Firebase injoignable : on dévoile la page auth (les boutons
-       réessaieront la connexion dès le retour du réseau). */
-    if (currentView !== 'auth') {
-      if (VIEWS.includes(parseHash()) && parseHash() !== 'auth') {
-        try { sessionStorage.setItem('arvx_pending_route', parseHash()); } catch { /* stockage indisponible */ }
+       réessaieront la connexion dès le retour du réseau).
+       Exception : la page BIENVENUE est publique — on n'y touche pas. */
+    const here = parseHash();
+    if (currentView !== 'auth' && here !== 'bienvenue') {
+      if (VIEWS.includes(here) && here !== 'auth') {
+        try { sessionStorage.setItem('arvx_pending_route', here); } catch { /* stockage indisponible */ }
       }
       if (location.hash === '#/auth') showView('auth', { animate: false });
       else location.replace('#/auth');
@@ -1704,5 +1937,734 @@ if (prevLogout && !prevLogout.dataset.arvxLogoutBound) {
   });
 }
 
-/* ── AMORÇAGE v0.12 — premier rendu complet, données initialisées ── */
+/* ═══════════════════════════════════════════════════════════════════
+   V0.13 — MOTEUR DE FLASHCARDS + MODE RAPIDE + MODE FOCUS + BIENVENUE
+   · CARDS RÉELLES : data/cards.json (1 884 fiches tirées des 1 218
+     notions du dépôt ARVEXA School — aucune invention).
+   · SRS LOCAL : localStorage 'arvexa-srs' { id: { due, ivl, ease,
+     reps, lapses, last } } — jugement À revoir / Difficile / Bien /
+     Facile → intervalle recalculé et annoncé.
+   · SÉANCE #/seance : confiance → révéler → juger ; les minutes et
+     révisions réelles écrivent 'arvexa-activity'.
+   · MODE RAPIDE #/rapide : page indépendante — GO → préparation →
+     séance mixte 5 minutes.
+   · MODE FOCUS #/focus : page indépendante — minuteur seul ou séance
+     minutée (cycles travail/pause, fiches VERROUILLÉES pendant la
+     pause).
+   · BIENVENUE #/bienvenue : page publique (chiffres réels).
+   ═══════════════════════════════════════════════════════════════════ */
+
+const SRS_KEY = 'arvexa-srs';
+const CARD_MIN_SECONDS = 22; /* estimation : ≈ 22 s par fiche */
+
+/* ── Écriture de l'activité réelle (minutes + révisions) ── */
+function saveActivity(mut) {
+  const a = getActivity();
+  mut(a);
+  try { localStorage.setItem(ACTIVITY_KEY, JSON.stringify(a)); } catch { /* stockage indisponible */ }
+}
+
+function addActivityMinutes(min, revisions, lastTitle) {
+  const m = Math.max(0, Math.round(min));
+  if (m <= 0 && !revisions) return;
+  saveActivity((a) => {
+    const k = dayKey(new Date());
+    const e = a.days[k] || { minutes: 0, revisions: 0 };
+    e.minutes += m;
+    if (revisions) e.revisions = (e.revisions || 0) + revisions;
+    a.days[k] = e;
+    if (lastTitle) a.last = { title: lastTitle, at: Date.now() };
+  });
+}
+
+/* ── Chargement des fiches réelles (un seul fetch, en cache) ── */
+let CARDS = null;
+let CARDS_LOADING = null;
+
+function loadCards() {
+  if (CARDS) return Promise.resolve(CARDS);
+  if (!CARDS_LOADING) {
+    CARDS_LOADING = fetch('data/cards.json')
+      .then((r) => r.json())
+      .then((j) => { CARDS = j.cards || []; return CARDS; })
+      .catch(() => { CARDS = []; return CARDS; });
+  }
+  return CARDS_LOADING;
+}
+
+/* ── SRS local — lecture / écriture / jugement ── */
+function getSRS() {
+  try {
+    const s = JSON.parse(localStorage.getItem(SRS_KEY) || 'null');
+    return (s && typeof s === 'object') ? s : {};
+  } catch { return {}; }
+}
+
+function setSRS(srs) {
+  try { localStorage.setItem(SRS_KEY, JSON.stringify(srs)); } catch { /* stockage indisponible */ }
+}
+
+/* Intervalle suivant le jugement (moteur local type FSRS/SM-2 :
+   ease ajusté, ivl multiplié, repli honnête pour les ratés). */
+function srsJudge(prev, judge) {
+  const st = prev ? { ...prev } : { ivl: 0, ease: 2.5, reps: 0, lapses: 0, due: 0, last: 0 };
+  const now = Date.now();
+  if (judge === 0) {           /* À revoir */
+    st.ease = Math.max(1.3, st.ease - 0.2);
+    st.lapses = (st.lapses || 0) + 1;
+    st.ivl = st.reps === 0 ? 0.007 : Math.max(0.007, st.ivl * 0.25);
+  } else if (judge === 1) {    /* Difficile */
+    st.ease = Math.max(1.3, st.ease - 0.05);
+    st.ivl = Math.max(0.3, st.ivl * 1.2);
+  } else if (judge === 2) {    /* Bien */
+    st.ivl = st.reps === 0 ? 1 : st.ivl * st.ease;
+  } else {                     /* Facile */
+    st.ease = Math.min(3.2, st.ease + 0.15);
+    st.ivl = st.reps === 0 ? 3 : st.ivl * st.ease * 1.3;
+  }
+  if (judge > 0) st.reps = (st.reps || 0) + 1;
+  st.ivl = Math.min(st.ivl, 365);
+  st.last = now;
+  st.due = now + st.ivl * 86400000;
+  return st;
+}
+
+function fmtIvl(ivlDays) {
+  if (ivlDays < 1) {
+    const mins = Math.max(10, Math.round((ivlDays * 1440) / 10) * 10);
+    return t('seance.ivlMin').replace('{n}', String(mins));
+  }
+  return t('seance.ivlJour').replace('{n}', String(Math.round(ivlDays)));
+}
+
+/* ── Construction de files de cartes ──
+   Répartition ronde par matière : la séance mixte balaye TOUTES les
+   matières au lieu d'empiler une seule matière. */
+function roundRobinBySubject(pool, limit) {
+  const groups = new Map();
+  pool.forEach((c) => {
+    if (!groups.has(c.s)) groups.set(c.s, []);
+    groups.get(c.s).push(c);
+  });
+  const order = [...groups.keys()];
+  const out = [];
+  let i = 0;
+  while (out.length < limit && order.length) {
+    const sid = order[i % order.length];
+    const g = groups.get(sid);
+    if (g && g.length) out.push(g.shift());
+    else { order.splice(i % order.length, 1); if (!order.length) break; continue; }
+    i++;
+  }
+  return out;
+}
+
+function buildDailyQueue(cards, srs, limit = 20) {
+  const now = Date.now();
+  const due = cards
+    .filter((c) => srs[c.i] && srs[c.i].due <= now)
+    .sort((a, b) => srs[a.i].due - srs[b.i].due);
+  const news = cards.filter((c) => !srs[c.i]);
+  const out = due.slice(0, limit);
+  if (out.length < limit) {
+    roundRobinBySubject(news, limit - out.length).forEach((c) => out.push(c));
+  }
+  return out;
+}
+
+function buildRapideQueue(cards, srs, limit = 12) {
+  const now = Date.now();
+  const due = cards
+    .filter((c) => srs[c.i] && srs[c.i].due <= now)
+    .sort((a, b) => srs[a.i].due - srs[b.i].due);
+  const news = cards.filter((c) => !srs[c.i]);
+  const out = due.slice(0, Math.ceil(limit / 2));
+  roundRobinBySubject(news, limit - out.length).forEach((c) => out.push(c));
+  return out;
+}
+
+function questionOf(card) {
+  /* La fiche terme devient une vraie question ; la fiche notion
+     garde son intitulé de notion comme question. */
+  return stripMath(card.t === 'd'
+    ? 'Que veut dire « ' + card.q + ' » ?'
+    : card.q);
+}
+
+/* Les données maths/physique contiennent des délimiteurs LaTeX
+   ($...$) — à l'écran on garde les symboles, pas les dollars. */
+function stripMath(s) {
+  return String(s).replace(/\$/g, '');
+}
+
+/* Statistiques « séance du jour » — calculées une fois par chargement
+   de CARDS (et recalcule après chaque jugement via computeJour). */
+const JOUR = { due: 0, subs: 0, estMin: 0, fresh: 0, total: 0, ready: false, mode: 'due' };
+
+function computeJour() {
+  if (!CARDS || !CARDS.length) return;
+  const srs = getSRS();
+  const now = Date.now();
+  const due = CARDS.filter((c) => srs[c.i] && srs[c.i].due <= now);
+  const fresh = CARDS.filter((c) => !srs[c.i]);
+  JOUR.total = CARDS.length;
+  JOUR.due = due.length;
+  JOUR.fresh = fresh.length;
+  if (due.length > 0) {
+    JOUR.subs = new Set(due.map((c) => c.s)).size;
+    JOUR.estMin = Math.max(1, Math.round((due.length * CARD_MIN_SECONDS) / 60));
+    JOUR.mode = 'due';
+  } else if (fresh.length > 0) {
+    JOUR.subs = new Set(fresh.slice(0, 10).map((c) => c.s)).size;
+    JOUR.estMin = Math.max(1, Math.round((Math.min(10, fresh.length) * CARD_MIN_SECONDS) / 60));
+    JOUR.mode = 'new';
+  } else {
+    JOUR.subs = 0;
+    JOUR.estMin = 0;
+    JOUR.mode = 'ok';
+  }
+  JOUR.ready = true;
+}
+
+/* ── ACCUEIL — carte « TA SÉANCE DU JOUR » (v0.13) ── */
+function updateJour() {
+  const main = document.getElementById('jourMain');
+  const sub = document.getElementById('jourSub');
+  if (!main || !sub) return;
+  if (!JOUR.ready) {
+    main.textContent = '…';
+    sub.textContent = '—';
+    return;
+  }
+  if (JOUR.mode === 'due') {
+    main.textContent = (JOUR.due === 1
+      ? t('accueil.jour.mainDue')
+      : t('accueil.jour.mainDuePl')).replace('{n}', String(JOUR.due));
+    sub.textContent = t('accueil.jour.sub')
+      .replace('{m}', String(JOUR.estMin))
+      .replace('{s}', String(JOUR.subs));
+  } else if (JOUR.mode === 'new') {
+    const n = Math.min(10, JOUR.fresh);
+    main.textContent = (n === 1
+      ? t('accueil.jour.mainNew')
+      : t('accueil.jour.mainNewPl')).replace('{n}', String(n));
+    sub.textContent = t('accueil.jour.subNew').replace('{m}', String(JOUR.estMin));
+  } else {
+    main.textContent = t('accueil.jour.mainOk');
+    sub.textContent = t('accueil.jour.subVide');
+  }
+}
+
+/* ── MODE RAPIDE — page indépendante ── */
+function updateRapide() {
+  const heroNum = document.getElementById('rapDue');
+  const heroSub = document.getElementById('rapDueSub');
+  const count = document.getElementById('rapCount');
+  const list = document.getElementById('rapList');
+  if (!heroNum || !list) return;
+
+  if (!JOUR.ready) {
+    heroNum.textContent = '—';
+    if (heroSub) heroSub.textContent = '…';
+    if (count) count.textContent = '—';
+    list.innerHTML = '';
+    return;
+  }
+
+  const srs = getSRS();
+  const perSubject = SUBJECTS.map((s2) => {
+    const subCards = CARDS.filter((c) => c.s === s2.id);
+    const dueN = subCards.filter((c) => srs[c.i] && srs[c.i].due <= Date.now()).length;
+    return { s: s2, cards: subCards.length, due: dueN };
+  });
+  const dueTotal = perSubject.reduce((a, p) => a + p.due, 0);
+
+  heroNum.textContent = String(dueTotal);
+  if (heroSub) {
+    heroSub.textContent = dueTotal > 0
+      ? (dueTotal === 1 ? t('rapide.dueModel') : t('rapide.dueModelPl')).replace('{n}', String(dueTotal))
+      : t('rapide.dueNew');
+  }
+  if (count) {
+    count.textContent = t('rapide.countModel')
+      .replace('{n}', String(SUBJECTS.length))
+      .replace('{m}', String(CARDS.length));
+  }
+
+  list.innerHTML = perSubject.map((p) =>
+    '<div class="rap-item">' +
+      '<span class="rap-item-icon" aria-hidden="true"><i class="fas ' + p.s.icon + '"></i></span>' +
+      '<span class="rap-item-body">' +
+        '<span class="rap-item-name">' + (lang === 'an' ? p.s.an : p.s.fr) + '</span>' +
+        '<span class="rap-item-meta">' + t('rapide.metaModel')
+          .replace('{n}', String(p.s.chapters)).replace('{m}', String(p.cards)) + '</span>' +
+      '</span>' +
+      (p.due > 0 ? '<span class="rap-item-due">' + p.due + '</span>' : '') +
+    '</div>'
+  ).join('');
+}
+
+/* GO du mode rapide : Bako réfléchit, la file se bâtie, puis #/seance */
+let rapidePreparing = false;
+document.getElementById('rapGo')?.addEventListener('click', async () => {
+  if (rapidePreparing) return;
+  const btn = document.getElementById('rapGo');
+  if (!CARDS || !CARDS.length) await loadCards();
+  if (!CARDS.length) { arvxToast(t('seance.saved')); return; }
+  rapidePreparing = true;
+  btn?.classList.add('loading');
+  window.ARVXA_BAKO?.say?.(t('rapide.prepare'), { ttl: 5000 });
+  window.ARVXA_BAKO?.set?.('think');
+  const queue = buildRapideQueue(CARDS, getSRS(), 12);
+  setTimeout(() => {
+    btn?.classList.remove('loading');
+    rapidePreparing = false;
+    if (!queue.length) { arvxToast(t('rapide.dueNew')); return; }
+    startSeance(queue, { mode: 'rapide' });
+    window.ARVXA_BAKO?.set?.('talk');
+    window.ARVXA_BAKO?.say?.(t('rapide.ready'), { ttl: 2200 });
+    goRoute('seance');
+  }, 1500);
+});
+
+/* ── SÉANCE — lecteur de flashcards ── */
+const SEANCE = {
+  queue: [], idx: 0, phase: 'idle', selConf: null,
+  mode: 'jour',       /* 'jour' | 'rapide' | 'focus' */
+  focus: null,        /* { work, brk, cycles, cycle, phase, phaseEnd, workMs } */
+  startAt: 0, rev: 0, ok: 0, finished: false,
+};
+
+function startSeance(queue, { mode = 'jour', focus = null } = {}) {
+  SEANCE.queue = queue;
+  SEANCE.idx = 0;
+  SEANCE.mode = mode;
+  SEANCE.focus = focus;
+  SEANCE.startAt = Date.now();
+  SEANCE.rev = 0;
+  SEANCE.ok = 0;
+  SEANCE.finished = false;
+  if (focus) {
+    focus.cycle = 1;
+    focus.phase = 'work';
+    focus.workMs = 0;
+    focus.phaseEnd = Date.now() + focus.work * 60000;
+  }
+  renderSeance();
+}
+
+function renderSeance() {
+  const view = document.getElementById('view-seance');
+  if (!view) return;
+  const doneEl = document.getElementById('scDone');
+  const breakEl = document.getElementById('scBreak');
+  if (!CARDS) {
+    /* Première ouverture : charger les fiches puis redessiner */
+    loadCards().then(() => {
+      computeJour();
+      if (currentView === 'seance') renderSeance();
+    });
+    return;
+  }
+  if (!SEANCE.queue.length && !SEANCE.finished) {
+    /* Route directe (#/seance) : file du jour par défaut */
+    const q = buildDailyQueue(CARDS, getSRS(), 20);
+    if (!q.length) { renderSeanceEmpty(); return; }
+    startSeance(q, { mode: 'jour' });
+    return;
+  }
+  if (SEANCE.finished) {
+    /* Re-entrée après une fin de séance : on repart proprement */
+    SEANCE.finished = false;
+    SEANCE.focus = null;
+    SEANCE.phase = 'confidence';
+    SEANCE.selConf = null;
+    document.getElementById('scDone').hidden = true;
+    const q = buildDailyQueue(CARDS, getSRS(), 20);
+    if (!q.length) { renderSeanceEmpty(); return; }
+    startSeance(q, { mode: 'jour' });
+    return;
+  }
+
+  if (doneEl) doneEl.hidden = true;
+  if (breakEl && !(SEANCE.focus && SEANCE.focus.phase === 'break')) breakEl.hidden = true;
+
+  const card = SEANCE.queue[SEANCE.idx];
+  if (!card) { finishSeance(); return; }
+
+  const sObj = SUBJECTS.find((s2) => s2.id === card.s);
+  document.getElementById('scSubject').textContent = sObj ? (lang === 'an' ? sObj.an : sObj.fr) : card.s;
+  document.getElementById('scChapter').textContent = 'Ch. ' + card.c + (card.ct ? ' · ' + card.ct : '');
+  document.getElementById('scQ').textContent = questionOf(card);
+
+  const aEl = document.getElementById('scA');
+  const confRow = document.getElementById('scConfidence');
+  const judgeRow = document.getElementById('scJudgment');
+  const hint = document.getElementById('scHint');
+
+  if (SEANCE.phase === 'judged') {
+    aEl.textContent = stripMath(card.a);
+    aEl.hidden = false;
+    confRow.hidden = true;
+    judgeRow.hidden = false;
+    hint.textContent = t('seance.hintJudge');
+  } else {
+    SEANCE.phase = 'confidence';
+    aEl.hidden = true;
+    confRow.hidden = false;
+    judgeRow.hidden = true;
+    hint.textContent = t('seance.hintReveal');
+    /* Confiance déjà choisie ? reflet visuel */
+    confRow.querySelectorAll('.sc-btn[data-conf]').forEach((b) => {
+      b.classList.toggle('sel', String(SEANCE.selConf) === b.dataset.conf);
+    });
+  }
+
+  /* Progression + compte (avec cycle focus si séance minutée) */
+  const fill = document.getElementById('scProgressFill');
+  if (fill) fill.style.width = (SEANCE.idx / SEANCE.queue.length) * 100 + '%';
+  const cnt = document.getElementById('scCount');
+  if (cnt) {
+    const base = (SEANCE.idx + 1) + ' / ' + SEANCE.queue.length;
+    cnt.textContent = SEANCE.focus
+      ? base + ' · C' + SEANCE.focus.cycle + '/' + SEANCE.focus.cycles
+      : base;
+  }
+  updateSeanceLabels();
+}
+
+function renderSeanceEmpty() {
+  document.getElementById('scSubject').textContent = '—';
+  document.getElementById('scChapter').textContent = '—';
+  document.getElementById('scQ').textContent = t('accueil.jour.subVide');
+  document.getElementById('scA').hidden = true;
+  document.getElementById('scConfidence').hidden = true;
+  document.getElementById('scJudgment').hidden = true;
+  document.getElementById('scHint').textContent = t('rapide.dueNew');
+  const cnt = document.getElementById('scCount');
+  if (cnt) cnt.textContent = '0 / 0';
+  const fill = document.getElementById('scProgressFill');
+  if (fill) fill.style.width = '0%';
+}
+
+function updateSeanceLabels() {
+  const hint = document.getElementById('scHint');
+  if (!hint) return;
+  if (SEANCE.phase === 'judged') hint.textContent = t('seance.hintJudge');
+  else hint.textContent = t('seance.hintReveal');
+}
+
+/* Confiance : clic sur Je ne sais pas / Je crois savoir / Je sais */
+document.querySelectorAll('#scConfidence .sc-btn[data-conf]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    SEANCE.selConf = Number(btn.dataset.conf);
+    document.querySelectorAll('#scConfidence .sc-btn[data-conf]').forEach((b) => {
+      b.classList.toggle('sel', b === btn);
+    });
+  });
+});
+
+/* Révéler : affiche la réponse et le jugement */
+document.getElementById('scReveal')?.addEventListener('click', () => {
+  if (!SEANCE.queue.length || SEANCE.finished) return;
+  SEANCE.phase = 'judged';
+  renderSeance();
+});
+
+/* Jugement : SRS réel + annonce de l'intervalle + fiche suivante */
+document.querySelectorAll('#scJudgment .sc-btn[data-judge]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    if (!SEANCE.queue.length || SEANCE.finished) return;
+    const card = SEANCE.queue[SEANCE.idx];
+    const judge = Number(btn.dataset.judge);
+    const srs = getSRS();
+    const st = srsJudge(srs[card.i], judge);
+    srs[card.i] = st;
+    setSRS(srs);
+    SEANCE.rev++;
+    if (judge >= 2) SEANCE.ok++;
+    arvxToast(t('seance.retour').replace('{i}', fmtIvl(st.ivl)), 'success', 1800);
+    window.ARVXA_BAKO?.say?.(
+      judge >= 2 ? (lang === 'an' ? 'Good! Keep going.' : 'Bien joué — on continue !') : (lang === 'an' ? 'No worries, we’ll come back to it.' : 'Pas grave — on y reviendra.'),
+      { ttl: 2400, anim: judge >= 2 ? 'talk' : 'wave' }
+    );
+    SEANCE.idx++;
+    SEANCE.phase = 'confidence';
+    SEANCE.selConf = null;
+    if (SEANCE.idx >= SEANCE.queue.length) finishSeance();
+    else renderSeance();
+  });
+});
+
+/* Quitter : minutes réelles déjà écrites, confirmation douce */
+function bankSeanceMinutes() {
+  const now = Date.now();
+  const elapsed = now - SEANCE.startAt;
+  let minutes;
+  if (SEANCE.focus) {
+    minutes = Math.round(SEANCE.focus.workMs / 60000);
+  } else {
+    minutes = Math.round(elapsed / 60000);
+  }
+  const card = SEANCE.queue[Math.max(0, SEANCE.idx - 1)];
+  const sObj = card ? SUBJECTS.find((s2) => s2.id === card.s) : null;
+  const title = sObj ? (lang === 'an' ? sObj.an : sObj.fr) : null;
+  if (minutes > 0 || SEANCE.rev > 0) addActivityMinutes(minutes, SEANCE.rev, title);
+  return minutes;
+}
+
+document.getElementById('scQuit')?.addEventListener('click', () => {
+  if (!SEANCE.queue.length || SEANCE.finished) { goRoute('accueil'); return; }
+  window.arvexaConfirm({
+    title: t('seance.quitTitle'),
+    message: t('seance.quitMsg'),
+    icon: '⏸️',
+    confirmText: t('seance.quitOk'),
+    cancelText: t('confirm.cancel'),
+    variant: 'primary',
+    onConfirm: () => {
+      bankSeanceMinutes();
+      const rev = SEANCE.rev;
+      SEANCE.queue = [];
+      SEANCE.finished = true;
+      window.ARVXA_BAKO?.set?.('wave');
+      if (rev > 0) arvxToast(t('seance.saved'));
+      goRoute('accueil');
+      updateJour();
+    },
+  });
+});
+
+/* Fin de séance : résumé réel + célébration Bako */
+function finishSeance() {
+  SEANCE.finished = true;
+  const minutes = bankSeanceMinutes();
+  const doneEl = document.getElementById('scDone');
+  if (doneEl) {
+    document.getElementById('scDoneRev').textContent = String(SEANCE.rev);
+    document.getElementById('scDoneOk').textContent = String(SEANCE.ok);
+    document.getElementById('scDoneMin').textContent = String(minutes);
+    doneEl.hidden = false;
+  }
+  /* D'abord la parole, PUIS la célébration — c'est la classe finale
+     qui reste (le set() fixe aussi l'anim de base restaurée ensuite). */
+  window.ARVXA_BAKO?.say?.(
+    lang === 'an' ? 'Session complete — proud of you!' : 'Séance terminée — fierté de toi !',
+    { ttl: 3200 }
+  );
+  window.ARVXA_BAKO?.set?.('cheer');
+  SEANCE.queue = [];
+  SEANCE.idx = 0;
+  computeJour();
+  updateJour();
+}
+
+document.getElementById('scDoneHome')?.addEventListener('click', () => {
+  document.getElementById('scDone').hidden = true;
+  goRoute('accueil');
+});
+
+/* ── FOCUS : cycles travail/pause À L'INTÉRIEUR de la séance ── */
+
+/* Séance minutée : GO depuis la page focus */
+document.getElementById('focGoSession')?.addEventListener('click', async () => {
+  if (!CARDS) await loadCards();
+  if (!CARDS.length) return;
+  const work = Number(document.getElementById('focWorkMin').textContent) || 25;
+  const brk = Number(document.getElementById('focBreakMin').textContent) || 5;
+  const queue = buildDailyQueue(CARDS, getSRS(), 30);
+  if (!queue.length) { arvxToast(t('rapide.dueNew')); return; }
+  startSeance(queue, { mode: 'focus', focus: { work, brk, cycles: 4, cycle: 1, phase: 'work', phaseEnd: Date.now() + work * 60000, workMs: 0 } });
+  goRoute('seance');
+});
+
+/* Minuteur seul : presets + GO */
+let FOC_TIMER = { min: 25, endAt: 0, running: false, startedAt: 0 };
+
+document.querySelectorAll('#focPresets .foc-preset').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#focPresets .foc-preset').forEach((b) => b.classList.toggle('active', b === btn));
+    FOC_TIMER.min = Number(btn.dataset.min) || 25;
+    FOC_TIMER.running = false;
+    const clock = document.getElementById('focClock');
+    if (clock) clock.textContent = String(FOC_TIMER.min).padStart(2, '0') + ':00';
+  });
+});
+
+document.querySelectorAll('#focCyclePresets .foc-preset').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#focCyclePresets .foc-preset').forEach((b) => b.classList.toggle('active', b === btn));
+    const w = document.getElementById('focWorkMin');
+    const br = document.getElementById('focBreakMin');
+    if (w) w.textContent = btn.dataset.work || '25';
+    if (br) br.textContent = btn.dataset.break || '5';
+  });
+});
+
+/* Onglets du mode focus (minuteur seul ↔ séance minutée) */
+function switchFocusPanel(which) {
+  const isTimer = which === 'timer';
+  document.getElementById('focTabTimer')?.classList.toggle('active', isTimer);
+  document.getElementById('focTabSession')?.classList.toggle('active', !isTimer);
+  document.getElementById('focTabTimer')?.setAttribute('aria-selected', isTimer ? 'true' : 'false');
+  document.getElementById('focTabSession')?.setAttribute('aria-selected', !isTimer ? 'true' : 'false');
+  const pt = document.getElementById('focPanelTimer');
+  const ps = document.getElementById('focPanelSession');
+  if (pt) pt.hidden = !isTimer;
+  if (ps) ps.hidden = isTimer;
+}
+document.getElementById('focTabTimer')?.addEventListener('click', () => switchFocusPanel('timer'));
+document.getElementById('focTabSession')?.addEventListener('click', () => switchFocusPanel('session'));
+
+function startFocusTimer() {
+  FOC_TIMER.running = true;
+  FOC_TIMER.startedAt = Date.now();
+  FOC_TIMER.endAt = Date.now() + FOC_TIMER.min * 60000;
+  document.getElementById('view-focus')?.classList.add('running');
+  /* Premier affichage immédiat (l'horloge 1 s prend le relais) */
+  const mm = Math.floor(FOC_TIMER.min);
+  const clock = document.getElementById('focRunClock');
+  if (clock) clock.textContent = String(mm).padStart(2, '0') + ':00';
+  window.ARVXA_BAKO?.set?.('sit');
+  window.ARVXA_BAKO?.say?.(lang === 'an' ? 'Deep focus — I’ll keep the time.' : 'Concentration — je garde le temps.', { ttl: 3000 });
+}
+
+function stopFocusTimer(banked) {
+  FOC_TIMER.running = false;
+  document.getElementById('view-focus')?.classList.remove('running');
+  if (!banked) {
+    const mins = Math.round((Date.now() - FOC_TIMER.startedAt) / 60000);
+    if (mins > 0) addActivityMinutes(mins, 0, null);
+  }
+}
+
+document.getElementById('focGoTimer')?.addEventListener('click', startFocusTimer);
+document.getElementById('focRunStop')?.addEventListener('click', () => {
+  const mins = Math.max(0, Math.round((Date.now() - FOC_TIMER.startedAt) / 60000));
+  stopFocusTimer(false);
+  if (mins > 0) arvxToast(t('focus.finie').replace('{m}', String(mins)));
+});
+/* Pont anti-TDZ : showView (défini plus haut) sonde le minuteur via
+   window — jamais directement (le let serait encore en zone morte au
+   premier rendu). */
+window.ARVXA_FOC = FOC_TIMER;
+/* Pont de débogage/tests : l'état séance est observable (les fonctions
+   du moteur restent en portée module — on n'expose que l'état). */
+window.ARVXA_SEANCE = SEANCE;
+
+function updateFocus() {
+  /* Horloge idle + libellés du panneau actif */
+  if (!FOC_TIMER.running) {
+    const clock = document.getElementById('focClock');
+    if (clock) clock.textContent = String(FOC_TIMER.min).padStart(2, '0') + ':00';
+  }
+}
+
+/* ── BIENVENUE — chiffres réels ── */
+function updateBienvenue() {
+  const s2 = document.getElementById('welStatSubjects');
+  const ch = document.getElementById('welStatChapters');
+  const no = document.getElementById('welStatNotions');
+  const ca = document.getElementById('welStatCards');
+  if (s2) s2.textContent = String(SUBJECTS.length);
+  if (ch) ch.textContent = String(SUBJECTS_CH);
+  if (no) no.textContent = String(SUBJECTS_NO);
+  if (ca && CARDS) ca.textContent = String(CARDS.length);
+}
+
+/* ── PROFIL — Inviter un camarade (lien réel vers #/bienvenue) ── */
+document.getElementById('profInvite')?.addEventListener('click', async () => {
+  const link = location.origin + location.pathname + '#/bienvenue';
+  const text = t('profil.inviteShare') + ' ' + link;
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: 'ARVX', text: t('profil.inviteShare'), url: link });
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+      arvxToast(t('profil.inviteOk'));
+    } else {
+      arvxToast(link);
+    }
+  } catch { /* partage annulé — silencieux */ }
+});
+
+/* ── Horloge globale 1 s — minuteur focus + cycles de la séance ── */
+setInterval(() => {
+  const now = Date.now();
+
+  /* Minuteur seul (page focus, plein cadre) */
+  if (FOC_TIMER.running) {
+    const left = Math.max(0, FOC_TIMER.endAt - now);
+    const mm = Math.floor(left / 60000);
+    const ss = Math.floor((left % 60000) / 1000);
+    const el = document.getElementById('focRunClock');
+    if (el) el.textContent = String(mm).padStart(2, '0') + ':' + String(ss).padStart(2, '0');
+    if (left <= 0) {
+      stopFocusTimer(true);
+      const mins = FOC_TIMER.min;
+      addActivityMinutes(mins, 0, null);
+      arvxToast(t('focus.finie').replace('{m}', String(mins)));
+      window.ARVXA_BAKO?.set?.('cheer');
+    }
+  }
+
+  /* Séance : cycles focus (travail → pause verrouillée → travail) */
+  if (currentView === 'seance' && SEANCE.focus && !SEANCE.finished) {
+    const f = SEANCE.focus;
+    if (f.phase === 'work') {
+      f.workMs += 1000;
+      if (now >= f.phaseEnd) {
+        /* Travail terminé → PAUSE : les fiches se verrouillent */
+        f.phase = 'break';
+        f.phaseEnd = now + f.brk * 60000;
+        const breakEl = document.getElementById('scBreak');
+        if (breakEl) breakEl.hidden = false;
+        /* Premier affichage immédiat du décompte de pause */
+        const bt = document.getElementById('scBreakTimer');
+        if (bt) bt.textContent = String(f.brk).padStart(2, '0') + ':00';
+        window.ARVXA_BAKO?.set?.('sleep');
+      }
+    } else if (f.phase === 'break') {
+      const left = Math.max(0, f.phaseEnd - now);
+      const mm = Math.floor(left / 60000);
+      const ss = Math.floor((left % 60000) / 1000);
+      const el = document.getElementById('scBreakTimer');
+      if (el) el.textContent = String(mm).padStart(2, '0') + ':' + String(ss).padStart(2, '0');
+      if (left <= 0) endSeanceBreak();
+    }
+  }
+}, 1000);
+
+function endSeanceBreak() {
+  const f = SEANCE.focus;
+  if (!f) return;
+  f.cycle++;
+  const breakEl = document.getElementById('scBreak');
+  if (breakEl) breakEl.hidden = true;
+  if (f.cycle > f.cycles) {
+    finishSeance();
+    return;
+  }
+  f.phase = 'work';
+  f.phaseEnd = Date.now() + f.work * 60000;
+  window.ARVXA_BAKO?.set?.('sit');
+  renderSeance();
+}
+
+document.getElementById('scBreakSkip')?.addEventListener('click', () => endSeanceBreak());
+
+/* ── AMORÇAGE v0.12 / v0.13 — premier rendu complet ──
+   Les données v0.13 (JOUR, SEANCE, FOC_TIMER, CARDS) sont déclarées
+   plus haut : le premier showView() peut maintenant s'exécuter sans
+   zone morte. */
 applyLang();
+showView(parseHash(), { animate: false });
+
+/* Fiches réelles : chargement puis premier calcul du jour */
+loadCards().then(() => {
+  computeJour();
+  updateJour();
+  updateRapide();
+  updateBienvenue();
+  if (currentView === 'seance') renderSeance();
+});

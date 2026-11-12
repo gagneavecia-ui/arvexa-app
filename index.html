@@ -16,15 +16,18 @@
   <!-- Font Awesome : même CDN et même version que le site original -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Polices : mêmes familles que le site original (Inter + Playfair Display)
-       — retour au normal v0.9.2 (demande : « rends la normale »). -->
+  <!-- Polices (v0.13 · empreinte typographique ARVX) : Inter pour le
+       corps de texte + FRAUNCES pour les titres — une serif à optical
+       size, chaleureuse et bien distincte de toute autre app. Aucun
+       rapport avec la référence : identité propre revendiquée. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/design-system.css">
   <script type="module" src="js/main.js"></script>
   <script type="module" src="js/auth.js"></script>
+  <script type="module" src="js/bako.js"></script>
 </head>
 <body>
 
@@ -507,10 +510,12 @@
         </div>
       </div>
 
-      <!-- ═══ BLOC 1bis — LES DEUX MODES (v0.12 · retapés) ═══
+      <!-- ═══ BLOC 1bis — LES DEUX MODES (v0.13 · pages propres) ═══
            Même matériau carte or validé (radial or, filet .38, glow,
            radius 18) + flèche d'action discrète. Navigation SPA
-           conservée : Mode rapide → Réviser, Mode focus → Examen. -->
+           corrigée : Mode rapide → #/rapide (PAGE INDÉPENDANTE, plus
+           de pont vers Réviser) · Mode focus → #/focus (page dédiée,
+           plus de pont vers Examen). -->
       <div class="modes-row" role="group" aria-label="Modes de révision">
         <button type="button" class="mode-card mode-quick" id="modeQuick">
           <span class="mode-icon quick" aria-hidden="true"><i class="fas fa-bolt"></i></span>
@@ -526,17 +531,20 @@
         </button>
       </div>
 
-      <!-- ═══ BLOC 2 — CONTINUER (v0.12 · réel) ═══
-           Affiche la DERNIÈRE RÉVISION réelle (localStorage
-           'arvexa-activity' → last) : titre du cours + « il y a n j ».
-           État vide tant qu'aucune révision. Clic → vue Réviser. -->
-      <button type="button" class="continue-card" id="continueCard">
-        <span class="continue-icon" aria-hidden="true"><i class="fas fa-rotate-right"></i></span>
-        <span class="continue-body">
-          <span class="continue-title" id="continueTitle">Continuer</span>
-          <span class="continue-sub" id="continueSub">Ta dernière révision apparaîtra ici.</span>
+      <!-- ═══ BLOC 2 — TA SÉANCE DU JOUR (v0.13 · moteur FSRS) ═══
+           Remplace « Continuer ». Affiche le travail DU JOUR réel :
+           N fiches à réviser (due ≤ maintenant, localStorage
+           'arvexa-srs') · ≈ X min estimées · M matières. Le bouton
+           GO lance la séance (#/seance, SPA) avec cette file exacte.
+           État vide honnête tant qu'aucune fiche n'est due. -->
+      <button type="button" class="jour-card" id="jourCard">
+        <span class="jour-rays" id="jourRays" aria-hidden="true"></span>
+        <span class="jour-body">
+          <span class="jour-eyebrow"><i class="fas fa-bolt" aria-hidden="true"></i><span data-i18n="accueil.jour.eyebrow">Ta séance du jour</span></span>
+          <span class="jour-main" id="jourMain">0 fiche à réviser</span>
+          <span class="jour-sub" id="jourSub">—</span>
         </span>
-        <span class="continue-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></span>
+        <span class="jour-go" aria-hidden="true"><i class="fas fa-play"></i></span>
       </button>
 
       <!-- ═══ BLOC 3 — GRANDE CARTE « MA PROGRESSION » (v0.12.1) ═══
@@ -861,6 +869,11 @@
         <!-- Compte -->
         <div class="prof-group">
           <span class="prof-group-label" data-i18n="profil.compte">Compte</span>
+          <button type="button" class="prof-row" id="profInvite">
+            <span class="prof-row-icon gold" aria-hidden="true"><i class="fas fa-paper-plane"></i></span>
+            <span class="prof-row-name" data-i18n="profil.inviter">Inviter un camarade</span>
+            <span class="prof-row-end"><i class="fas fa-chevron-right" aria-hidden="true"></i></span>
+          </button>
           <button type="button" class="prof-row" id="profAbo">
             <span class="prof-row-icon gold" aria-hidden="true"><i class="fas fa-crown"></i></span>
             <span class="prof-row-name" data-i18n="menu.abonnement">Mon abonnement</span>
@@ -881,9 +894,315 @@
         <button type="button" class="prof-logout" id="profLogout">
           <i class="fas fa-sign-out-alt" aria-hidden="true"></i><span data-i18n="menu.deconnexion">Déconnexion</span>
         </button>
-        <p class="prof-version">ARVX v0.12 · Firebase</p>
+        <p class="prof-version">ARVX v0.13 · Firebase</p>
       </div>
     </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       VUE SÉANCE (v0.13 — LECTEUR DE FLASHCARDS, page propre)
+       Le cœur pédagogique, en 3 temps comme la méthode à
+       l'origine de l'app :
+         1. QUESTION seule à l'écran — l'élève s'auto-évalue
+            d'abord (Je ne sais pas / Je crois savoir / Je sais)
+         2. RÉVÉLER — « Réponds dans ta tête, puis révèle »
+         3. JUGEMENT — À revoir / Difficile / Bien / Facile →
+            l'intervalle de répétition est recalculé (moteur
+            FSRS local, 'arvexa-srs') et annoncé (« revient
+            dans {intervalle} »)
+       Fiches RÉELLES : data/cards.json (1 884 cartes tirées des
+       1 218 notions du dépôt ARVEXA School). La séance tient
+       ENTIÈREMENT entre les deux barres : aucune fiche ne
+       défile, tout est calibré en clamp().
+       ══════════════════════════════════════════════════════ -->
+  <section class="view view-seance" id="view-seance" data-view="seance" hidden>
+    <div class="sc-top">
+      <button type="button" class="sc-quit" id="scQuit" aria-label="Quitter la séance">
+        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+      </button>
+      <div class="sc-progress" aria-hidden="true">
+        <span class="sc-progress-fill" id="scProgressFill"></span>
+      </div>
+      <span class="sc-count" id="scCount">1 / 10</span>
+    </div>
+
+    <div class="sc-stage">
+      <div class="sc-meta">
+        <span class="sc-subject" id="scSubject">—</span>
+        <span class="sc-chapter" id="scChapter">—</span>
+      </div>
+      <div class="sc-card" id="scCard" role="group" aria-live="polite">
+        <span class="sc-q" id="scQ">—</span>
+        <span class="sc-a" id="scA" hidden>—</span>
+      </div>
+      <span class="sc-hint" id="scHint">Réponds dans ta tête, puis révèle.</span>
+    </div>
+
+    <div class="sc-actions" id="scActions">
+      <!-- PHASE 1 : confiance avant révélation -->
+      <div class="sc-row sc-row-confidence" id="scConfidence">
+        <button type="button" class="sc-btn conf-0" data-conf="0" data-i18n="seance.conf0">Je ne sais pas</button>
+        <button type="button" class="sc-btn conf-1" data-conf="1" data-i18n="seance.conf1">Je crois savoir</button>
+        <button type="button" class="sc-btn conf-2" data-conf="2" data-i18n="seance.conf2">Je sais</button>
+        <button type="button" class="sc-btn sc-reveal" id="scReveal">
+          <i class="fas fa-eye" aria-hidden="true"></i>
+          <span data-i18n="seance.reveler">Révéler</span>
+        </button>
+      </div>
+      <!-- PHASE 2 : jugement après révélation -->
+      <div class="sc-row sc-row-judgment" id="scJudgment" hidden>
+        <button type="button" class="sc-btn judge-0" data-judge="0">
+          <i class="fas fa-rotate-left" aria-hidden="true"></i>
+          <span data-i18n="seance.j0">À revoir</span>
+        </button>
+        <button type="button" class="sc-btn judge-1" data-judge="1">
+          <span data-i18n="seance.j1">Difficile</span>
+        </button>
+        <button type="button" class="sc-btn judge-2" data-judge="2">
+          <span data-i18n="seance.j2">Bien</span>
+        </button>
+        <button type="button" class="sc-btn judge-3" data-judge="3">
+          <span data-i18n="seance.j3">Facile</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- PAUSE FOCUS — overlay verrouillé : les fiches sont masquées
+         pendant la pause du cycle 25/5 (séance minutée uniquement) -->
+    <div class="sc-break" id="scBreak" hidden>
+      <span class="sc-break-ring" aria-hidden="true"></span>
+      <span class="sc-break-title" data-i18n="seance.pauseTitre">Pause</span>
+      <span class="sc-break-timer" id="scBreakTimer">5:00</span>
+      <span class="sc-break-sub" data-i18n="seance.pauseSub">Les fiches reviennent à la fin de la pause.</span>
+      <button type="button" class="sc-break-skip" id="scBreakSkip" data-i18n="seance.pausePasser">Passer la pause</button>
+    </div>
+
+    <!-- FIN DE SÉANCE — résumé réel + Bako célèbre -->
+    <div class="sc-done" id="scDone" hidden>
+      <span class="sc-done-emoji" id="scDoneEmoji" aria-hidden="true">🎉</span>
+      <span class="sc-done-title" data-i18n="seance.finTitre">Séance terminée</span>
+      <div class="sc-done-grid">
+        <div class="sc-done-tile"><span class="n" id="scDoneRev">0</span><span class="l" data-i18n="seance.finRev">fiches revues</span></div>
+        <div class="sc-done-tile"><span class="n" id="scDoneOk">0</span><span class="l" data-i18n="seance.finOk">bien mémorisées</span></div>
+        <div class="sc-done-tile"><span class="n" id="scDoneMin">0</span><span class="l" data-i18n="seance.finMin">minutes</span></div>
+      </div>
+      <button type="button" class="sc-done-home" id="scDoneHome">
+        <i class="fas fa-home" aria-hidden="true"></i>
+        <span data-i18n="seance.finRetour">Retour à l'accueil</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       VUE MODE RAPIDE (v0.13 — PAGE INDÉPENDANTE)
+       N'est PLUS connectée à Réviser ni à Examen : c'est une
+       page à part entière. Elle montre TOUT CE QUE L'ÉLÈVE A
+       AJOUTÉ (les 7 matières réelles avec leurs fiches dues),
+       et le bouton GO prépare la séance mixte 5 minutes :
+       Bako réfléchit, la file est bâtie, puis #/seance.
+       ══════════════════════════════════════════════════════ -->
+  <section class="view view-rapide" id="view-rapide" data-view="rapide" hidden>
+    <div class="rap-head">
+      <span class="prog-eyebrow"><i class="fas fa-bolt" aria-hidden="true"></i><span data-i18n="rapide.eyebrow">Mode rapide</span></span>
+      <span class="prog-title" data-i18n="rapide.titre">Révision éclair</span>
+    </div>
+
+    <div class="rap-body">
+      <div class="rap-hero">
+        <span class="lib-rays" id="rapRays" aria-hidden="true"></span>
+        <span class="rap-hero-num" id="rapDue">—</span>
+        <span class="rap-hero-sub" id="rapDueSub">—</span>
+      </div>
+
+      <div class="rap-list-head">
+        <span class="lib-subjects-title" data-i18n="rapide.tonContenu">Ton contenu</span>
+        <span class="lib-subjects-count" id="rapCount">—</span>
+      </div>
+      <div class="rap-list" id="rapList"></div>
+
+      <button type="button" class="rap-go" id="rapGo">
+        <i class="fas fa-bolt" aria-hidden="true"></i>
+        <span data-i18n="rapide.go">GO — 5 minutes</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       VUE MODE FOCUS (v0.13 — PAGE INDÉPENDANTE)
+       N'est PLUS connectée à Examen. Deux outils :
+         · MINUTEUR SEUL — un simple minuteur de concentration
+           (10 / 25 / 45 min), les minutes vont dans l'activité
+           réelle à la fin.
+         · SÉANCE MINUTÉE — 4 cycles travail/pause (préréglages
+           15/3 · 25/5 · 50/10) : pendant la pause les fiches
+           sont VERROUILLÉES (overlay pause de #/seance).
+       ══════════════════════════════════════════════════════ -->
+  <section class="view view-focus" id="view-focus" data-view="focus" hidden>
+    <div class="foc-head">
+      <span class="prog-eyebrow"><i class="fas fa-stopwatch" aria-hidden="true"></i><span data-i18n="focus.eyebrow">Mode focus</span></span>
+      <span class="prog-title" data-i18n="focus.titre">Concentration profonde</span>
+    </div>
+
+    <div class="foc-body">
+      <!-- Choix : minuteur seul ou séance minutée -->
+      <div class="foc-tabs" role="tablist" aria-label="Type de focus">
+        <button type="button" class="foc-tab active" id="focTabTimer" role="tab" aria-selected="true" data-i18n="focus.tabTimer">Minuteur seul</button>
+        <button type="button" class="foc-tab" id="focTabSession" role="tab" aria-selected="false" data-i18n="focus.tabSession">Séance minutée</button>
+      </div>
+
+      <!-- MINUTEUR SEUL -->
+      <div class="foc-panel active" id="focPanelTimer">
+        <div class="foc-clock-wrap">
+          <span class="foc-clock" id="focClock">25:00</span>
+          <span class="foc-clock-sub" id="focClockSub">Minuteur de concentration</span>
+        </div>
+        <div class="foc-presets" id="focPresets" role="group" aria-label="Durées">
+          <button type="button" class="foc-preset" data-min="10">10</button>
+          <button type="button" class="foc-preset active" data-min="25">25</button>
+          <button type="button" class="foc-preset" data-min="45">45</button>
+        </div>
+        <button type="button" class="foc-go" id="focGoTimer">
+          <i class="fas fa-play" aria-hidden="true"></i>
+          <span data-i18n="focus.lancer">Lancer le minuteur</span>
+        </button>
+      </div>
+
+      <!-- SÉANCE MINUTÉE (cycles travail/pause) -->
+      <div class="foc-panel" id="focPanelSession" hidden>
+        <div class="foc-cycle-info">
+          <span class="foc-cycle-row"><i class="fas fa-book-open" aria-hidden="true"></i><span data-i18n="focus.cycleTravail">Travail — fiches actives</span><b id="focWorkMin">25</b></span>
+          <span class="foc-cycle-row"><i class="fas fa-mug-hot" aria-hidden="true"></i><span data-i18n="focus.cyclePause">Pause — fiches verrouillées</span><b id="focBreakMin">5</b></span>
+          <span class="foc-cycle-row"><i class="fas fa-repeat" aria-hidden="true"></i><span data-i18n="focus.cycleNb">Cycles</span><b>4</b></span>
+        </div>
+        <div class="foc-presets" id="focCyclePresets" role="group" aria-label="Préréglages de cycles">
+          <button type="button" class="foc-preset" data-work="15" data-break="3">15/3</button>
+          <button type="button" class="foc-preset active" data-work="25" data-break="5">25/5</button>
+          <button type="button" class="foc-preset" data-work="50" data-break="10">50/10</button>
+        </div>
+        <button type="button" class="foc-go" id="focGoSession">
+          <i class="fas fa-play" aria-hidden="true"></i>
+          <span data-i18n="focus.lancerSession">Lancer la séance minutée</span>
+        </button>
+      </div>
+
+      <p class="foc-note" data-i18n="focus.note">Les minutes de concentration rejoignent ton activité réelle.</p>
+    </div>
+
+    <!-- MINUTEUR EN COURS — plein cadre, le chrono seul à l'écran -->
+    <div class="foc-run-wrap" id="focRunWrap" aria-hidden="true">
+      <span class="foc-run-clock" id="focRunClock">25:00</span>
+      <span class="foc-run-sub" data-i18n="focus.runSub">Concentration en cours — reste ici.</span>
+      <div class="foc-run-actions">
+        <button type="button" class="foc-run-stop" id="focRunStop" data-i18n="focus.stop">Arrêter</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════
+       VUE BIENVENUE (v0.13 — PAGE PUBLIQUE)
+       Le portail d'entrée : héros, chiffres RÉELS de la
+       bibliothèque, promesses, mini-FAQ, appel à l'action.
+       Fonctionnellement l'équivalent d'une landing, mais
+       DESIGN 100 % ARVX (vert/or, Fraunces, composition à
+       nous). Aucune barre (body.welcome-mode). Contenu
+       défilable À L'INTÉRIEUR du cadre — le document ne
+       défile jamais. CTA → #/auth (Firebase inchangé).
+       ══════════════════════════════════════════════════════ -->
+  <section class="view view-bienvenue" id="view-bienvenue" data-view="bienvenue" hidden>
+    <div class="wel-scroll">
+      <div class="wel-bg" aria-hidden="true"></div>
+
+      <header class="wel-header">
+        <a href="#/bienvenue" class="wel-logo" aria-label="ARVX">ARV<span>X</span></a>
+        <div class="wel-header-right">
+          <div class="lang-switch" role="group" aria-label="Langue">
+            <button type="button" class="lang-btn active" data-lang="fr" aria-pressed="true">FR</button>
+            <button type="button" class="lang-btn" data-lang="an" aria-pressed="false">AN</button>
+          </div>
+          <a href="#/auth" class="wel-signin" id="welSignin" data-i18n="wel.entrer">Se connecter</a>
+        </div>
+      </header>
+
+      <div class="wel-content">
+        <!-- HÉROS -->
+        <div class="wel-hero">
+          <span class="wel-hero-kicker" data-i18n="wel.kicker">L'école, partout — même sans cours</span>
+          <h1 class="wel-hero-title">
+            <span data-i18n="wel.t1">Toutes les matières.</span><br>
+            <em data-i18n="wel.t2">Un seul réflexe.</em>
+          </h1>
+          <p class="wel-hero-sub" data-i18n="wel.sousTitre">
+            Révise le vrai programme du BAC, fiche par fiche, à ton rythme — l'application connaît exactement ce que tu dois revoir aujourd'hui.
+          </p>
+          <a href="#/auth" class="wel-cta" id="welCta">
+            <span data-i18n="wel.cta">Commencer gratuitement</span>
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+
+        <!-- CHIFFRES RÉELS -->
+        <div class="wel-stats">
+          <div class="wel-stat"><b id="welStatSubjects">7</b><span data-i18n="wel.statMatieres">matières</span></div>
+          <div class="wel-stat"><b id="welStatChapters">87</b><span data-i18n="wel.statChapitres">chapitres</span></div>
+          <div class="wel-stat"><b id="welStatNotions">1218</b><span data-i18n="wel.statNotions">notions</span></div>
+          <div class="wel-stat"><b id="welStatCards">1884</b><span data-i18n="wel.statFiches">fiches</span></div>
+        </div>
+
+        <!-- PROMESSES (nos 4 piliers réels) -->
+        <div class="wel-features">
+          <div class="wel-feature">
+            <span class="wel-feature-icon"><i class="fas fa-bolt" aria-hidden="true"></i></span>
+            <b data-i18n="wel.f1">Séance du jour</b>
+            <span data-i18n="wel.f1sub">Les fiches exactes à revoir — calculées pour toi, chaque jour.</span>
+          </div>
+          <div class="wel-feature">
+            <span class="wel-feature-icon"><i class="fas fa-stopwatch" aria-hidden="true"></i></span>
+            <b data-i18n="wel.f2">Mode focus</b>
+            <span data-i18n="wel.f2sub">Des cycles travail / pause pour tenir sans te disperser.</span>
+          </div>
+          <div class="wel-feature">
+            <span class="wel-feature-icon"><i class="fas fa-fire" aria-hidden="true"></i></span>
+            <b data-i18n="wel.f3">Ta série</b>
+            <span data-i18n="wel.f3sub">Chaque jour actif fait grandir ta série — la régularité paie.</span>
+          </div>
+          <div class="wel-feature">
+            <span class="wel-feature-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></span>
+            <b data-i18n="wel.f4">Vrai programme</b>
+            <span data-i18n="wel.f4sub">87 chapitres · 1218 notions alignés sur l'épreuve du BAC.</span>
+          </div>
+        </div>
+
+        <!-- MINI-FAQ (accordéon réel, 3 questions) -->
+        <div class="wel-faq">
+          <span class="wel-faq-title" data-i18n="wel.faqTitre">Questions fréquentes</span>
+          <details class="wel-faq-item">
+            <summary><span class="wel-faq-q" data-i18n="wel.q1">Est-ce que c'est vraiment gratuit ?</span><i class="fas fa-plus" aria-hidden="true"></i></summary>
+            <p data-i18n="wel.r1">Oui — créer un compte, réviser et suivre ta progression est gratuit. Aucune carte bancaire demandée.</p>
+          </details>
+          <details class="wel-faq-item">
+            <summary><span class="wel-faq-q" data-i18n="wel.q2">Le programme correspond-il à mon BAC ?</span><i class="fas fa-plus" aria-hidden="true"></i></summary>
+            <p data-i18n="wel.r2">Oui — 7 matières de terminale, du programme officiel, avec les définitions, les points clés et les pièges d'examen.</p>
+          </details>
+          <details class="wel-faq-item">
+            <summary><span class="wel-faq-q" data-i18n="wel.q3">Combien de temps par jour ?</span><i class="fas fa-plus" aria-hidden="true"></i></summary>
+            <p data-i18n="wel.r3">Une séance de 5 minutes suffit pour commencer. Le mode rapide est fait pour ça — GO, et tu révises.</p>
+          </details>
+        </div>
+
+        <!-- CTA FINAL -->
+        <div class="wel-final">
+          <span class="wel-final-title" data-i18n="wel.finalTitre">Prêt à commencer ?</span>
+          <a href="#/auth" class="wel-cta" id="welCta2">
+            <span data-i18n="wel.cta2">Créer mon compte</span>
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+
+        <footer class="wel-footer">
+          <span>© 2026 ARVX — <span data-i18n="wel.droits">Tous droits réservés</span></span>
+        </footer>
+      </div>
+    </div>
+  </section>
 
   </main>
 
@@ -909,6 +1228,21 @@
       <i class="fas fa-user" aria-hidden="true"></i><span data-i18n="nav.profil">Profil</span>
     </button>
   </nav>
+
+  <!-- ══════════════════════════════════════════════════════
+       MASCOTTE BAKO (v0.13) — personnage ORIGINAL de l'app :
+       corps vert de marque, casquette or, lunettes rondes.
+       js/bako.js injecte le SVG dans ce point de montage, gère
+       ses comportements (accueille, réfléchit, célèbre,
+       encourage, s'endort, traverse l'écran) et sa bulle de
+       message DRAGGABLE. Présent sur Accueil, Mode rapide,
+       Mode focus et Séance. (Le chat IA restera désactivé
+       jusqu'à réception des clés API.)
+       ══════════════════════════════════════════════════════ -->
+  <div class="bako-layer" id="bakoLayer" hidden>
+    <div class="bako-bubble" id="bakoBubble" hidden><span id="bakoBubbleText"></span></div>
+    <div class="bako-figure" id="bakoFigure" aria-hidden="true"></div>
+  </div>
 
   <!-- ══════════════════════════════════════════════════════
        TOASTS AUTH (v0.10) — même design que les pages

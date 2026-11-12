@@ -208,7 +208,11 @@ function showToast(message, type = 'success', duration = 4000) {
    GARDE DE ROUTE — SPA : le hash est la seule source de vérité
    ═══════════════════════════════════════════════════════════════════ */
 
-const PROTECTED_ROUTES = ['accueil', 'reviser', 'examen', 'progression', 'profil'];
+/* v0.13 — SEANCE / RAPIDE / FOCUS protégées comme les autres.
+   BIENVENUE (#/bienvenue) est PUBLIQUE : c'est la page de porte
+   d'entrée, visible sans compte (comme une landing). */
+const PROTECTED_ROUTES = ['accueil', 'reviser', 'examen', 'progression', 'profil', 'seance', 'rapide', 'focus'];
+const PUBLIC_ROUTES = ['bienvenue'];
 const PENDING_KEY = 'arvx_pending_route';
 
 function currentRoute() {
@@ -225,10 +229,12 @@ function consumePendingRoute() {
   }
 }
 
-/* Non connecté → #/auth (la route demandée est mémorisée). */
+/* Non connecté → #/auth (la route demandée est mémorisée).
+   Exception : les routes PUBLIQUES (#/bienvenue) restent accessibles. */
 function forceAuthView() {
   const route = currentRoute();
   if (route === 'auth') return;
+  if (PUBLIC_ROUTES.includes(route)) return;
   if (PROTECTED_ROUTES.includes(route)) {
     try { sessionStorage.setItem(PENDING_KEY, route); } catch { /* stockage indisponible */ }
   }
@@ -247,7 +253,7 @@ window.addEventListener('hashchange', () => {
   if (!authReady) return; /* le boot est géré par onAuthStateChanged */
   const user = auth.currentUser;
   const route = currentRoute();
-  if (!user && route !== 'auth') {
+  if (!user && route !== 'auth' && !PUBLIC_ROUTES.includes(route)) {
     forceAuthView();
   } else if (user && route === 'auth' && currentUid) {
     location.replace('#/' + (consumePendingRoute() || 'accueil'));
@@ -457,9 +463,11 @@ onAuthStateChanged(auth, (user) => {
     try { localStorage.removeItem('arvexa_user'); } catch { /* stockage indisponible */ }
     window.ARVXA_PROFILE = null;
     /* Comme l'original : une session qui se ferme ramène au formulaire
-       de CONNEXION (pas au panneau inscription laissé ouvert). */
+       de CONNEXION (pas au panneau inscription laissé ouvert).
+       Exception v0.13 : si l'élève est sur la page publique
+       BIENVENUE, on ne le chasse pas vers le formulaire. */
     switchMode('login');
-    forceAuthView();
+    if (!PUBLIC_ROUTES.includes(currentRoute())) forceAuthView();
     hideVeil();
   }
 });

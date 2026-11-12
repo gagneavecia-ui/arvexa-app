@@ -81,7 +81,7 @@
    v0.9    : DIFFÉRENCIATION ACCUEIL (demande explicite — « change
              l'arrière-plan des grandes cartes, supprime les
              bordures, change la police et quelques dispositions ») :
-             · TYPOGRAPHIE PROPRE : sortie d'Inter + Playfair Display
+             · TYPOGRAPHIE PROPRE : sortie d'Inter + Fraunces
                (les familles de la référence) → FRAUNCES (chiffre,
                titres, citations, wordmark) + MANROPE (interface) ;
              · ACCUEIL SANS BORDURES : plus aucun filet autour des
@@ -271,7 +271,7 @@ body {
    v0.6.3 débordait sur vrai téléphone : mini-cartes coupées sous la
    barre). Polyvalent (toutes matières) : nombre de cours à gauche,
    anneau de progression à droite, citation en bas (façon original).
-   Typographie expressive : Playfair Display (chiffre, label,
+   Typographie expressive : Fraunces (chiffre, label,
    citation) — jamais d'écriture simple ; les petits libellés UI
    restent en Inter pour la cohérence de l'ensemble (v0.9.2 :
    retour aux polices d'origine).
@@ -291,7 +291,7 @@ body {
    matériau validé v0.7.2 — vert de marque --primary + radial or
    haut-gauche + FILET OR 0.22 + rayons « aurora » (recadrage
    signature v0.8 conservé, identique au héros de Réviser).
-   Carte compacte (1/4 du cadre), Playfair Display pour le chiffre
+   Carte compacte (1/4 du cadre), Fraunces pour le chiffre
    et la citation, filet or au-dessus de la citation. Les
    enrichissements v0.9 (tiret, pastilles, halo) sont retirés.
    La carte reste VERTE dans les deux thèmes ; textes en crème
@@ -376,11 +376,11 @@ body {
   gap: 9px;
 }
 
-/* Le chiffre : Playfair Display, or dégradé — façon le X du
+/* Le chiffre : Fraunces, or dégradé — façon le X du
    wordmark ARVX (retour au normal v0.9.2). Une écriture riche,
    jamais simple. */
 .stats-number {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 46px;
   font-weight: 700;
   line-height: 1;
@@ -392,7 +392,7 @@ body {
 }
 
 .stats-numlabel {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-style: italic;
   font-size: 18px;
   color: #F5F0E8;  /* crème littéral : la carte reste verte même en clair */
@@ -410,7 +410,7 @@ body {
 }
 
 /* Anneau de progression : SVG 72×72, trait or, arrondi.
-   Le pourcentage au centre est en Playfair. */
+   Le pourcentage au centre est en Fraunces. */
 .stats-ring {
   position: relative;
   width: 84px;
@@ -442,7 +442,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 19px;
   font-weight: 700;
   color: #F5F0E8;
@@ -491,7 +491,7 @@ body {
 }
 
 .stats-pill b {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 15px;
   font-weight: 700;
   color: #F5F0E8;
@@ -618,7 +618,7 @@ body {
 }
 
 .mode-name {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.15;
@@ -647,7 +647,7 @@ html[data-theme="light"] .mode-icon.focus {
    VUE ACCUEIL — BLOC 2 : CONTINUER (v0.6.4 · v0.9.2)
    Bouton SPA → vue Réviser. RETOUR AU NORMAL v0.9.2 : même
    matériau carte matière SVT que les mini-cartes (radial or,
-   filet or .38, glow, radius 18), titres Playfair, couleurs de
+   filet or .38, glow, radius 18), titres Fraunces, couleurs de
    texte du thème.
    ═══════════════════════════════════════════════════════════════════ */
 .continue-card {
@@ -700,7 +700,7 @@ html[data-theme="light"] .mode-icon.focus {
 }
 
 .continue-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.15;
@@ -855,7 +855,7 @@ html[data-theme="light"] .continue-card {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 19px;
   font-weight: 700;
   color: #F5F0E8;   /* crème littéral : la carte reste verte en clair */
@@ -882,7 +882,7 @@ html[data-theme="light"] .continue-card {
 }
 
 .progress-chip-num {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 22px;
   font-weight: 700;
   line-height: 1;
@@ -973,7 +973,7 @@ html[data-theme="light"] .continue-card {
 .prog-eyebrow i { color: var(--accent-bright); font-size: 10px; }
 
 .prog-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 26px;
   font-weight: 800;
   line-height: 1.2;
@@ -1042,7 +1042,7 @@ html[data-theme="light"] .continue-card {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 22px;
   font-weight: 700;
   color: #F5F0E8;   /* crème littéral : la carte reste verte en clair */
@@ -1069,7 +1069,7 @@ html[data-theme="light"] .continue-card {
 }
 
 .prog-chip-num {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 24px;
   font-weight: 700;
   line-height: 1;
@@ -1180,7 +1180,7 @@ html[data-theme="light"] .continue-card {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 17px;
   font-weight: 700;
   color: #FFF6DC;  /* crème or de l'avatar — déjà signature ARVX */
@@ -1567,10 +1567,9 @@ html[data-theme="light"] .lib-subject-ok {
 }
 
 /* Petits écrans en hauteur : les cartes restent compactes, le cadre
-   ne déborde jamais (pages fixes — aucun défilement vertical). La
-   carte « Continuer » s'efface ici (v0.9.2 : les actions rapides
-   restent supprimées — la carte principale garde sa taille fixe et
-   l'air sous Continuer absorbe la place).
+   ne déborde jamais (pages fixes — aucun défilement vertical).
+   v0.13 : « Continuer » a laissé place à « TA SÉANCE DU JOUR » —
+   le CTA central de l'app, compacté mais TOUJOURS visible.
    (La règle est placée APRÈS tous les blocs accueil pour gagner.) */
 @media (max-height: 720px) {
   .modes-row { gap: 10px; margin-top: 13px; }
@@ -1578,7 +1577,9 @@ html[data-theme="light"] .lib-subject-ok {
   .mode-icon { width: 32px; height: 32px; font-size: 14px; }
   .mode-name { font-size: 15px; }
   .mode-sub { font-size: 11px; }
-  .continue-card { display: none; }
+  .jour-card { padding: 11px 13px; gap: 10px; }
+  .jour-main { font-size: 15px; }
+  .jour-go { width: 40px; height: 40px; font-size: 13px; }
   /* Grande carte progression : compacte mais TOUJOURS visible
      (v0.11.1 : la progression est l'élément prioritaire de l'accueil) */
   .progress-card { gap: 7px; margin-top: 11px; padding: 12px 15px 11px; }
@@ -1587,6 +1588,12 @@ html[data-theme="light"] .lib-subject-ok {
   .progress-chip { padding: 6px 11px; }
   .progress-chip-num { font-size: 18px; }
   .progress-main { gap: 13px; }
+  /* v0.13 : séance / rapide / focus compacts sur écrans courts */
+  .sc-card { padding: 13px 14px; }
+  .sc-btn { min-height: 40px; padding: 10px 8px; }
+  .rap-hero { padding: 11px 14px; }
+  .rap-hero-num { font-size: 22px; }
+  .foc-clock { font-size: 46px; }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1773,7 +1780,7 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
   color: var(--text-light);
   font-size: 20px;
   font-weight: 700;
-  font-family: 'Playfair Display', 'Georgia', serif;
+  font-family: 'Fraunces', 'Georgia', serif;
   letter-spacing: 2px;
 }
 
@@ -1849,7 +1856,7 @@ html[data-theme="light"] .header .menu-toggle:hover { color: var(--text-light); 
   justify-content: center;
   background: linear-gradient(135deg, var(--accent), var(--accent-bright));
   color: #141210;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 18px;
   font-weight: 700;
   font-style: italic;
@@ -2303,7 +2310,7 @@ html[data-theme="light"] .bottom-nav button.active i {
 .arvexa-confirm-title {
   font-size: 22px;
   font-weight: 700;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   color: var(--text-light);
   text-align: center;
   margin-bottom: 8px;
@@ -2480,7 +2487,7 @@ body.auth-mode .bottom-nav { display: none !important; }
 }
 .boot-veil.done { opacity: 0; pointer-events: none; }
 .boot-veil-logo {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 30px;
   font-weight: 700;
   letter-spacing: 0.4px;
@@ -2587,7 +2594,7 @@ html[data-theme="light"] .view-auth {
   align-items: baseline;
   gap: 0;
   text-decoration: none;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: clamp(20px, 3.4vw, 24px);
   font-weight: 700;
   letter-spacing: 0.4px;
@@ -2735,7 +2742,7 @@ html[data-theme="light"] .view-auth {
 }
 .view-auth .auth-hero-badge i { font-size: 12px; }
 .view-auth .auth-hero-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: clamp(30px, 6.4vw, 42px);
   font-weight: 700;
   line-height: 1.12;
@@ -3517,7 +3524,7 @@ html[data-theme="light"] .view-auth .terms-box input[type="checkbox"] {
 }
 
 .exam-days-num {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 54px;
   font-weight: 700;
   line-height: 0.95;
@@ -3528,7 +3535,7 @@ html[data-theme="light"] .view-auth .terms-box input[type="checkbox"] {
 }
 
 .exam-days-label {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-style: italic;
   font-size: 18px;
   color: #F5F0E8;
@@ -3610,7 +3617,7 @@ html[data-theme="light"] .view-auth .terms-box input[type="checkbox"] {
 }
 
 .exam-tool-name {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 15px;
   font-weight: 700;
   line-height: 1.15;
@@ -3664,7 +3671,7 @@ html[data-theme="light"] .exam-soon {
 }
 
 .exam-plan-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 15.5px;
   font-weight: 700;
   color: var(--text-light);
@@ -3848,7 +3855,7 @@ html[data-theme="light"] .exam-card-pct { color: var(--gold-text); }
 }
 
 .prog-tile-num {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 24px;
   font-weight: 700;
   line-height: 1;
@@ -3892,7 +3899,7 @@ html[data-theme="light"] .prog-tile-label i { color: var(--gold-text); }
 }
 
 .prog-week-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 15px;
   font-weight: 700;
   color: var(--text-light);
@@ -3938,7 +3945,7 @@ html[data-theme="light"] .prog-week-total { color: var(--gold-text); }
 }
 
 .prog-goal-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 15px;
   font-weight: 700;
   color: var(--text-light);
@@ -4045,7 +4052,7 @@ html[data-theme="light"] .prog-goal-val { color: var(--gold-text); }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 22px;
   font-weight: 700;
   color: #FFF6DC;
@@ -4063,7 +4070,7 @@ html[data-theme="light"] .prog-goal-val { color: var(--gold-text); }
 }
 
 .prof-name {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 18px;
   font-weight: 700;
   line-height: 1.2;
@@ -4128,7 +4135,7 @@ html[data-theme="light"] .prog-goal-val { color: var(--gold-text); }
 }
 
 .prof-stat-num {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Fraunces', Georgia, serif;
   font-size: 23px;
   font-weight: 700;
   line-height: 1;
@@ -4370,4 +4377,591 @@ html[data-theme="light"] .prof-row-icon.green {
 /* Écrans étroits : la grille d'examen passe à une colonne */
 @media (max-width: 340px) {
   .exam-grid { grid-template-columns: 1fr; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   V0.13 — SÉANCE / MODE RAPIDE / MODE FOCUS / BIENVENUE / BAKO
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── ACCUEIL — CARTE « TA SÉANCE DU JOUR » (v0.13) ───────────────
+   Remplace « Continuer ». Matériau carte or de la maison (radial
+   or, filet .38, radius 18) mais composition PROPRE à ARVX : pastille
+   ronde GO à droite, chiffres réels à gauche. Clic → #/seance. */
+.jour-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 15px;
+  border-radius: 18px;
+  border: 1px solid rgba(224, 184, 74, 0.38);
+  background:
+    radial-gradient(90px 60px at 88% 18%, rgba(224, 184, 74, 0.16), transparent 70%),
+    linear-gradient(160deg, rgba(26, 58, 42, 0.30), rgba(10, 26, 18, 0.30));
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.15s ease, border-color 0.2s ease;
+}
+.jour-card:active { transform: scale(0.97); }
+.jour-card:focus-visible { outline: 2px solid rgba(224, 184, 74, 0.6); outline-offset: 2px; }
+.jour-rays { position: absolute; inset: -40% -20% auto auto; width: 200px; opacity: 0.35; pointer-events: none; }
+.jour-rays svg { width: 100%; height: auto; display: block; }
+.jour-body { display: flex; flex-direction: column; gap: 3px; flex: 1 1 auto; min-width: 0; position: relative; }
+.jour-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent-bright); font-weight: 700;
+}
+.jour-eyebrow i { font-size: 9px; }
+.jour-main {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 17px; font-weight: 600; color: var(--text-light);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.jour-sub { font-size: 12px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.jour-go {
+  flex: 0 0 auto;
+  width: 44px; height: 44px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: linear-gradient(140deg, var(--accent), #8a6508);
+  color: #141210; font-size: 15px;
+  box-shadow: 0 4px 14px rgba(184, 134, 11, 0.35);
+  position: relative;
+}
+html[data-theme="light"] .jour-card {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(253, 251, 246, 0.92));
+  border-color: rgba(184, 134, 11, 0.30);
+  box-shadow: var(--shadow-warm);
+}
+html[data-theme="light"] .jour-main { color: var(--text-light); }
+html[data-theme="light"] .jour-sub { color: var(--text-dim); }
+
+/* ═══════════════════════════════════════════════════════════════
+   VUE SÉANCE — lecteur de flashcards (#/seance)
+   Trois zones verticales STRICTES (aucun défilement) :
+   sc-top (progression) · sc-stage (la fiche) · sc-actions.
+   ═══════════════════════════════════════════════════════════════ */
+.view-seance {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px 14px;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  position: relative;
+}
+.sc-top { display: flex; align-items: center; gap: 12px; height: 40px; flex: 0 0 auto; }
+.sc-quit {
+  width: 34px; height: 34px; border-radius: 10px; flex: 0 0 auto;
+  background: var(--bg-elev); border: 1px solid var(--card-border);
+  color: var(--text-dim); font-size: 13px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.sc-quit:active { transform: scale(0.92); }
+.sc-progress {
+  flex: 1 1 auto; height: 6px; border-radius: 999px;
+  background: rgba(224, 184, 74, 0.14); overflow: hidden;
+}
+.sc-progress-fill {
+  display: block; height: 100%; width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.sc-count {
+  flex: 0 0 auto; font-size: 12px; font-weight: 600; color: var(--text-dim);
+  font-variant-numeric: tabular-nums; min-width: 46px; text-align: right;
+}
+
+.sc-stage { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 10px; padding: 6px 0; }
+.sc-meta { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; flex-wrap: wrap; }
+.sc-subject {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent-bright);
+  background: var(--accent-dim); border: 1px solid rgba(224, 184, 74, 0.25);
+  padding: 4px 9px; border-radius: 999px;
+}
+.sc-chapter { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.sc-card {
+  flex: 1 1 auto; min-height: 0;
+  border-radius: 20px;
+  border: 1px solid rgba(224, 184, 74, 0.30);
+  background:
+    radial-gradient(140px 90px at 12% 0%, rgba(26, 58, 42, 0.55), transparent 70%),
+    radial-gradient(120px 80px at 100% 100%, rgba(224, 184, 74, 0.10), transparent 70%),
+    var(--bg-surface);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding: 16px 18px; text-align: center; overflow: hidden;
+  position: relative;
+}
+.sc-card::before {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 56px; height: 3px; border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+}
+html[data-theme="light"] .sc-card {
+  background: #FFFFFF;
+  border-color: rgba(184, 134, 11, 0.28);
+  box-shadow: var(--shadow-warm);
+}
+.sc-q {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(17px, 4.6vw, 24px);
+  font-weight: 600; line-height: 1.32; color: var(--text-light);
+  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 6; -webkit-box-orient: vertical;
+}
+.sc-a {
+  font-size: clamp(13px, 3.4vw, 15.5px);
+  line-height: 1.5; color: var(--text-dim);
+  overflow: hidden; display: -webkit-box; -webkit-line-clamp: 7; -webkit-box-orient: vertical;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(224, 184, 74, 0.35);
+  width: 100%;
+  animation: sc-reveal-in 0.28s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+@keyframes sc-reveal-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.sc-hint { flex: 0 0 auto; font-size: 11.5px; color: var(--text-muted); text-align: center; font-style: italic; min-height: 16px; }
+
+.sc-actions { flex: 0 0 auto; padding-top: 4px; }
+.sc-row { display: grid; gap: 8px; }
+.sc-row[hidden] { display: none !important; }
+.sc-a[hidden] { display: none !important; }
+.sc-row-confidence { grid-template-columns: repeat(3, 1fr); }
+.sc-btn {
+  border-radius: 13px; padding: 12px 10px;
+  background: var(--bg-elev); border: 1px solid var(--card-border);
+  color: var(--text-light); font-size: 13px; font-weight: 600;
+  cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+  min-height: 44px;
+}
+.sc-btn:active { transform: scale(0.96); }
+.sc-btn.conf-0.sel, .sc-btn.conf-1.sel, .sc-btn.conf-2.sel { border-color: rgba(224, 184, 74, 0.65); background: var(--accent-dim); }
+.sc-reveal { grid-column: 1 / -1; background: linear-gradient(140deg, var(--primary), var(--primary-dark)); border-color: rgba(224, 184, 74, 0.4); color: var(--text-light); }
+.sc-reveal i { color: var(--accent-bright); }
+.sc-row-judgment { grid-template-columns: repeat(4, 1fr); }
+.sc-btn.judge-0 { color: var(--danger); border-color: rgba(184, 92, 58, 0.4); }
+.sc-btn.judge-1 { color: var(--accent-bright); border-color: rgba(224, 184, 74, 0.35); }
+.sc-btn.judge-2 { color: var(--success-light); border-color: rgba(58, 182, 126, 0.35); }
+.sc-btn.judge-3 { color: var(--success-light); border-color: rgba(58, 182, 126, 0.55); background: rgba(45, 125, 90, 0.12); }
+html[data-theme="light"] .sc-btn { background: #FFFFFF; }
+
+.sc-done[hidden], .sc-break[hidden] { display: none !important; }
+
+/* PAUSE FOCUS — overlay plein cadre, fiches VERROUILLÉES */
+.sc-break {
+  position: absolute; inset: 0; z-index: 5;
+  background: color-mix(in srgb, var(--bg-deep) 92%, transparent);
+  backdrop-filter: blur(10px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: 24px; text-align: center;
+}
+.sc-break-ring {
+  width: 132px; height: 132px; border-radius: 50%;
+  border: 3px solid rgba(224, 184, 74, 0.2);
+  border-top-color: var(--accent-bright);
+  animation: break-spin 1.6s linear infinite;
+}
+@keyframes break-spin { to { transform: rotate(360deg); } }
+.sc-break-title {
+  font-family: 'Fraunces', Georgia, serif; font-size: 24px; font-weight: 600;
+}
+.sc-break-timer { font-size: 34px; font-weight: 700; color: var(--accent-bright); font-variant-numeric: tabular-nums; }
+.sc-break-sub { font-size: 12.5px; color: var(--text-dim); max-width: 260px; }
+.sc-break-skip {
+  margin-top: 6px; border: 1px solid rgba(224, 184, 74, 0.4); border-radius: 12px;
+  background: transparent; color: var(--accent-bright); font-weight: 600; font-size: 13px;
+  padding: 10px 18px; cursor: pointer;
+}
+
+/* FIN DE SÉANCE — résumé */
+.sc-done {
+  position: absolute; inset: 0; z-index: 5;
+  background: color-mix(in srgb, var(--bg-deep) 94%, transparent);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+  padding: 24px; text-align: center;
+}
+.sc-done-emoji { font-size: 44px; }
+.sc-done-title { font-family: 'Fraunces', Georgia, serif; font-size: 24px; font-weight: 600; }
+.sc-done-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; max-width: 340px; }
+.sc-done-tile {
+  background: var(--bg-surface); border: 1px solid rgba(224, 184, 74, 0.3);
+  border-radius: 14px; padding: 12px 8px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.sc-done-tile .n { font-family: 'Fraunces', Georgia, serif; font-size: 22px; font-weight: 700; color: var(--accent-bright); }
+.sc-done-tile .l { font-size: 10.5px; color: var(--text-dim); }
+.sc-done-home {
+  margin-top: 8px; border-radius: 14px; border: none; cursor: pointer;
+  background: linear-gradient(140deg, var(--primary), var(--primary-dark));
+  color: var(--text-light); font-weight: 600; font-size: 14px;
+  padding: 13px 22px; display: inline-flex; align-items: center; gap: 9px;
+}
+.sc-done-home i { color: var(--accent-bright); }
+
+/* ═══════════════════════════════════════════════════════════════
+   VUE MODE RAPIDE (#/rapide) — PAGE INDÉPENDANTE
+   ═══════════════════════════════════════════════════════════════ */
+.view-rapide { display: flex; flex-direction: column; width: 100%; max-width: 720px; margin: 0 auto; }
+.rap-head { padding: 16px 16px 10px; flex: 0 0 auto; }
+.rap-body {
+  flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 10px;
+  padding: 0 16px 14px; overflow: hidden;
+}
+.rap-hero {
+  position: relative; flex: 0 0 auto; border-radius: 18px; padding: 14px 16px;
+  border: 1px solid rgba(224, 184, 74, 0.28);
+  background:
+    radial-gradient(120px 80px at 90% 10%, rgba(224, 184, 74, 0.14), transparent 70%),
+    linear-gradient(150deg, var(--primary), var(--primary-dark));
+  display: flex; flex-direction: column; gap: 2px; overflow: hidden;
+}
+.rap-hero-num {
+  font-family: 'Fraunces', Georgia, serif; font-size: 26px; font-weight: 700;
+  color: var(--accent-bright); line-height: 1.1;
+}
+.rap-hero-sub { font-size: 12px; color: rgba(245, 240, 232, 0.72); }
+html[data-theme="light"] .rap-hero { background: linear-gradient(150deg, var(--primary), var(--primary-dark)); }
+html[data-theme="light"] .rap-hero-num { color: #E8C869; }
+html[data-theme="light"] .rap-hero-sub { color: rgba(245, 240, 232, 0.78); }
+.rap-list-head { flex: 0 0 auto; display: flex; align-items: baseline; justify-content: space-between; padding: 2px 2px 0; }
+.rap-list {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 7px; scrollbar-width: none;
+  mask-image: linear-gradient(to bottom, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent);
+}
+.rap-list::-webkit-scrollbar { display: none; }
+.rap-item {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-card); border: 1px solid var(--card-border);
+  border-radius: 13px; padding: 10px 12px; flex: 0 0 auto;
+}
+.rap-item-icon {
+  width: 32px; height: 32px; border-radius: 10px; flex: 0 0 auto;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--accent-dim); color: var(--accent-bright); font-size: 13px;
+}
+.rap-item-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.rap-item-name { font-size: 13px; font-weight: 600; color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rap-item-meta { font-size: 10.5px; color: var(--text-muted); }
+.rap-item-due { flex: 0 0 auto; font-size: 11px; font-weight: 700; color: var(--accent-bright); background: var(--accent-dim); border-radius: 999px; padding: 4px 9px; }
+.rap-go {
+  flex: 0 0 auto; margin-top: 2px;
+  border: none; border-radius: 16px; cursor: pointer;
+  background: linear-gradient(140deg, var(--accent), #8a6508);
+  color: #141210; font-size: 15px; font-weight: 700;
+  padding: 15px; display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+  box-shadow: 0 6px 18px rgba(184, 134, 11, 0.35);
+  transition: transform 0.12s ease;
+}
+.rap-go:active { transform: scale(0.97); }
+.rap-go.loading { opacity: 0.75; pointer-events: none; }
+
+/* ═══════════════════════════════════════════════════════════════
+   VUE MODE FOCUS (#/focus) — PAGE INDÉPENDANTE
+   ═══════════════════════════════════════════════════════════════ */
+.view-focus { display: flex; flex-direction: column; width: 100%; max-width: 720px; margin: 0 auto; }
+.foc-head { padding: 16px 16px 10px; flex: 0 0 auto; }
+.foc-body {
+  flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 12px;
+  padding: 0 16px 14px; overflow: hidden;
+}
+.foc-tabs {
+  flex: 0 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+  background: var(--bg-elev); border: 1px solid var(--card-border);
+  border-radius: 14px; padding: 4px; position: relative;
+}
+.foc-tab {
+  border: none; background: transparent; border-radius: 11px;
+  color: var(--text-dim); font-size: 13px; font-weight: 600; padding: 10px 6px; cursor: pointer;
+}
+.foc-tab.active { background: var(--accent-dim); color: var(--accent-bright); }
+.foc-panel {
+  flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; gap: 14px;
+  align-items: center; justify-content: center;
+  background: var(--bg-card); border: 1px solid var(--card-border);
+  border-radius: 20px; padding: 18px 16px;
+}
+.foc-panel[hidden] { display: none !important; }
+.foc-clock-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.foc-clock {
+  font-family: 'Fraunces', Georgia, serif; font-size: clamp(46px, 13vw, 64px);
+  font-weight: 700; color: var(--text-light); line-height: 1;
+  font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
+}
+.foc-clock.running { color: var(--accent-bright); }
+.foc-clock-sub { font-size: 12px; color: var(--text-dim); }
+.foc-presets { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.foc-preset {
+  border: 1px solid var(--card-border); background: var(--bg-elev);
+  color: var(--text-dim); border-radius: 12px; padding: 9px 16px;
+  font-size: 13px; font-weight: 700; cursor: pointer; min-width: 52px;
+}
+.foc-preset.active { border-color: rgba(224, 184, 74, 0.55); background: var(--accent-dim); color: var(--accent-bright); }
+.foc-go {
+  border: none; border-radius: 16px; cursor: pointer;
+  background: linear-gradient(140deg, var(--primary), var(--primary-dark));
+  border: 1px solid rgba(224, 184, 74, 0.4);
+  color: var(--text-light); font-size: 14px; font-weight: 700;
+  padding: 14px 26px; display: inline-flex; align-items: center; gap: 9px;
+}
+.foc-go i { color: var(--accent-bright); }
+.foc-go:active { transform: scale(0.97); }
+.foc-cycle-info { display: flex; flex-direction: column; gap: 9px; width: 100%; }
+.foc-cycle-row {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg-elev); border: 1px solid var(--card-border);
+  border-radius: 12px; padding: 11px 13px; font-size: 12.5px; color: var(--text-dim);
+}
+.foc-cycle-row i { color: var(--accent-bright); font-size: 12px; flex: 0 0 auto; }
+.foc-cycle-row b { margin-left: auto; font-size: 14px; color: var(--text-light); font-variant-numeric: tabular-nums; }
+.foc-note { flex: 0 0 auto; font-size: 11.5px; color: var(--text-muted); text-align: center; font-style: italic; }
+
+/* Minuteur actif (plein cadre, fiches hors de la vue) */
+.foc-run-wrap { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 18px; z-index: 4; background: var(--bg); padding: 24px; text-align: center; }
+.view-focus.running .foc-run-wrap { display: flex; }
+.view-focus.running .foc-head, .view-focus.running .foc-body { visibility: hidden; }
+.foc-run-clock {
+  font-family: 'Fraunces', Georgia, serif; font-size: clamp(64px, 20vw, 96px);
+  font-weight: 700; color: var(--accent-bright); line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.foc-run-sub { font-size: 13px; color: var(--text-dim); }
+.foc-run-actions { display: flex; gap: 10px; }
+.foc-run-stop {
+  border-radius: 14px; border: 1px solid rgba(184, 92, 58, 0.45);
+  background: transparent; color: var(--danger); font-weight: 600; font-size: 13px;
+  padding: 11px 20px; cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VUE BIENVENUE (#/bienvenue) — PAGE PUBLIQUE
+   Aucune barre (body.welcome-mode) ; le contenu défile À
+   L'INTÉRIEUR du cadre. Composition 100 % ARVX : héros calé à
+   gauche, anneau or décoratif, stats en ruban, features en
+   liste à filets, FAQ numérotée — rien de commun avec la
+   référence.
+   ═══════════════════════════════════════════════════════════════ */
+body.welcome-mode { padding-bottom: 0; }
+body.welcome-mode .header,
+body.welcome-mode .bottom-nav { display: none !important; }
+.view-bienvenue { position: relative; }
+.wel-scroll {
+  position: absolute; inset: 0;
+  overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none;
+}
+.wel-scroll::-webkit-scrollbar { display: none; }
+.wel-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(420px 300px at 110% -8%, rgba(184, 134, 11, 0.16), transparent 65%),
+    radial-gradient(360px 260px at -14% 34%, rgba(26, 58, 42, 0.5), transparent 70%);
+}
+.wel-header {
+  position: sticky; top: 0; z-index: 3;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  background: color-mix(in srgb, var(--bg-dark) 86%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+}
+.wel-logo { font-family: 'Fraunces', Georgia, serif; font-weight: 700; font-size: 20px; letter-spacing: 0.02em; color: var(--text-light); text-decoration: none; }
+.wel-logo span { color: var(--accent-bright); }
+.wel-header-right { display: flex; align-items: center; gap: 10px; }
+.wel-signin {
+  font-size: 12.5px; font-weight: 700; text-decoration: none;
+  color: #141210; background: linear-gradient(140deg, var(--accent), #8a6508);
+  padding: 8px 14px; border-radius: 999px;
+}
+.wel-content { position: relative; z-index: 1; padding: 10px 18px 26px; display: flex; flex-direction: column; gap: 18px; max-width: 640px; margin: 0 auto; }
+.wel-hero { display: flex; flex-direction: column; gap: 12px; padding-top: 14px; position: relative; }
+.wel-hero::before {
+  content: ''; position: absolute; right: -34px; top: -26px;
+  width: 132px; height: 132px; border-radius: 50%;
+  border: 2px solid rgba(224, 184, 74, 0.22); pointer-events: none;
+}
+.wel-hero::after {
+  content: ''; position: absolute; right: -8px; top: 4px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: rgba(224, 184, 74, 0.14); pointer-events: none;
+}
+.wel-hero-kicker {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent-bright);
+}
+.wel-hero-kicker::before { content: ''; width: 22px; height: 2px; border-radius: 2px; background: var(--accent-bright); }
+.wel-hero-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: clamp(30px, 8.4vw, 44px); line-height: 1.08; font-weight: 600;
+  color: var(--text-light);
+}
+.wel-hero-title em { font-style: italic; color: var(--accent-bright); }
+.wel-hero-sub { font-size: 14px; line-height: 1.55; color: var(--text-dim); max-width: 420px; }
+.wel-cta {
+  margin-top: 6px; align-self: flex-start;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(140deg, var(--accent), #8a6508);
+  color: #141210; font-weight: 700; font-size: 14px; text-decoration: none;
+  padding: 13px 20px; border-radius: 14px;
+  box-shadow: 0 8px 22px rgba(184, 134, 11, 0.3);
+}
+.wel-cta:active { transform: scale(0.97); }
+.wel-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  background: var(--bg-card); border: 1px solid var(--card-border);
+  border-radius: 16px; padding: 12px 8px;
+}
+.wel-stat { display: flex; flex-direction: column; align-items: center; gap: 2px; text-align: center; }
+.wel-stat b { font-family: 'Fraunces', Georgia, serif; font-size: 18px; font-weight: 700; color: var(--accent-bright); }
+.wel-stat span { font-size: 9.5px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.wel-features { display: flex; flex-direction: column; gap: 9px; }
+.wel-feature {
+  display: grid; grid-template-columns: 40px 1fr; grid-template-rows: auto auto; column-gap: 12px;
+  background: var(--bg-card); border: 1px solid var(--card-border);
+  border-radius: 14px; padding: 12px 14px;
+}
+.wel-feature-icon {
+  grid-row: 1 / 3; width: 40px; height: 40px; border-radius: 12px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: linear-gradient(140deg, rgba(26, 58, 42, 0.9), rgba(10, 26, 18, 0.9));
+  border: 1px solid rgba(224, 184, 74, 0.3); color: var(--accent-bright); font-size: 14px;
+}
+.wel-feature b { font-size: 13.5px; color: var(--text-light); }
+.wel-feature > span:last-child { font-size: 12px; color: var(--text-dim); line-height: 1.45; }
+.wel-faq { display: flex; flex-direction: column; gap: 8px; }
+.wel-faq-title { font-family: 'Fraunces', Georgia, serif; font-size: 18px; font-weight: 600; margin-bottom: 2px; }
+.wel-faq-item {
+  background: var(--bg-card); border: 1px solid var(--card-border);
+  border-radius: 13px; padding: 0 14px; overflow: hidden;
+}
+.wel-faq-item summary {
+  list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px;
+  padding: 12px 0; font-size: 13px; font-weight: 600; color: var(--text-light);
+}
+.wel-faq-item summary::-webkit-details-marker { display: none; }
+.wel-faq-item summary i { margin-left: auto; color: var(--accent-bright); font-size: 11px; transition: transform 0.2s ease; }
+.wel-faq-item[open] summary i { transform: rotate(45deg); }
+.wel-faq-item p { font-size: 12.5px; color: var(--text-dim); line-height: 1.55; padding: 0 0 12px; }
+.wel-final { display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; padding: 16px 14px; border-radius: 18px; background: linear-gradient(150deg, var(--primary), var(--primary-dark)); border: 1px solid rgba(224, 184, 74, 0.3); }
+.wel-final-title { font-family: 'Fraunces', Georgia, serif; font-size: 20px; font-weight: 600; color: var(--text-light); }
+.wel-final .wel-cta { margin-top: 2px; }
+.wel-footer { text-align: center; font-size: 11px; color: var(--text-muted); padding-top: 4px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   MASCOTTE BAKO — personnage ORIGINAL (v0.13)
+   Corps vert de marque + casquette or + lunettes rondes.
+   Comportements : flotte (idle), cligne, parle, réfléchit,
+   célèbre, encourage, s'endort, s'assoit (focus), traverse
+   l'écran (walk). Bulle de message draggable.
+   ═══════════════════════════════════════════════════════════════ */
+.bako-layer {
+  position: fixed; z-index: 60;
+  right: 12px; bottom: calc(66px + var(--safe-bottom));
+  width: 118px; height: 128px;
+  pointer-events: none;
+  transition: right 0.3s ease, bottom 0.3s ease, opacity 0.3s ease;
+}
+body.auth-mode .bako-layer, body.welcome-mode .bako-layer { display: none !important; }
+.bako-layer[hidden] { display: none !important; }
+.bako-figure {
+  position: absolute; right: 0; bottom: 0;
+  width: 104px; height: 108px;
+  pointer-events: auto; cursor: grab;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.35));
+}
+.bako-figure:active { cursor: grabbing; }
+.bako-figure svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+/* Corps : respiration */
+.bako-anim-idle .bako-body { animation: bako-breathe 3.2s ease-in-out infinite; transform-origin: 52px 78px; }
+@keyframes bako-breathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-2.4px); } }
+
+/* Yeux : clignement périodique */
+.bako-eyes-l, .bako-eyes-r { transform-origin: center; animation: bako-blink 4.6s infinite; }
+@keyframes bako-blink { 0%, 94%, 100% { transform: scaleY(1); } 96.5% { transform: scaleY(0.08); } }
+
+/* Parle : la bouche s'anime */
+.bako-anim-talk .bako-mouth { animation: bako-talk 0.32s ease-in-out infinite alternate; transform-origin: center; }
+@keyframes bako-talk { from { transform: scaleY(0.5); } to { transform: scaleY(1.25); } }
+
+/* Réfléchit : tête penchée + petites bulles de pensée */
+.bako-anim-think .bako-head { animation: bako-tilt 2.6s ease-in-out infinite; transform-origin: 52px 52px; }
+@keyframes bako-tilt { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+.bako-think { opacity: 0; transition: opacity 0.25s ease; }
+.bako-anim-think .bako-think { opacity: 1; }
+.bako-anim-think .bako-think circle { animation: bako-thinkpop 1.8s ease-in-out infinite; transform-origin: center; }
+.bako-anim-think .bako-think circle:nth-child(2) { animation-delay: 0.3s; }
+.bako-anim-think .bako-think circle:nth-child(3) { animation-delay: 0.6s; }
+@keyframes bako-thinkpop { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+/* Célèbre : petit saut + bras ouverts */
+.bako-anim-cheer { animation: bako-jump 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) infinite alternate; transform-origin: 52px 100px; }
+@keyframes bako-jump { from { transform: translateY(0) scale(1); } to { transform: translateY(-9px) scale(1.04); } }
+
+/* Encourage : petite salutation du bras or */
+.bako-anim-wave .bako-arm-r { animation: bako-wave 0.7s ease-in-out infinite alternate; transform-origin: 74px 66px; }
+@keyframes bako-wave { from { transform: rotate(-6deg); } to { transform: rotate(24deg); } }
+
+/* Endormi : yeux fermés (paupières) + Zzz flottantes */
+.bako-anim-sleep .bako-eyes-open { opacity: 0; }
+.bako-anim-sleep .bako-eyes-closed { opacity: 1; }
+.bako-anim-sleep .bako-body { animation: bako-sleep 4s ease-in-out infinite; transform-origin: 52px 78px; }
+@keyframes bako-sleep { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.2px); } }
+.bako-zzz { opacity: 0; }
+.bako-anim-sleep .bako-zzz { opacity: 1; }
+.bako-anim-sleep .bako-zzz text { animation: bako-zzzfloat 2.6s ease-in-out infinite; }
+.bako-anim-sleep .bako-zzz text:nth-child(2) { animation-delay: 0.5s; }
+.bako-anim-sleep .bako-zzz text:nth-child(3) { animation-delay: 1s; }
+@keyframes bako-zzzfloat { 0% { transform: translate(0, 2px); opacity: 0.2; } 40% { opacity: 1; } 100% { transform: translate(3px, -5px); opacity: 0.15; } }
+
+/* Assis (focus) : plus de bob, jambes repliées */
+.bako-anim-sit .bako-body { animation: none; }
+.bako-anim-sit .bako-legs { transform: translateY(3px); }
+
+/* Traverse l'écran : déplacement géré en JS, jambes qui pedalent */
+.bako-anim-walk .bako-leg-l { animation: bako-step 0.5s ease-in-out infinite alternate; transform-origin: 44px 96px; }
+.bako-anim-walk .bako-leg-r { animation: bako-step 0.5s ease-in-out infinite alternate-reverse; transform-origin: 60px 96px; }
+@keyframes bako-step { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+
+/* Bulle de message — draggable */
+.bako-bubble {
+  position: absolute; right: 6px; bottom: 118px;
+  max-width: 160px; min-width: 96px;
+  background: var(--bg-surface); color: var(--text-light);
+  border: 1px solid rgba(224, 184, 74, 0.45);
+  border-radius: 14px; border-bottom-left-radius: 4px;
+  padding: 9px 11px;
+  font-size: 12px; line-height: 1.45; font-weight: 500;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+  pointer-events: auto; cursor: grab; user-select: none;
+  animation: bako-bubble-in 0.22s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+.bako-bubble:active { cursor: grabbing; }
+@keyframes bako-bubble-in { from { opacity: 0; transform: translateY(6px) scale(0.94); } to { opacity: 1; transform: translateY(0) scale(1); } }
+.bako-bubble[hidden] { display: none !important; }
+html[data-theme="light"] .bako-bubble { box-shadow: var(--shadow-warm); }
+
+/* Sur les pages à boutons pleins (rapide / focus / séance), Bako se
+   LÈVE au-dessus de la zone d'action : ni lui ni sa bulle ne peuvent
+   recouvrir GO, les durées ou les jugements. Hors accueil il devient
+   décoratif (pointer-events none sur la silhouette) — il ne bloque
+   plus jamais un bouton ; sa bulle, elle, reste draggable. */
+.bako-layer.bako-lift { bottom: calc(240px + var(--safe-bottom)); }
+.bako-layer.bako-lift2 { bottom: calc(300px + var(--safe-bottom)); }
+.bako-layer.bako-nodeco .bako-figure { pointer-events: none; }
+.bako-layer.bako-quiet .bako-bubble { display: none !important; }
+.bako-layer.bako-quiet .bako-figure { pointer-events: none; }
+.bako-layer.bako-quiet { right: 4px; bottom: calc(205px + var(--safe-bottom)); }
+.bako-layer.bako-quiet .bako-figure { transform: scale(0.8); transform-origin: bottom right; }
+
+/* Réduction des mouvements : Bako reste statique */
+@media (prefers-reduced-motion: reduce) {
+  .bako-anim-idle .bako-body, .bako-eyes-l, .bako-eyes-r, .bako-anim-talk .bako-mouth,
+  .bako-anim-think .bako-head, .bako-anim-cheer, .bako-anim-wave .bako-arm-r,
+  .bako-anim-walk .bako-leg-l, .bako-anim-walk .bako-leg-r, .bako-break-ring { animation: none !important; }
 }
