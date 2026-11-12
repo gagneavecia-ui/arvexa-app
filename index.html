@@ -25,6 +25,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="css/design-system.css">
+  <script type="module" src="js/ai.js"></script>
   <script type="module" src="js/main.js"></script>
   <script type="module" src="js/auth.js"></script>
   <script type="module" src="js/bako.js"></script>
@@ -608,7 +609,7 @@
           <span class="lib-title" data-i18n="reviser.titre">Mes cours</span>
           <span class="lib-avatar" aria-hidden="true">É</span>
           <button type="button" class="lib-add" id="libAdd">
-            <i class="fas fa-plus" aria-hidden="true"></i>
+            <i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i>
             <span data-i18n="reviser.ajouter">Ajouter</span>
           </button>
         </div>
@@ -694,7 +695,9 @@
           <span class="exam-hero-sub" data-i18n="examen.countdownSub">Un chapitre par jour garde ta longueur d’avance.</span>
         </div>
 
-        <!-- Outils d'examen -->
+        <!-- Outils d'examen (v0.14 : GENERÉS PAR IA — la passerelle
+             /api/ai est branchée ; les badges passent de « Bientôt »
+             à une pastille IA vivante) -->
         <div class="exam-tools">
           <button type="button" class="exam-tool" id="examQuiz">
             <span class="exam-tool-icon gold" aria-hidden="true"><i class="fas fa-bolt"></i></span>
@@ -702,7 +705,7 @@
               <span class="exam-tool-name" data-i18n="examen.quiz">Quiz éclair</span>
               <span class="exam-tool-sub" data-i18n="examen.quizSub">5 questions · générées pour toi</span>
             </span>
-            <span class="exam-soon" data-i18n="examen.bientot">Bientôt</span>
+            <span class="exam-ai-badge" aria-hidden="true"><i class="fas fa-wand-magic-sparkles"></i>IA</span>
           </button>
           <button type="button" class="exam-tool" id="examWhite">
             <span class="exam-tool-icon green" aria-hidden="true"><i class="fas fa-file-circle-check"></i></span>
@@ -710,7 +713,7 @@
               <span class="exam-tool-name" data-i18n="examen.blanc">Examen blanc</span>
               <span class="exam-tool-sub" data-i18n="examen.blancSub">Dans les conditions réelles</span>
             </span>
-            <span class="exam-soon" data-i18n="examen.bientot">Bientôt</span>
+            <span class="exam-ai-badge" aria-hidden="true"><i class="fas fa-wand-magic-sparkles"></i>IA</span>
           </button>
         </div>
 
@@ -894,7 +897,7 @@
         <button type="button" class="prof-logout" id="profLogout">
           <i class="fas fa-sign-out-alt" aria-hidden="true"></i><span data-i18n="menu.deconnexion">Déconnexion</span>
         </button>
-        <p class="prof-version">ARVX v0.13 · Firebase</p>
+        <p class="prof-version">ARVX v0.14 · Firebase + IA</p>
       </div>
     </section>
 
@@ -1276,6 +1279,58 @@
           <span id="arvexaConfirmOkText" data-i18n="confirm.ok">Confirmer</span>
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       VOILE IA GÉNÉRIQUE (v0.14) — une seule feuille pleine
+       cadre pour les trois outils générés : QUIZ ÉCLAIR,
+       EXAMEN BLANC, AJOUTE UN COURS. Le contenu des étapes
+       (choix matière, chargement, question, résultat) est
+       rendu par js/main.js dans #aiStage. Défilement
+       INTERNE uniquement — le document ne défile jamais.
+       ══════════════════════════════════════════════════════ -->
+  <div class="ai-veil" id="aiVeil" hidden>
+    <div class="ai-sheet" role="dialog" aria-modal="true" aria-labelledby="aiTitle">
+      <header class="ai-head">
+        <span class="ai-head-icon" id="aiHeadIcon" aria-hidden="true"><i class="fas fa-bolt"></i></span>
+        <div class="ai-head-body">
+          <span class="ai-head-title" id="aiTitle">—</span>
+          <span class="ai-head-sub" id="aiSub">—</span>
+        </div>
+        <button type="button" class="ai-close" id="aiClose" aria-label="Fermer">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </header>
+      <div class="ai-stage" id="aiStage"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       CHAT BAKO (v0.14) — tap sur la mascotte → panneau de
+       discussion avec le camarade IA. Historique en mémoire,
+       réponse courte, persona côté serveur. Défilement
+       INTERNE des messages uniquement.
+       ══════════════════════════════════════════════════════ -->
+  <div class="ai-veil ai-veil-chat" id="bakoChatVeil" hidden>
+    <div class="ai-sheet ai-chat-sheet" role="dialog" aria-modal="true" aria-labelledby="aiChatTitle">
+      <header class="ai-head">
+        <span class="ai-head-icon chat" aria-hidden="true"><i class="fas fa-comment-dots"></i></span>
+        <div class="ai-head-body">
+          <span class="ai-head-title" id="aiChatTitle">Bako</span>
+          <span class="ai-head-sub" id="aiChatSub">—</span>
+        </div>
+        <button type="button" class="ai-close" id="aiChatClose" aria-label="Fermer">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+      </header>
+      <div class="ai-chat-log" id="aiChatLog" aria-live="polite"></div>
+      <form class="ai-chat-form" id="aiChatForm" autocomplete="off">
+        <input type="text" id="aiChatInput" maxlength="280" data-i18n-ph="ai.chatPh" placeholder="Demande quelque chose…">
+        <button type="submit" class="ai-chat-send" id="aiChatSend" aria-label="Envoyer">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i>
+        </button>
+      </form>
     </div>
   </div>
 

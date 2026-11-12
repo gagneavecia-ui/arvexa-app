@@ -515,6 +515,50 @@ const I18N = {
     'profil.inviter': 'Inviter un camarade',
     'profil.inviteOk': 'Lien d’invitation copié — envoie-le à un camarade !',
     'profil.inviteShare': 'Révise le BAC avec moi sur ARVX :',
+    /* ── v0.14 : IA (quiz · examen blanc · cours · chat Bako) ── */
+    'ai.quiz.title': 'Quiz éclair',
+    'ai.quiz.pickSub': 'Choisis une matière — 5 questions générées pour toi.',
+    'ai.exam.title': 'Examen blanc',
+    'ai.exam.pickSub': 'Dans les conditions réelles — tu réponds, puis tu te corriges.',
+    'ai.exam.lenSub': 'Combien de questions ?',
+    'ai.q': 'Question {n} / {t}',
+    'ai.quiz.fin': 'Quiz terminé !',
+    'ai.exam.fin': 'Examen terminé !',
+    'ai.quiz.rec': '{n} bonnes réponses en plus dans ta progression.',
+    'ai.next': 'Suivant',
+    'ai.see': 'Voir la réponse',
+    'ai.model': 'Réponse attendue',
+    'ai.j0': 'Raté',
+    'ai.j1': 'Moyen',
+    'ai.j2': 'Réussi',
+    'ai.redo': 'Recommencer',
+    'ai.close': 'Fermer',
+    'ai.loadingQuiz': 'Bako prépare tes questions…',
+    'ai.loadingExam': 'Bako rédige ton examen…',
+    'ai.loadingCourse': 'Bako structure ton cours…',
+    'ai.err': 'L’IA est indisponible — réessaie dans un instant.',
+    'ai.start': 'GO',
+    'ai.course.title': 'Ajoute un cours',
+    'ai.course.sub': 'Colle ta leçon — Bako en fait des fiches à réviser.',
+    'ai.course.fTitle': 'Titre du cours',
+    'ai.course.fTitlePh': 'ex. : La génétique mendélienne',
+    'ai.course.fMat': 'Matière',
+    'ai.course.fContent': 'Ta leçon (colle-la ici)',
+    'ai.course.fContentPh': 'Colle ton cours… ou décris le chapitre à couvrir.',
+    'ai.course.go': 'Créer mes fiches',
+    'ai.course.mine': 'Mes cours ajoutés',
+    'ai.course.cards': '{n} fiches',
+    'ai.course.revise': 'Réviser',
+    'ai.course.del': 'Supprimer ce cours ?',
+    'ai.course.delSub': '« {t} » sera retiré de tes fiches. Les révisions déjà faites restent.',
+    'ai.course.deleted': 'Cours supprimé.',
+    'ai.course.saved': 'Cours ajouté — {n} fiches prêtes !',
+    'ai.course.summary': 'Aperçu',
+    'ai.course.notions': '{n} notions repérées',
+    'ai.chat.sub': 'Ton camarade IA — pose ta question.',
+    'ai.chatPh': 'Demande quelque chose…',
+    'ai.chat.hello': 'Salut ! Demande-moi une définition, un exercice ou une astuce.',
+    'ai.chat.err': 'Bako n’arrive pas à répondre — réessaie.',
   },
   an: {
     'salut.matin': 'Good morning',
@@ -773,6 +817,50 @@ const I18N = {
     'profil.inviter': 'Invite a classmate',
     'profil.inviteOk': 'Invite link copied — send it to a classmate!',
     'profil.inviteShare': 'Revise the BAC with me on ARVX:',
+    /* ── v0.14 : IA (quiz · examen blanc · cours · chat Bako) ── */
+    'ai.quiz.title': 'Flash quiz',
+    'ai.quiz.pickSub': 'Pick a subject — 5 questions generated for you.',
+    'ai.exam.title': 'Mock exam',
+    'ai.exam.pickSub': 'Real conditions — answer first, then mark yourself.',
+    'ai.exam.lenSub': 'How many questions?',
+    'ai.q': 'Question {n} / {t}',
+    'ai.quiz.fin': 'Quiz complete!',
+    'ai.exam.fin': 'Exam complete!',
+    'ai.quiz.rec': '{n} correct answers added to your progress.',
+    'ai.next': 'Next',
+    'ai.see': 'Show the answer',
+    'ai.model': 'Expected answer',
+    'ai.j0': 'Missed',
+    'ai.j1': 'So-so',
+    'ai.j2': 'Got it',
+    'ai.redo': 'Redo',
+    'ai.close': 'Close',
+    'ai.loadingQuiz': 'Bako is preparing your questions…',
+    'ai.loadingExam': 'Bako is writing your exam…',
+    'ai.loadingCourse': 'Bako is structuring your course…',
+    'ai.err': 'AI is unavailable — try again in a moment.',
+    'ai.start': 'GO',
+    'ai.course.title': 'Add a course',
+    'ai.course.sub': 'Paste your lesson — Bako turns it into cards to review.',
+    'ai.course.fTitle': 'Course title',
+    'ai.course.fTitlePh': 'e.g. Mendelian genetics',
+    'ai.course.fMat': 'Subject',
+    'ai.course.fContent': 'Your lesson (paste it here)',
+    'ai.course.fContentPh': 'Paste your course… or describe the chapter to cover.',
+    'ai.course.go': 'Create my cards',
+    'ai.course.mine': 'My added courses',
+    'ai.course.cards': '{n} cards',
+    'ai.course.revise': 'Revise',
+    'ai.course.del': 'Delete this course?',
+    'ai.course.delSub': '“{t}” will be removed from your cards. Past reviews remain.',
+    'ai.course.deleted': 'Course deleted.',
+    'ai.course.saved': 'Course added — {n} cards ready!',
+    'ai.course.summary': 'Preview',
+    'ai.course.notions': '{n} notions spotted',
+    'ai.chat.sub': 'Your AI study buddy — ask away.',
+    'ai.chatPh': 'Ask something…',
+    'ai.chat.hello': 'Hi! Ask me for a definition, an exercise or a tip.',
+    'ai.chat.err': 'Bako can’t answer right now — try again.',
   },
 };
 
@@ -821,6 +909,8 @@ function applyLang() {
   updateFocus();
   updateBienvenue();
   updateSeanceLabels();
+  /* v0.14 — le bloc « Mes cours ajoutés » suit la langue */
+  renderCustomCourses();
 }
 
 function setLang(next) {
@@ -1886,17 +1976,18 @@ document.getElementById('libRevise')?.addEventListener('click', () => {
   updateExamen();
 });
 
-/* Réviser : « Ajouter » → information honnête (import à venir) */
+/* Réviser : « Ajouter » → AJOUTE UN COURS (v0.14) — la leçon collée
+   est structurée par l'IA en fiches réelles qui rejoignent la piscine
+   de révision (localStorage 'arvexa-custom-courses'). */
 document.getElementById('libAdd')?.addEventListener('click', () => {
-  arvxToast(t('reviser.ajoutBientot'));
+  openAISheet('course');
 });
 
-/* Examen : Quiz éclair / Examen blanc → bientôt (clés IA à venir) */
-['examQuiz', 'examWhite'].forEach((id) => {
-  document.getElementById(id)?.addEventListener('click', () => {
-    arvxToast(t('examen.bientotToast'));
-  });
-});
+/* Examen : Quiz éclair / Examen blanc → GÉNÉRÉS PAR IA (v0.14).
+   La passerelle /api/ai tient les clés côté serveur ; le client ne
+   fait que demander une tâche. */
+document.getElementById('examQuiz')?.addEventListener('click', () => openAISheet('quiz'));
+document.getElementById('examWhite')?.addEventListener('click', () => openAISheet('exam'));
 
 /* Profil : abonnement / rappels → bientôt */
 ['profAbo', 'profNotifs'].forEach((id) => {
@@ -1980,13 +2071,21 @@ function addActivityMinutes(min, revisions, lastTitle) {
 /* ── Chargement des fiches réelles (un seul fetch, en cache) ── */
 let CARDS = null;
 let CARDS_LOADING = null;
+let CARDS_BASE = null; /* v0.14 : les 1 884 fiches du dépôt, hors cours ajoutés */
 
 function loadCards() {
   if (CARDS) return Promise.resolve(CARDS);
   if (!CARDS_LOADING) {
     CARDS_LOADING = fetch('data/cards.json')
       .then((r) => r.json())
-      .then((j) => { CARDS = j.cards || []; return CARDS; })
+      .then((j) => {
+        /* v0.14 — les fiches réelles s'ajoutent les fiches des cours
+           créés par l'élève (Ajoute un cours) : une seule piscine,
+           le SRS ne fait pas la différence. */
+        CARDS_BASE = j.cards || [];
+        CARDS = CARDS_BASE.concat(customToCards());
+        return CARDS;
+      })
       .catch(() => { CARDS = []; return CARDS; });
   }
   return CARDS_LOADING;
@@ -2294,7 +2393,11 @@ function renderSeance() {
 
   const sObj = SUBJECTS.find((s2) => s2.id === card.s);
   document.getElementById('scSubject').textContent = sObj ? (lang === 'an' ? sObj.an : sObj.fr) : card.s;
-  document.getElementById('scChapter').textContent = 'Ch. ' + card.c + (card.ct ? ' · ' + card.ct : '');
+  /* v0.14 — les fiches des cours ajoutés n'ont pas de chapitre :
+     on affiche le titre du cours à la place. */
+  document.getElementById('scChapter').textContent = card.c
+    ? 'Ch. ' + card.c + (card.ct ? ' · ' + card.ct : '')
+    : (card.ct || '—');
   document.getElementById('scQ').textContent = questionOf(card);
 
   const aEl = document.getElementById('scA');
@@ -2653,6 +2756,673 @@ function endSeanceBreak() {
 
 document.getElementById('scBreakSkip')?.addEventListener('click', () => endSeanceBreak());
 
+/* ═══════════════════════════════════════════════════════════════════
+   V0.14 — INTELLIGENCE ARTIFICIELLE (toutes les fonctions générées)
+   · UNE passerelle serveur (/api/ai) tient les clés — le client ne
+     demande que des tâches pédagogiques (js/ai.js = transport).
+   · QUIZ ÉCLAIR (#/examen) — 5 QCM générés, corrigés en direct, le
+     score rejoint la progression réelle (a.quiz).
+   · EXAMEN BLANC (#/examen) — questions ouvertes type épreuve :
+     l'élève répond dans sa tête, révèle la réponse attendue, puis
+     s'auto-corrige (Raté / Moyen / Réussi). Les minutes réelles
+     rejoignent l'activité.
+   · AJOUTE UN COURS (#/reviser) — la leçon collée devient un cours
+     avec fiches, stocké en local, fusionné dans la piscine CARDS :
+     il alimente séance du jour, mode rapide et SRS comme les autres.
+   · CHAT BAKO — tap sur la mascotte → discussion courte avec le
+     camarade IA (persona et garde-fous côté serveur).
+   Aucun défilement du document : tout tient dans la feuille IA,
+   défilement interne uniquement.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── COURS AJOUTÉS (localStorage 'arvexa-custom-courses') ── */
+const CUSTOM_KEY = 'arvexa-custom-courses';
+
+function getCustom() {
+  try {
+    const a = JSON.parse(localStorage.getItem(CUSTOM_KEY) || 'null');
+    return Array.isArray(a) ? a : [];
+  } catch { return []; }
+}
+
+function setCustom(list) {
+  try { localStorage.setItem(CUSTOM_KEY, JSON.stringify(list)); } catch { /* stockage indisponible */ }
+}
+
+function customToCards() {
+  const out = [];
+  getCustom().forEach((c) => {
+    (c.cards || []).forEach((card, n) => {
+      out.push({
+        i: 'x:' + c.id + ':' + n,   /* jamais de collision avec le dépôt */
+        s: c.s,                     /* matière choisie parmi les 7 */
+        c: 0,                       /* pas de chapitre → titre du cours */
+        ct: c.title,
+        t: 'n',
+        q: String(card.q || ''),
+        a: String(card.a || ''),
+      });
+    });
+  });
+  return out;
+}
+
+function remergeCards() {
+  if (CARDS_BASE) CARDS = CARDS_BASE.concat(customToCards());
+}
+
+/* Bloc « Mes cours ajoutés » de la bibliothèque (au-dessus du héros) */
+function renderCustomCourses() {
+  const body = document.querySelector('.lib-body');
+  if (!body) return;
+  let box = document.getElementById('libCustom');
+  const list = getCustom();
+
+  if (!list.length) {
+    if (box) box.remove();
+    return;
+  }
+  if (!box) {
+    box = document.createElement('div');
+    box.className = 'lib-custom';
+    box.id = 'libCustom';
+    body.insertBefore(box, body.firstChild);
+  }
+
+  box.innerHTML =
+    '<div class="lib-subjects-head"><span class="lib-subjects-title">' +
+      t('ai.course.mine') + '</span><span class="lib-subjects-count">' +
+      list.length + '</span></div>' +
+    list.map((c) => {
+      const sObj = SUBJECTS.find((s2) => s2.id === c.s);
+      return (
+        '<div class="ai-course-card" data-id="' + c.id + '">' +
+          '<span class="ai-course-badge" aria-hidden="true"><i class="fas fa-wand-magic-sparkles"></i>IA</span>' +
+          '<div class="ai-course-body">' +
+            '<span class="ai-course-name"></span>' +
+            '<span class="ai-course-meta">' +
+              (sObj ? (lang === 'an' ? sObj.an : sObj.fr) : '') + ' · ' +
+              t('ai.course.cards').replace('{n}', String((c.cards || []).length)) +
+            '</span>' +
+          '</div>' +
+          '<button type="button" class="ai-course-go" data-act="cstart" aria-label="' + t('ai.course.revise') + '">' +
+            '<i class="fas fa-play" aria-hidden="true"></i>' +
+          '</button>' +
+          '<button type="button" class="ai-course-x" data-act="cdel" aria-label="' + t('ai.course.deleted') + '">' +
+            '<i class="fas fa-trash-can" aria-hidden="true"></i>' +
+          '</button>' +
+        '</div>'
+      );
+    }).join('');
+
+  /* Titre inséré par textContent (le contenu vient de l'IA) */
+  box.querySelectorAll('.ai-course-card').forEach((el) => {
+    const c = list.find((x) => x.id === el.dataset.id);
+    const nameEl = el.querySelector('.ai-course-name');
+    if (c && nameEl) nameEl.textContent = c.title;
+  });
+}
+
+/* Clics du bloc cours ajoutés : réviser / supprimer (délégation) */
+document.querySelector('.lib-body')?.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-act]');
+  if (!btn) return;
+  const cardEl = btn.closest('.ai-course-card');
+  if (!cardEl) return;
+  const id = cardEl.dataset.id;
+  const course = getCustom().find((c) => c.id === id);
+  if (!course) return;
+
+  if (btn.dataset.act === 'cstart') {
+    const queue = (course.cards || []).map((card, n) => ({
+      i: 'x:' + course.id + ':' + n, s: course.s, c: 0, ct: course.title,
+      t: 'n', q: String(card.q || ''), a: String(card.a || ''),
+    })).sort(() => Math.random() - 0.5);
+    if (!queue.length) return;
+    startSeance(queue, { mode: 'jour' });
+    goRoute('seance');
+  } else if (btn.dataset.act === 'cdel') {
+    window.arvexaConfirm({
+      title: t('ai.course.del'),
+      message: t('ai.course.delSub').replace('{t}', course.title),
+      icon: '🗑️',
+      confirmText: t('confirm.ok'),
+      cancelText: t('confirm.cancel'),
+      variant: 'danger',
+      onConfirm: () => {
+        setCustom(getCustom().filter((c) => c.id !== id));
+        remergeCards();
+        computeJour();
+        updateJour();
+        updateRapide();
+        renderCustomCourses();
+        arvxToast(t('ai.course.deleted'));
+      },
+    });
+  }
+});
+
+/* ── FEUILLE IA GÉNÉRIQUE (quiz / examen / cours) ── */
+const AI_VEIL = document.getElementById('aiVeil');
+const AI_STAGE = document.getElementById('aiStage');
+const AI_STATE = {
+  mode: null, step: 'pick', data: null, idx: 0,
+  picked: null, answers: [], subject: null, len: 10,
+  startAt: 0, result: null,
+};
+
+function subjectName(id) {
+  const s2 = SUBJECTS.find((x) => x.id === id);
+  return s2 ? (lang === 'an' ? s2.an : s2.fr) : '';
+}
+
+function openAISheet(mode) {
+  if (!AI_VEIL || !AI_STAGE) return;
+  if (!window.ARVXA_AI || !window.ARVXA_AI.ok()) { arvxToast(t('ai.err'), 'error'); return; }
+  AI_STATE.mode = mode;
+  AI_STATE.step = 'pick';
+  AI_STATE.data = null;
+  AI_STATE.idx = 0;
+  AI_STATE.picked = null;
+  AI_STATE.answers = [];
+  AI_STATE.subject = null;
+  AI_STATE.len = 10;
+  AI_STATE.result = null;
+  const icon = document.getElementById('aiHeadIcon');
+  if (icon) {
+    icon.innerHTML = mode === 'course'
+      ? '<i class="fas fa-wand-magic-sparkles"></i>'
+      : (mode === 'exam' ? '<i class="fas fa-file-circle-check"></i>' : '<i class="fas fa-bolt"></i>');
+    icon.classList.toggle('chat', false);
+  }
+  document.body.classList.add('ai-open');
+  AI_VEIL.hidden = false;
+  renderAI();
+}
+
+function closeAISheet() {
+  if (!AI_VEIL) return;
+  AI_VEIL.hidden = true;
+  document.body.classList.remove('ai-open');
+  AI_STATE.mode = null;
+}
+
+document.getElementById('aiClose')?.addEventListener('click', closeAISheet);
+AI_VEIL?.addEventListener('click', (e) => { if (e.target === AI_VEIL) closeAISheet(); });
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (AI_VEIL && !AI_VEIL.hidden) closeAISheet();
+    if (CHAT_VEIL && !CHAT_VEIL.hidden) closeBakoChat();
+  }
+});
+
+function aiChipsHTML(small) {
+  return SUBJECTS.map((s2) =>
+    '<button type="button" class="ai-chip' + (small ? ' small' : '') +
+    (AI_STATE.subject === s2.id ? ' sel' : '') + '" data-act="pickSubject" data-subject="' + s2.id + '">' +
+      '<i class="fas ' + s2.icon + '" aria-hidden="true"></i>' +
+      (lang === 'an' ? s2.an : s2.fr) +
+    '</button>'
+  ).join('');
+}
+
+function setAIHead(titleKey, subText) {
+  const titleEl = document.getElementById('aiTitle');
+  const subEl = document.getElementById('aiSub');
+  if (titleEl) titleEl.textContent = t(titleKey);
+  if (subEl) subEl.textContent = subText;
+}
+
+function renderAI() {
+  if (!AI_STAGE || !AI_STATE.mode) return;
+  const m = AI_STATE.mode;
+
+  if (AI_STATE.step === 'pick') {
+    if (m === 'quiz') {
+      setAIHead('ai.quiz.title', t('ai.quiz.pickSub'));
+      AI_STAGE.innerHTML =
+        '<div class="ai-chips">' + aiChipsHTML(false) + '</div>' +
+        '<div class="ai-actions"><button type="button" class="ai-go" data-act="go" disabled>' +
+          t('ai.start') + '</button></div>';
+    } else if (m === 'exam') {
+      setAIHead('ai.exam.title', t('ai.exam.pickSub'));
+      AI_STAGE.innerHTML =
+        '<div class="ai-chips">' + aiChipsHTML(false) + '</div>' +
+        '<span class="ai-legend">' + t('ai.exam.lenSub') + '</span>' +
+        '<div class="ai-chips small">' +
+          '<button type="button" class="ai-chip small' + (AI_STATE.len === 5 ? ' sel' : '') + '" data-act="setLen" data-len="5">5</button>' +
+          '<button type="button" class="ai-chip small' + (AI_STATE.len === 10 ? ' sel' : '') + '" data-act="setLen" data-len="10">10</button>' +
+        '</div>' +
+        '<div class="ai-actions"><button type="button" class="ai-go" data-act="go" disabled>' +
+          t('ai.start') + '</button></div>';
+    } else {
+      setAIHead('ai.course.title', t('ai.course.sub'));
+      AI_STAGE.innerHTML =
+        '<label class="ai-field"><span>' + t('ai.course.fTitle') + '</span>' +
+          '<input type="text" id="aiCourseTitle" maxlength="120" placeholder="' + t('ai.course.fTitlePh') + '"></label>' +
+        '<span class="ai-legend">' + t('ai.course.fMat') + '</span>' +
+        '<div class="ai-chips small">' + aiChipsHTML(true) + '</div>' +
+        '<label class="ai-field"><span>' + t('ai.course.fContent') + '</span>' +
+          '<textarea id="aiCourseContent" rows="5" maxlength="12000" placeholder="' + t('ai.course.fContentPh') + '"></textarea></label>' +
+        '<div class="ai-actions"><button type="button" class="ai-go" data-act="courseGo" disabled>' +
+          t('ai.course.go') + '</button></div>';
+    }
+    return;
+  }
+
+  if (AI_STATE.step === 'loading') {
+    const msg = m === 'quiz' ? t('ai.loadingQuiz') : (m === 'exam' ? t('ai.loadingExam') : t('ai.loadingCourse'));
+    AI_STAGE.innerHTML =
+      '<div class="ai-loading"><span class="ai-spinner" aria-hidden="true"></span><p></p></div>';
+    AI_STAGE.querySelector('.ai-loading p').textContent = msg;
+    return;
+  }
+
+  if (AI_STATE.step === 'play') {
+    if (m === 'quiz') renderAIQuiz();
+    else renderAIExam();
+    return;
+  }
+
+  if (AI_STATE.step === 'preview') { renderAICoursePreview(); return; }
+  if (AI_STATE.step === 'done') { renderAIDone(); return; }
+}
+
+/* ── Quiz éclair : QCM, correction immédiate ── */
+function renderAIQuiz() {
+  const qs = AI_STATE.data.questions;
+  const q = qs[AI_STATE.idx];
+  const picked = AI_STATE.picked;
+  const answered = picked !== null;
+
+  setAIHead('ai.quiz.title', subjectName(AI_STATE.subject));
+  const dots = qs.map((_, i) =>
+    '<i class="' + (i < AI_STATE.idx ? 'past' : (i === AI_STATE.idx ? 'now' : '')) + '"></i>').join('');
+
+  AI_STAGE.innerHTML =
+    '<div class="ai-qhead"><span class="ai-qnum">' +
+      t('ai.q').replace('{n}', String(AI_STATE.idx + 1)).replace('{t}', String(qs.length)) +
+    '</span><span class="ai-qdots" aria-hidden="true">' + dots + '</span></div>' +
+    '<div class="ai-qcard"><span class="ai-qtxt"></span></div>' +
+    '<div class="ai-choices">' + q.choices.map((c, n) =>
+      '<button type="button" class="ai-choice" data-act="choice" data-n="' + n + '"' +
+      (answered ? ' disabled' : '') + '><span class="ai-choice-txt"></span></button>'
+    ).join('') + '</div>' +
+    '<p class="ai-why" ' + (answered ? '' : 'hidden') + '></p>' +
+    '<div class="ai-actions"><button type="button" class="ai-go" data-act="next"' +
+      (answered ? '' : ' hidden') + '>' +
+      (AI_STATE.idx + 1 < qs.length ? t('ai.next') : t('ai.quiz.fin')) + '</button></div>';
+
+  AI_STAGE.querySelector('.ai-qtxt').textContent = q.q;
+  AI_STAGE.querySelectorAll('.ai-choice').forEach((btn) => {
+    const n = Number(btn.dataset.n);
+    btn.querySelector('.ai-choice-txt').textContent = q.choices[n];
+    if (answered) {
+      btn.disabled = true;
+      if (n === q.answer) btn.classList.add('good');
+      if (n === picked && picked !== q.answer) btn.classList.add('bad');
+    }
+  });
+  if (answered) {
+    const why = AI_STAGE.querySelector('.ai-why');
+    why.textContent = q.why || '';
+    why.hidden = !q.why;
+  }
+}
+
+/* ── Examen blanc : question ouverte → réponse attendue → auto-noté ── */
+function renderAIExam() {
+  const qs = AI_STATE.data.questions;
+  const q = qs[AI_STATE.idx];
+  const shown = AI_STATE.picked === 'shown';
+
+  setAIHead('ai.exam.title', subjectName(AI_STATE.subject) + ' · ' + AI_STATE.len + ' q');
+
+  AI_STAGE.innerHTML =
+    '<div class="ai-qhead"><span class="ai-qnum">' +
+      t('ai.q').replace('{n}', String(AI_STATE.idx + 1)).replace('{t}', String(qs.length)) +
+    '</span><span class="ai-qdots" aria-hidden="true">' +
+      qs.map((_, i) => '<i class="' + (i < AI_STATE.idx ? 'past' : (i === AI_STATE.idx ? 'now' : '')) + '"></i>').join('') +
+    '</span></div>' +
+    '<div class="ai-qcard open"><span class="ai-qtxt"></span></div>' +
+    '<p class="ai-hintopen">' + t('seance.hintReveal') + '</p>' +
+    '<div class="ai-answer" ' + (shown ? '' : 'hidden') + '>' +
+      '<span class="ai-answer-label">' + t('ai.model') + '</span>' +
+      '<p class="ai-answer-txt"></p>' +
+    '</div>' +
+    (shown
+      ? '<span class="ai-legend">' + t('ai.exam.pickSub') + '</span>' +
+        '<div class="ai-judges">' +
+          '<button type="button" class="ai-judge bad" data-act="judge" data-n="0">' + t('ai.j0') + '</button>' +
+          '<button type="button" class="ai-judge mid" data-act="judge" data-n="1">' + t('ai.j1') + '</button>' +
+          '<button type="button" class="ai-judge good" data-act="judge" data-n="2">' + t('ai.j2') + '</button>' +
+        '</div>'
+      : '<div class="ai-actions"><button type="button" class="ai-go" data-act="reveal">' + t('ai.see') + '</button></div>');
+
+  AI_STAGE.querySelector('.ai-qtxt').textContent = q.q;
+  const atxt = AI_STAGE.querySelector('.ai-answer-txt');
+  if (atxt) atxt.textContent = q.answer;
+}
+
+/* ── Cours ajouté : aperçu avant enregistrement ── */
+function renderAICoursePreview() {
+  const d = AI_STATE.data;
+  setAIHead('ai.course.title', t('ai.course.summary'));
+
+  AI_STAGE.innerHTML =
+    '<div class="ai-cp-title"></div>' +
+    '<span class="ai-cp-sub">' + subjectName(AI_STATE.subject) + ' · ' +
+      t('ai.course.cards').replace('{n}', String(d.cards.length)) +
+      (d.notions && d.notions.length
+        ? ' · ' + t('ai.course.notions').replace('{n}', String(d.notions.length))
+        : '') + '</span>' +
+    (d.summary ? '<p class="ai-cp-summary"></p>' : '') +
+    '<div class="ai-cp-notions">' +
+      (d.notions || []).slice(0, 6).map((n) =>
+        '<div class="ai-cp-notion"><b></b><span></span></div>').join('') +
+    '</div>' +
+    '<div class="ai-actions"><button type="button" class="ai-go" data-act="courseSave">' +
+      t('ai.course.go') + '</button></div>';
+
+  AI_STAGE.querySelector('.ai-cp-title').textContent = d.title;
+  const sum = AI_STAGE.querySelector('.ai-cp-summary');
+  if (sum) sum.textContent = d.summary;
+  AI_STAGE.querySelectorAll('.ai-cp-notion').forEach((el, i) => {
+    el.querySelector('b').textContent = d.notions[i].term;
+    el.querySelector('span').textContent = d.notions[i].def;
+  });
+}
+
+/* ── Fin : score quiz / bilan examen ── */
+function renderAIDone() {
+  const m = AI_STATE.mode;
+  const r = AI_STATE.result;
+  setAIHead(m === 'quiz' ? 'ai.quiz.title' : 'ai.exam.title', subjectName(AI_STATE.subject));
+
+  const pct = r.total > 0 ? Math.round((r.good / r.total) * 100) : 0;
+  AI_STAGE.innerHTML =
+    '<div class="ai-done">' +
+      '<span class="ai-done-emoji" aria-hidden="true">' + (pct >= 60 ? '🎉' : '💪') + '</span>' +
+      '<span class="ai-done-title">' + t(m === 'quiz' ? 'ai.quiz.fin' : 'ai.exam.fin') + '</span>' +
+      '<div class="ai-done-score"><b>' + r.good + ' / ' + r.total + '</b><span>' + pct + ' %</span></div>' +
+      (m === 'quiz' ? '<p class="ai-done-sub">' +
+        t('ai.quiz.rec').replace('{n}', String(r.good)) + '</p>' : '') +
+      '<div class="ai-actions two">' +
+        '<button type="button" class="ai-go ghost" data-act="redo">' + t('ai.redo') + '</button>' +
+        '<button type="button" class="ai-go" data-act="end">' + t('ai.close') + '</button>' +
+      '</div>' +
+    '</div>';
+}
+
+/* ── Délégation des clics dans la feuille ── */
+AI_STAGE?.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-act]');
+  if (!btn || !AI_STATE.mode) return;
+  const act = btn.dataset.act;
+
+  if (act === 'pickSubject') {
+    AI_STATE.subject = btn.dataset.subject || null;
+    AI_STAGE.querySelectorAll('.ai-chip').forEach((b) => {
+      if (b.dataset.act === 'pickSubject') b.classList.toggle('sel', b === btn);
+    });
+    const go = AI_STAGE.querySelector('[data-act="go"], [data-act="courseGo"]');
+    if (go && !go.dataset.form) go.disabled = false;
+    if (go && go.dataset.form) go.disabled = !(aiCourseValid());
+    return;
+  }
+  if (act === 'setLen') {
+    AI_STATE.len = Number(btn.dataset.len) || 10;
+    AI_STAGE.querySelectorAll('[data-act="setLen"]').forEach((b) => {
+      b.classList.toggle('sel', b === btn);
+    });
+    return;
+  }
+  if (act === 'go') {
+    if (!AI_STATE.subject) return;
+    aiRun();
+    return;
+  }
+  if (act === 'courseGo') {
+    if (!aiCourseValid()) return;
+    aiRun();
+    return;
+  }
+  if (act === 'choice') {
+    if (AI_STATE.picked !== null) return; /* déjà répondu */
+    AI_STATE.picked = Number(btn.dataset.n);
+    renderAIQuiz();
+    return;
+  }
+  if (act === 'next') {
+    if (AI_STATE.picked === null) return; /* il faut répondre d'abord */
+    const qs = AI_STATE.data.questions;
+    AI_STATE.answers.push(AI_STATE.picked === qs[AI_STATE.idx].answer ? 1 : 0);
+    AI_STATE.picked = null;
+    AI_STATE.idx++;
+    if (AI_STATE.idx >= qs.length) {
+      const good = AI_STATE.answers.reduce((a, b) => a + b, 0);
+      AI_STATE.result = { good, total: qs.length };
+      AI_STATE.step = 'done';
+      /* Progression réelle : le quiz nourrit le compteur « Quiz réussis »
+         et les minutes réelles de la matière. */
+      saveActivity((a) => {
+        a.quiz.correct += good;
+        a.quiz.total += qs.length;
+      });
+      const mins = Math.max(1, Math.round((Date.now() - AI_STATE.startAt) / 60000));
+      addActivityMinutes(mins, 0, subjectName(AI_STATE.subject));
+      updateProgression();
+      renderAIDone();
+    } else {
+      renderAIQuiz();
+    }
+    return;
+  }
+  if (act === 'reveal') {
+    if (AI_STATE.picked === 'shown') return;
+    AI_STATE.picked = 'shown';
+    renderAIExam();
+    return;
+  }
+  if (act === 'judge') {
+    if (AI_STATE.picked !== 'shown') return; /* réponse pas encore révélée */
+    const qs = AI_STATE.data.questions;
+    AI_STATE.answers.push(Number(btn.dataset.n));
+    AI_STATE.picked = null;
+    AI_STATE.idx++;
+    if (AI_STATE.idx >= qs.length) {
+      const good = AI_STATE.answers.filter((n) => n === 2).length;
+      AI_STATE.result = { good, total: qs.length };
+      AI_STATE.step = 'done';
+      const mins = Math.max(1, Math.round((Date.now() - AI_STATE.startAt) / 60000));
+      addActivityMinutes(mins, 0, subjectName(AI_STATE.subject));
+      updateProgression();
+      renderAIDone();
+    } else {
+      renderAIExam();
+    }
+    return;
+  }
+  if (act === 'redo') {
+    AI_STATE.step = 'pick';
+    AI_STATE.data = null;
+    AI_STATE.idx = 0;
+    AI_STATE.picked = null;
+    AI_STATE.answers = [];
+    renderAI();
+    return;
+  }
+  if (act === 'end') {
+    closeAISheet();
+    return;
+  }
+  if (act === 'courseSave') {
+    const d = AI_STATE.data;
+    const list = getCustom();
+    list.unshift({
+      id: 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+      ts: Date.now(),
+      s: AI_STATE.subject,
+      title: d.title,
+      summary: d.summary || '',
+      cards: d.cards,
+    });
+    setCustom(list);
+    remergeCards();
+    computeJour();
+    updateJour();
+    updateRapide();
+    renderCustomCourses();
+    arvxToast(t('ai.course.saved').replace('{n}', String(d.cards.length)));
+    closeAISheet();
+  }
+});
+
+/* Formulaire « Ajoute un cours » : GO actif seulement si complet */
+function aiCourseValid() {
+  const title = document.getElementById('aiCourseTitle');
+  const content = document.getElementById('aiCourseContent');
+  return Boolean(AI_STATE.subject && title && title.value.trim().length >= 3 &&
+    content && content.value.trim().length >= 40);
+}
+
+AI_STAGE?.addEventListener('input', () => {
+  if (AI_STATE.mode !== 'course' || AI_STATE.step !== 'pick') return;
+  const go = AI_STAGE.querySelector('[data-act="courseGo"]');
+  if (go) go.disabled = !aiCourseValid();
+});
+
+/* ── Appel IA (chargement → rendu) ── */
+async function aiRun() {
+  const m = AI_STATE.mode;
+  /* Lire les champs du formulaire AVANT l'écran de chargement :
+     le rendu « loading » remplace le contenu de la feuille et
+     détruirait les champs. */
+  let courseTitle = '';
+  let courseContent = '';
+  if (m === 'course') {
+    const tEl = document.getElementById('aiCourseTitle');
+    const cEl = document.getElementById('aiCourseContent');
+    courseTitle = ((tEl && tEl.value) || '').trim();
+    courseContent = ((cEl && cEl.value) || '').trim();
+  }
+  AI_STATE.step = 'loading';
+  renderAI();
+  try {
+    if (m === 'quiz') {
+      const res = await window.ARVXA_AI.ask('quiz', { subject: subjectName(AI_STATE.subject) });
+      AI_STATE.data = res.data;
+      AI_STATE.step = 'play';
+      AI_STATE.startAt = Date.now();
+      renderAI();
+    } else if (m === 'exam') {
+      const res = await window.ARVXA_AI.ask('exam', {
+        subject: subjectName(AI_STATE.subject),
+        count: AI_STATE.len,
+      });
+      AI_STATE.data = res.data;
+      AI_STATE.step = 'play';
+      AI_STATE.startAt = Date.now();
+      renderAI();
+    } else {
+      const res = await window.ARVXA_AI.ask('course', {
+        subject: subjectName(AI_STATE.subject),
+        title: courseTitle,
+        content: courseContent,
+      });
+      AI_STATE.data = res.data;
+      AI_STATE.step = 'preview';
+      renderAI();
+    }
+  } catch (e) {
+    closeAISheet();
+    arvxToast(window.ARVXA_AI.errMessage(e.code || 'ai_error'), 'error');
+  }
+}
+
+/* Changement de langue : la feuille ouverte se redessine */
+window.addEventListener('arvexa-langchange', () => {
+  if (AI_VEIL && !AI_VEIL.hidden && AI_STATE.mode) renderAI();
+  if (CHAT_VEIL && !CHAT_VEIL.hidden) {
+    const sub = document.getElementById('aiChatSub');
+    if (sub) sub.textContent = t('ai.chat.sub');
+    renderChat();
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════════════
+   V0.14 — CHAT BAKO (tap sur la mascotte → panneau de discussion)
+   Historique en mémoire (session), réponses courtes, persona côté
+   serveur. En cas d'erreur : message doux, jamais bloquant.
+   ═══════════════════════════════════════════════════════════════════ */
+
+const CHAT_VEIL = document.getElementById('bakoChatVeil');
+const CHAT_HIST = []; /* {role:'user'|'assistant', content} — session */
+let chatBusy = false;
+
+function openBakoChat() {
+  if (!CHAT_VEIL) return false;
+  if (!window.ARVXA_AI || !window.ARVXA_AI.ok()) return false;
+  document.body.classList.add('ai-open');
+  CHAT_VEIL.hidden = false;
+  const sub = document.getElementById('aiChatSub');
+  if (sub) sub.textContent = t('ai.chat.sub');
+  if (!CHAT_HIST.length) CHAT_HIST.push({ role: 'assistant', content: t('ai.chat.hello') });
+  renderChat();
+  setTimeout(() => document.getElementById('aiChatInput')?.focus(), 90);
+  return true;
+}
+
+function closeBakoChat() {
+  if (!CHAT_VEIL) return;
+  CHAT_VEIL.hidden = true;
+  document.body.classList.remove('ai-open');
+}
+
+function renderChat(typing = false) {
+  const log = document.getElementById('aiChatLog');
+  if (!log) return;
+  log.innerHTML = CHAT_HIST.map((m) =>
+    '<div class="ai-msg ' + (m.role === 'user' ? 'me' : 'bako') + '">' +
+      '<span class="ai-msg-txt"></span>' +
+    '</div>'
+  ).join('') +
+  (typing ? '<div class="ai-msg bako"><span class="ai-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>' : '');
+  log.querySelectorAll('.ai-msg-txt').forEach((el, i) => {
+    el.textContent = CHAT_HIST[i].content;
+  });
+  log.scrollTop = log.scrollHeight;
+}
+
+document.getElementById('aiChatClose')?.addEventListener('click', closeBakoChat);
+CHAT_VEIL?.addEventListener('click', (e) => { if (e.target === CHAT_VEIL) closeBakoChat(); });
+
+document.getElementById('aiChatForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (chatBusy) return;
+  const input = document.getElementById('aiChatInput');
+  const text = (input && input.value || '').trim();
+  if (!text) return;
+  input.value = '';
+  CHAT_HIST.push({ role: 'user', content: text });
+  renderChat(true);
+  chatBusy = true;
+  try {
+    const res = await window.ARVXA_AI.ask('chat', { messages: CHAT_HIST.slice(-8) });
+    CHAT_HIST.push({ role: 'assistant', content: res.data.reply });
+  } catch (err) {
+    CHAT_HIST.push({ role: 'assistant', content: t('ai.chat.err') });
+  }
+  chatBusy = false;
+  renderChat();
+});
+
+/* Le tap sur Bako ouvre le chat (bako.js vérifie ARVXA_BAKO.chat —
+   assigné ici après le chargement des modules). */
+setTimeout(() => {
+  if (window.ARVXA_BAKO) window.ARVXA_BAKO.chat = openBakoChat;
+}, 0);
+
 /* ── AMORÇAGE v0.12 / v0.13 — premier rendu complet ──
    Les données v0.13 (JOUR, SEANCE, FOC_TIMER, CARDS) sont déclarées
    plus haut : le premier showView() peut maintenant s'exécuter sans
@@ -2666,5 +3436,6 @@ loadCards().then(() => {
   updateJour();
   updateRapide();
   updateBienvenue();
+  renderCustomCourses();
   if (currentView === 'seance') renderSeance();
 });

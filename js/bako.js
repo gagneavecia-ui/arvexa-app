@@ -380,8 +380,15 @@ window.addEventListener('hashchange', () => {
   armIdleSleep();
 });
 
-/* ── Tap sur Bako : astuce d'étude (le chat IA viendra avec les clés) ── */
+/* ── Tap sur Bako : depuis v0.14, ouvre le CHAT IA (le camarade
+      répond) quand la passerelle est là ; repli : astuces d'étude ── */
 FIGURE.addEventListener('click', () => {
+  if (typeof window.ARVXA_BAKO.chat === 'function' &&
+      window.ARVXA_AI && window.ARVXA_AI.ok()) {
+    window.ARVXA_BAKO.chat();
+    setAnim('talk', false);
+    return;
+  }
   const lang = langNow();
   const tips = LINES.tips[lang];
   say(tips[Math.floor(Math.random() * tips.length)], { ttl: 3400, anim: 'talk' });

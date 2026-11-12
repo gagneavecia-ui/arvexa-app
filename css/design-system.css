@@ -4965,3 +4965,462 @@ html[data-theme="light"] .bako-bubble { box-shadow: var(--shadow-warm); }
   .bako-anim-think .bako-head, .bako-anim-cheer, .bako-anim-wave .bako-arm-r,
   .bako-anim-walk .bako-leg-l, .bako-anim-walk .bako-leg-r, .bako-break-ring { animation: none !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════
+   V0.14 — INTELLIGENCE ARTIFICIELLE : feuilles plein cadre
+   (Quiz éclair · Examen blanc · Ajoute un cours · Chat Bako)
+   Le document ne défile JAMAIS : le voile est fixed, la feuille
+   tient entre les safe-areas, le contenu défile À L'INTÉRIEUR.
+   Palette ARVX : vert de marque + or, Fraunces pour les titres.
+   ═══════════════════════════════════════════════════════════════════ */
+
+.ai-veil {
+  position: fixed; inset: 0; z-index: 70;
+  display: flex; align-items: stretch; justify-content: center;
+  background: color-mix(in srgb, var(--bg-deep) 78%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: calc(var(--safe-top) + 10px) 12px calc(var(--safe-bottom) + 10px);
+}
+.ai-veil[hidden] { display: none !important; }
+body.ai-open .bako-layer { opacity: 0; pointer-events: none; }
+
+.ai-sheet {
+  display: flex; flex-direction: column; min-height: 0; width: 100%;
+  max-width: 640px; border-radius: 22px 22px 18px 18px;
+  background:
+    radial-gradient(130% 110% at 0% 0%, rgba(184, 134, 11, 0.07), rgba(184, 134, 11, 0) 55%),
+    var(--bg-surface);
+  border: 1px solid rgba(184, 134, 11, 0.28);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45), 0 0 46px rgba(184, 134, 11, 0.08);
+  overflow: hidden;
+  animation: ai-sheet-in 0.26s cubic-bezier(0.25, 1, 0.5, 1) both;
+}
+@keyframes ai-sheet-in { from { opacity: 0; transform: translateY(16px) scale(0.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+.ai-head {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 11px;
+  padding: 14px 14px 12px 16px;
+  border-bottom: 1px solid rgba(184, 134, 11, 0.16);
+  background: linear-gradient(160deg, rgba(184, 134, 11, 0.05), rgba(184, 134, 11, 0));
+}
+.ai-head-icon {
+  flex: 0 0 auto; width: 38px; height: 38px; border-radius: 12px;
+  display: grid; place-items: center; font-size: 15px;
+  color: #F5F0E8; background: linear-gradient(150deg, var(--primary), var(--primary-dark));
+  border: 1px solid rgba(184, 134, 11, 0.4);
+  box-shadow: inset 0 1px 0 rgba(224, 184, 74, 0.25);
+}
+.ai-head-icon.chat { background: linear-gradient(150deg, #2A5A3A, var(--primary-dark)); }
+.ai-head-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.ai-head-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 17.5px; font-weight: 700; letter-spacing: -0.2px;
+  color: var(--text-light); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ai-head-sub {
+  font-size: 11px; font-weight: 600; color: var(--text-dim);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ai-close {
+  flex: 0 0 auto; width: 34px; height: 34px; border-radius: 11px;
+  border: 1px solid rgba(184, 134, 11, 0.25); background: rgba(var(--rgb-soft), 0.04);
+  color: var(--text-dim); font-size: 14px; cursor: pointer; transition: var(--transition-fast);
+}
+.ai-close:hover { color: var(--text-light); border-color: rgba(184, 134, 11, 0.45); }
+.ai-close:active { transform: scale(0.94); }
+
+/* Scène : SEUL endroit qui défile, à l'intérieur de la feuille */
+.ai-stage {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  padding: 16px 16px 18px; display: flex; flex-direction: column; gap: 12px;
+  scrollbar-width: none;
+}
+.ai-stage::-webkit-scrollbar { display: none; }
+
+/* ── Choix de matière / longueur ── */
+.ai-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.ai-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 12px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; letter-spacing: -0.1px;
+  color: var(--text-dim);
+  background: rgba(var(--rgb-soft), 0.04);
+  border: 1px solid rgba(184, 134, 11, 0.22);
+  cursor: pointer; transition: var(--transition-fast); max-width: 100%;
+}
+.ai-chip i { font-size: 10px; color: var(--accent-bright); }
+html[data-theme="light"] .ai-chip i { color: var(--gold-text); }
+.ai-chip:active { transform: scale(0.96); }
+.ai-chip.sel {
+  color: var(--text-light); border-color: rgba(184, 134, 11, 0.6);
+  background: linear-gradient(150deg, rgba(184, 134, 11, 0.16), rgba(184, 134, 11, 0.05));
+  box-shadow: inset 0 1px 0 rgba(224, 184, 74, 0.2);
+}
+.ai-chip.small { padding: 6px 11px; font-size: 11.5px; }
+.ai-legend {
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-muted); margin-top: 2px;
+}
+
+/* ── Formulaire « Ajoute un cours » ── */
+.ai-field { display: flex; flex-direction: column; gap: 6px; }
+.ai-field span {
+  font-size: 10.5px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-muted);
+}
+.ai-field input,
+.ai-field textarea {
+  width: 100%; border-radius: 13px; padding: 11px 13px;
+  font-family: inherit; font-size: 13.5px; font-weight: 500; line-height: 1.45;
+  color: var(--text-light);
+  background: rgba(var(--rgb-soft), 0.04);
+  border: 1px solid rgba(184, 134, 11, 0.22);
+  outline: none; transition: var(--transition-fast); resize: none;
+}
+.ai-field input::placeholder,
+.ai-field textarea::placeholder { color: var(--text-muted); }
+.ai-field input:focus,
+.ai-field textarea:focus {
+  border-color: rgba(184, 134, 11, 0.55);
+  background: rgba(var(--rgb-soft), 0.06);
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1);
+}
+
+/* ── Actions ── */
+.ai-actions { display: flex; gap: 9px; margin-top: 4px; }
+.ai-actions.two { margin-top: 10px; }
+.ai-go {
+  flex: 1 1 auto; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 46px; border-radius: 14px; border: none; cursor: pointer;
+  font-family: inherit; font-size: 14px; font-weight: 800; letter-spacing: 0.01em;
+  color: #141210;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  box-shadow: 0 8px 18px -8px rgba(184, 134, 11, 0.55), inset 0 1px 0 rgba(255, 244, 214, 0.5);
+  transition: var(--transition-fast);
+}
+.ai-go:hover { filter: brightness(1.05); }
+.ai-go:active { transform: scale(0.97); }
+.ai-go:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
+.ai-go.ghost {
+  background: rgba(var(--rgb-soft), 0.04);
+  color: var(--text-light);
+  border: 1px solid rgba(184, 134, 11, 0.35);
+  box-shadow: none;
+}
+
+/* ── Chargement ── */
+.ai-loading {
+  flex: 1 1 auto; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 14px; text-align: center; padding: 30px 10px;
+}
+.ai-loading p { font-size: 13px; font-weight: 700; color: var(--text-dim); }
+.ai-spinner {
+  width: 42px; height: 42px; border-radius: 50%;
+  border: 3px solid rgba(184, 134, 11, 0.18);
+  border-top-color: var(--accent-bright);
+  animation: ai-spin 0.85s linear infinite;
+}
+@keyframes ai-spin { to { transform: rotate(360deg); } }
+
+/* ── Question (quiz + examen) ── */
+.ai-qhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ai-qnum { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+.ai-qdots { display: inline-flex; gap: 5px; }
+.ai-qdots i {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: rgba(var(--rgb-soft), 0.12);
+  border: 1px solid rgba(184, 134, 11, 0.25);
+  transition: var(--transition-fast);
+}
+.ai-qdots i.now { background: var(--accent-bright); box-shadow: 0 0 8px rgba(224, 184, 74, 0.5); }
+.ai-qdots i.past { background: var(--success); border-color: transparent; }
+.ai-qcard {
+  padding: 16px 15px; border-radius: 16px;
+  background:
+    radial-gradient(130% 120% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0) 58%),
+    linear-gradient(160deg, var(--primary), var(--primary-dark));
+  border: 1px solid rgba(184, 134, 11, 0.3);
+  box-shadow: inset 0 1px 0 rgba(224, 184, 74, 0.18), 0 10px 24px -14px rgba(0, 0, 0, 0.6);
+}
+.ai-qcard.open { background: var(--bg-surface); border-color: rgba(184, 134, 11, 0.35); }
+.ai-qtxt {
+  display: block;
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 16.5px; font-weight: 600; line-height: 1.42; letter-spacing: -0.1px;
+  color: #F5F0E8;
+  overflow-wrap: anywhere;
+}
+.ai-qcard.open .ai-qtxt { color: var(--text-light); }
+.ai-hintopen { font-size: 11px; font-weight: 600; color: var(--text-muted); text-align: center; }
+
+/* ── Choix du quiz ── */
+.ai-choices { display: flex; flex-direction: column; gap: 8px; }
+.ai-choice {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  padding: 12px 13px; border-radius: 13px; cursor: pointer;
+  text-align: left; font-family: inherit;
+  background: rgba(var(--rgb-soft), 0.04);
+  border: 1px solid rgba(184, 134, 11, 0.22);
+  color: var(--text-light); font-size: 13.5px; font-weight: 600; line-height: 1.35;
+  transition: var(--transition-fast);
+}
+.ai-choice:active:not(:disabled) { transform: scale(0.985); }
+.ai-choice:disabled { cursor: default; opacity: 0.92; }
+.ai-choice .ai-choice-txt { overflow-wrap: anywhere; }
+.ai-choice.good {
+  border-color: rgba(45, 125, 90, 0.75);
+  background: linear-gradient(150deg, rgba(45, 125, 90, 0.22), rgba(45, 125, 90, 0.08));
+  box-shadow: inset 0 0 0 1px rgba(58, 182, 126, 0.35);
+}
+.ai-choice.bad {
+  border-color: rgba(184, 92, 58, 0.75);
+  background: linear-gradient(150deg, rgba(184, 92, 58, 0.2), rgba(184, 92, 58, 0.07));
+}
+.ai-why {
+  font-size: 12px; font-weight: 600; line-height: 1.5; color: var(--text-dim);
+  padding: 10px 12px; border-radius: 12px;
+  background: rgba(var(--rgb-soft), 0.035);
+  border: 1px dashed rgba(184, 134, 11, 0.3);
+}
+
+/* ── Examen blanc : réponse attendue + auto-correction ── */
+.ai-answer {
+  padding: 13px 14px; border-radius: 14px;
+  background:
+    radial-gradient(130% 120% at 0% 0%, rgba(45, 125, 90, 0.1), rgba(45, 125, 90, 0) 60%),
+    rgba(var(--rgb-soft), 0.035);
+  border: 1px solid rgba(45, 125, 90, 0.4);
+}
+.ai-answer-label {
+  display: block; font-size: 10px; font-weight: 800; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--success); margin-bottom: 6px;
+}
+.ai-answer-txt { font-size: 13px; font-weight: 500; line-height: 1.55; color: var(--text-light); overflow-wrap: anywhere; }
+.ai-judges { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.ai-judge {
+  min-height: 44px; border-radius: 12px; cursor: pointer; font-family: inherit;
+  font-size: 12.5px; font-weight: 800; letter-spacing: -0.1px;
+  border: 1px solid rgba(184, 134, 11, 0.25);
+  background: rgba(var(--rgb-soft), 0.04);
+  color: var(--text-dim);
+  transition: var(--transition-fast);
+}
+.ai-judge:active { transform: scale(0.95); }
+.ai-judge.good { color: var(--success); border-color: rgba(45, 125, 90, 0.55); background: rgba(45, 125, 90, 0.1); }
+.ai-judge.mid { color: var(--accent-bright); border-color: rgba(184, 134, 11, 0.5); background: rgba(184, 134, 11, 0.08); }
+html[data-theme="light"] .ai-judge.mid { color: var(--gold-text); }
+.ai-judge.bad { color: var(--danger); border-color: rgba(184, 92, 58, 0.5); background: rgba(184, 92, 58, 0.08); }
+
+/* ── Aperçu du cours ajouté ── */
+.ai-cp-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 19px; font-weight: 700; letter-spacing: -0.2px; line-height: 1.25;
+  color: var(--text-light); overflow-wrap: anywhere;
+}
+.ai-cp-sub { font-size: 11.5px; font-weight: 700; color: var(--accent-bright); }
+html[data-theme="light"] .ai-cp-sub { color: var(--gold-text); }
+.ai-cp-summary {
+  font-size: 12.5px; font-weight: 500; line-height: 1.55; color: var(--text-dim);
+  padding: 10px 12px; border-radius: 12px;
+  background: rgba(var(--rgb-soft), 0.035);
+  border: 1px solid rgba(184, 134, 11, 0.18);
+}
+.ai-cp-notions {
+  display: flex; flex-direction: column; gap: 7px;
+  max-height: 180px; overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: none; padding-right: 2px;
+}
+.ai-cp-notions::-webkit-scrollbar { display: none; }
+.ai-cp-notion {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 9px 12px; border-radius: 12px;
+  background: rgba(var(--rgb-soft), 0.03);
+  border: 1px solid rgba(184, 134, 11, 0.16);
+}
+.ai-cp-notion b { font-size: 12.5px; font-weight: 800; color: var(--text-light); }
+.ai-cp-notion span { font-size: 11.5px; font-weight: 500; line-height: 1.45; color: var(--text-dim); }
+
+/* ── Fin (score) ── */
+.ai-done {
+  flex: 1 1 auto; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 10px; text-align: center; padding: 12px 4px;
+}
+.ai-done-emoji { font-size: 40px; line-height: 1; }
+.ai-done-title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 21px; font-weight: 700; letter-spacing: -0.2px; color: var(--text-light);
+}
+.ai-done-score { display: flex; align-items: baseline; gap: 10px; }
+.ai-done-score b {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 34px; font-weight: 700; letter-spacing: -0.5px;
+  background: linear-gradient(120deg, var(--accent-bright), #C79A2A 55%, var(--accent-bright));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.ai-done-score span { font-size: 13px; font-weight: 800; color: var(--text-dim); }
+.ai-done-sub { font-size: 12px; font-weight: 600; color: var(--text-dim); max-width: 300px; line-height: 1.5; }
+
+/* ── Chat Bako ── */
+.ai-chat-sheet { height: 100%; }
+.ai-chat-log {
+  flex: 1 1 auto; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
+  display: flex; flex-direction: column; gap: 8px; padding: 14px 14px 8px;
+  scrollbar-width: none;
+}
+.ai-chat-log::-webkit-scrollbar { display: none; }
+.ai-msg {
+  max-width: 86%; padding: 9px 12px; border-radius: 15px;
+  font-size: 13px; font-weight: 500; line-height: 1.5;
+  overflow-wrap: anywhere;
+  animation: ai-msg-in 0.2s ease both;
+}
+@keyframes ai-msg-in { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+.ai-msg.bako {
+  align-self: flex-start; color: var(--text-light);
+  background: rgba(var(--rgb-soft), 0.05);
+  border: 1px solid rgba(184, 134, 11, 0.24);
+  border-bottom-left-radius: 6px;
+}
+.ai-msg.me {
+  align-self: flex-end; color: #141210;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  border-bottom-right-radius: 6px;
+  box-shadow: 0 6px 14px -8px rgba(184, 134, 11, 0.55);
+}
+.ai-dots { display: inline-flex; gap: 4px; padding: 3px 2px; }
+.ai-dots i {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent-bright);
+  animation: ai-dot 1.1s ease-in-out infinite;
+}
+.ai-dots i:nth-child(2) { animation-delay: 0.15s; }
+.ai-dots i:nth-child(3) { animation-delay: 0.3s; }
+@keyframes ai-dot { 0%, 60%, 100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-4px); opacity: 1; } }
+.ai-chat-form {
+  flex: 0 0 auto; display: flex; align-items: center; gap: 8px;
+  padding: 10px 12px calc(10px + var(--safe-bottom) * 0.3);
+  border-top: 1px solid rgba(184, 134, 11, 0.16);
+  background: linear-gradient(0deg, rgba(184, 134, 11, 0.04), rgba(184, 134, 11, 0));
+}
+.ai-chat-form input {
+  flex: 1 1 auto; min-width: 0; border-radius: 999px; padding: 11px 15px;
+  font-family: inherit; font-size: 13.5px; font-weight: 500; color: var(--text-light);
+  background: rgba(var(--rgb-soft), 0.05);
+  border: 1px solid rgba(184, 134, 11, 0.22); outline: none; transition: var(--transition-fast);
+}
+.ai-chat-form input::placeholder { color: var(--text-muted); }
+.ai-chat-form input:focus { border-color: rgba(184, 134, 11, 0.55); box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1); }
+.ai-chat-send {
+  flex: 0 0 auto; width: 42px; height: 42px; border-radius: 50%; border: none; cursor: pointer;
+  color: #141210; font-size: 14px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  box-shadow: 0 6px 14px -6px rgba(184, 134, 11, 0.55);
+  transition: var(--transition-fast);
+  display: grid; place-items: center;
+}
+.ai-chat-send:active { transform: scale(0.92); }
+
+/* ── Pastille IA des outils d'examen + bloc « Mes cours ajoutés » ── */
+.exam-ai-badge {
+  position: absolute; top: 12px; right: 12px;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 9px; border-radius: 999px;
+  font-size: 9.5px; font-weight: 800; letter-spacing: 0.1em;
+  color: #141210;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  box-shadow: 0 4px 10px -4px rgba(184, 134, 11, 0.5);
+}
+.exam-ai-badge i { font-size: 8.5px; }
+.lib-custom { display: flex; flex-direction: column; gap: 8px; margin-bottom: 4px; }
+.ai-course-card {
+  position: relative; display: flex; align-items: center; gap: 10px;
+  padding: 11px 12px; border-radius: 16px;
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.09), rgba(184, 134, 11, 0.01) 62%),
+    var(--bg-card);
+  border: 1px solid rgba(184, 134, 11, 0.35);
+  box-shadow: 0 8px 18px -12px rgba(184, 134, 11, 0.4);
+}
+.ai-course-badge {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 3px;
+  padding: 4px 8px; border-radius: 999px;
+  font-size: 9px; font-weight: 800; letter-spacing: 0.08em; color: #141210;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+}
+.ai-course-badge i { font-size: 8px; }
+.ai-course-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.ai-course-name {
+  font-size: 13px; font-weight: 800; letter-spacing: -0.1px; color: var(--text-light);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.ai-course-meta { font-size: 10.5px; font-weight: 600; color: var(--text-dim); }
+.ai-course-go {
+  flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer;
+  color: #141210; font-size: 11px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  display: grid; place-items: center; transition: var(--transition-fast);
+}
+.ai-course-go:active { transform: scale(0.92); }
+.ai-course-x {
+  flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;
+  color: var(--text-muted); font-size: 11px;
+  background: transparent; border: 1px solid rgba(var(--rgb-soft), 0.12);
+  display: grid; place-items: center; transition: var(--transition-fast);
+}
+.ai-course-x:hover { color: var(--danger); border-color: rgba(184, 92, 58, 0.4); }
+
+/* ── Thème clair « papier & encre » ── */
+html[data-theme="light"] .ai-veil { background: rgba(236, 230, 216, 0.72); }
+html[data-theme="light"] .ai-sheet {
+  background:
+    radial-gradient(130% 110% at 0% 0%, rgba(184, 134, 11, 0.06), rgba(184, 134, 11, 0) 55%),
+    #FFFFFF;
+  border-color: rgba(184, 134, 11, 0.3);
+  box-shadow: 0 24px 70px rgba(74, 58, 24, 0.22), 0 0 40px rgba(184, 134, 11, 0.07);
+}
+html[data-theme="light"] .ai-head { border-bottom-color: rgba(184, 134, 11, 0.2); }
+html[data-theme="light"] .ai-close { background: rgba(0, 0, 0, 0.03); }
+html[data-theme="light"] .ai-chip { background: rgba(0, 0, 0, 0.028); }
+html[data-theme="light"] .ai-chip.sel {
+  color: var(--text-light);
+  background: linear-gradient(150deg, rgba(184, 134, 11, 0.14), rgba(184, 134, 11, 0.04));
+}
+html[data-theme="light"] .ai-field input,
+html[data-theme="light"] .ai-field textarea,
+html[data-theme="light"] .ai-chat-form input { background: rgba(0, 0, 0, 0.025); }
+html[data-theme="light"] .ai-qcard { box-shadow: inset 0 1px 0 rgba(224, 184, 74, 0.2), 0 10px 22px -14px rgba(74, 58, 24, 0.5); }
+html[data-theme="light"] .ai-qdots i { background: rgba(0, 0, 0, 0.1); }
+html[data-theme="light"] .ai-qdots i.now { background: var(--accent); }
+html[data-theme="light"] .ai-choice { background: rgba(0, 0, 0, 0.025); }
+html[data-theme="light"] .ai-why,
+html[data-theme="light"] .ai-cp-summary,
+html[data-theme="light"] .ai-answer,
+html[data-theme="light"] .ai-cp-notion,
+html[data-theme="light"] .ai-msg.bako { background: rgba(0, 0, 0, 0.03); }
+html[data-theme="light"] .ai-msg.me { color: #FFF8E7; }
+html[data-theme="light"] .ai-course-card {
+  background:
+    radial-gradient(120% 150% at 0% 0%, rgba(184, 134, 11, 0.08), rgba(184, 134, 11, 0) 62%),
+    #FFFFFF;
+  border-color: rgba(184, 134, 11, 0.32);
+  box-shadow: 0 8px 20px -12px rgba(74, 58, 24, 0.35);
+}
+
+/* Petits écrans — tout respire encore (360×700) */
+@media (max-height: 700px) {
+  .ai-stage { padding: 12px 14px 14px; gap: 10px; }
+  .ai-head { padding: 11px 12px 10px 14px; }
+  .ai-qcard { padding: 13px 13px; }
+  .ai-qtxt { font-size: 15px; }
+  .ai-choice { padding: 10px 12px; }
+  .ai-cp-notions { max-height: 130px; }
+  .ai-done-emoji { font-size: 34px; }
+  .ai-done-score b { font-size: 29px; }
+}
+
+/* Filet de sécurité GLOBAL (v0.14) : l'attribut hidden doit TOUJOURS
+   gagner, même sur les éléments qui posent un display explicite
+   (boutons .ai-go, feuilles, panneaux) — sinon un « caché » reste
+   peint et cliquable selon le navigateur. */
+[hidden] { display: none !important; }
