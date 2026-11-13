@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+    <!--
+      Aucun zoom (décision NOX, 2026-10-20) : ni pincement, ni double tap, ni zoom
+      automatique d'iOS sur un champ. `maximum-scale=1` coupe aussi ce dernier.
+    -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no, viewport-fit=cover"
+    />
+    <title>Axia</title>
+    <!-- The `react-native-web` recommended style reset: https://necolas.github.io/react-native-web/docs/setup/#root-element -->
+    <style id="expo-reset">
+      /* These styles make the body full-height */
+      html,
+      body {
+        height: 100%;
+      }
+      /* These styles disable body scrolling if you are using <ScrollView> */
+      body {
+        overflow: hidden;
+      }
+      /*
+       * Pas de zoom tactile : pincement et double tap coupés (seuls les défilements
+       * restent), et pas d'agrandissement du texte décidé par le navigateur.
+       */
+      html,
+      body,
+      #root {
+        touch-action: pan-x pan-y;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+      /* These styles make the root element full-height */
+      #root {
+        display: flex;
+        height: 100%;
+        flex: 1;
+      }
+    </style>
+
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+
+    <!--
+      iOS ne lit jamais le manifest pour ces réglages : sans ces balises,
+      l'app ajoutée à l'écran d'accueil s'ouvrirait dans un onglet Safari
+      avec sa barre d'adresse au lieu d'un plein écran autonome.
+    -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="AXIA" />
+  <meta name="theme-color" content="#4285F4">
+<meta name="description" content="AXIA transforme tes cours en fiches de révision et en cartes mentales.">
+<link rel="icon" href="/favicon.ico"/></head>
+
+  <body>
+    <!-- Use static rendering with Expo Router to support running without JavaScript. -->
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <!-- The root element for your Expo app. -->
+    <div id="root"></div>
+    <script>
+      // Aucun zoom. Safari iOS ignore `user-scalable=no` depuis iOS 10 : le
+      // pincement s'y bloque par ses événements `gesture*` et par les touchers à
+      // plusieurs doigts. Sur ordinateur : Ctrl/Cmd + molette ou pavé tactile, et
+      // Ctrl/Cmd + « + », « - », « = », « 0 ». (Le zoom du menu du navigateur reste
+      // hors de portée d'une page.)
+      (function () {
+        var stop = function (e) { e.preventDefault(); };
+        ['gesturestart', 'gesturechange', 'gestureend'].forEach(function (type) {
+          document.addEventListener(type, stop, { passive: false });
+        });
+        document.addEventListener('touchmove', function (e) {
+          if (e.touches && e.touches.length > 1) e.preventDefault();
+        }, { passive: false });
+        window.addEventListener('wheel', function (e) {
+          if (e.ctrlKey || e.metaKey) e.preventDefault();
+        }, { passive: false });
+        window.addEventListener('keydown', function (e) {
+          if ((e.ctrlKey || e.metaKey) && ['+', '-', '=', '0', '_'].indexOf(e.key) !== -1) e.preventDefault();
+        });
+      })();
+
+      // Service worker (cf. sw.js) : garde l'app pour qu'elle s'ouvre hors-ligne,
+      // reçoit les pushes, et rend la PWA installable. Échoue silencieusement
+      // là où il n'existe pas.
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/sw.js').catch(function () {});
+        });
+      }
+    </script>
+  <script src="/_expo/static/js/web/__expo-metro-runtime-1f8f5d3ca6b7f58204d51e14506d73fb.js" defer></script><script src="/_expo/static/js/web/__common-5df6a563b4cbdc9bd3c46d0ce2d2ca7c.js" defer></script><script src="/_expo/static/js/web/index-fa585494ae388f60e53236674d66276f.js" defer></script>
+</body>
+</html>

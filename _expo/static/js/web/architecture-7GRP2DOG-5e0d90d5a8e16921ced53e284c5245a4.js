@@ -1,0 +1,1 @@
+__d(function(g,r,i,a,m,e,d){"use strict";Object.defineProperty(e,'__esModule',{value:!0}),Object.defineProperty(e,"ArchitectureModule",{enumerable:!0,get:function(){return t.ArchitectureModule}}),Object.defineProperty(e,"createArchitectureServices",{enumerable:!0,get:function(){return t.createArchitectureServices}});var t=r(d[0]);r(d[1])},1604,[1605,1597]);
