@@ -10,7 +10,7 @@ Manuellement :
 
 ```bash
 cd arvexa-mobile
-git remote add origin https://github.com/ARVEXA/arvexa-app.git
+git remote add origin https://github.com/gagneavecia-ui/arvexa-app.git
 git push -u origin main
 ```
 
@@ -31,7 +31,7 @@ git push origin v1.0.0
 ```
 
 Une Release **v1.0.0** est créée avec l'APK joint :
-`https://github.com/ARVEXA/arvexa-app/releases/latest`
+`https://github.com/gagneavecia-ui/arvexa-app/releases/latest`
 
 ## 4. Déployer la page vitrine sur Vercel
 
@@ -47,7 +47,7 @@ vercel --prod
 Puis ouvrir `landing/index.html` et remplacer le lien de téléchargement provisoire par l'URL de la Release :
 
 ```
-https://github.com/ARVEXA/arvexa-app/releases/latest/download/ARVX-1.0.0.apk
+https://github.com/gagneavecia-ui/arvexa-app/releases/latest/download/ARVX-1.0.0.apk
 ```
 
 re-pousser, Vercel redéploie tout seul.
