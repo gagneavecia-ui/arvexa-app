@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "AXIA",
-  "short_name": "AXIA",
-  "description": "AXIA transforme tes cours en fiches de révision et en cartes mentales.",
+  "name": "ARVEXA School",
+  "short_name": "ARVEXA",
+  "description": "ARVEXA transforme tes cours en fiches de révision et en cartes mentales.",
   "lang": "fr",
   "start_url": "/",
   "scope": "/",
