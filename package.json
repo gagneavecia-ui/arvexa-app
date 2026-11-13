@@ -1,0 +1,7 @@
+{
+  "name": "axia-clone",
+  "private": true,
+  "scripts": {
+    "build": "rm -rf dist && mkdir dist && cp -r index.html sw.js precache.json manifest.webmanifest favicon.ico icons assets _expo dist/ && mv dist/assets/nm_modules dist/assets/node_modules"
+  }
+}
