@@ -1,0 +1,14 @@
+node_modules/
+.expo/
+dist/
+android/
+ios/
+web-build/
+*.orig
+*.log
+npm-debug.*
+.expo/types/
+*.tsbuildinfo
+.DS_Store
+.env
+.env.*

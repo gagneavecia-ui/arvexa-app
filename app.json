@@ -1,0 +1,38 @@
+{
+  "expo": {
+    "name": "ARVX",
+    "slug": "arvx",
+    "version": "1.0.0",
+    "scheme": "arvx",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "backgroundColor": "#F6F7FB",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F6F7FB"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "app.arvexa.arvx"
+    },
+    "android": {
+      "package": "app.arvexa.arvx",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1F2A44"
+      },
+      "edgeToEdgeEnabled": true
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": false
+    }
+  }
+}

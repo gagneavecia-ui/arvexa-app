@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ARVX — ton cours entre, ARVX s'occupe du reste</title>
+<meta name="description" content="ARVX transforme ton propre cours — n'importe quel niveau — en résumé, explication pas à pas, examens et progression. Application Android." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --fond: #F6F7FB; --surface: #FFFFFF; --elevation: #F1F3F9;
+    --contour: #E3E7F1; --contour-fort: #D6DBEA;
+    --encre: #1F2A44; --texte: #17223B; --second: #5C6579; --attenu: #8B94A8;
+    --succes: #2FA36B; --erreur: #E4574C;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: var(--fond); color: var(--texte); line-height: 1.6; }
+  .conteneur { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; }
+  .marque { display: flex; align-items: center; gap: 12px; }
+  .logo { width: 42px; height: 42px; border-radius: 12px; background: var(--encre); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 22px; }
+  .marque strong { font-size: 18px; font-weight: 800; letter-spacing: 0.5px; }
+  .bouton { display: inline-block; background: var(--encre); color: #fff; text-decoration: none; font-weight: 700; font-size: 14px; padding: 13px 22px; border-radius: 12px; border: none; cursor: pointer; }
+  .bouton.secondaire { background: var(--surface); color: var(--encre); border: 1px solid var(--contour-fort); }
+  header { padding: 72px 0 64px; }
+  .etiquette { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; color: var(--attenu); text-transform: uppercase; }
+  h1 { font-size: 44px; font-weight: 800; line-height: 1.15; margin: 14px 0 16px; max-width: 640px; }
+  h1 .accent { color: var(--encre); }
+  .sous-titre { font-size: 16px; color: var(--second); max-width: 560px; }
+  .actions-hero { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  section { padding: 56px 0; }
+  h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+  .section-intro { color: var(--second); max-width: 620px; margin-bottom: 32px; }
+  .grille3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .grille2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .carte { background: var(--surface); border: 1px solid var(--contour); border-radius: 16px; padding: 22px; }
+  .carte .num { width: 30px; height: 30px; border-radius: 15px; background: var(--encre); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 14px; margin-bottom: 14px; }
+  .carte h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .carte p { font-size: 13px; color: var(--second); }
+  .pastille { display: inline-block; width: 12px; height: 12px; border-radius: 6px; margin-right: 8px; vertical-align: -1px; }
+  .telechargement { background: var(--encre); border-radius: 20px; color: #fff; padding: 44px; text-align: center; }
+  .telechargement h2 { color: #fff; }
+  .telechargement p { color: rgba(255,255,255,0.75); max-width: 520px; margin: 0 auto 24px; }
+  .telechargement .bouton { background: #fff; color: var(--encre); font-size: 15px; padding: 15px 28px; }
+  .note-taille { font-size: 11px; color: rgba(255,255,255,0.55); margin-top: 12px; }
+  footer { border-top: 1px solid var(--contour); padding: 26px 0 40px; color: var(--attenu); font-size: 12px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+  @media (max-width: 760px) {
+    h1 { font-size: 32px; }
+    .grille3, .grille2 { grid-template-columns: 1fr; }
+    .telechargement { padding: 32px 22px; }
+  }
+</style>
+</head>
+<body>
+  <div class="conteneur">
+    <nav>
+      <div class="marque">
+        <div class="logo">A</div>
+        <strong>ARVX</strong>
+      </div>
+      <a class="bouton secondaire" href="#telecharger">Télécharger</a>
+    </nav>
+
+    <header>
+      <span class="etiquette">Écosystème ARVEXA · Application Android</span>
+      <h1>Ton cours entre,<br /><span class="accent">ARVX s'occupe du reste.</span></h1>
+      <p class="sous-titre">
+        Ajoute ton cours avec son titre — n'importe quel niveau, n'importe quelle matière.
+        ARVX détecte la matière, rédige le résumé, construit l'explication pas à pas,
+        fabrique les examens et suit ta progression. Tout se passe sur ton téléphone.
+      </p>
+      <div class="actions-hero">
+        <a class="bouton" href="#telecharger">Installer ARVX</a>
+        <a class="bouton secondaire" href="#comment">Voir comment ça marche</a>
+      </div>
+    </header>
+
+    <section id="comment">
+      <span class="etiquette">Comment ça marche</span>
+      <h2>Trois temps, toujours les mêmes</h2>
+      <p class="section-intro">Le titre est le tien ; la matière, elle, se déduit du contenu — jamais du titre seul.</p>
+      <div class="grille3">
+        <div class="carte">
+          <div class="num">1</div>
+          <h3>Ajoute ton cours</h3>
+          <p>Titre + texte collé ou saisi. La matière est détectée automatiquement — Mathématiques, Physique-Chimie, SVT, Histoire-Géo, Français, Langues, Informatique — et reste corrigeable avant enregistrement.</p>
+        </div>
+        <div class="carte">
+          <div class="num">2</div>
+          <h3>Révise pas à pas</h3>
+          <p>ARVX rédige un résumé fidèle et découpe le cours en étapes explicatives numérotées. Chaque étape se marque « compris » — c'est ce qui nourrit la carte « Reprendre » et la progression.</p>
+        </div>
+        <div class="carte">
+          <div class="num">3</div>
+          <h3>Passe tes examens</h3>
+          <p>Examen ciblé sur un cours ou examen global : les questions sont fabriquées à partir de ce que tu as fourni. Correction immédiate, puis « Revoir le cours » là où les erreurs se concentrent.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <span class="etiquette">Ce qui est livré</span>
+      <h2>Une boucle complète, rien de décoratif</h2>
+      <p class="section-intro">Chaque page enregistre ce qu'elle produit et lit les autres — un seul flux de données, du cours à la progression.</p>
+      <div class="grille2">
+        <div class="carte">
+          <h3><span class="pastille" style="background:#6F6BF0"></span>Cartes de matières dynamiques</h3>
+          <p>La carte d'une matière n'existe que si au moins un cours l'a révélée. Toucher la carte rouvre ses cours et permet d'en ajouter d'autres — la même règle pour n'importe quelle matière.</p>
+        </div>
+        <div class="carte">
+          <h3><span class="pastille" style="background:#1F2A44"></span>Examens intelligents</h3>
+          <p>La page la plus connectée : elle puise dans les banques de questions de tes cours, chronomètre indicatif, correction immédiate et liens « Revoir le cours ».</p>
+        </div>
+        <div class="carte">
+          <h3><span class="pastille" style="background:#2FA36B"></span>Progression honnête</h3>
+          <p>Série de jours actifs, temps révisé, examens passés, état par matière, « à renforcer ». Un chiffre n'est jamais affiché sans donnée réelle derrière.</p>
+        </div>
+        <div class="carte">
+          <h3><span class="pastille" style="background:#E8873C"></span>Privé et hors ligne</h3>
+          <p>L'analyse tourne sur l'appareil — aucun cours ne quitte ton téléphone. Une fois analysé, tout marche sans réseau : résumé, pas à pas, examens.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="telecharger">
+      <div class="telechargement">
+        <span class="etiquette" style="color:rgba(255,255,255,0.6)">Version 1.0.0 · Android 8+</span>
+        <h2>Installer ARVX</h2>
+        <p>Télécharge l'APK signé, construit et publié par la pipeline officielle du dépôt. Installe-le en autorisant la source inconnue — c'est la distribution directe de la v1, avant la boutique.</p>
+        <a class="bouton" href="https://github.com/ARVEXA/arvexa-mobile/releases/latest/download/ARVX-1.0.0.apk">Télécharger l'APK — ARVX 1.0.0</a>
+        <div class="note-taille">APK ≈ 60–90 Mo · aucun compte externe requis · tes cours restent sur ton appareil</div>
+      </div>
+    </section>
+
+    <footer>
+      <div>ARVX — écosystème ARVEXA</div>
+      <div>Référence produit AXIA · design system « Encre claire » · v1.0.0</div>
+    </footer>
+  </div>
+</body>
+</html>
