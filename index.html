@@ -43,8 +43,8 @@
     </style>
 
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="/icons/arvx-apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/arvx-icon-192.png" />
 
     <!--
       iOS ne lit jamais le manifest pour ces réglages : sans ces balises,
@@ -63,14 +63,19 @@
          application restent synchronisées. */
       (function () {
         var t = 'dark';
-        try {
-          var s = localStorage.getItem('axia.theme');
-          if (s !== 'light' && s !== 'dark') { localStorage.setItem('axia.theme', 'dark'); }
-          else { t = s; }
-        } catch (e) {}
-        document.documentElement.setAttribute('data-arvx', t);
+        var landing = location.pathname === '/';
+        if (!landing) {
+          try {
+            var s = localStorage.getItem('axia.theme');
+            if (s !== 'light' && s !== 'dark') { localStorage.setItem('axia.theme', 'dark'); }
+            else { t = s; }
+          } catch (e) {}
+        }
+        /* la landing est TOUJOURS noire, uniforme comme le vrai site ARVEXA ;
+           l'application (après connexion) suit la bascule du bouton Profil. */
+        document.documentElement.setAttribute('data-arvx', landing ? 'dark' : t);
         var mc = document.querySelector('meta[name="theme-color"]');
-        if (mc) mc.setAttribute('content', t === 'dark' ? '#0A0A0A' : '#F5F0E8');
+        if (mc) mc.setAttribute('content', (landing ? 'dark' : t) === 'dark' ? '#0A0A0A' : '#F5F0E8');
       })();
     </script>
     <!-- ARVX skin phase 1 : couleurs, barre du haut, bascule clair/sombre -->
@@ -80,7 +85,7 @@
         --arvx-brand-main-flip: #0A0A0A; /* rendu blanc une fois inversé */
         --arvx-brand-accent: #E0B84A;
         --arvx-bar-bg: rgba(10, 10, 10, 0.95);
-        --arvx-bar-border: rgba(184, 134, 11, 0.18);
+        --arvx-bar-border: rgba(184, 134, 11, 0.08);
         --arvx-btn-bg: rgba(255, 255, 255, 0.06);
         --arvx-btn-border: rgba(255, 255, 255, 0.18);
         --arvx-btn-color: #F5F0E8;
@@ -90,7 +95,7 @@
         --arvx-brand-main: #141414;
         --arvx-brand-accent: #B8860B;
         --arvx-bar-bg: rgba(250, 247, 240, 0.94);
-        --arvx-bar-border: rgba(184, 134, 11, 0.16);
+        --arvx-bar-border: rgba(184, 134, 11, 0.08);
         --arvx-btn-bg: rgba(32, 27, 18, 0.05);
         --arvx-btn-border: rgba(32, 27, 18, 0.14);
         --arvx-btn-color: #3A3428;
@@ -121,11 +126,6 @@
         border: 1px solid var(--arvx-btn-border) !important;
         background: transparent !important;
       }
-      .arvx-topbar .arvx-theme-toggle {
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer;
-      }
-      .arvx-topbar .arvx-theme-toggle svg { width: 18px; height: 18px; }
       /* Mode sombre de la landing : #root inversé (le header et les modales
          suivent), images re-inversées pour rester naturelles */
       html[data-arvx="dark"] #root.arvx-inv { filter: invert(1) hue-rotate(180deg); }
@@ -170,7 +170,18 @@
       // là où il n'existe pas.
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function () {
-          navigator.serviceWorker.register('/sw.js').catch(function () {});
+          navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' }).catch(function () {});
+        });
+        /* Quand le nouveau service worker prend la main (après un déploiement),
+           une seule rechargement automatique garantit l'affichage de la
+           nouvelle version — même sur un appareil resté des semaines en cache. */
+        navigator.serviceWorker.addEventListener('message', function (ev) {
+          try {
+            if (!ev.data || ev.data.type !== 'arvx-update') return;
+            if (sessionStorage.getItem('arvx-recharge')) return;
+            sessionStorage.setItem('arvx-recharge', '1');
+            location.reload();
+          } catch (e) {}
         });
       }
     </script>
@@ -181,9 +192,6 @@
        (à l'emplacement du bouton profil du site original). */
     (function () {
       var doc = document.documentElement;
-      var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>';
-      var MOON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.6 14.2A8.6 8.6 0 0 1 9.8 3.4a8.6 8.6 0 1 0 10.8 10.8z"/></svg>';
-
       function mode() { return doc.getAttribute('data-arvx') || 'dark'; }
       function isApp() { if (location.pathname !== '/') return true; return !!document.querySelector('button[aria-label="Change theme"], button[aria-label="Changer de thème"]'); }
 
@@ -197,21 +205,6 @@
         try { localStorage.setItem('axia.theme', m); } catch (e) {}
         setMetaColor(m);
         paint();
-      }
-
-      function ensureToggle(bar) {
-        if (bar.querySelector('.arvx-theme-toggle')) return;
-        var burger = bar.querySelector('button[aria-label="Menu"]');
-        var b = document.createElement('button');
-        b.type = 'button';
-        b.className = 'arvx-theme-toggle';
-        b.setAttribute('aria-label', 'Mode clair ou sombre');
-        b.title = 'Mode clair / sombre';
-        b.addEventListener('click', function () {
-          setMode(mode() === 'dark' ? 'light' : 'dark');
-        });
-        if (burger && burger.parentElement) burger.parentElement.insertBefore(b, burger);
-        else bar.appendChild(b);
       }
 
       function tagBars(landingFiltered) {
@@ -232,7 +225,6 @@
           var outerAlready = e.parentElement ? e.parentElement.closest('.arvx-landing-bar') : null;
           if (landingFiltered && !outerAlready) e.classList.add('arvx-landing-bar');
           if (!landingFiltered) e.classList.remove('arvx-landing-bar');
-          if (!isApp()) ensureToggle(e);
         }
       }
 
@@ -266,8 +258,6 @@
         }
         tagBars(landingFiltered);
         paintRetention(m, app);
-        var tgs = document.querySelectorAll('.arvx-theme-toggle');
-        for (var i = 0; i < tgs.length; i++) tgs[i].innerHTML = m === 'dark' ? SUN : MOON;
         /* « ARVEX » hors barres (ex. footer) : couleur pré-inversée pour rester
            lisible sur le fond sombre du contenu inversé */
         var sps = document.querySelectorAll('span');
@@ -277,6 +267,21 @@
             sps[i].style.color = 'var(--arvx-brand-main-flip)';
           } else {
             sps[i].style.color = 'var(--arvx-brand-main)';
+          }
+        }
+        /* Logo « ARVEXA School » du pied de page : il vit dans le contenu inversé,
+           ses couleurs natives (crème + or) ressortaient noires. Un contre-filtre
+           sur son conteneur le rend comme la barre du haut : couleurs exactes. */
+        for (var i = 0; i < sps.length; i++) {
+          if (sps[i].textContent !== 'ARVEXA') continue;
+          if (!landingFiltered || sps[i].closest('.arvx-landing-bar')) continue;
+          var pc = sps[i].parentElement;
+          for (var k = 0; pc && k < 6; k++, pc = pc.parentElement) {
+            var tc = pc.textContent || '';
+            if (tc.indexOf('School') >= 0 && tc.indexOf('ARVEXA') >= 0 && tc.length < 40) {
+              if (!pc.classList.contains('arvx-landing-bar')) pc.classList.add('arvx-landing-bar');
+              break;
+            }
           }
         }
       }
@@ -330,6 +335,7 @@
         /* filet de sécurité : resynchronise avec axia.theme (la bascule native
            de l'app écrit cette clé) et re-applique le skin si besoin */
         setInterval(function () {
+          if (location.pathname === '/') { paint(); return; }
           try {
             var t = localStorage.getItem('axia.theme');
             if ((t === 'light' || t === 'dark') && t !== mode()) {
@@ -344,6 +350,6 @@
       else start();
     })();
   </script>
-<script src="/_expo/static/js/web/__expo-metro-runtime-1f8f5d3ca6b7f58204d51e14506d73fb.js" defer></script><script src="/_expo/static/js/web/__common-5df6a563b4cbdc9bd3c46d0ce2d2ca7c.js" defer></script><script src="/_expo/static/js/web/index-b728625579eaec378222b6d0710ef049.js" defer></script>
+<script src="/_expo/static/js/web/__expo-metro-runtime-1f8f5d3ca6b7f58204d51e14506d73fb.js" defer></script><script src="/_expo/static/js/web/__common-5df6a563b4cbdc9bd3c46d0ce2d2ca7c.js" defer></script><script src="/_expo/static/js/web/index-d6aa9a10c72b74c25eb4462fb1c917e6.js" defer></script>
 </body>
 </html>

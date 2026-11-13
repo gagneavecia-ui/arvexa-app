@@ -18,7 +18,7 @@
  * empreinte dans le nom (`index-<hash>.js`), une nouvelle version n'écrase donc rien,
  * et les fichiers d'une version qui n'est plus la page servie sont retirés.
  */
-const SHELL = 'arvx-shell-v2';
+const SHELL = 'arvx-shell-v3';
 /* Fichiers dont le nom change à chaque version : servis depuis la réserve d'abord. */
 const IMMUTABLE = /^\/(_expo\/static|assets)\//;
 
@@ -32,8 +32,10 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== SHELL && /-shell-/.test(k)).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k !== SHELL).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
+      .then(() => self.clients.matchAll({ type: 'window', includeUncontrolled: true }))
+      .then((cs) => cs.forEach((c) => { try { c.postMessage({ type: 'arvx-update' }); } catch (e) {} }))
   );
 });
 
@@ -192,7 +194,7 @@ self.addEventListener('push', (event) => {
         // ne garde que la transparence : l'icône de l'app, opaque, y devenait un
         // carré plein. D'où le monogramme blanc ajouré
         // (scripts/generate-notification-icon.js).
-        icon: '/icons/icon-192.png',
+        icon: '/icons/arvx-icon-192.png',
         badge: '/icons/badge-96.png',
         /*
          * Un `tag` égal à l'identifiant du plan fait qu'un rappel envoyé deux fois
