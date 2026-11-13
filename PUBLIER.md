@@ -2,18 +2,17 @@
 
 Tout est prêt dans ce dépôt : le code complet, la pipeline CI, la page vitrine. Il reste quatre commandes à exécuter depuis une machine connectée au compte GitHub de l'écosystème ARVEXA.
 
-## 1. Créer le dépôt et pousser
+## 1. Pousser sur le dépôt `arvexa-app`
+
+Décision du propriétaire : la publication se fait sur le dépôt **`arvexa-app`** (script prêt : `scripts/publish_arvexa.sh`, il suffit de fournir un token GitHub).
+
+Manuellement :
 
 ```bash
 cd arvexa-mobile
-git init -b main
-git add -A
-git commit -m "ARVX 1.0.0 — première version : cours → analyse → examens → progression"
-git remote add origin https://github.com/<COMPTE>/arvexa-mobile.git
+git remote add origin https://github.com/ARVEXA/arvexa-app.git
 git push -u origin main
 ```
-
-> Nom recommandé : `arvexa-mobile` (décision D9 du blueprint).
 
 ## 2. Laisser la pipeline construire l'APK
 
@@ -32,7 +31,7 @@ git push origin v1.0.0
 ```
 
 Une Release **v1.0.0** est créée avec l'APK joint :
-`https://github.com/<COMPTE>/arvexa-mobile/releases/latest`
+`https://github.com/ARVEXA/arvexa-app/releases/latest`
 
 ## 4. Déployer la page vitrine sur Vercel
 
@@ -48,7 +47,7 @@ vercel --prod
 Puis ouvrir `landing/index.html` et remplacer le lien de téléchargement provisoire par l'URL de la Release :
 
 ```
-https://github.com/<COMPTE>/arvexa-mobile/releases/latest/download/ARVX-1.0.0.apk
+https://github.com/ARVEXA/arvexa-app/releases/latest/download/ARVX-1.0.0.apk
 ```
 
 re-pousser, Vercel redéploie tout seul.
