@@ -57,7 +57,84 @@
     <meta name="apple-mobile-web-app-title" content="AXIA" />
   <meta name="theme-color" content="#0A0A0A">
 <meta name="description" content="AXIA transforme tes cours en fiches de révision et en cartes mentales.">
-<link rel="icon" href="/favicon.ico"/></head>
+<link rel="icon" href="/favicon.ico"/>    <script>
+      /* ARVX phase 1 : thème par défaut = sombre (uniforme comme arvexaschool).
+         Clé partagée avec l'app axia (localStorage 'axia.theme') : landing et
+         application restent synchronisées. */
+      (function () {
+        var t = 'dark';
+        try {
+          var s = localStorage.getItem('axia.theme');
+          if (s !== 'light' && s !== 'dark') { localStorage.setItem('axia.theme', 'dark'); }
+          else { t = s; }
+        } catch (e) {}
+        document.documentElement.setAttribute('data-arvx', t);
+        var mc = document.querySelector('meta[name="theme-color"]');
+        if (mc) mc.setAttribute('content', t === 'dark' ? '#0A0A0A' : '#FAF7F0');
+      })();
+    </script>
+    <!-- ARVX skin phase 1 : couleurs, barre du haut, bascule clair/sombre -->
+    <style id="arvx-skin">
+      html[data-arvx="dark"] {
+        --arvx-brand-main: #F5F0E8;
+        --arvx-brand-main-flip: #0A0A0A; /* rendu blanc une fois inversé */
+        --arvx-brand-accent: #E0B84A;
+        --arvx-bar-bg: rgba(10, 10, 10, 0.95);
+        --arvx-bar-border: rgba(184, 134, 11, 0.18);
+        --arvx-btn-bg: rgba(255, 255, 255, 0.06);
+        --arvx-btn-border: rgba(255, 255, 255, 0.18);
+        --arvx-btn-color: #F5F0E8;
+        --arvx-page-bg: #0A0A0A;
+      }
+      html[data-arvx="light"] {
+        --arvx-brand-main: #141414;
+        --arvx-brand-accent: #B8860B;
+        --arvx-bar-bg: rgba(250, 247, 240, 0.94);
+        --arvx-bar-border: rgba(184, 134, 11, 0.16);
+        --arvx-btn-bg: rgba(32, 27, 18, 0.05);
+        --arvx-btn-border: rgba(32, 27, 18, 0.14);
+        --arvx-btn-color: #3A3428;
+        --arvx-page-bg: #FAF7F0;
+      }
+      /* fond uniforme : plus aucun bleu ni blanc visible en bas (rebond,
+         overscroll, zones mortes) — noir en mode sombre, voile crème en clair */
+      html, body { background: var(--arvx-page-bg, #0A0A0A) !important; }
+      /* Barre du haut — réplique fidèle du header ARVEXA School */
+      .arvx-topbar {
+        background: var(--arvx-bar-bg) !important;
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--arvx-bar-border) !important;
+      }
+      .arvx-topbar button {
+        width: 36px !important; height: 36px !important; min-width: 36px !important;
+        border-radius: 50% !important;
+        background: var(--arvx-btn-bg) !important;
+        border: none !important;
+        color: var(--arvx-btn-color) !important;
+      }
+      .arvx-topbar button > div, .arvx-topbar button > div > div {
+        color: var(--arvx-btn-color) !important;
+      }
+      .arvx-topbar button[aria-label="Menu"] {
+        border-radius: 10px !important;
+        border: 1px solid var(--arvx-btn-border) !important;
+        background: transparent !important;
+      }
+      .arvx-topbar .arvx-theme-toggle {
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+      }
+      .arvx-topbar .arvx-theme-toggle svg { width: 18px; height: 18px; }
+      /* Mode sombre de la landing : #root inversé (le header et les modales
+         suivent), images re-inversées pour rester naturelles */
+      html[data-arvx="dark"] #root.arvx-inv { filter: invert(1) hue-rotate(180deg); }
+      html[data-arvx="dark"] #root.arvx-inv img { filter: invert(1) hue-rotate(180deg); }
+      /* contre-filtre sur les barres du haut de la landing : double inversion
+         = couleurs natives de la barre (le skin ARVEXA reste intact) */
+      .arvx-landing-bar { filter: invert(1) hue-rotate(180deg); }
+    </style>
+</head>
 
   <body>
     <!-- Use static rendering with Expo Router to support running without JavaScript. -->
@@ -97,6 +174,118 @@
         });
       }
     </script>
-  <script src="/_expo/static/js/web/__expo-metro-runtime-1f8f5d3ca6b7f58204d51e14506d73fb.js" defer></script><script src="/_expo/static/js/web/__common-5df6a563b4cbdc9bd3c46d0ce2d2ca7c.js" defer></script><script src="/_expo/static/js/web/index-a19006a0d5b6205d658e4ddcdba2f09f.js" defer></script>
+    <script>
+    /* ARVX skin — moteur : observe le DOM (les écrans React se re-rendent),
+       étiquette les barres du haut (.arvx-topbar), inverse la landing en mode
+       sombre (#root.arvx-inv) et pose la bascule clair/sombre dans la barre
+       (à l'emplacement du bouton profil du site original). */
+    (function () {
+      var doc = document.documentElement;
+      var SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M2.5 12h2.4M19.1 12h2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M19.1 4.9l-1.7 1.7M6.6 17.4l-1.7 1.7"/></svg>';
+      var MOON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.6 14.2A8.6 8.6 0 0 1 9.8 3.4a8.6 8.6 0 1 0 10.8 10.8z"/></svg>';
+
+      function mode() { return doc.getAttribute('data-arvx') || 'dark'; }
+      function isApp() { return !!document.querySelector('button[aria-label="Change theme"]'); }
+
+      function setMetaColor(m) {
+        var mc = document.querySelector('meta[name="theme-color"]');
+        if (mc) mc.setAttribute('content', m === 'dark' ? '#0A0A0A' : '#FAF7F0');
+      }
+
+      function setMode(m) {
+        doc.setAttribute('data-arvx', m);
+        try { localStorage.setItem('axia.theme', m); } catch (e) {}
+        setMetaColor(m);
+        paint();
+      }
+
+      function ensureToggle(bar) {
+        if (bar.querySelector('.arvx-theme-toggle')) return;
+        var burger = bar.querySelector('button[aria-label="Menu"]');
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'arvx-theme-toggle';
+        b.setAttribute('aria-label', 'Mode clair ou sombre');
+        b.title = 'Mode clair / sombre';
+        b.addEventListener('click', function () {
+          setMode(mode() === 'dark' ? 'light' : 'dark');
+        });
+        if (burger && burger.parentElement) burger.parentElement.insertBefore(b, burger);
+        else bar.appendChild(b);
+      }
+
+      function tagBars(landingFiltered) {
+        var all = document.querySelectorAll('div');
+        for (var i = 0; i < all.length; i++) {
+          var e = all[i], r = e.getBoundingClientRect();
+          if (r.width < 300 || r.top > 4 || r.height < 40 || r.height > 72) continue;
+          if (!e.querySelector('button')) continue;
+          var hasMenu = !!e.querySelector('button[aria-label="Menu"]');
+          var hasTheme = !!e.querySelector('button[aria-label="Change theme"]');
+          if (!hasMenu && !hasTheme) continue;
+          var txt = e.textContent || '';
+          var hasBrand = !!e.querySelector('img[alt="AXIA logo"]') || txt.indexOf('ARVEX') >= 0 || /(^|\s)axia(\s|$)/i.test(txt);
+          if (!hasBrand) continue;
+          if (!e.classList.contains('arvx-topbar')) e.classList.add('arvx-topbar');
+          /* un seul contre-filtre : les barres peuvent être imbriquées
+             (conteneur fixe + rangée) — ne le mettre que sur l'externe */
+          var outerAlready = e.parentElement ? e.parentElement.closest('.arvx-landing-bar') : null;
+          if (landingFiltered && !outerAlready) e.classList.add('arvx-landing-bar');
+          if (!landingFiltered) e.classList.remove('arvx-landing-bar');
+          if (!isApp()) ensureToggle(e);
+        }
+      }
+
+      function paint() {
+        if (!document.body) return;
+        var m = mode(), app = isApp();
+        var root = document.getElementById('root');
+        var landingFiltered = (!app && m === 'dark');
+        if (root) {
+          if (landingFiltered && !root.classList.contains('arvx-inv')) root.classList.add('arvx-inv');
+          if (!landingFiltered && root.classList.contains('arvx-inv')) root.classList.remove('arvx-inv');
+        }
+        tagBars(landingFiltered);
+        var tgs = document.querySelectorAll('.arvx-theme-toggle');
+        for (var i = 0; i < tgs.length; i++) tgs[i].innerHTML = m === 'dark' ? SUN : MOON;
+        /* « ARVEX » hors barres (ex. footer) : couleur pré-inversée pour rester
+           lisible sur le fond sombre du contenu inversé */
+        var sps = document.querySelectorAll('span');
+        for (var i = 0; i < sps.length; i++) {
+          if (sps[i].textContent !== 'ARVEX') continue;
+          if (m === 'dark' && landingFiltered && !sps[i].closest('.arvx-landing-bar')) {
+            sps[i].style.color = 'var(--arvx-brand-main-flip)';
+          } else {
+            sps[i].style.color = 'var(--arvx-brand-main)';
+          }
+        }
+      }
+
+      var tt = null;
+      var mo = new MutationObserver(function () {
+        clearTimeout(tt); tt = setTimeout(paint, 120);
+      });
+
+      function start() {
+        paint();
+        mo.observe(document.body, { childList: true, subtree: true });
+        /* filet de sécurité : resynchronise avec axia.theme (la bascule native
+           de l'app écrit cette clé) et re-applique le skin si besoin */
+        setInterval(function () {
+          try {
+            var t = localStorage.getItem('axia.theme');
+            if ((t === 'light' || t === 'dark') && t !== mode()) {
+              doc.setAttribute('data-arvx', t);
+              setMetaColor(t);
+            }
+          } catch (e) {}
+          paint();
+        }, 600);
+      }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+      else start();
+    })();
+  </script>
+<script src="/_expo/static/js/web/__expo-metro-runtime-1f8f5d3ca6b7f58204d51e14506d73fb.js" defer></script><script src="/_expo/static/js/web/__common-5df6a563b4cbdc9bd3c46d0ce2d2ca7c.js" defer></script><script src="/_expo/static/js/web/index-a19006a0d5b6205d658e4ddcdba2f09f.js" defer></script>
 </body>
 </html>
