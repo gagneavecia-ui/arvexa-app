@@ -286,7 +286,45 @@
         clearTimeout(tt); tt = setTimeout(paint, 120);
       });
 
+      /* ARVX passe 5 : dans l'application, le bouton « Profil » de la barre
+         d'onglets du bas devient la bascule mode clair / mode sombre. Le clic
+         est intercepté AVANT React (capture au document), l'app suit par
+         l'événement 'arvx-theme' et la clé 'axia.theme' que le ThemeProvider
+         écoute désormais. L'écran Profil reste accessible via le menu ☰. */
+      var LIBELLES_PROFIL = ['Profil', 'Profile'];
+      var MARQUEURS_LIGNE = ['Ma\u00eetrise', 'Mastery'];
+      function clicSurProfilBarre(el) {
+        var p = el, prof = null, k;
+        for (k = 0; p && k < 14 && !prof; k++) {
+          var propre = (p.textContent || '').replace(/([\uE000-\uF8FF]|[\uDB80-\uDBBF][\uDC00-\uDFFF])/g, '').trim();
+          if (LIBELLES_PROFIL.indexOf(propre) >= 0 && propre.length <= 8) prof = p;
+          p = p.parentElement;
+        }
+        if (!prof) return false;
+        var r = prof.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.62) return false;
+        var q = prof;
+        for (k = 0; q && k < 10; k++) {
+          var rr = q.getBoundingClientRect();
+          if (rr.height <= 110 && rr.width >= window.innerWidth * 0.55) {
+            var t2 = (q.textContent || '').replace(/([\uE000-\uF8FF]|[\uDB80-\uDBBF][\uDC00-\uDFFF])/g, '');
+            for (var j2 = 0; j2 < MARQUEURS_LIGNE.length; j2++)
+              if (t2.indexOf(MARQUEURS_LIGNE[j2]) >= 0) return true;
+          }
+          q = q.parentElement;
+        }
+        return false;
+      }
+
       function start() {
+        document.addEventListener('click', function (ev) {
+          try {
+            if (!clicSurProfilBarre(ev.target)) return;
+            ev.preventDefault(); ev.stopPropagation();
+            setMode(mode() === 'dark' ? 'light' : 'dark');
+            try { window.dispatchEvent(new Event('arvx-theme')); } catch (e) {}
+          } catch (e) {}
+        }, true);
         paint();
         mo.observe(document.body, { childList: true, subtree: true });
         /* filet de sécurité : resynchronise avec axia.theme (la bascule native

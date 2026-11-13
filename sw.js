@@ -18,7 +18,7 @@
  * empreinte dans le nom (`index-<hash>.js`), une nouvelle version n'écrase donc rien,
  * et les fichiers d'une version qui n'est plus la page servie sont retirés.
  */
-const SHELL = 'axia-shell-v1';
+const SHELL = 'arvx-shell-v2';
 /* Fichiers dont le nom change à chaque version : servis depuis la réserve d'abord. */
 const IMMUTABLE = /^\/(_expo\/static|assets)\//;
 
@@ -32,7 +32,7 @@ self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((keys) => Promise.all(keys.filter((k) => k.startsWith('axia-shell-') && k !== SHELL).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k !== SHELL && /-shell-/.test(k)).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
